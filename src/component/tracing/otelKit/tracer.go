@@ -14,3 +14,8 @@ PS:
 func NewTracer(name string, opts ...trace.TracerOption) trace.Tracer {
 	return otel.Tracer(name, opts...)
 }
+
+func NewNoopTracer(name string, opts ...trace.TracerOption) trace.Tracer {
+	tp := NewNoopTracerProvider()
+	return tp.Tracer(name, opts...)
+}
