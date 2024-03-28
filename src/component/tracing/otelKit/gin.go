@@ -5,14 +5,15 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/trace"
+	"net/http"
 )
 
 const (
-	keyGinContextWithSpan = "_chimera/gin-context-with-span"
-	keyGinSpan            = "_chimera/gin-span"
+	keyGinSpanCtx = "_chimera/gin-span-context"
+	keyGinSpan    = "_chimera/gin-span"
 )
 
-// NewOuterGinMiddleware TODO: 适用于: （链路追踪）最外层的服务
+// NewOuterGinMiddleware 适用于: （链路追踪）最外层的服务.
 /*
 PS: 需要先 set up.
 */
@@ -23,10 +24,10 @@ func NewOuterGinMiddleware() (middleware gin.HandlerFunc, err error) {
 
 	middleware = func(ctx *gin.Context) {
 		tracer := otel.Tracer("")
-		ctxWithSpan, span := tracer.Start(ctx.Request.Context(), "main")
+		spanCtx, span := tracer.Start(ctx.Request.Context(), "entire")
 		defer span.End()
 
-		ctx.Set(keyGinContextWithSpan, ctxWithSpan)
+		ctx.Set(keyGinSpanCtx, spanCtx)
 		ctx.Set(keyGinSpan, span)
 
 		ctx.Next()
@@ -34,7 +35,7 @@ func NewOuterGinMiddleware() (middleware gin.HandlerFunc, err error) {
 	return
 }
 
-// NewSecondaryGinMiddleware TODO: 适用于: （链路追踪）次级的服务
+// NewSecondaryGinMiddleware 适用于: （链路追踪）次级的服务.
 /*
 PS: 需要先 set up.
 */
@@ -44,21 +45,31 @@ func NewSecondaryGinMiddleware() (middleware gin.HandlerFunc, err error) {
 	}
 
 	middleware = func(ctx *gin.Context) {
-		//tracer := otel.Tracer("", trace.WithInstrumentationAttributes(attribute.String("111", "111")))
-		//spanCtx, span := tracer.Start(context.TODO(), "main", trace.WithAttributes(attribute.String("222", "222")))
-		//defer span.End()
-		//
-		//ctx.Next()
+		remoteSpanCtx, err := ExtractFromRequest(ctx.Request)
+		if err != nil {
+			ctx.String(http.StatusInternalServerError, err.Error())
+			ctx.Abort()
+			return
+		}
+
+		tracer := otel.Tracer("")
+		ctxWithSpan, span := tracer.Start(remoteSpanCtx, "entire")
+		defer span.End()
+
+		ctx.Set(keyGinSpanCtx, ctxWithSpan)
+		ctx.Set(keyGinSpan, span)
+
+		ctx.Next()
 	}
 	return
 }
 
-// GetCtxWithSpanFromGin
+// GetSpanCtxFromGin
 /*
 !!!: 需要先使用中间件 NewOuterGinMiddleware 或 NewSecondaryGinMiddleware.
 */
-func GetCtxWithSpanFromGin(ctx *gin.Context) context.Context {
-	value, exists := ctx.Get(keyGinContextWithSpan)
+func GetSpanCtxFromGin(ctx *gin.Context) context.Context {
+	value, exists := ctx.Get(keyGinSpanCtx)
 	if !exists || value == nil {
 		return context.TODO()
 	}
@@ -70,9 +81,9 @@ func GetCtxWithSpanFromGin(ctx *gin.Context) context.Context {
 !!!: 需要先使用中间件 NewOuterGinMiddleware 或 NewSecondaryGinMiddleware.
 */
 func GetSpanFromGin(ctx *gin.Context) trace.Span {
-	value, exists := ctx.Get(keyGinContextWithSpan)
+	value, exists := ctx.Get(keyGinSpanCtx)
 	if !exists || value == nil {
-		tracer := NewNoopTracer("")
+		tracer := NewNoopTracer()
 		_, span := tracer.Start(context.TODO(), "noop")
 		return span
 	}

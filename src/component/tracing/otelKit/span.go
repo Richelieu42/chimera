@@ -16,17 +16,17 @@ import (
 						trace.WithAttributes(attribute.String("222", "222"))
 @return err == nil的情况下，spanCtx 可以作为子span的传参parentCtx
 */
-func NewSpan(tracer trace.Tracer, parentCtx context.Context, spanName string, opts ...trace.SpanStartOption) (spanCtx context.Context, span trace.Span, err error) {
+func NewSpan(tracer trace.Tracer, parentSpanCtx context.Context, spanName string, opts ...trace.SpanStartOption) (spanCtx context.Context, span trace.Span, err error) {
 	if err = interfaceKit.AssertNotNil(tracer, "tracer"); err != nil {
 		return
 	}
-	if parentCtx == nil {
-		parentCtx = context.TODO()
+	if parentSpanCtx == nil {
+		parentSpanCtx = context.TODO()
 	}
 	if err = strKit.AssertNotBlank(spanName, "spanName"); err != nil {
 		return
 	}
 
-	spanCtx, span = tracer.Start(parentCtx, spanName, opts...)
+	spanCtx, span = tracer.Start(parentSpanCtx, spanName, opts...)
 	return
 }
