@@ -10,19 +10,19 @@ import (
 	"time"
 )
 
-// MustSetUp
+// MustSetUpWithGrpc
 /*
 @param opts e.g. otlptracegrpc.WithInsecure(), otlptracegrpc.WithDialOption(grpc.WithBlock())
 */
-func MustSetUp(grpcEndpoint, serviceName string, attributeMap map[string]string, opts ...otlptracegrpc.Option) {
-	err := SetUp(grpcEndpoint, serviceName, attributeMap, opts...)
+func MustSetUpWithGrpc(grpcEndpoint, serviceName string, attributeMap map[string]string, opts ...otlptracegrpc.Option) {
+	err := SetUpWithGrpc(grpcEndpoint, serviceName, attributeMap, opts...)
 	if err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
 }
 
-func SetUp(grpcEndpoint, serviceName string, attributeMap map[string]string, opts ...otlptracegrpc.Option) error {
+func SetUpWithGrpc(grpcEndpoint, serviceName string, attributeMap map[string]string, opts ...otlptracegrpc.Option) error {
 	if err := strKit.AssertNotEmpty(serviceName, "serviceName"); err != nil {
 		return err
 	}

@@ -10,6 +10,6 @@ import (
 
 func TestMustSetUp(t *testing.T) {
 	logrus.Info("---")
-	MustSetUp("", "service-test", nil, otlptracegrpc.WithInsecure(), otlptracegrpc.WithDialOption(grpc.WithBlock()))
+	MustSetUpWithGrpc("", "service-test", nil, otlptracegrpc.WithInsecure(), otlptracegrpc.WithDialOption(grpc.WithBlock()))
 	logrus.Info("---")
 }
