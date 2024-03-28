@@ -31,8 +31,7 @@ type (
 		Gzip      bool  `json:"gzip" yaml:"gzip"`
 		//XFrameOptions string `json:"xFrameOptions" yaml:"xFrameOptions" validate:"omitempty,lowercase,oneof=deny sameorigin|startswith=allow-from "`
 
-		Cors CorsConfig `json:"cors" yaml:"cors"`
-		//Referer       []*refererKit.RefererVerifierBuilder `json:"referer" yaml:"referer"`
+		Cors        CorsConfig         `json:"cors" yaml:"cors"`
 		RateLimiter *RateLimiterConfig `json:"rateLimiter" yaml:"rateLimiter"`
 
 		ResponseHeaders map[string]string `json:"responseHeaders" yaml:"responseHeaders" mapstructure:"responseHeaders"`
