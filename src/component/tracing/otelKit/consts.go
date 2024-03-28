@@ -7,5 +7,6 @@ const (
 	KeyTraceId = "trace-id"
 	KeySpanId  = "span-id"
 
-	KeyParentContext = "parent-context"
+	KeyGinContextWithSpan = "_chimera/gin-context-with-span"
+	KeyGinSpan            = "_chimera/gin-span"
 )

@@ -7,7 +7,9 @@ import (
 
 // NewTracer
 /*
-PS: 需要先 set up.
+PS:
+(1) 需要先 set up;
+(2) 使用全局的TracerProvider.
 */
 func NewTracer(name string, opts ...trace.TracerOption) trace.Tracer {
 	return otel.Tracer(name, opts...)
