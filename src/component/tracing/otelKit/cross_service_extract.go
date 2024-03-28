@@ -47,7 +47,7 @@ func ExtractFromRequest(r *http.Request) (remoteSpanCtx context.Context, err err
 	if err != nil {
 		return
 	}
-	spanCtx := trace.NewSpanContext(trace.SpanContextConfig{
+	var spanCtx trace.SpanContext = trace.NewSpanContext(trace.SpanContextConfig{
 		TraceID:    traceId,
 		SpanID:     spanId,
 		TraceFlags: trace.FlagsSampled, // 这个没写，是不会记录的

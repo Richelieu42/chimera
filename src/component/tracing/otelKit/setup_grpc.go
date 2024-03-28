@@ -22,15 +22,21 @@ func MustSetUpWithGrpc(grpcEndpoint, serviceName string, attributeMap map[string
 	}
 }
 
-func SetUpWithGrpc(grpcEndpoint, serviceName string, attributeMap map[string]string, opts ...otlptracegrpc.Option) error {
-	if err := strKit.AssertNotEmpty(serviceName, "serviceName"); err != nil {
-		return err
+func SetUpWithGrpc(grpcEndpoint, serviceName string, attributeMap map[string]string, opts ...otlptracegrpc.Option) (err error) {
+	defer func() {
+		if err == nil {
+			setupFlag.Store(true)
+		}
+	}()
+
+	if err = strKit.AssertNotEmpty(serviceName, "serviceName"); err != nil {
+		return
 	}
 
 	/* TracerProvider */
 	tp, err := NewGrpcTracerProvider(grpcEndpoint, serviceName, attributeMap, opts...)
 	if err != nil {
-		return err
+		return
 	}
 	otel.SetTracerProvider(tp)
 
@@ -41,5 +47,5 @@ func SetUpWithGrpc(grpcEndpoint, serviceName string, attributeMap map[string]str
 	logrus.RegisterExitHandler(func() {
 		ShutdownTracerProvider(tp, time.Second*3)
 	})
-	return nil
+	return
 }

@@ -18,15 +18,21 @@ func MustSetUpWithHttp(httpEndpoint, serviceName string, attributeMap map[string
 	}
 }
 
-func SetUpWithHttp(httpEndpoint, serviceName string, attributeMap map[string]string, opts ...otlptracehttp.Option) error {
-	if err := strKit.AssertNotEmpty(serviceName, "serviceName"); err != nil {
-		return err
+func SetUpWithHttp(httpEndpoint, serviceName string, attributeMap map[string]string, opts ...otlptracehttp.Option) (err error) {
+	defer func() {
+		if err == nil {
+			setupFlag.Store(true)
+		}
+	}()
+
+	if err = strKit.AssertNotEmpty(serviceName, "serviceName"); err != nil {
+		return
 	}
 
 	/* TracerProvider */
 	tp, err := NewHttpTracerProvider(httpEndpoint, serviceName, attributeMap, opts...)
 	if err != nil {
-		return err
+		return
 	}
 	otel.SetTracerProvider(tp)
 
@@ -37,5 +43,5 @@ func SetUpWithHttp(httpEndpoint, serviceName string, attributeMap map[string]str
 	logrus.RegisterExitHandler(func() {
 		ShutdownTracerProvider(tp, time.Second*3)
 	})
-	return nil
+	return
 }
