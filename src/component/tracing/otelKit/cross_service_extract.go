@@ -20,7 +20,7 @@ PS:
 (3) 返回的error != nil的情况下，可以判断是否等于 otelKit.NotOtelRequestError.
 */
 func ExtractFromRequest(r *http.Request) (remoteSpanCtx context.Context, err error) {
-	// Richelieu: 如果不在此处就行特殊情况判断，会在 trace.TraceIDFromHex(b.Member(KeyTraceId).Value()) 处返回error
+	// Richelieu: 如果不在此处就行特殊情况判断，下面会在 trace.TraceIDFromHex(b.Member(KeyTraceId).Value()) 处返回error
 	baggageStr := httpKit.GetHeader(r.Header, HeaderBaggage)
 	if strKit.IsEmpty(baggageStr) {
 		// 非链路追踪请求
