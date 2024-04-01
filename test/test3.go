@@ -9,13 +9,13 @@ import (
 )
 
 func main() {
-	io.Copy()
+	io.Writer()
 
 	var r *http.Request
 
 	fmt.Println(dataSizeKit.ToReadableIecString(512))
-	//io.ReadAll()
-	//io.ReadFull()
+	io.ReadAll()
+	io.ReadFull()
 	//
 	//tp := noop.NewTracerProvider()
 }

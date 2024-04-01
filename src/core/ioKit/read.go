@@ -2,11 +2,11 @@ package ioKit
 
 import "io"
 
-// ReadReader 读取io.Reader的内容.
-var ReadReader func(r io.Reader) ([]byte, error) = io.ReadAll
+// ReadAll 读取 io.Reader实例 的内容.
+var ReadAll func(r io.Reader) ([]byte, error) = io.ReadAll
 
-// ReadReaderToString 读取io.Reader的内容.
-func ReadReaderToString(reader io.Reader) (string, error) {
-	data, err := ReadReader(reader)
+// ReadAllToString 读取 io.Reader实例 的内容.
+func ReadAllToString(reader io.Reader) (string, error) {
+	data, err := ReadAll(reader)
 	return string(data), err
 }
