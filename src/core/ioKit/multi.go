@@ -4,10 +4,8 @@ import (
 	"io"
 )
 
-func MultiReader(readers ...io.Reader) io.Reader {
-	return io.MultiReader(readers...)
-}
+var (
+	MultiReader func(readers ...io.Reader) io.Reader = io.MultiReader
 
-func MultiWriter(writers ...io.Writer) io.Writer {
-	return io.MultiWriter(writers...)
-}
+	MultiWriter func(writers ...io.Writer) io.Writer = io.MultiWriter
+)
