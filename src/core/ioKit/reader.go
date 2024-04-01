@@ -23,7 +23,7 @@ var (
 	NewReaderFromString func(s string) *strings.Reader = strings.NewReader
 )
 
-// NewFileReader
+// NewReaderFromPath
 /*
 !!!: 要在外部手动调用 *os.File 的Close方法.
 
@@ -31,7 +31,7 @@ PS: os.File 结构体 实现了 io.Reader 接口.
 
 @param path 文件（或目录）的路径
 */
-func NewFileReader(path string) (*os.File, error) {
+func NewReaderFromPath(path string) (*os.File, error) {
 	if err := fileKit.AssertExist(path); err != nil {
 		return nil, err
 	}
@@ -44,6 +44,7 @@ PS: bufio.Reader 结构体 实现了 io.Reader 接口.
 */
 func NewBufioReader(reader io.Reader, bufSizeArgs ...int) *bufio.Reader {
 	if len(bufSizeArgs) == 0 {
+		// 默认缓冲大小: 4096
 		return bufio.NewReader(reader)
 	}
 	return bufio.NewReaderSize(reader, bufSizeArgs[0])
