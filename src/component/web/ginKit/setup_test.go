@@ -37,6 +37,14 @@ func TestMustSetUp(t *testing.T) {
 
 	MustSetUp(c.Gin, func(engine *gin.Engine) error {
 		engine.Any("/test", func(ctx *gin.Context) {
+			r := ctx.Request
+			readCloser, err := r.GetBody()
+			if err != nil {
+				ctx.String(500, err.Error())
+				return
+			}
+			readCloser = readCloser
+
 			ctx.String(200, "oK")
 
 			//qm := map[string][]string{

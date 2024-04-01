@@ -44,3 +44,7 @@ func ReadStringFromReader(reader io.Reader) (string, error) {
 	data, err := io.ReadAll(reader)
 	return string(data), err
 }
+
+func Read() {
+
+}
