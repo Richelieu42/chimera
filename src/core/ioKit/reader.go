@@ -3,48 +3,48 @@ package ioKit
 import (
 	"bufio"
 	"bytes"
+	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
 	"io"
 	"os"
 	"strings"
 )
 
-func NewReader(s []byte) io.Reader {
-	return bytes.NewReader(s)
-}
+var (
+	// NewReader
+	/*
+		PS: bytes.Reader 结构体实现了 io.Reader 接口.
+	*/
+	NewReader func(b []byte) *bytes.Reader = bytes.NewReader
 
-func NewReaderFromString(str string) io.Reader {
-	return strings.NewReader(str)
-}
+	// NewReaderFromString
+	/*
+		PS: strings.Reader 结构体实现了 io.Reader 接口.
+	*/
+	NewReaderFromString func(s string) *strings.Reader = strings.NewReader
+)
 
 // NewFileReader
 /*
-！！！：要在外部手动调用 *os.File 的Close方法.
+!!!: 要在外部手动调用 *os.File 的Close方法.
 
-@return os.File 结构体 实现了 io.Reader 接口
+PS: os.File 结构体 实现了 io.Reader 接口.
+
+@param path 文件（或目录）的路径
 */
-func NewFileReader(filePath string) (*os.File, error) {
-	return os.Open(filePath)
+func NewFileReader(path string) (*os.File, error) {
+	if err := fileKit.AssertExist(path); err != nil {
+		return nil, err
+	}
+	return os.Open(path)
 }
 
-// ToBufioReader io.Reader 接口 => *bufio.Reader
+// NewBufioReader 带缓冲的Reader.
 /*
-作用: 可以调用 bufio.Reader 结构体的方法（因为 io.Reader 接口就一个Read方法）.
+PS: bufio.Reader 结构体 实现了 io.Reader 接口.
 */
-func ToBufioReader(reader io.Reader) *bufio.Reader {
-	return bufio.NewReader(reader)
-}
-
-// ReadFromReader 读取io.Reader的内容（io.Reader => []byte）
-func ReadFromReader(reader io.Reader) ([]byte, error) {
-	return io.ReadAll(reader)
-}
-
-// ReadStringFromReader 读取io.Reader的内容（io.Reader => string）
-func ReadStringFromReader(reader io.Reader) (string, error) {
-	data, err := io.ReadAll(reader)
-	return string(data), err
-}
-
-func Read() {
-
+func NewBufioReader(reader io.Reader, bufSizeArgs ...int) *bufio.Reader {
+	if len(bufSizeArgs) == 0 {
+		return bufio.NewReader(reader)
+	}
+	return bufio.NewReaderSize(reader, bufSizeArgs[0])
 }
