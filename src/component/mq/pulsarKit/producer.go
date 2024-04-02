@@ -21,6 +21,10 @@ func (p *Producer) SendWithTimeout(pMsg *pulsar.ProducerMessage, timeout time.Du
 }
 
 func (p *Producer) Close() {
+	if p == nil {
+		return
+	}
+
 	if p.Producer != nil {
 		p.Producer.Close()
 	}
@@ -49,7 +53,7 @@ func NewProducerOriginally(ctx context.Context, addresses []string, options puls
 		}
 	}()
 
-	// 写入nil: 新建Producer成功
+	// case 写入nil: 新建Producer成功
 	errCh := make(chan error, 1)
 
 	go func() {

@@ -14,6 +14,10 @@ type (
 )
 
 func (c *Consumer) Close() {
+	if c == nil {
+		return
+	}
+
 	if c.Consumer != nil {
 		c.Consumer.Close()
 	}
@@ -41,7 +45,7 @@ func NewConsumerOriginally(ctx context.Context, addresses []string, options puls
 		}
 	}()
 
-	// 写入nil: 新建Consumer成功
+	// case 写入nil: 新建Consumer成功
 	errCh := make(chan error, 1)
 
 	go func() {
