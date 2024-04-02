@@ -45,7 +45,7 @@ func NewConsumerOriginally(ctx context.Context, addresses []string, options puls
 		}
 		consumer, err = client.Subscribe(options)
 		if err != nil {
-			err = errorKit.Wrapf(err, "Client fails to subscribe with topic(%s), subscriptionName(%s) and type(%s)",
+			err = errorKit.Wrapf(err, "client fails to subscribe with topic(%s), subscriptionName(%s) and type(%s)",
 				options.Topic, options.SubscriptionName, options.Type)
 			errCh <- err
 			return
@@ -54,10 +54,10 @@ func NewConsumerOriginally(ctx context.Context, addresses []string, options puls
 		select {
 		case <-ctx.Done():
 			// 新建Consumer成功之前，ctx已经 超时 或 被取消 了，此时需要释放资源
-			if consumer == nil {
+			if consumer != nil {
 				consumer.Close()
 			}
-			if client == nil {
+			if client != nil {
 				client.Close()
 			}
 			errCh <- ctx.Err()

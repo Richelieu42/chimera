@@ -61,10 +61,10 @@ func NewProducerOriginally(ctx context.Context, addresses []string, options puls
 		select {
 		case <-ctx.Done():
 			// 新建Producer成功之前，ctx已经 超时 或 被取消 了，此时需要释放资源
-			if producer == nil {
+			if producer != nil {
 				producer.Close()
 			}
-			if client == nil {
+			if client != nil {
 				client.Close()
 			}
 			errCh <- ctx.Err()
