@@ -68,7 +68,7 @@ func NewConsumerOriginally(ctx context.Context, addresses []string, options puls
 	case <-ctx.Done():
 		rst.Close()
 		return nil, ctx.Err()
-	case err = <-errCh:
+	case err := <-errCh:
 		if err != nil {
 			rst.Close()
 			return nil, err
