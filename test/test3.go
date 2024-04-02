@@ -1,21 +1,19 @@
 package main
 
 import (
-	"fmt"
-	"github.com/richelieu-yang/chimera/v3/src/dataSizeKit"
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
 	"io"
-	"net/http"
+	"os"
 )
 
 func main() {
-	io.Writer()
-
-	var r *http.Request
-
-	fmt.Println(dataSizeKit.ToReadableIecString(512))
-	io.ReadAll()
-	io.ReadFull()
-	//
-	//tp := noop.NewTracerProvider()
+	path := "/Users/richelieu/Documents/ino.7z"
+	f, err := os.Open(path)
+	if err != nil {
+		panic(err)
+	}
+	_, err = io.ReadAll(f)
+	if err != nil {
+		panic(err)
+	}
 }
