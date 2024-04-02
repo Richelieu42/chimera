@@ -3,6 +3,7 @@ Golang 语言标准库 bytes 包怎么使用？
     https://mp.weixin.qq.com/s?__biz=MzA4Mjc1NTMyOQ==&mid=2247484410&idx=1&sn=e50b07f7adf7ac0c5f6d0496509d34fa
 
 一个可读写、可变大小的字节缓冲区.
+bytes.NewBuffer 传参可以为nil.
 
 - 实现了: io.Reader、io.Writer
 - 未实现: io.Seeker、io.Closer

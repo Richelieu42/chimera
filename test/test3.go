@@ -1,25 +1,20 @@
 package main
 
 import (
+	"bytes"
+	"fmt"
+	"github.com/richelieu-yang/chimera/v3/src/core/ioKit"
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
-	"io"
-	"os"
 )
 
 func main() {
-	tmp := &os.File{}
-	//tmp := &bufio.Writer{}
-	//tmp := &bufio.ReadWriter{}
+	buf := bytes.NewBuffer(nil)
+	reader := ioKit.NewReaderFromString("abcdefg")
 
-	var _ io.Reader = tmp
-	//var _ io.ReaderAt = tmp
-	//var _ io.ReaderFrom = tmp
-
-	var _ io.Writer = tmp
-	//var _ io.WriterAt = tmp
-	//var _ io.WriterTo = tmp
-
-	var _ io.Seeker = tmp
-
-	var _ io.Closer = tmp
+	fmt.Println(ioKit.Copy(buf, reader)) // 7 <nil>
+	data, err := ioKit.ReadAll(reader)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(len(data)) // 0（因为Copy操作会"读"reader）
 }
