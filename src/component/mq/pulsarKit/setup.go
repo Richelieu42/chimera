@@ -13,6 +13,8 @@ var config *Config
 
 // MustSetUp
 /*
+PS: Pulsar服务中途挂掉的话，恢复后，Consumer实例、Producer实例还能正常工作.
+
 @param verifyConfig		可以为nil（将不验证，但不推荐这么干）
 */
 func MustSetUp(pulsarConfig *Config, verifyConfig *VerifyConfig) {
