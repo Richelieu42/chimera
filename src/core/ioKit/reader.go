@@ -38,11 +38,11 @@ func NewReaderFromPath(path string) (*os.File, error) {
 	return os.Open(path)
 }
 
-// NewBufioReader 带缓冲的Reader.
+// NewReaderWithBuffer 带缓冲的Reader.
 /*
 PS: bufio.Reader 结构体 实现了 io.Reader 接口.
 */
-func NewBufioReader(reader io.Reader, bufSizeArgs ...int) *bufio.Reader {
+func NewReaderWithBuffer(reader io.Reader, bufSizeArgs ...int) *bufio.Reader {
 	if len(bufSizeArgs) == 0 {
 		// 默认缓冲大小: 4096
 		return bufio.NewReader(reader)

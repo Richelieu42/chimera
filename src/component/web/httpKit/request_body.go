@@ -1,11 +1,11 @@
 package httpKit
 
 import (
+	"bufio"
 	"bytes"
 	"errors"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/ioKit"
-	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v3/src/urlKit"
 	"io"
 	"net/http"
@@ -28,15 +28,16 @@ PS:
 */
 func MakeRequestBodySeekable(req *http.Request) error {
 	// 特殊情况: req.Body == http.NoBody，http客户端发的是post请求，但是没有request body（即没post参数）
-	if strKit.EqualsIgnoreCase(req.Method, http.MethodGet) || req.Body == nil || req.Body == http.NoBody {
+	if req.Method == http.MethodGet || req.Body == nil || req.Body == http.NoBody {
 		return nil
 	}
-
 	if _, ok := req.Body.(io.Seeker); ok {
 		// 已经实现了 io.Seeker，避免重复调用
 		return nil
 	}
-	data, err := io.ReadAll(req.Body)
+
+	br := bufio.NewReader(req.Body)
+	data, err := io.ReadAll(br)
 	if err != nil {
 		return err
 	}
