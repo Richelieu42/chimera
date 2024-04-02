@@ -7,13 +7,19 @@ import (
 )
 
 func main() {
-	path := "/Users/richelieu/Documents/ino.7z"
-	f, err := os.Open(path)
-	if err != nil {
-		panic(err)
-	}
-	_, err = io.ReadAll(f)
-	if err != nil {
-		panic(err)
-	}
+	tmp := &os.File{}
+	//tmp := &bufio.Writer{}
+	//tmp := &bufio.ReadWriter{}
+
+	var _ io.Reader = tmp
+	//var _ io.ReaderAt = tmp
+	//var _ io.ReaderFrom = tmp
+
+	var _ io.Writer = tmp
+	//var _ io.WriterAt = tmp
+	//var _ io.WriterTo = tmp
+
+	var _ io.Seeker = tmp
+
+	var _ io.Closer = tmp
 }
