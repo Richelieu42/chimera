@@ -6,11 +6,20 @@ import "io"
 /*
 !!!: 由于 io.ReadAll 将整个文件内容加载到内存中，因此对于大文件或资源有限的情况，请谨慎使用，以免造成"内存溢出".在这种情况下，应考虑采用逐块读取数据的流式处理方式.
 */
-var ReadAll func(r io.Reader) ([]byte, error) = io.ReadAll
+var ReadAll func(reader io.Reader) ([]byte, error) = io.ReadAll
 
 func ReadAllToString(reader io.Reader) (string, error) {
 	data, err := ReadAll(reader)
 	return string(data), err
+}
+
+// ReadAllWithBuffer
+/*
+@param bufSizeArgs 可以不传参（默认缓冲大小为4096）
+*/
+func ReadAllWithBuffer(reader io.Reader, bufSizeArgs ...int) ([]byte, error) {
+	bufferedReader := NewBufferedReader(reader, bufSizeArgs...)
+	return ReadAll(bufferedReader)
 }
 
 // ReadFull 尝试从 io.Reader 中读取指定长度的数据，并确保至少读取这么多数据，否则它会返回一个错误.
