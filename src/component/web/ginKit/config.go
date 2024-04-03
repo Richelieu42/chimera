@@ -28,7 +28,7 @@ type (
 
 	MiddlewareConfig struct {
 		BodyLimit int64 `json:"bodyLimit" yaml:"bodyLimit"`
-		Gzip      bool  `json:"gzip" yaml:"gzip"`
+		Gzip      int   `json:"gzip" yaml:"gzip"`
 		//XFrameOptions string `json:"xFrameOptions" yaml:"xFrameOptions" validate:"omitempty,lowercase,oneof=deny sameorigin|startswith=allow-from "`
 
 		Cors        CorsConfig         `json:"cors" yaml:"cors"`
