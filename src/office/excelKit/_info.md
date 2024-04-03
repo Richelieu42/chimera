@@ -25,3 +25,15 @@ Excelize 是 Go 语言编写的用于操作 Office Excel 文档基础库，基�
 ## 开档可能返回的error
 excelize.ErrWorkbookFileFormat: 格式不支持，.
 
+## Sheet
+- File.NewSheet(sheet string) (int, error)
+- File.SetActiveSheet(index int)
+
+## Cell
+- File.SetCellValue(sheet, cell string, value interface{}) error
+
+## Save
+- File.Save(opts ...Options) error
+- File.SaveAs(name string, opts ...Options) error
+
+
