@@ -10,11 +10,12 @@ import (
 /*
 PS: 可能会返回 excelize.ErrWorkbookFileFormat，原因: 文件格式不支持（比如.xls文件）.
 */
-func OpenFile(path string, opts ...excelize.Options) (*excelize.File, error) {
-	if err := fileKit.AssertExistAndIsFile(path); err != nil {
+func OpenFile(filePath string, opts ...excelize.Options) (*excelize.File, error) {
+	if err := fileKit.AssertExistAndIsFile(filePath); err != nil {
 		return nil, err
 	}
-	return excelize.OpenFile(path, opts...)
+
+	return excelize.OpenFile(filePath, opts...)
 }
 
 // OpenReader 打开数据流.

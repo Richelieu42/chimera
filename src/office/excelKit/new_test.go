@@ -30,8 +30,6 @@ func TestNewFile(t *testing.T) {
 	// Set active sheet of the workbook.
 	f.SetActiveSheet(index)
 
-	f.GetSheetDimension()
-
 	// Save spreadsheet by the given path.
 	if err := f.SaveAs("_test.xlsx"); err != nil {
 		panic(err)
