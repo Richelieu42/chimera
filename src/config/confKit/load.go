@@ -9,11 +9,10 @@ import (
 
 // MustLoad 读取配置文件并反序列化为 指定结构体指针ptr.
 /*
-Deprecated: 不支持 .properties，字段验证相关还是用 validateKit 吧.
-
 使用 go-zero/core/conf 的缺陷: 不能自动将string类型转换为int类型，会直接返回error.
 
 PS:
+(0) 不支持 .properties，字段验证相关还是用 validateKit 吧
 (1) default对应的是 该行被注释掉（而非值为空） 的情况;
 (2) default和 '|' 一起使用;
 (3) range和 ':' 一起使用.
@@ -56,7 +55,10 @@ func MustLoad(path string, ptr any, options ...conf.Option) {
 	}
 }
 
-// Load Deprecated: 不支持 .properties，字段验证相关还是用 validateKit 吧.
+// Load
+/*
+PS: 不支持 .properties，字段验证相关还是用 validateKit 吧.
+*/
 func Load(path string, ptr any, options ...conf.Option) error {
 	if err := fileKit.AssertExistAndIsFile(path); err != nil {
 		return err
