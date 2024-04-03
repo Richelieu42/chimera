@@ -32,6 +32,14 @@ func SetCellInt(f *excelize.File, sheetName string, col, row int, value int) err
 	return f.SetCellInt(sheetName, cellName, value)
 }
 
+func SetCellUint(f *excelize.File, sheetName string, col, row int, value uint64) error {
+	cellName, err := CoordinatesToCellName(col, row)
+	if err != nil {
+		return err
+	}
+	return f.SetCellUint(sheetName, cellName, value)
+}
+
 func SetCellFloat(f *excelize.File, sheetName string, col, row int, value float64, precision, bitSize int) error {
 	cellName, err := CoordinatesToCellName(col, row)
 	if err != nil {
