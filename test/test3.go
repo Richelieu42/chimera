@@ -2,19 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v3/src/config/viperKit"
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
+	"github.com/richelieu-yang/chimera/v3/src/office/excelKit"
 )
 
 func main() {
-	type config struct {
-		Level *int
-	}
-
-	c := &config{}
-	_, err := viperKit.UnmarshalFromFile("test.yaml", nil, c)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(c)
+	fmt.Println(excelKit.ColumnNameToNumber("A"))  // 1 <nil>
+	fmt.Println(excelKit.ColumnNameToNumber("a"))  // 1 <nil>
+	fmt.Println(excelKit.ColumnNameToNumber("B"))  // 2 <nil>
+	fmt.Println(excelKit.ColumnNameToNumber("AK")) // 37 <nil>
 }
