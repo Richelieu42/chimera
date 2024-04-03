@@ -7,6 +7,8 @@ import (
 )
 
 func main() {
-	fmt.Println(excelKit.CoordinatesToCellName(1, 1))       // A1 <nil>
-	fmt.Println(excelKit.CoordinatesToCellName(1, 1, true)) // $A$1 <nil>
+	fmt.Println(excelKit.JoinCellName("C", 3)) // C3 <nil>
+
+	fmt.Println(excelKit.SplitCellName("C3")) // C 3 <nil>
+	fmt.Println(excelKit.SplitCellName("c3")) // c 3 <nil>
 }

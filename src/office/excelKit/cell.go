@@ -22,12 +22,15 @@ var (
 	// JoinCellName
 	/*
 		e.g.
+			fmt.Println(excelKit.JoinCellName("C", 3)) // C3 <nil>
 	*/
 	JoinCellName func(col string, row int) (cellName string, err error) = excelize.JoinCellName
 
 	// SplitCellName
 	/*
 		e.g.
+			fmt.Println(excelKit.SplitCellName("C3")) // C 3 <nil>
+			fmt.Println(excelKit.SplitCellName("c3")) // c 3 <nil>
 	*/
 	SplitCellName func(cell string) (col string, row int, err error) = excelize.SplitCellName
 )
