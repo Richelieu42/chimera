@@ -2,6 +2,7 @@ package ginKit
 
 import (
 	"fmt"
+	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v3/src/core/mapKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
@@ -42,8 +43,8 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, opts *ginOpt
 		(1) 必须在 recoveryMiddleware 前面，为了万无一失还是放在最前面吧；
 		(2) gzip会使得响应头中的 Content-Length 不生效.
 	*/
-	if config.Gzip {
-		engine.Use(NewBestSpeedGzipMiddleware())
+	if config.Gzip != gzip.NoCompression {
+		engine.Use(NewGzipMiddleware(config.Gzip))
 	}
 
 	/* logger(necessary) && recovery(necessary) */
