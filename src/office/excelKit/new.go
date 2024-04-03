@@ -17,13 +17,13 @@ PS: 返回的 *excelize.File实例，不再使用时应当调用 File.Close().
 
 @param path 文件的路径（如果文件已经存在，会覆盖它）
 */
-func NewFileWithPath(path string, opts ...excelize.Options) (*excelize.File, error) {
-	if err := fileKit.MkParentDirs(path); err != nil {
+func NewFileWithPath(filePath string, opts ...excelize.Options) (*excelize.File, error) {
+	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
 		return nil, err
 	}
 
 	f := NewFile()
-	if err := f.SaveAs(path, opts...); err != nil {
+	if err := f.SaveAs(filePath, opts...); err != nil {
 		_ = f.Close()
 		return nil, err
 	}
