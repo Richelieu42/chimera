@@ -23,6 +23,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	f.GetSheet
 	fmt.Println(f.Close())
 
 	{
