@@ -32,7 +32,7 @@ func Setup(antPool *ants.Pool, logger *logrus.Logger, pongInterval time.Duration
 	if capacity > 0 {
 		tag := "gte=2000"
 		if err := validateKit.Var(capacity, tag); err != nil {
-			return errorKit.Wrapf(err, "Capacity(%d) of pool is invalid(tag: %s) when it's greater than zero", capacity, tag)
+			return errorKit.Wrapf(err, "capacity(%d) of pool is invalid(tag: %s) when it's greater than zero", capacity, tag)
 		}
 	}
 	pool = antPool
