@@ -7,8 +7,6 @@ import (
 )
 
 func main() {
-	fmt.Println(excelKit.ColumnNameToNumber("A"))  // 1 <nil>
-	fmt.Println(excelKit.ColumnNameToNumber("a"))  // 1 <nil>
-	fmt.Println(excelKit.ColumnNameToNumber("B"))  // 2 <nil>
-	fmt.Println(excelKit.ColumnNameToNumber("AK")) // 37 <nil>
+	fmt.Println(excelKit.CoordinatesToCellName(1, 1))       // A1 <nil>
+	fmt.Println(excelKit.CoordinatesToCellName(1, 1, true)) // $A$1 <nil>
 }
