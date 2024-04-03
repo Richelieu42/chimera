@@ -22,14 +22,15 @@ func TestSetCellValue(t *testing.T) {
 		}
 	}()
 
-	sheetName := f.GetSheetName(f.GetActiveSheetIndex())
-	if err := SetCellStr(f, sheetName, 3, 3, "hello"); err != nil {
+	activeSheetName := GetActiveSheetName(f)
+	logrus.Infof("activeSheetName: %s", activeSheetName)
+	if err := SetCellStr(f, activeSheetName, 3, 3, "hello"); err != nil {
 		panic(err)
 	}
-	if err := SetCellStr(f, sheetName, 3, 4, "world"); err != nil {
+	if err := SetCellStr(f, activeSheetName, 3, 4, "world"); err != nil {
 		panic(err)
 	}
-	if err := SetCellValue(f, sheetName, 3, 5, "!"); err != nil {
+	if err := SetCellValue(f, activeSheetName, 3, 5, "!"); err != nil {
 		panic(err)
 	}
 }
