@@ -37,15 +37,15 @@ func TestMustSetUp(t *testing.T) {
 
 	MustSetUp(c.Gin, func(engine *gin.Engine) error {
 		engine.Any("/test", func(ctx *gin.Context) {
-			r := ctx.Request
-			readCloser, err := r.GetBody()
-			if err != nil {
-				ctx.String(500, err.Error())
-				return
-			}
-			readCloser = readCloser
+			//r := ctx.Request
+			//readCloser, err := r.GetBody()
+			//if err != nil {
+			//	ctx.String(500, err.Error())
+			//	return
+			//}
+			//readCloser = readCloser
 
-			ctx.String(200, "oK")
+			ctx.String(200, `{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}`)
 
 			//qm := map[string][]string{
 			//	"b": {"bOx"},

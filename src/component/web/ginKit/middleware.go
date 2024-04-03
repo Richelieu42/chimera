@@ -43,7 +43,7 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, opts *ginOpt
 		(2) gzip会使得响应头中的 Content-Length 不生效.
 	*/
 	if config.Gzip {
-		engine.Use(NewFastGzipMiddleware())
+		engine.Use(NewBestSpeedGzipMiddleware())
 	}
 
 	/* logger(necessary) && recovery(necessary) */

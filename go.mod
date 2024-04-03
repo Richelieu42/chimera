@@ -90,7 +90,7 @@ require (
 	github.com/spf13/viper v1.18.2
 	github.com/tidwall/buntdb v1.3.0
 	github.com/tidwall/gjson v1.17.1
-	github.com/unidoc/unioffice v1.30.0
+	github.com/unidoc/unioffice v1.31.0
 	github.com/xuri/excelize/v2 v2.8.1
 	github.com/zeromicro/go-zero v1.6.3
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231030135404-af9ae855016f
