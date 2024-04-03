@@ -1,5 +1,5 @@
 ## 参考
-github(16k Star): 
+github(17.1k Star): 
     https://github.com/qax-os/excelize
 官网快速开始: 
     https://xuri.me/excelize/zh-hans/base/installation.html
@@ -18,6 +18,14 @@ Excelize 是 Go 语言编写的用于操作 Office Excel 文档基础库，基�
 * 增加 Chart
 * 增加 图片
 * ...
+
+## row（行）
+- 从 1 开始
+- 有效范围: [1, 1048576]
+
+## column（列）
+- 从 1 开始
+- 有效范围: [1, 16384]
 
 ## 开档可能返回的error
 excelize.ErrWorkbookFileFormat: 格式不支持.
