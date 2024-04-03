@@ -11,8 +11,8 @@ import (
 
 var pool *ants.Pool
 
-func MustSetUp(antPool *ants.Pool, logrusLogger *logrus.Logger, pongInterval time.Duration) {
-	if err := Setup(antPool, logrusLogger, pongInterval); err != nil {
+func MustSetUp(antPool *ants.Pool, logger *logrus.Logger, pongInterval time.Duration) {
+	if err := Setup(antPool, logger, pongInterval); err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
@@ -23,7 +23,7 @@ func MustSetUp(antPool *ants.Pool, logrusLogger *logrus.Logger, pongInterval tim
 @param antPool	需要自行决定: cap大小、是否自定义输出...
 @param logger 	可以为nil
 */
-func Setup(antPool *ants.Pool, logrusLogger *logrus.Logger, pongInterval time.Duration) error {
+func Setup(antPool *ants.Pool, logger *logrus.Logger, pongInterval time.Duration) error {
 	/* pool */
 	if antPool.IsClosed() {
 		return errorKit.Newf("pool has already been closed")
@@ -38,8 +38,8 @@ func Setup(antPool *ants.Pool, logrusLogger *logrus.Logger, pongInterval time.Du
 	pool = antPool
 
 	/* logger */
-	if logrusLogger != nil {
-		if err := SetDefaultLogger(logrusLogger); err != nil {
+	if logger != nil {
+		if err := SetDefaultLogger(logger); err != nil {
 			return err
 		}
 	}
