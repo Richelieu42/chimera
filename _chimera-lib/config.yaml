@@ -26,10 +26,11 @@ gin:
     # key文件(".key"后缀)
     keyFile: _chimera-lib/ssl.key
   middleware:
-    # 是否开启gzip压缩（默认: false）
-    # true:   客户端支持的话使用gzip压缩，否则不压缩
-    # false:  不压缩
-    gzip: true
+    # gzip压缩的配置
+    # -1:   默认压缩
+    # 0:    不压缩
+    # 1~9:  不同的压缩级别（越大压缩比越高，但越慢越耗服务器性能）
+    gzip: 1
     # 全局对request body的大小限制（整数; 单位: MB; 默认: 0; <=0: 不做限制; >0: 进行限制）
     # 不建议在此处配置，想限制上传文件大小可以在handler中进行处理
     # TODO: 因为http.MaxBytesReader()，如果涉及"请求转发（代理）"，转发方不要全局配置此属性，否则会导致: 有时成功，有时代理失败（error），有时http客户端失败
