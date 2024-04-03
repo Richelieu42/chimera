@@ -18,4 +18,16 @@ var (
 			fmt.Println(excelKit.CoordinatesToCellName(1, 1, true)) // $A$1 <nil>
 	*/
 	CoordinatesToCellName func(col, row int, abs ...bool) (cellName string, err error) = excelize.CoordinatesToCellName
+
+	// JoinCellName
+	/*
+		e.g.
+	*/
+	JoinCellName func(col string, row int) (cellName string, err error) = excelize.JoinCellName
+
+	// SplitCellName
+	/*
+		e.g.
+	*/
+	SplitCellName func(cell string) (col string, row int, err error) = excelize.SplitCellName
 )
