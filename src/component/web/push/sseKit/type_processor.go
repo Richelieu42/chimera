@@ -33,12 +33,12 @@ func (p *SseProcessor) Process(w http.ResponseWriter, r *http.Request) {
 
 	channel, err := p.newChannel(w, r, make(chan string, 1))
 	if err != nil {
-		err = errorKit.Wrapf(err, "Fail to new channel")
+		err = errorKit.Wrapf(err, "fail to new channel")
 		p.listeners.OnFailure(w, r, err.Error())
 		return
 	}
 	if err := channel.Initialize(); err != nil {
-		err = errorKit.Wrapf(err, "Fail to initialize channel")
+		err = errorKit.Wrapf(err, "fail to initialize channel")
 		p.listeners.OnFailure(w, r, err.Error())
 		return
 	}
@@ -65,7 +65,7 @@ func (p *SseProcessor) Process(w http.ResponseWriter, r *http.Request) {
 func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request, closeCh chan string) (pushKit.Channel, error) {
 	id, err := p.idGenerator()
 	if err != nil {
-		return nil, errorKit.Wrapf(err, "Fail to generate id with idGenerator")
+		return nil, errorKit.Wrapf(err, "fail to generate id with idGenerator")
 	}
 	if err := strKit.AssertNotBlank(id, "id"); err != nil {
 		return nil, err

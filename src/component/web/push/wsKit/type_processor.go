@@ -42,7 +42,7 @@ func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	// Upgrade（升级为WebSocket协议）
 	conn, err := p.upgrader.Upgrade(w, r, w.Header())
 	if err != nil {
-		err = errorKit.Wrapf(err, "Fail to upgrade")
+		err = errorKit.Wrapf(err, "fail to upgrade")
 		p.listeners.OnFailure(w, r, err.Error())
 		return
 	}
@@ -51,12 +51,12 @@ func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 
 	channel, err := p.newChannel(r, conn, make(chan string, 1))
 	if err != nil {
-		err = errorKit.Wrapf(err, "Fail to new channel")
+		err = errorKit.Wrapf(err, "fail to new channel")
 		p.listeners.OnFailure(w, r, err.Error())
 		return
 	}
 	if err := channel.Initialize(); err != nil {
-		err = errorKit.Wrapf(err, "Fail to initialize channel")
+		err = errorKit.Wrapf(err, "fail to initialize channel")
 		p.listeners.OnFailure(w, r, err.Error())
 		return
 	}
@@ -110,7 +110,7 @@ func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 func (p *WsProcessor) newChannel(r *http.Request, conn *websocket.Conn, closeCh chan string) (pushKit.Channel, error) {
 	id, err := p.idGenerator()
 	if err != nil {
-		return nil, errorKit.Wrapf(err, "Fail to generate id with idGenerator")
+		return nil, errorKit.Wrapf(err, "fail to generate id with idGenerator")
 	}
 	if err := strKit.AssertNotBlank(id, "id"); err != nil {
 		return nil, err
