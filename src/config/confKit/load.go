@@ -9,7 +9,8 @@ import (
 
 // MustLoad 读取配置文件并反序列化为 指定结构体指针ptr.
 /*
-使用 go-zero/core/conf 的缺陷: 不能自动将string类型转换为int类型，会直接返回error.
+https://github.com/zeromicro/go-zero/tree/master/core/conf
+go-zero/core/conf 的缺陷: 不能自动将string类型转换为int类型，会直接返回error.
 
 PS:
 (0) 不支持 .properties，字段验证相关还是用 validateKit 吧
