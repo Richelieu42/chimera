@@ -9,7 +9,8 @@ import (
 	"time"
 )
 
-var pool *ants.Pool
+// pushPool 并发执行推送任务
+var pushPool *ants.Pool
 
 func MustSetUp(antPool *ants.Pool, logger *logrus.Logger, pongInterval time.Duration) {
 	if err := Setup(antPool, logger, pongInterval); err != nil {
@@ -24,18 +25,18 @@ func MustSetUp(antPool *ants.Pool, logger *logrus.Logger, pongInterval time.Dura
 @param logger 	可以为nil
 */
 func Setup(antPool *ants.Pool, logger *logrus.Logger, pongInterval time.Duration) error {
-	/* pool */
+	/* pushPool */
 	if antPool.IsClosed() {
-		return errorKit.Newf("pool has already been closed")
+		return errorKit.Newf("pushPool has already been closed")
 	}
 	capacity := antPool.Cap()
 	if capacity > 0 {
 		tag := "gte=2000"
 		if err := validateKit.Var(capacity, tag); err != nil {
-			return errorKit.Wrapf(err, "capacity(%d) of pool is invalid(tag: %s) when it's greater than zero", capacity, tag)
+			return errorKit.Wrapf(err, "capacity(%d) of pushPool is invalid(tag: %s) when it's greater than zero", capacity, tag)
 		}
 	}
-	pool = antPool
+	pushPool = antPool
 
 	/* logger */
 	if logger != nil {
@@ -53,7 +54,7 @@ func Setup(antPool *ants.Pool, logger *logrus.Logger, pongInterval time.Duration
 }
 
 func isAvailable() error {
-	if pool == nil {
+	if pushPool == nil {
 		return NotSetupError
 	}
 	return nil

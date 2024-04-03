@@ -22,7 +22,7 @@ func PushToAll(data []byte, exceptBsids []string) (err error) {
 			// for range + goroutine，必须使用 "同名变量覆盖v:=v"
 			c := channel
 			wg.Add(1)
-			_ = pool.Submit(func() {
+			_ = pushPool.Submit(func() {
 				defer wg.Done()
 				_ = c.Push(data)
 			})
@@ -73,7 +73,7 @@ func PushToUser(data []byte, user string, exceptBsids []string) (err error) {
 
 				// 由于使用 Set.Each() 进行遍历，此处无需使用 "同名变量覆盖v:=v"
 				wg.Add(1)
-				_ = pool.Submit(func() {
+				_ = pushPool.Submit(func() {
 					defer wg.Done()
 					_ = channel.Push(data)
 				})
@@ -108,7 +108,7 @@ func PushToGroup(data []byte, group string, exceptBsids []string) (err error) {
 
 				// 由于使用 Set.Each() 进行遍历，此处无需使用 "同名变量覆盖v:=v"
 				wg.Add(1)
-				_ = pool.Submit(func() {
+				_ = pushPool.Submit(func() {
 					defer wg.Done()
 					_ = channel.Push(data)
 				})
