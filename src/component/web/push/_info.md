@@ -1,4 +1,4 @@
 ## !!!: demo
-notes/_GolandProjects/pushDemo
+- notes/_GolandProjects/pushDemo
 
 
