@@ -10,7 +10,8 @@ import (
 参考:
 Golang正确停止Ticker https://blog.csdn.net/weixin_40098405/article/details/111517279
 
-!!!: 使用 time.Ticker 时要注意: Stop会停止Ticker，停止后，Ticker不会再被发送，但是Stop不会关闭通道，防止读取通道发生错误.
+!!!:
+(1) 使用 time.Ticker 时要注意: Stop会停止Ticker，停止后，Ticker不会再被发送，但是Stop不会关闭通道，防止读取通道发生错误.
 */
 type Interval struct {
 	mutexKit.RWMutex
