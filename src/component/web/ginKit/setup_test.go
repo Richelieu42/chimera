@@ -39,19 +39,19 @@ func TestMustSetUp(t *testing.T) {
 
 	MustSetUp(c.Gin, func(engine *gin.Engine) error {
 		engine.Any("/test", func(ctx *gin.Context) {
-			type bean struct {
-				Name string `json:"name"`
-			}
+			//type bean struct {
+			//	Name string `json:"name"`
+			//}
+			//
+			//b := &bean{}
+			////if err := ctx.ShouldBindJSON(b); err != nil {
+			//if err := ctx.ShouldBind(b); err != nil {
+			//	ctx.String(500, err.Error())
+			//	return
+			//}
+			//name := b.Name
 
-			b := &bean{}
-			//if err := ctx.ShouldBindJSON(b); err != nil {
-			if err := ctx.ShouldBind(b); err != nil {
-				ctx.String(500, err.Error())
-				return
-			}
-			name := b.Name
-
-			name := ObtainPostParam()
+			name := ObtainPostParam(ctx, "name")
 			ctx.String(200, fmt.Sprintf("[%s] Hello %s.", timeKit.FormatCurrent(""), name))
 		})
 
