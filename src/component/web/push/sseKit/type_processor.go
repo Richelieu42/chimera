@@ -85,7 +85,7 @@ func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request, closeC
 			Data:         nil,
 			Closed:       false,
 			Listeners:    p.listeners,
-			PongInterval: pushKit.GetPongInterval(),
+			PongInterval: pushKit.GetSsePongInterval(),
 		},
 		w:       w,
 		r:       r,

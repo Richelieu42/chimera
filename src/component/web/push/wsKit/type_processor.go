@@ -130,7 +130,7 @@ func (p *WsProcessor) newChannel(r *http.Request, conn *websocket.Conn, closeCh 
 			Data:         nil,
 			Closed:       false,
 			Listeners:    p.listeners,
-			PongInterval: pushKit.GetPongInterval(),
+			PongInterval: pushKit.GetWsPongInterval(),
 		},
 		conn:        conn,
 		messageType: p.msgType,

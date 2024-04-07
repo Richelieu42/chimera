@@ -19,12 +19,14 @@ type WsChannel struct {
 }
 
 func (channel *WsChannel) Initialize() error {
-	channel.interval = timeKit.SetInterval(context.TODO(), func(t time.Time) {
-		if err := channel.Push(pushKit.PongData); err != nil {
-			pushKit.GetDefaultLogger().WithError(err).Error("Fail to pong.")
-			return
-		}
-	}, channel.PongInterval)
+	if channel.PongInterval > 0 {
+		channel.interval = timeKit.SetInterval(context.TODO(), func(t time.Time) {
+			if err := channel.Push(pushKit.PongData); err != nil {
+				pushKit.GetDefaultLogger().WithError(err).Error("Fail to pong.")
+				return
+			}
+		}, channel.PongInterval)
+	}
 	return nil
 }
 
