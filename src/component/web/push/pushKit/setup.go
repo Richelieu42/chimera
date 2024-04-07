@@ -20,16 +20,18 @@ func MustSetUp(antPool *ants.Pool, logger *logrus.Logger, options ...Option) {
 
 // Setup
 /*
-@param antPool	(1) 不能为nil
+@param antPool	用来并发执行推送任务
+				(1) 不能为nil
 				(2) 需要自行决定: cap大小、是否自定义输出...
 @param logger 	可以为nil
+@param options
 */
 func Setup(antPool *ants.Pool, logger *logrus.Logger, options ...Option) error {
 	opts := loadOptions(options...)
 
 	/* pushPool */
 	if antPool.IsClosed() {
-		return errorKit.Newf("pushPool has already been closed")
+		return errorKit.Newf("antPool has already been closed")
 	}
 	capacity := antPool.Cap()
 	if capacity > 0 {
@@ -48,9 +50,8 @@ func Setup(antPool *ants.Pool, logger *logrus.Logger, options ...Option) error {
 	}
 
 	/* pongInterval */
-	if err := setPongInterval(pongInterval); err != nil {
-		return err
-	}
+	setWsPongInterval(opts.WsPongInterval)
+	setSsePongInterval(opts.SsePongInterval)
 
 	return nil
 }
