@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test WebSocket</title>
+</head>
+<body>
+<div>
+    <div>
+        <label>
+            url: <input id="url" type="text" style="width:400px">
+        </label>
+        <br>
+        <label>
+            group: <input id="group" type="text" style="width:400px">
+        </label>
+        <br>
+        <label>
+            user: <input id="user" type="text" style="width:400px">
+        </label>
+        <br>
+        <label>
+            bsid: <input id="bsid" type="text" style="width:400px">
+        </label>
+    </div>
+
+    <br>
+    <div>
+        <button id="connectBtn">Connect</button>
+        <button id="disconnectBtn">Disconnect</button>
+    </div>
+    <br>
+
+    <div>
+        输出: <br>
+        <button id="clearBtn">Clear</button>
+        <br>
+        <label for="output"></label><textarea id="output" cols="180" rows="30"></textarea>
+    </div>
+</div>
+
+<!--<script src="js/ws.js"></script>-->
+<!--<script src="js/common.js"></script>-->
+<script>
+    var array = ["js/ws.js", "js/common.js"],
+        extra = `?${Date.now()}`;
+
+    for (var i = 0; i < array.length; i++) {
+        var script = document.createElement("script");
+        script.src = array[i] + extra;
+        document.body.appendChild(script);
+    }
+</script>
+
+</body>
+</html>

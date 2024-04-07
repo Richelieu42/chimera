@@ -30,7 +30,7 @@ func MustSetUp(antPool *ants.Pool, logger *logrus.Logger, options ...Option) {
 func Setup(antPool *ants.Pool, logger *logrus.Logger, options ...Option) error {
 	opts := loadOptions(options...)
 
-	/* pushPool */
+	/* antPool */
 	if err := interfaceKit.AssertNotNil(antPool, "antPool"); err != nil {
 		return err
 	}
@@ -39,9 +39,9 @@ func Setup(antPool *ants.Pool, logger *logrus.Logger, options ...Option) error {
 	}
 	capacity := antPool.Cap()
 	if capacity > 0 {
-		tag := "gte=2000"
+		tag := "gte=100"
 		if err := validateKit.Var(capacity, tag); err != nil {
-			return errorKit.Wrapf(err, "capacity(%d) of pushPool is invalid(tag: %s) when it's greater than zero", capacity, tag)
+			return errorKit.Wrapf(err, "capacity(%d) of antPool is invalid(tag: %s) when it's greater than zero", capacity, tag)
 		}
 	}
 	pushPool = antPool

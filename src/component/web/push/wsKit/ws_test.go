@@ -8,7 +8,6 @@ import (
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"testing"
-	"time"
 )
 
 type demoListener struct {
@@ -67,7 +66,8 @@ func TestWs(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	pushKit.MustSetUp(pool, nil, pushKit.WithWsPongInterval(time.Second*5))
+	//pushKit.MustSetUp(pool, nil, pushKit.WithWsPongInterval(time.Second*5))
+	pushKit.MustSetUp(pool, nil, pushKit.WithWsPongInterval(-1))
 
 	/* WebSocket */
 	processor, err := NewProcessor(nil, nil, &demoListener{}, MessageTypeText)
