@@ -10,8 +10,7 @@ import (
 参考:
 Golang正确停止Ticker https://blog.csdn.net/weixin_40098405/article/details/111517279
 
-!!!:
-使用 time.Ticker 时要注意: Stop会停止Ticker，停止后，Ticker不会再被发送，但是Stop不会关闭通道，防止读取通道发生错误。
+!!!: 使用 time.Ticker 时要注意: Stop会停止Ticker，停止后，Ticker不会再被发送，但是Stop不会关闭通道，防止读取通道发生错误.
 */
 type Interval struct {
 	mutexKit.RWMutex
@@ -40,19 +39,20 @@ func (i *Interval) Stop() {
 		if i.stopped {
 			return
 		}
+
 		i.stopped = true
 		i.ticker.Stop()
 		i.closeCh <- struct{}{}
 	})
 }
 
-// NewInterval
+// SetInterval 效果类似于JavaScript中的 window.setInterval().
 /*
 @param task		(1) 不能为nil
 				(2) 传参t为执行任务时的 time.Time
 @param duration 必须>0
 */
-func NewInterval(task func(t time.Time), duration time.Duration) *Interval {
+func SetInterval(task func(t time.Time), duration time.Duration) *Interval {
 	i := &Interval{
 		RWMutex: mutexKit.RWMutex{},
 		stopped: false,
@@ -86,7 +86,7 @@ func NewInterval(task func(t time.Time), duration time.Duration) *Interval {
 }
 
 // SetInterval 效果类似于JavaScript中的同名函数.
-var SetInterval func(task func(t time.Time), duration time.Duration) *Interval = NewInterval
+//var SetInterval func(task func(t time.Time), duration time.Duration) *Interval = SetInterval
 
 // ClearInterval 效果类似于JavaScript中的同名函数.
 /*

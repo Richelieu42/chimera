@@ -21,7 +21,7 @@ type SseChannel struct {
 }
 
 func (channel *SseChannel) Initialize() error {
-	channel.interval = timeKit.NewInterval(func(t time.Time) {
+	channel.interval = timeKit.SetInterval(func(t time.Time) {
 		if err := channel.Push(pushKit.PongData); err != nil {
 			pushKit.GetDefaultLogger().WithError(err).Error("Fail to pong.")
 			return
