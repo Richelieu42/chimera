@@ -2,35 +2,31 @@ package main
 
 import (
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
-	"github.com/richelieu-yang/chimera/v3/src/office/excelKit"
 	"github.com/sirupsen/logrus"
+	"time"
 )
 
 func main() {
-	path := "/Users/richelieu/Desktop/未命名.xlsx"
+	ch := make(chan int)
 
-	f, err := excelKit.NewFileWithPath(path)
-	if err != nil {
-		panic(err)
-	}
-	defer func() {
-		if err := f.Save(); err != nil {
-			logrus.WithError(err).Error("Fail to save.")
-			return
-		}
-		if err := f.Close(); err != nil {
-			logrus.WithError(err).Error("Fail to close.")
-		}
+	go func() {
+		ch <- 0
+		ch <- 1
+		ch <- 2
+		time.Sleep(time.Second * 3)
+		close(ch)
 	}()
 
-	sheetName := f.GetSheetName(f.GetActiveSheetIndex())
-	if err := excelKit.SetCellStr(f, sheetName, 3, 3, "hello"); err != nil {
-		panic(err)
+	logrus.Info("start ---")
+outerLoop:
+	for {
+		select {
+		case i, ok := <-ch:
+			if !ok {
+				break outerLoop
+			}
+			logrus.Info(i)
+		}
 	}
-	if err := excelKit.SetCellStr(f, sheetName, 3, 4, "world"); err != nil {
-		panic(err)
-	}
-	if err := excelKit.SetCellValue(f, sheetName, 3, 5, "!"); err != nil {
-		panic(err)
-	}
+	logrus.Info("end ---")
 }
