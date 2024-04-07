@@ -6,6 +6,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/consts"
 	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
+	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 	"github.com/sirupsen/logrus"
 	"testing"
 )
@@ -44,6 +45,8 @@ func TestMustSetUp(t *testing.T) {
 			//	return
 			//}
 			//readCloser = readCloser
+
+			ctx.String(200, timeKit.FormatCurrent())
 
 			ctx.String(200, `{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}{"errorMessage":"[O(192.168.80.115:9000)-0] no error","result":{"wdStaticPages":1},"errorCode":"0","appVersion":0}`)
 
