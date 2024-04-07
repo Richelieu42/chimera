@@ -53,6 +53,7 @@ func (i *Interval) Stop() {
 
 // SetInterval 效果类似于JavaScript中的 window.setInterval().
 /*
+@param ctx		控制 *Interval实例 的生命周期
 @param task		(1) 不能为nil
 				(2) 传参t为执行任务时的 time.Time
 @param duration 必须>0
