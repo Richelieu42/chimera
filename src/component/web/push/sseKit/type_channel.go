@@ -1,6 +1,7 @@
 package sseKit
 
 import (
+	"context"
 	"encoding/base64"
 	"fmt"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
@@ -21,7 +22,7 @@ type SseChannel struct {
 }
 
 func (channel *SseChannel) Initialize() error {
-	channel.interval = timeKit.SetInterval(func(t time.Time) {
+	channel.interval = timeKit.SetInterval(context.TODO(), func(t time.Time) {
 		if err := channel.Push(pushKit.PongData); err != nil {
 			pushKit.GetDefaultLogger().WithError(err).Error("Fail to pong.")
 			return

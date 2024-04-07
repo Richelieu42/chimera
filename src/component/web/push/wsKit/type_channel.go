@@ -1,6 +1,7 @@
 package wsKit
 
 import (
+	"context"
 	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
@@ -18,7 +19,7 @@ type WsChannel struct {
 }
 
 func (channel *WsChannel) Initialize() error {
-	channel.interval = timeKit.SetInterval(func(t time.Time) {
+	channel.interval = timeKit.SetInterval(context.TODO(), func(t time.Time) {
 		if err := channel.Push(pushKit.PongData); err != nil {
 			pushKit.GetDefaultLogger().WithError(err).Error("Fail to pong.")
 			return
