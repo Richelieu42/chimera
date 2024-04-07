@@ -10,9 +10,6 @@ func main() {
 	ch := make(chan int)
 
 	go func() {
-		ch <- 0
-		ch <- 1
-		ch <- 2
 		time.Sleep(time.Second * 3)
 		close(ch)
 	}()
@@ -21,11 +18,9 @@ func main() {
 outerLoop:
 	for {
 		select {
-		case i, ok := <-ch:
-			if !ok {
-				break outerLoop
-			}
-			logrus.Info(i)
+		case <-ch:
+			logrus.Info("break")
+			break outerLoop
 		}
 	}
 	logrus.Info("end ---")

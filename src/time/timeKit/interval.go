@@ -3,7 +3,6 @@ package timeKit
 import (
 	"context"
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
-	"github.com/sirupsen/logrus"
 	"time"
 )
 
@@ -47,8 +46,19 @@ func (i *Interval) Stop() {
 		i.stopped = true
 		i.ticker.Stop()
 		close(i.closeCh)
-		//i.closeCh <- struct{}{}
 	})
+}
+
+func (i *Interval) IsStopped() (rst bool) {
+	if i == nil {
+		return true
+	}
+
+	/* 读锁 */
+	i.RLockFunc(func() {
+		rst = i.stopped
+	})
+	return
 }
 
 // SetInterval 效果类似于JavaScript中的 window.setInterval().
@@ -67,24 +77,21 @@ func SetInterval(ctx context.Context, task func(t time.Time), duration time.Dura
 	}
 
 	go func(i *Interval) {
-		// test
-		defer func() {
-			logrus.Info("goroutine ends...")
-		}()
+		//// test
+		//defer func() {
+		//	logrus.Info("[TEST] goroutine ends...")
+		//}()
 
 		defer i.ticker.Stop()
 
 		for {
 			select {
 			case t := <-i.ticker.C:
-				/* 读锁 */
-				i.RLockFunc(func() {
-					if i.stopped {
-						return
-					}
-
-					task(t)
-				})
+				if i.IsStopped() {
+					// 中断的是最内层的select语句
+					break
+				}
+				task(t)
 			case <-i.closeCh:
 				return
 			case <-ctx.Done():
