@@ -62,11 +62,6 @@ func SetInterval(task func(t time.Time), duration time.Duration) *Interval {
 	}
 
 	go func(i *Interval) {
-		//// test
-		//defer func() {
-		//	logrus.Info("goroutine ends")
-		//}()
-
 		defer i.ticker.Stop()
 
 		for {
@@ -85,9 +80,6 @@ func SetInterval(task func(t time.Time), duration time.Duration) *Interval {
 	}(i)
 	return i
 }
-
-// SetInterval 效果类似于JavaScript中的同名函数.
-//var SetInterval func(task func(t time.Time), duration time.Duration) *Interval = SetInterval
 
 // ClearInterval 效果类似于JavaScript中的同名函数.
 /*
