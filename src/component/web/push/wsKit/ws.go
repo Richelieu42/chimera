@@ -23,6 +23,8 @@ func DefaultUpgrader() *websocket.Upgrader {
 
 // NewProcessor
 /*
+!!!: 需要先调用 pushKit.MustSetUp 或 pushKit.SetUp.
+
 @param upgrader			可以为nil（将使用默认的）
 @param idGenerator		可以为nil（将使用xid）
 @param listener			不能为nil

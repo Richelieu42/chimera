@@ -3,6 +3,7 @@ package pushKit
 import (
 	"github.com/panjf2000/ants/v2"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v3/src/validateKit"
 	"github.com/sirupsen/logrus"
@@ -30,6 +31,9 @@ func Setup(antPool *ants.Pool, logger *logrus.Logger, options ...Option) error {
 	opts := loadOptions(options...)
 
 	/* pushPool */
+	if err := interfaceKit.AssertNotNil(antPool, "antPool"); err != nil {
+		return err
+	}
 	if antPool.IsClosed() {
 		return errorKit.Newf("antPool has already been closed")
 	}
