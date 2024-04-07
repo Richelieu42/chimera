@@ -12,8 +12,7 @@ func TestNewTicker(t *testing.T) {
 
 	/*
 		使用for循环持续接收并处理Tick事件
-
-		!!!: 缺陷：虽然调用了Stop方法，但是ticker.C的通道并没有关闭，导致goroutine无法退出.
+		!!!: 缺陷：虽然调用了Stop方法，但是 ticker.C通道 并没有关闭，导致goroutine无法退出.
 	*/
 	go func() {
 		defer fmt.Println("goroutine ends")
