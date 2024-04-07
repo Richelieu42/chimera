@@ -9,7 +9,7 @@ import (
 	"io"
 )
 
-// ObtainGetParam 从url获取参数.
+// ObtainGetParam 获取 GET 请求的参数（从url获取）.
 /*
 PS:
 (1) 原生方法的用法更加丰富!
@@ -19,12 +19,13 @@ func ObtainGetParam(ctx *gin.Context, key string) string {
 	return ctx.Query(key)
 }
 
-// ObtainPostParam
+// ObtainPostParam 获取 POST 请求的参数.
 /*
 PS:
 (1) 原生方法的用法更加丰富!
 (2) 不需要额外手动解码;
-(3) 支持的Content-Type: multipart/form-data、x-www-form-urlencoded ...
+(3) 请求的Content-Type，	(a) 支持: multipart/form-data、x-www-form-urlencoded（即application/x-www-form-urlencoded）
+						(b) 不支持: application/json
 */
 func ObtainPostParam(ctx *gin.Context, key string) string {
 	return ctx.PostForm(key)
