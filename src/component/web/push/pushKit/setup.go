@@ -21,7 +21,8 @@ func MustSetUp(antPool *ants.Pool, logger *logrus.Logger, pongInterval time.Dura
 
 // Setup
 /*
-@param antPool	需要自行决定: cap大小、是否自定义输出...
+@param antPool	(1) 不能为nil
+				(2) 需要自行决定: cap大小、是否自定义输出...
 @param logger 	可以为nil
 */
 func Setup(antPool *ants.Pool, logger *logrus.Logger, pongInterval time.Duration) error {
