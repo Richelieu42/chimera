@@ -1,24 +1,27 @@
 package pushKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"time"
 )
 
-var pongInterval time.Duration = time.Second * 15
+var (
+	wsPongInterval time.Duration = time.Second * 15
 
-func setPongInterval(interval time.Duration) error {
-	if interval <= 0 {
-		return errorKit.Newf("interval(%s) must be greater than 0", interval.String())
-	}
-	if interval < time.Millisecond*500 {
-		return errorKit.Newf("interval(%s) is too small", interval.String())
-	}
+	ssePongInterval time.Duration = time.Second * 15
+)
 
-	pongInterval = interval
-	return nil
+func setSsePongInterval(interval time.Duration) {
+	ssePongInterval = interval
 }
 
-func GetPongInterval() time.Duration {
-	return pongInterval
+func GetSsePongInterval() time.Duration {
+	return ssePongInterval
+}
+
+func setWsPongInterval(interval time.Duration) {
+	wsPongInterval = interval
+}
+
+func GetWsPongInterval() time.Duration {
+	return wsPongInterval
 }

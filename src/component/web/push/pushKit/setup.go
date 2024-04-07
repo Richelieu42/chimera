@@ -6,14 +6,13 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v3/src/validateKit"
 	"github.com/sirupsen/logrus"
-	"time"
 )
 
 // pushPool 并发执行推送任务
 var pushPool *ants.Pool
 
-func MustSetUp(antPool *ants.Pool, logger *logrus.Logger, pongInterval time.Duration) {
-	if err := Setup(antPool, logger, pongInterval); err != nil {
+func MustSetUp(antPool *ants.Pool, logger *logrus.Logger, options ...Option) {
+	if err := Setup(antPool, logger, options...); err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
@@ -25,7 +24,9 @@ func MustSetUp(antPool *ants.Pool, logger *logrus.Logger, pongInterval time.Dura
 				(2) 需要自行决定: cap大小、是否自定义输出...
 @param logger 	可以为nil
 */
-func Setup(antPool *ants.Pool, logger *logrus.Logger, pongInterval time.Duration) error {
+func Setup(antPool *ants.Pool, logger *logrus.Logger, options ...Option) error {
+	opts := loadOptions(options...)
+
 	/* pushPool */
 	if antPool.IsClosed() {
 		return errorKit.Newf("pushPool has already been closed")
