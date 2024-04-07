@@ -28,6 +28,7 @@ func TestSetInterval(t *testing.T) {
 func TestSetInterval1(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.TODO(), time.Millisecond*1500)
 	defer cancel()
+
 	i := SetInterval(ctx, func(t time.Time) {
 		logrus.Info(t)
 	}, time.Second)
