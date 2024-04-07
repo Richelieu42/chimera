@@ -1,7 +1,9 @@
 package timeKit
 
 import (
+	"context"
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
+	"github.com/sirupsen/logrus"
 	"time"
 )
 
@@ -11,7 +13,8 @@ import (
 Golang正确停止Ticker https://blog.csdn.net/weixin_40098405/article/details/111517279
 
 !!!:
-(1) 使用 time.Ticker 时要注意: Stop会停止Ticker，停止后，Ticker不会再被发送，但是Stop不会关闭通道，防止读取通道发生错误.
+(1) 使用 time.Ticker 时要注意: Stop会停止Ticker，停止后，Ticker不会再被发送，但是Stop不会关闭通道，防止读取通道发生错误;
+(2) 可以重复调用 Ticker.Stop().
 */
 type Interval struct {
 	mutexKit.RWMutex
@@ -43,7 +46,8 @@ func (i *Interval) Stop() {
 
 		i.stopped = true
 		i.ticker.Stop()
-		i.closeCh <- struct{}{}
+		close(i.closeCh)
+		//i.closeCh <- struct{}{}
 	})
 }
 
@@ -53,7 +57,7 @@ func (i *Interval) Stop() {
 				(2) 传参t为执行任务时的 time.Time
 @param duration 必须>0
 */
-func SetInterval(task func(t time.Time), duration time.Duration) *Interval {
+func SetInterval(ctx context.Context, task func(t time.Time), duration time.Duration) *Interval {
 	i := &Interval{
 		RWMutex: mutexKit.RWMutex{},
 		stopped: false,
@@ -62,6 +66,11 @@ func SetInterval(task func(t time.Time), duration time.Duration) *Interval {
 	}
 
 	go func(i *Interval) {
+		// test
+		defer func() {
+			logrus.Info("goroutine ends...")
+		}()
+
 		defer i.ticker.Stop()
 
 		for {
@@ -69,11 +78,16 @@ func SetInterval(task func(t time.Time), duration time.Duration) *Interval {
 			case t := <-i.ticker.C:
 				/* 读锁 */
 				i.RLockFunc(func() {
-					if !i.stopped {
-						task(t)
+					if i.stopped {
+						return
 					}
+
+					task(t)
 				})
 			case <-i.closeCh:
+				return
+			case <-ctx.Done():
+				i.Stop()
 				return
 			}
 		}
