@@ -74,11 +74,11 @@ func TestWs(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	pushKit.MustSetUp(pool, nil, pushKit.WithWsPongInterval(time.Second*5))
+	pushKit.MustSetUp(pool, nil)
 	//pushKit.MustSetUp(pool, nil, pushKit.WithWsPongInterval(-1))
 
 	/* WebSocket */
-	processor, err := NewProcessor(nil, nil, &demoListener{}, MessageTypeText)
+	processor, err := NewProcessor(nil, nil, &demoListener{}, MessageTypeText, time.Second*3)
 	if err != nil {
 		logrus.Fatal(err)
 	}
