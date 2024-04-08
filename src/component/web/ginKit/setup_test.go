@@ -2,12 +2,12 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v3/src/component/web/proxyKit"
 	"github.com/richelieu-yang/chimera/v3/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v3/src/consts"
 	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
 	"github.com/sirupsen/logrus"
+	"strings"
 	"testing"
 )
 
@@ -37,13 +37,16 @@ func TestMustSetUp(t *testing.T) {
 	}
 
 	MustSetUp(c.Gin, func(engine *gin.Engine) error {
-		engine.Any("/test", func(ctx *gin.Context) {
-			if err := proxyKit.ProxyWithGin(ctx, "127.0.0.1:8888"); err != nil {
-				ctx.String(500, err.Error())
-				return
-			}
-			return
+		engine.Any("/test.act", func(ctx *gin.Context) {
+			ctx.String(200, strings.Repeat("c", 1000))
+			//if err := proxyKit.ProxyWithGin(ctx, "127.0.0.1:8888"); err != nil {
+			//	ctx.String(500, err.Error())
+			//	return
+			//}
+			//return
 		})
+
+		StaticDir(engine, "/s", "images", true)
 
 		return nil
 	}, WithServiceInfo("TEST"), WithDefaultFavicon(true))
