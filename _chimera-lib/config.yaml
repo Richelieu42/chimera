@@ -15,13 +15,13 @@ gin:
   # 是否开启pprof路由？（默认: false）
   # PS: 只应该在性能测试的时候才在代码中引入pprof.
   pprof: false
-  ssl:
-    # https server使用的端口（默认0: 不使用https server）
-    port: 443
-    # 证书文件(建议 .pem || .crt)
-    certFile: _chimera-lib/ssl.crt
-    # key文件(".key"后缀)
-    keyFile: _chimera-lib/ssl.key
+#  ssl:
+#    # https server使用的端口（默认0: 不使用https server）
+#    port: 443
+#    # 证书文件(建议 .pem || .crt)
+#    certFile: _chimera-lib/ssl.crt
+#    # key文件(".key"后缀)
+#    keyFile: _chimera-lib/ssl.key
   middleware:
     gzip:
       # gzip的压缩级别
@@ -29,7 +29,7 @@ gin:
       # 0:    不压缩(默认值)
       # 1~9:  不同的压缩级别（越大压缩比越高，但越慢越耗服务器性能）
       level: 9
-      # 触发gzip的最小内容长度
+      # 触发gzip的最小内容长度（单位: byte）
       minContentLength: 256
     # 全局对request body的大小限制（整数; 单位: MB; 默认: 0; <=0: 不做限制; >0: 进行限制）
     # 不建议在此处配置，想限制上传文件大小可以在handler中进行处理

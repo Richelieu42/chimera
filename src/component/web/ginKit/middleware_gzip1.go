@@ -7,6 +7,9 @@ import (
 
 // NewGzipMiddleware1
 /*
+PS: 涉及多个服务（请求转发）的场景下，	(1) 最外层的务使用gzip压缩;
+									(2) 内层的服务不使用gzip压缩.
+
 @param level			压缩级别
 @param minContentLength	(1) 触发gzip的最小内容长度
 						(2) 单位: byte
