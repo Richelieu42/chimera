@@ -1,6 +1,7 @@
 package wsKit
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/ginKit"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
@@ -8,6 +9,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"testing"
+	"time"
 )
 
 type demoListener struct {
@@ -36,8 +38,10 @@ func (l *demoListener) OnMessage(channel pushKit.Channel, messageType int, data 
 		"text":        string(data),
 	}).Info("OnMessage")
 
-	if err := channel.Push([]byte("hello")); err != nil {
+	text := fmt.Sprintf("length of received message: %d", len(data))
+	if err := channel.Push([]byte(text)); err != nil {
 		logrus.WithError(err).Error("Fail to push when on message.")
+		return
 	}
 }
 
@@ -70,8 +74,8 @@ func TestWs(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	//pushKit.MustSetUp(pool, nil, pushKit.WithWsPongInterval(time.Second*5))
-	pushKit.MustSetUp(pool, nil, pushKit.WithWsPongInterval(-1))
+	pushKit.MustSetUp(pool, nil, pushKit.WithWsPongInterval(time.Second*5))
+	//pushKit.MustSetUp(pool, nil, pushKit.WithWsPongInterval(-1))
 
 	/* WebSocket */
 	processor, err := NewProcessor(nil, nil, &demoListener{}, MessageTypeText)

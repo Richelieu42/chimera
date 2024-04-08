@@ -35,14 +35,23 @@
         输出: <br>
         <button id="clearBtn">Clear</button>
         <br>
-        <label for="output"></label><textarea id="output" cols="180" rows="30"></textarea>
+        <label for="output"></label><textarea id="output" cols="180" rows="20"></textarea>
+    </div>
+
+    <br>
+    <div>
+        <label for="message">Message: </label>
+        <br>
+        <textarea id="message" cols="180" rows="5"></textarea>
+        <br>
+        <button id="sendBtn">Send</button>
     </div>
 </div>
 
-<!--<script src="js/ws.js"></script>-->
-<!--<script src="js/common.js"></script>-->
+<!--<script src="ws.js"></script>-->
+<!--<script src="common.js"></script>-->
 <script>
-    var array = ["js/ws.js", "js/common.js"],
+    var array = ["ws.js", "common.js"],
         extra = `?${Date.now()}`;
 
     for (var i = 0; i < array.length; i++) {

@@ -27,6 +27,23 @@ disconnectBtn.onclick = function () {
     disconnect();
 };
 
+// Send Message
+{
+    document.getElementById("sendBtn").onclick = function () {
+        var message = document.getElementById("message").value;
+
+        if (!message) {
+            alert("Message to send is empty!");
+            return;
+        }
+        if (!channel || channel.readyState !== WebSocket.OPEN) {
+            alert("WebSocket isn't ready!");
+            return;
+        }
+        channel.send(message);
+    };
+}
+
 /**
  * PS: EventSource 没有onclose事件.
  */
