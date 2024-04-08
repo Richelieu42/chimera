@@ -8,7 +8,8 @@ import (
 // NewGzipMiddleware1
 /*
 @param level			压缩级别
-@param minContentLength	触发gzip的最小内容长度
+@param minContentLength	(1) 触发gzip的最小内容长度
+						(2) 单位: byte
 */
 func NewGzipMiddleware1(level int, minContentLength int64) gin.HandlerFunc {
 	gzipHandler := gzip.NewHandler(gzip.Config{
