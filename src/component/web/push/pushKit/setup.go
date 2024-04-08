@@ -2,6 +2,7 @@ package pushKit
 
 import (
 	"github.com/panjf2000/ants/v2"
+	"github.com/richelieu-yang/chimera/v3/src/atomic/atomicKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
@@ -9,8 +10,12 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// pushPool 并发执行推送任务
-var pushPool *ants.Pool
+var (
+	setupFlag = atomicKit.NewBool(false)
+
+	// pushPool 并发执行推送任务
+	pushPool *ants.Pool
+)
 
 func MustSetUp(antPool *ants.Pool, logger *logrus.Logger, options ...Option) {
 	if err := Setup(antPool, logger, options...); err != nil {
@@ -27,7 +32,11 @@ func MustSetUp(antPool *ants.Pool, logger *logrus.Logger, options ...Option) {
 @param logger 	可以为nil
 @param options
 */
-func Setup(antPool *ants.Pool, logger *logrus.Logger, options ...Option) error {
+func Setup(antPool *ants.Pool, logger *logrus.Logger, options ...Option) (err error) {
+	defer func() {
+		setupFlag.Store(err == nil)
+	}()
+
 	opts := loadOptions(options...)
 
 	/* antPool */
@@ -60,8 +69,8 @@ func Setup(antPool *ants.Pool, logger *logrus.Logger, options ...Option) error {
 	return nil
 }
 
-func isAvailable() error {
-	if pushPool == nil {
+func CheckSetup() error {
+	if !setupFlag.Load() {
 		return NotSetupError
 	}
 	return nil

@@ -7,7 +7,7 @@ import (
 )
 
 func PushToAll(data []byte, exceptBsids []string) (err error) {
-	if err = isAvailable(); err != nil {
+	if err = CheckSetup(); err != nil {
 		return err
 	}
 
@@ -34,7 +34,7 @@ func PushToAll(data []byte, exceptBsids []string) (err error) {
 }
 
 func PushToBsid(data []byte, bsid string) (err error) {
-	if err = isAvailable(); err != nil {
+	if err = CheckSetup(); err != nil {
 		return
 	}
 
@@ -51,7 +51,7 @@ func PushToBsid(data []byte, bsid string) (err error) {
 }
 
 func PushToUser(data []byte, user string, exceptBsids []string) (err error) {
-	if err = isAvailable(); err != nil {
+	if err = CheckSetup(); err != nil {
 		return
 	}
 
@@ -86,7 +86,7 @@ func PushToUser(data []byte, user string, exceptBsids []string) (err error) {
 }
 
 func PushToGroup(data []byte, group string, exceptBsids []string) (err error) {
-	if err = isAvailable(); err != nil {
+	if err = CheckSetup(); err != nil {
 		return
 	}
 

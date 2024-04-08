@@ -30,6 +30,10 @@ func DefaultUpgrader() *websocket.Upgrader {
 @param listener			不能为nil
 */
 func NewProcessor(upgrader *websocket.Upgrader, idGenerator func() (string, error), listener pushKit.Listener, messageType messageType) (*WsProcessor, error) {
+	if err := pushKit.CheckSetup(); err != nil {
+		return nil, err
+	}
+
 	if upgrader == nil {
 		upgrader = DefaultUpgrader()
 	}
