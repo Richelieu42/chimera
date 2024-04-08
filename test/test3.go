@@ -1,27 +1,11 @@
 package main
 
 import (
+	"fmt"
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
-	"github.com/sirupsen/logrus"
-	"time"
+	"html"
 )
 
 func main() {
-	ch := make(chan int)
-
-	go func() {
-		time.Sleep(time.Second * 3)
-		close(ch)
-	}()
-
-	logrus.Info("start ---")
-outerLoop:
-	for {
-		select {
-		case <-ch:
-			logrus.Info("break")
-			break outerLoop
-		}
-	}
-	logrus.Info("end ---")
+	fmt.Println(html.UnescapeString("&lt;p&gt;Some text with &#39;quotes&#39; and &lt;em&gt;markup&lt;/em&gt;&lt;/p&gt;"))
 }
