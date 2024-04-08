@@ -35,6 +35,10 @@ func (l *demoListener) OnMessage(channel pushKit.Channel, messageType int, data 
 		"messageType": messageType,
 		"text":        string(data),
 	}).Info("OnMessage")
+
+	if err := channel.Push([]byte("hello")); err != nil {
+		logrus.WithError(err).Error("Fail to push when on message.")
+	}
 }
 
 func (l *demoListener) BeforeClosedByBackend(channel pushKit.Channel, closeInfo string) {
