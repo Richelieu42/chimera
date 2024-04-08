@@ -9,6 +9,7 @@ import (
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
 	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 	"github.com/sirupsen/logrus"
+	"strings"
 	"testing"
 )
 
@@ -51,8 +52,8 @@ func TestMustSetUp(t *testing.T) {
 			//}
 			//name := b.Name
 
-			name := ObtainPostParam(ctx, "name")
-			ctx.String(200, fmt.Sprintf("[%s] Hello %s.", timeKit.FormatCurrent(""), name))
+			//name := ObtainPostParam(ctx, "name")
+			ctx.String(200, fmt.Sprintf("[%s] Hello %s.", timeKit.FormatCurrent(""), strings.Repeat("c", 200)))
 		})
 
 		return nil
