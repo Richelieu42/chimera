@@ -7,8 +7,10 @@ import (
 
 // NewGzipMiddleware1
 /*
-PS: 涉及多个服务（请求转发）的场景下，	(1) 最外层的务使用gzip压缩;
-									(2) 内层的服务不使用gzip压缩.
+PS:
+(1) 涉及多个服务（请求转发）的场景下，(a) 最外层的务使用gzip压缩;
+								(b) 内层的服务不使用gzip压缩.
+(2) Gzip通常不建议用来压缩图片.
 
 @param level			压缩级别
 @param minContentLength	(1) 触发gzip的最小内容长度
