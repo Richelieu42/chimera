@@ -68,6 +68,7 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/modern-go/reflect2 v1.0.2
 	github.com/nacos-group/nacos-sdk-go/v2 v2.2.5
+	github.com/nanmu42/gzip v1.2.0
 	github.com/natefinch/lumberjack/v3 v3.0.0-alpha
 	github.com/nicksnyder/go-i18n/v2 v2.4.0
 	github.com/oklog/ulid/v2 v2.1.0
@@ -268,6 +269,7 @@ require (
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
 	github.com/segmentio/asm v1.2.0 // indirect
 	github.com/shoenig/go-m1cpu v0.1.6 // indirect
+	github.com/signalsciences/ac v1.2.0 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
