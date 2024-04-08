@@ -2,6 +2,7 @@ package sseKit
 
 import (
 	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
+	"time"
 )
 
 // NewProcessor
@@ -10,8 +11,10 @@ import (
 
 @param idGenerator	可以为nil（将使用xid）
 @param listener		不能为nil
+@param msgType		消息类型
+@param pongInterval	pong的周期（<=0则不发送pong）
 */
-func NewProcessor(idGenerator func() (string, error), listener pushKit.Listener, msgType messageType) (pushKit.Processor, error) {
+func NewProcessor(idGenerator func() (string, error), listener pushKit.Listener, msgType messageType, pongInterval time.Duration) (pushKit.Processor, error) {
 	if err := pushKit.CheckSetup(); err != nil {
 		return nil, err
 	}

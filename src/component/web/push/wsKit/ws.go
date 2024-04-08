@@ -25,11 +25,13 @@ func DefaultUpgrader() *websocket.Upgrader {
 /*
 !!!: 需要先调用 pushKit.MustSetUp 或 pushKit.SetUp.
 
-@param upgrader			可以为nil（将使用默认的）
-@param idGenerator		可以为nil（将使用xid）
-@param listener			不能为nil
+@param upgrader		可以为nil（将使用默认的）
+@param idGenerator	可以为nil（将使用xid）
+@param listener		不能为nil
+@param msgType		消息类型
+@param pongInterval	pong的周期（<=0则不发送pong）
 */
-func NewProcessor(upgrader *websocket.Upgrader, idGenerator func() (string, error), listener pushKit.Listener, messageType messageType) (*WsProcessor, error) {
+func NewProcessor(upgrader *websocket.Upgrader, idGenerator func() (string, error), listener pushKit.Listener, messageType messageType, pongInterval time.Duration) (*WsProcessor, error) {
 	if err := pushKit.CheckSetup(); err != nil {
 		return nil, err
 	}
@@ -46,9 +48,10 @@ func NewProcessor(upgrader *websocket.Upgrader, idGenerator func() (string, erro
 	}
 
 	return &WsProcessor{
-		upgrader:    upgrader,
-		idGenerator: idGenerator,
-		listeners:   listeners,
-		msgType:     messageType,
+		upgrader:     upgrader,
+		idGenerator:  idGenerator,
+		listeners:    listeners,
+		msgType:      messageType,
+		pongInterval: pongInterval,
 	}, nil
 }

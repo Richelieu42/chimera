@@ -8,14 +8,16 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"net/http"
+	"time"
 )
 
 type SseProcessor struct {
 	pushKit.Processor
 
-	idGenerator func() (string, error)
-	listeners   pushKit.Listeners
-	msgType     messageType
+	idGenerator  func() (string, error)
+	listeners    pushKit.Listeners
+	msgType      messageType
+	pongInterval time.Duration
 }
 
 func (p *SseProcessor) ProcessWithGin(ctx *gin.Context) {
@@ -85,7 +87,7 @@ func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request, closeC
 			Data:         nil,
 			Closed:       false,
 			Listeners:    p.listeners,
-			PongInterval: pushKit.GetSsePongInterval(),
+			PongInterval: p.pongInterval,
 		},
 		w:       w,
 		r:       r,

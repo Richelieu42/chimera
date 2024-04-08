@@ -20,9 +20,10 @@ type WsProcessor struct {
 	// upgrader 是并发安全的
 	upgrader *websocket.Upgrader
 
-	idGenerator func() (string, error)
-	listeners   pushKit.Listeners
-	msgType     messageType
+	idGenerator  func() (string, error)
+	listeners    pushKit.Listeners
+	msgType      messageType
+	pongInterval time.Duration
 }
 
 func (p *WsProcessor) ProcessWithGin(ctx *gin.Context) {
@@ -130,7 +131,7 @@ func (p *WsProcessor) newChannel(r *http.Request, conn *websocket.Conn, closeCh 
 			Data:         nil,
 			Closed:       false,
 			Listeners:    p.listeners,
-			PongInterval: pushKit.GetWsPongInterval(),
+			PongInterval: p.pongInterval,
 		},
 		conn:        conn,
 		messageType: p.msgType,

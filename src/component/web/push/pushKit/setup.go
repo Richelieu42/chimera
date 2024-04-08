@@ -17,8 +17,8 @@ var (
 	pushPool *ants.Pool
 )
 
-func MustSetUp(antPool *ants.Pool, logger *logrus.Logger, options ...Option) {
-	if err := Setup(antPool, logger, options...); err != nil {
+func MustSetUp(antPool *ants.Pool, logger *logrus.Logger) {
+	if err := Setup(antPool, logger); err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
@@ -32,12 +32,10 @@ func MustSetUp(antPool *ants.Pool, logger *logrus.Logger, options ...Option) {
 @param logger 	可以为nil
 @param options
 */
-func Setup(antPool *ants.Pool, logger *logrus.Logger, options ...Option) (err error) {
+func Setup(antPool *ants.Pool, logger *logrus.Logger) (err error) {
 	defer func() {
 		setupFlag.Store(err == nil)
 	}()
-
-	opts := loadOptions(options...)
 
 	/* antPool */
 	if err := interfaceKit.AssertNotNil(antPool, "antPool"); err != nil {
@@ -61,10 +59,6 @@ func Setup(antPool *ants.Pool, logger *logrus.Logger, options ...Option) (err er
 			return err
 		}
 	}
-
-	/* pongInterval */
-	setWsPongInterval(opts.WsPongInterval)
-	setSsePongInterval(opts.SsePongInterval)
 
 	return nil
 }
