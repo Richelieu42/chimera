@@ -5,9 +5,6 @@ logrus:
   printBasic: true
 
 gin:
-  responseHeaders:
-    X-XSS-Protection: 1;mode=block
-    Strict-Transport-Security: "max-age=604800; includeSubDomains"
   # Gin的模式（默认: debug，可选值: debug|release|test）
   mode: debug
   hostName:
