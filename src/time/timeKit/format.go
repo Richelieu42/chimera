@@ -1,7 +1,6 @@
 package timeKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"time"
 )
 
@@ -12,9 +11,12 @@ import (
 e.g.
 	("2006-01-02T15:04:05.000") => "2023-08-17T16:05:14.985"
 */
-func FormatCurrent[F ~string](format F) string {
-	if strKit.IsEmpty(string(format)) {
+func FormatCurrent[F ~string](formats ...F) string {
+	var format F
+	if len(formats) == 0 {
 		format = F(FormatCommon)
+	} else {
+		format = formats[0]
 	}
 
 	return time.Now().Format(string(format))
