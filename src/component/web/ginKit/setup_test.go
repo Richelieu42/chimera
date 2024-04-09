@@ -45,9 +45,6 @@ func TestMustSetUp(t *testing.T) {
 			//}
 			//return
 		})
-
-		StaticDir(engine, "/s", "images", true)
-
 		return nil
 	}, WithServiceInfo("TEST"), WithDefaultFavicon(true))
 }

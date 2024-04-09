@@ -13,7 +13,7 @@ import (
 @param methods 	nil => 接收所有类型method的请求.	e.g. http.MethodGet、http.MethodPost
 @param handlers 其中的元素不能为nil!!!
 */
-func BindHandlersToRoute(group IGroup, route string, methods []string, handlers ...gin.HandlerFunc) {
+func BindHandlersToRoute(group *gin.RouterGroup, route string, methods []string, handlers ...gin.HandlerFunc) {
 	if len(handlers) == 0 {
 		// do nothing
 		return
@@ -36,7 +36,7 @@ func BindHandlersToRoute(group IGroup, route string, methods []string, handlers 
 }
 
 // BindHandlersToRoutes 将相同的多个处理器，注册到多个路由.
-func BindHandlersToRoutes(group IGroup, routes []string, methods []string, handlers ...gin.HandlerFunc) {
+func BindHandlersToRoutes(group *gin.RouterGroup, routes []string, methods []string, handlers ...gin.HandlerFunc) {
 	routes = sliceKit.Uniq(routes)
 	for _, route := range routes {
 		BindHandlersToRoute(group, route, methods, handlers...)
