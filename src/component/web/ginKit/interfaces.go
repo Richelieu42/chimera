@@ -6,14 +6,6 @@ import (
 )
 
 type (
-	IEngine interface {
-		LoadHTMLFiles(filePaths ...string)
-
-		LoadHTMLGlob(pattern string)
-
-		NoRoute(handlers ...gin.HandlerFunc)
-	}
-
 	IGroup interface {
 		Handle(httpMethod, relativePath string, handlers ...gin.HandlerFunc) gin.IRoutes
 

@@ -4,24 +4,10 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
+	"net/http"
 )
-
-// LoadHTMLFiles 加载（多个）html文件
-/*
-Deprecated: 直接调用 IEngine 的方法.
-*/
-func LoadHTMLFiles(engine IEngine, filePaths ...string) {
-	engine.LoadHTMLFiles(filePaths...)
-}
-
-// LoadHTMLGlob
-/*
-Deprecated: 直接调用 IEngine 的方法.
-*/
-func LoadHTMLGlob(engine IEngine, pattern string) {
-	engine.LoadHTMLGlob(pattern)
-}
 
 // StaticFile 静态资源（单个文件）
 /*
@@ -52,5 +38,17 @@ func StaticDir(group IGroup, relativePath, root string, listDirectory bool) erro
 
 	fs := gin.Dir(root, listDirectory)
 	group.StaticFS(relativePath, fs)
+	return nil
+}
+
+func StaticFS(group IGroup, relativePath string, httpFs http.FileSystem) error {
+	if err := interfaceKit.AssertNotNil(httpFs, "httpFs"); err != nil {
+		return err
+	}
+
+	var engine = gin.Default()
+	engine.LoadHTMLFiles()
+
+	group.StaticFS(relativePath, httpFs)
 	return nil
 }
