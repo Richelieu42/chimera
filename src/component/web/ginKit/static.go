@@ -37,8 +37,7 @@ func StaticDir(group *gin.RouterGroup, relativePath, root string, listDirectory 
 	}
 
 	fs := gin.Dir(root, listDirectory)
-	group.StaticFS(relativePath, fs)
-	return nil
+	return StaticFS(group, relativePath, fs)
 }
 
 func StaticFS(group *gin.RouterGroup, relativePath string, httpFs http.FileSystem) error {
