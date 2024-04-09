@@ -1,4 +1,4 @@
-package main
+package embedKit
 
 import (
 	"embed"
@@ -6,22 +6,6 @@ import (
 	"io/fs"
 	"net/http"
 )
-
-//go:embed c/*
-var efs embed.FS
-
-func main() {
-	httpFs, err := NewHttpFileSystem(efs, "c")
-	if err != nil {
-		panic(err)
-	}
-
-	// TODO: 将 "/" 改成 "/s"，会有问题
-	http.Handle("/", http.FileServer(httpFs))
-	if err := http.ListenAndServe(":80", nil); err != nil {
-		panic(err)
-	}
-}
 
 // NewHttpFileSystem
 /*
