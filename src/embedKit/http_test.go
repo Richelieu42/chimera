@@ -7,10 +7,10 @@ import (
 )
 
 //go:embed c/*
-var efs embed.FS
+var tmpEfs embed.FS
 
 func TestNewHttpFileSystem(t *testing.T) {
-	httpFs, err := NewHttpFileSystem(efs, "c")
+	httpFs, err := NewHttpFileSystem(tmpEfs, "c")
 	if err != nil {
 		panic(err)
 	}
