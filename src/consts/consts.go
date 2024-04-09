@@ -2,8 +2,7 @@
 package consts
 
 import (
-	"github.com/richelieu-yang/chimera/v3/internal/resources"
-	"github.com/sirupsen/logrus"
+	_ "embed"
 )
 
 const (
@@ -20,13 +19,14 @@ const (
 英文ASCII艺术字，Spring Boot自定义启动Banner在线生成工具
 	https://www.bootschool.net/ascii
 */
+//go:embed _banner.txt
 var Banner string
 
-func init() {
-	data, err := resources.Asset("_resources/banner.txt")
-	if err != nil {
-		logrus.WithError(err).Fatalf("[%s] Fail to get banner.", UpperProjectName)
-		return
-	}
-	Banner = string(data)
-}
+//func init() {
+//	data, err := resources.Asset("_resources/banner.txt")
+//	if err != nil {
+//		logrus.WithError(err).Fatalf("[%s] Fail to get banner.", UpperProjectName)
+//		return
+//	}
+//	Banner = string(data)
+//}
