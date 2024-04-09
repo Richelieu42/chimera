@@ -2,31 +2,36 @@ package main
 
 import (
 	"embed"
-	"fmt"
-	"io"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
+	"io/fs"
+	"net/http"
 )
 
 //go:embed c
-var a embed.FS
-
-//go:embed c/a.json
-var b []byte
-
-//go:embed c/a.json
-var c string
+var efs embed.FS
 
 func main() {
-	f, err := a.Open("c/a.json")
+	handler, err := NewHttpHandler(efs, "c")
 	if err != nil {
 		panic(err)
 	}
-	data, err := io.ReadAll(f)
-	if err != nil {
+
+	// TODO: 将 "/" 改成 "/s"，会有问题
+	http.Handle("/", handler)
+	if err := http.ListenAndServe(":80", nil); err != nil {
 		panic(err)
 	}
-	fmt.Println(string(data))
+}
 
-	fmt.Println(string(b))
+func NewHttpHandler(embedFs embed.FS, dir string) (http.Handler, error) {
+	if err := strKit.AssertNotEmpty(dir, "dir"); err != nil {
+		return nil, err
+	}
 
-	fmt.Println(c)
+	subFs, err := fs.Sub(embedFs, dir)
+	if err != nil {
+		return nil, err
+	}
+	httpFs := http.FS(subFs)
+	return http.FileServer(httpFs), nil
 }
