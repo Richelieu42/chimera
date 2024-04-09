@@ -11,19 +11,23 @@ import (
 var efs embed.FS
 
 func main() {
-	handler, err := NewHttpHandler(efs, "c")
+	httpFs, err := NewHttpFileSystem(efs, "c")
 	if err != nil {
 		panic(err)
 	}
 
 	// TODO: 将 "/" 改成 "/s"，会有问题
-	http.Handle("/", handler)
+	http.Handle("/", http.FileServer(httpFs))
 	if err := http.ListenAndServe(":80", nil); err != nil {
 		panic(err)
 	}
 }
 
-func NewHttpHandler(embedFs embed.FS, dir string) (http.Handler, error) {
+// NewHttpFileSystem
+/*
+@param dir 子目录
+*/
+func NewHttpFileSystem(embedFs embed.FS, dir string) (http.FileSystem, error) {
 	if err := strKit.AssertNotEmpty(dir, "dir"); err != nil {
 		return nil, err
 	}
@@ -32,6 +36,5 @@ func NewHttpHandler(embedFs embed.FS, dir string) (http.Handler, error) {
 	if err != nil {
 		return nil, err
 	}
-	httpFs := http.FS(subFs)
-	return http.FileServer(httpFs), nil
+	return http.FS(subFs), nil
 }
