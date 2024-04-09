@@ -7,8 +7,13 @@ import (
 
 func TestNewStaticMiddleware(t *testing.T) {
 	engine := gin.Default()
+	engine.RedirectTrailingSlash = false
 
-	engine.Use(NewStaticMiddleware("/s", "_test/", true))
+	m, err := NewStaticMiddleware("/", "_test", false)
+	if err != nil {
+		panic(err)
+	}
+	engine.Use(m)
 
 	engine.GET("/ping", func(c *gin.Context) {
 		c.String(200, "OK")
