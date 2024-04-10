@@ -13,4 +13,5 @@ func init() {
 	if err != nil {
 		logrus.WithError(err).Fatalf("Fail to load location with name(%s).", name)
 	}
+	//GMT = time.FixedZone("GMT", 0)
 }
