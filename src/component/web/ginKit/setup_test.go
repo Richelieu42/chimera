@@ -37,7 +37,7 @@ func TestMustSetUp(t *testing.T) {
 	}
 
 	MustSetUp(c.Gin, func(engine *gin.Engine) error {
-		engine.Any("/test.act", func(ctx *gin.Context) {
+		engine.Any("/test", func(ctx *gin.Context) {
 			ctx.String(200, strings.Repeat("c", 1000))
 			//if err := proxyKit.ProxyWithGin(ctx, "127.0.0.1:8888"); err != nil {
 			//	ctx.String(500, err.Error())

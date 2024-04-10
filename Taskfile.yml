@@ -2,8 +2,10 @@ version: '3'
 
 # 全局变量
 vars:
-  APP: chimera
-  SOURCE: internal/main.go
+#  APP: chimera
+#  SOURCE: internal/main.go
+  APP: test3
+  SOURCE: test/test3.go
   # 0 || 1
   CGO_ENABLED: 0
   VERSION: 0.0.1
@@ -23,7 +25,7 @@ tasks:
   prepare:
     cmds:
       - go mod tidy
-      - go-bindata -fs -o=internal/resources/bindata.go -pkg=resources _resources/...
+#      - go-bindata -fs -o=internal/resources/bindata.go -pkg=resources _resources/...
   # 串行
   build-serial:
     cmds:

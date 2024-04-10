@@ -51,8 +51,8 @@ const (
 	FormatEntire1 TimeFormat = "2006-01-02T15:04:05.000Z07:00 MST"
 	FormatEntire2 TimeFormat = "2006-01-02T15:04:05.000Z07:00"
 
-	//// FormatNetwork 网络的格式
-	//FormatNetwork TimeFormat = "Mon, 02 Jan 2006 15:04:05 MST"
+	// FormatNetwork 网络的格式
+	FormatNetwork TimeFormat = "Mon, 02 Jan 2006 15:04:05 MST"
 
 	// FormatRFC1123 网络的格式
 	FormatRFC1123 TimeFormat = time.RFC1123

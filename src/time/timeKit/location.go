@@ -4,6 +4,14 @@ import (
 	"time"
 )
 
+var (
+	Local *time.Location = time.Local
+
+	UTC *time.Location = time.UTC
+
+	GMT *time.Location
+)
+
 // ConvertLocation 时区转换.
 /*
 PS: 返回值是个副本，不会修改传参t.

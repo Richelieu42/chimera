@@ -2,5 +2,9 @@ package ginKit
 
 import "embed"
 
-//go:embed _html/* _icon/*
+//go:embed _icon/*.ico _html/*.html
 var efs embed.FS
+
+func init() {
+
+}
