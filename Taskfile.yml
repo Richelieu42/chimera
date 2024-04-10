@@ -25,7 +25,6 @@ tasks:
   prepare:
     cmds:
       - go mod tidy
-#      - go-bindata -fs -o=internal/resources/bindata.go -pkg=resources _resources/...
   # 串行
   build-serial:
     cmds:
