@@ -23,7 +23,7 @@ func DefaultNoRouteHtml(engine *gin.Engine) error {
 	}
 
 	engine.NoRoute(func(ctx *gin.Context) {
-		ctx.HTML(http.StatusNotFound, "_html/404.min.html", gin.H{
+		ctx.HTML(http.StatusNotFound, "404.min.html", gin.H{
 			"prefix": prefix,
 			"route":  ctx.Request.URL.Path,
 		})
