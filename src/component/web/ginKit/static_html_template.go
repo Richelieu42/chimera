@@ -23,7 +23,9 @@ func LoadHTMLGlob(engine *gin.Engine, pattern string) {
 
 // SetHTMLTemplate
 /*
-PS: 搭配 gin.Context.HTML() 使用.
+PS:
+(1) 搭配 gin.Context.HTML() 使用.
+(2) 参考: https://mp.weixin.qq.com/s/07YhlR3fFIbRPrvT6HUqng
 */
 func SetHTMLTemplate(engine *gin.Engine, templ *template.Template) {
 	engine.SetHTMLTemplate(templ)
