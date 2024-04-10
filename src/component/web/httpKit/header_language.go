@@ -15,7 +15,7 @@ func GetAcceptLanguages(req *http.Request) []string {
 		"zh,zh-TW;q=0.9,en-US;q=0.8,en;q=0.7,zh-CN;q=0.6"
 		"fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5"
 	*/
-	headerValue := GetHeader(req.Header, "Accept-Language")
+	headerValue := GetHeader(req.Header, HeaderAcceptLanguage)
 	s := strKit.Split(headerValue, ",")
 	for _, ele := range s {
 		ele = strKit.TrimSpace(ele)

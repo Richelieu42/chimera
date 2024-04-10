@@ -1,6 +1,12 @@
 package httpKit
 
 const (
+	HeaderAccept = "Accept"
+
+	HeaderAcceptEncoding = "Accept-Encoding"
+
+	HeaderAcceptLanguage = "Accept-Language"
+
 	HeaderAccessControlAllowCredentials = "Access-Control-Allow-Credentials"
 
 	HeaderAccessControlAllowHeaders = "Access-Control-Allow-Headers"
