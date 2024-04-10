@@ -1,9 +1,25 @@
 package httpKit
 
 const (
+	HeaderAccessControlAllowCredentials = "Access-Control-Allow-Credentials"
+
+	HeaderAccessControlAllowHeaders = "Access-Control-Allow-Headers"
+
+	HeaderAccessControlAllowMethods = "Access-Control-Allow-Methods"
+
+	HeaderAccessControlAllowOrigin = "Access-Control-Allow-Origin"
+
+	HeaderAllow = "Allow"
+
+	HeaderVary = "Vary"
+
 	HeaderCacheControl = "Cache-Control"
 
 	HeaderContentType = "Content-Type"
 
 	HeaderConnection = "Connection"
+
+	HeaderSetCookie = "Set-Cookie"
+
+	HeaderUpgrade = "Upgrade"
 )
