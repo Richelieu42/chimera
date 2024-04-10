@@ -137,6 +137,7 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 		}()
 		go func() {
 			time.Sleep(time.Millisecond * 20)
+
 			if err := engine.RunTLS(netKit.JoinHostnameAndPort(config.HostName, ssl.Port), ssl.CertFile, ssl.KeyFile); err != nil {
 				logrus.WithError(err).WithFields(logrus.Fields{
 					"port":     ssl.Port,
