@@ -28,7 +28,7 @@ func ConvertLocation(t time.Time, loc *time.Location) time.Time {
 	return t.In(loc)
 }
 
-// LoadLocation
+// LoadLocation string => *time.Location
 /*
 LoadLocation的输入参数的取值，除了该函数的源代码中可看到的”UTC”、”Local”，其余的值其实是遵照“IANA Time Zone”的规则，可以解压$GOROOT/lib/time/zoneinfo.zip 这个文件打开查看。
 在Asia这个目录，我看到了Chongqing，Hong_Kong，但没Beijing。在国外获取中国北京时间，要用”PRC”，当然”Asia/Chongqing”也是个方法
