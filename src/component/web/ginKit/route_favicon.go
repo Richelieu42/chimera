@@ -11,7 +11,8 @@ func DefaultFavicon(engine *gin.Engine) {
 
 	engine.GET("/favicon.ico", func(ctx *gin.Context) {
 		// 缓存24h
-		SetResponseHeader(ctx, httpKit.HeaderCacheControl, "public, max-age=86400, must-revalidate")
+		ctx.Header(httpKit.HeaderCacheControl, "public, max-age=86400, must-revalidate")
+
 		ctx.FileFromFS("_icon/favicon.ico", httpFileSystem)
 	})
 }
