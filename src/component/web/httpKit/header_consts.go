@@ -28,4 +28,6 @@ const (
 	HeaderSetCookie = "Set-Cookie"
 
 	HeaderUpgrade = "Upgrade"
+
+	HeaderXXSSProtection = "X-XSS-Protection"
 )
