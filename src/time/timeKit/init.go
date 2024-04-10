@@ -1,17 +1,13 @@
 package timeKit
 
 import (
-	"github.com/sirupsen/logrus"
 	"time"
 )
 
 func init() {
 	var err error
-
-	name := "GMT"
-	GMT, err = time.LoadLocation(name)
+	GMT, err = time.LoadLocation("GMT")
 	if err != nil {
-		logrus.WithError(err).Fatalf("Fail to load location with name(%s).", name)
+		GMT = time.FixedZone("GMT", 0)
 	}
-	//GMT = time.FixedZone("GMT", 0)
 }

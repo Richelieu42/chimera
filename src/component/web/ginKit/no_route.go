@@ -10,12 +10,12 @@ import (
 
 // DefaultNoRouteHtml 使用自带的404页面.
 func DefaultNoRouteHtml(engine *gin.Engine) error {
-	//t := template.Must(template.New("").ParseFS(efs, "_html/*.html"))
-	t, err := template.New("").ParseFS(efs, "_html/*.html")
+	//templ := template.Must(template.New("").ParseFS(efs, "_html/*.html"))
+	templ, err := template.New("").ParseFS(efs, "_html/*.html")
 	if err != nil {
 		return err
 	}
-	engine.SetHTMLTemplate(t)
+	engine.SetHTMLTemplate(templ)
 
 	var prefix string
 	if strKit.IsNotEmpty(serviceInfo) {
