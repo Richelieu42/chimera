@@ -12,7 +12,7 @@ import (
 /*
 PS:
 (1) 默认输出到 控制台(os.Stderr);
-(2) 如果希望 输出到文件 且 rotatable，可以使用 WithOutput()，详见下例.
+(2) 如果希望 输出到文件（可选是否rotatable），可以使用 WithOutput()，详见下例.
 
 @param options 可以什么都不配置（此时输出到控制台）
 */
