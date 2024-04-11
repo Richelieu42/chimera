@@ -13,7 +13,7 @@ import (
 输出到控制台: ERROR、PANIC、FATAL
 */
 func TestNewLfsHook(t *testing.T) {
-	logger, err := NewFileLogger("_test_lfshook.log")
+	logger, err := NewTruncFileLogger("_test_lfshook.log")
 	if err != nil {
 		panic(err)
 	}
@@ -31,5 +31,5 @@ func TestNewLfsHook(t *testing.T) {
 	logger.Errorf("Error %d", 3)
 
 	//logger.Panicf("Panic %d", 4)
-	logger.Fatalf("Fatal %d", 5)
+	//logger.Fatalf("Fatal %d", 5)
 }
