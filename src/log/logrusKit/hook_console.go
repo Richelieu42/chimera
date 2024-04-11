@@ -6,14 +6,18 @@ import (
 
 var (
 	// 保护性检查
-	_ logrus.Hook = (*ErrorToConsoleHook)(nil)
+	_ logrus.Hook = (*errorToConsoleHook)(nil)
 )
 
-// ErrorToConsoleHook ERROR及以上的，也输出到控制台
-type ErrorToConsoleHook struct {
+func NewErrorToConsoleHook() logrus.Hook {
+	return &errorToConsoleHook{}
 }
 
-func (hook *ErrorToConsoleHook) Fire(entry *logrus.Entry) error {
+// errorToConsoleHook 效果: ERROR及以上的，也输出到控制台
+type errorToConsoleHook struct {
+}
+
+func (hook *errorToConsoleHook) Fire(entry *logrus.Entry) error {
 	// 输出到控制台
 	logrus.WithFields(logrus.Fields{
 		"location": GetLocation(entry.Caller),
@@ -23,7 +27,7 @@ func (hook *ErrorToConsoleHook) Fire(entry *logrus.Entry) error {
 	return nil
 }
 
-func (hook *ErrorToConsoleHook) Levels() []logrus.Level {
+func (hook *errorToConsoleHook) Levels() []logrus.Level {
 	return []logrus.Level{
 		logrus.PanicLevel,
 		logrus.FatalLevel,
