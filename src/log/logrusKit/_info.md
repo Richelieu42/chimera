@@ -12,8 +12,9 @@ Logrus也提供了一些有用的特性，如：
 * 可以使用条目（Entry）来记录带有字段的日志信息，或者使用WithFields、WithTime、WithError等方法来创建带有字段的条目；
 * 可以使用日志级别函数（如Info、Warn、Error等）来记录不同级别的日志信息，或者使用Log或Print等方法来记录默认级别的日志信息。
 
-## logrus默认的日志级别
-INFO
+## logrus库
+- 默认的日志级别: INFO
+- 默认的Out属性: os.Stderr
 
 ## exit handler（退出函数）
 e.g.
