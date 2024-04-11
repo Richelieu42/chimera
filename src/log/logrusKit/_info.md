@@ -1,3 +1,6 @@
+## 参考
+- notes/Golang/日志 log/logrus.wps
+
 ## 简介
 Logrus是一个结构化、分级、可扩展和兼容标准库log包的日志库，由Sirupsen开发和维护。
 Logrus提供了一个简单而强大的API，可以用于记录不同级别和格式的日志信息。

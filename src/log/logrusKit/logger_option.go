@@ -3,6 +3,7 @@ package logrusKit
 import (
 	"github.com/sirupsen/logrus"
 	"io"
+	"os"
 )
 
 type (
@@ -36,7 +37,7 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 		reportCaller: true,
 		level:        logrus.DebugLevel,
 		// 默认: 输出到控制台
-		output:       nil,
+		output:       os.Stderr,
 		msgPrefix:    "",
 		disableQuote: false,
 	}
