@@ -1,6 +1,8 @@
 package main
 
 import (
+	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
+
 	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 )
@@ -10,14 +12,21 @@ type hook struct {
 }
 
 func (hook *hook) Fire(entry *logrus.Entry) error {
-	entry.Message += "==="
+	logrus.Info(entry.Message)
 
 	return nil
 }
 
 func (hook *hook) Levels() []logrus.Level {
-	// 只有 INFO、WARN 级别
-	return []logrus.Level{logrus.InfoLevel, logrus.WarnLevel}
+	return []logrus.Level{
+		logrus.PanicLevel,
+		logrus.FatalLevel,
+		logrus.ErrorLevel,
+		//logrus.WarnLevel,
+		//logrus.InfoLevel,
+		//logrus.DebugLevel,
+		//logrus.TraceLevel,
+	}
 
 	//return logrus.AllLevels
 }
@@ -30,8 +39,8 @@ func main() {
 
 	logger.AddHook(&hook{})
 
-	logger.Debug("Debug")
-	logger.Info("Info")
-	logger.Warn("Warn")
-	logger.Error("Error")
+	logger.Debugf("Debug %d", 0)
+	logger.Infof("Info %d", 1)
+	logger.Warnf("Warn %d", 2)
+	logger.Errorf("Error %d", 3)
 }
