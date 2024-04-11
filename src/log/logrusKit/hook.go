@@ -6,20 +6,20 @@ import (
 
 var (
 	// 保护性检查
-	_ logrus.Hook = (*defaultPrefixHook)(nil)
+	_ logrus.Hook = (*prefixHook)(nil)
 )
 
-type defaultPrefixHook struct {
+type prefixHook struct {
 	prefix string
 }
 
-func (hook *defaultPrefixHook) Fire(entry *logrus.Entry) error {
+func (hook *prefixHook) Fire(entry *logrus.Entry) error {
 	entry.Message = hook.prefix + entry.Message
 
 	return nil
 }
 
-func (hook *defaultPrefixHook) Levels() []logrus.Level {
+func (hook *prefixHook) Levels() []logrus.Level {
 	// 只有 INFO、WARN 级别，才会触发 Fire()
 	//return []logrus.Level{logrus.InfoLevel, logrus.WarnLevel}
 

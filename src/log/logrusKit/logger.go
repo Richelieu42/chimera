@@ -29,7 +29,7 @@ func NewLogger(options ...LoggerOption) *logrus.Logger {
 
 	// msgPrefix
 	if strKit.IsNotEmpty(opts.msgPrefix) {
-		hook := &defaultPrefixHook{prefix: opts.msgPrefix}
+		hook := &prefixHook{prefix: opts.msgPrefix}
 		logger.AddHook(hook)
 	}
 

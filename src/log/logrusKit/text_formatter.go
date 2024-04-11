@@ -1,12 +1,10 @@
 package logrusKit
 
 import (
-	"fmt"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 	"github.com/sirupsen/logrus"
 	"runtime"
-	"strings"
 )
 
 func NewDefaultTextFormatter() *logrus.TextFormatter {
@@ -50,23 +48,25 @@ func NewTextFormatter(timestampFormat string) *logrus.TextFormatter {
 		QuoteEmptyFields: true,
 
 		CallerPrettyfier: func(f *runtime.Frame) (funcName string, fileName string) {
-			s := strings.Split(f.Function, ".")
-			funcName = s[len(s)-1]
+			return GetLocation(f), ""
 
-			s1 := strKit.Split(f.File, "/")
-			length := len(s1)
-			if length >= 2 {
-				fileName = fmt.Sprintf("%s/%s:%d", s1[length-2], s1[length-1], f.Line)
-			} else {
-				fileName = fmt.Sprintf("%s:%d", f.File, f.Line)
-			}
-
-			// 把 file属性 整合到 func属性 里
-			funcName = fmt.Sprintf("%s(%s)", funcName, fileName)
-			// 不输出 file属性
-			fileName = ""
-
-			return funcName, fileName
+			//s := strings.Split(f.Function, ".")
+			//funcName = s[len(s)-1]
+			//
+			//s1 := strKit.Split(f.File, "/")
+			//length := len(s1)
+			//if length >= 2 {
+			//	fileName = fmt.Sprintf("%s/%s:%d", s1[length-2], s1[length-1], f.Line)
+			//} else {
+			//	fileName = fmt.Sprintf("%s:%d", f.File, f.Line)
+			//}
+			//
+			//// 把 file属性 整合到 func属性 里
+			//funcName = fmt.Sprintf("%s(%s)", funcName, fileName)
+			//// 不输出 file属性
+			//fileName = ""
+			//
+			//return funcName, fileName
 		},
 	}
 }

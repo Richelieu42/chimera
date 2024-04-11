@@ -43,4 +43,5 @@ func main() {
 	logger.Infof("Info %d", 1)
 	logger.Warnf("Warn %d", 2)
 	logger.Errorf("Error %d", 3)
+	logger.Panicf("Panic %d", 4)
 }
