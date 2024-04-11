@@ -7,7 +7,7 @@ import (
 
 // NewGzipMiddleware
 /*
-Deprecated: github.com/gin-contrib/gzip v1.0.0 不支持设置minContentLength.
+缺陷: github.com/gin-contrib/gzip v1.0.0 不支持设置minContentLength.
 
 PS:
 (1) 涉及多个服务（请求转发）的场景下，(a) 最外层的务使用gzip压缩;
