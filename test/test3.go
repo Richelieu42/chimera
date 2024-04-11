@@ -1,11 +1,11 @@
 package main
 
 import (
+	"fmt"
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
-
-	"github.com/rifflock/lfshook"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
-	hook := lfshook.NewHook()
+	fmt.Println(logrus.StandardLogger().Level.String())
 }
