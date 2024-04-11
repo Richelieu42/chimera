@@ -1,18 +1,37 @@
 package main
 
 import (
-	"fmt"
-	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
-	"time"
+	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
+	"github.com/sirupsen/logrus"
 )
 
+type hook struct {
+	prefix string
+}
+
+func (hook *hook) Fire(entry *logrus.Entry) error {
+	entry.Message += "==="
+
+	return nil
+}
+
+func (hook *hook) Levels() []logrus.Level {
+	// 只有 INFO、WARN 级别
+	return []logrus.Level{logrus.InfoLevel, logrus.WarnLevel}
+
+	//return logrus.AllLevels
+}
+
 func main() {
-	t := time.Now()
+	logger, err := logrusKit.NewFileLogger("_test.log")
+	if err != nil {
+		panic(err)
+	}
 
-	fmt.Println(timeKit.Format(t, timeKit.FormatNetwork))
-	fmt.Println(timeKit.Format(t.In(time.UTC), timeKit.FormatNetwork))
-	fmt.Println(timeKit.Format(t.In(timeKit.GMT), timeKit.FormatNetwork))
+	logger.AddHook(&hook{})
 
-	loc := time.FixedZone("GMT", 0)
-	fmt.Println(timeKit.Format(t.In(loc), timeKit.FormatNetwork))
+	logger.Debug("Debug")
+	logger.Info("Info")
+	logger.Warn("Warn")
+	logger.Error("Error")
 }
