@@ -20,8 +20,8 @@ type errorToConsoleHook struct {
 func (hook *errorToConsoleHook) Fire(entry *logrus.Entry) error {
 	// 输出到控制台
 	logrus.WithFields(logrus.Fields{
-		"location": GetLocation(entry.Caller),
-		"level":    entry.Level.String(),
+		"entryLocation": GetLocation(entry.Caller),
+		"entryLevel":    entry.Level.String(),
 	}).Error(entry.Message)
 
 	return nil
