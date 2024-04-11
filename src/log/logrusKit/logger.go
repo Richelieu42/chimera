@@ -41,6 +41,10 @@ func NewLogger(options ...LoggerOption) *logrus.Logger {
 }
 
 // NewFileLogger 输出到 文件(not rotatable).
+/*
+@param filePath (1) 如果文件不存在，会自动创建；
+				(2) 如果文件存在，会自动追加内容.
+*/
 func NewFileLogger(filePath string, options ...LoggerOption) (*logrus.Logger, error) {
 	file, err := fileKit.CreateInAppendMode(filePath)
 	if err != nil {
@@ -52,6 +56,10 @@ func NewFileLogger(filePath string, options ...LoggerOption) (*logrus.Logger, er
 }
 
 // NewFileAndStdoutLogger 同时输出到 文件(not rotatable) 和 os.Stdout.
+/*
+@param filePath (1) 如果文件不存在，会自动创建；
+				(2) 如果文件存在，会自动追加内容.
+*/
 func NewFileAndStdoutLogger(filePath string, options ...LoggerOption) (*logrus.Logger, error) {
 	f, err := fileKit.CreateInAppendMode(filePath)
 	if err != nil {
