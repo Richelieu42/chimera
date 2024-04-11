@@ -7,6 +7,8 @@ import (
 
 // NewGzipMiddleware1
 /*
+Deprecated: github.com/nanmu42/gzip 可能会截断长json（github.com/gin-contrib/gzip 则不会），导致前端解析失败.
+
 PS:
 (1) 涉及多个服务（请求转发）的场景下，(a) 最外层的务使用gzip压缩;
 								(b) 内层的服务不使用gzip压缩.
