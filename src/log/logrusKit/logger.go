@@ -46,8 +46,8 @@ func NewFileLogger(filePath string, options ...LoggerOption) (*logrus.Logger, er
 	if err != nil {
 		return nil, err
 	}
-
 	options = append(options, WithOutput(file))
+
 	return NewLogger(options...), nil
 }
 
@@ -58,8 +58,8 @@ func NewFileAndStdoutLogger(filePath string, options ...LoggerOption) (*logrus.L
 		return nil, err
 	}
 	output := ioKit.MultiWriter(f, os.Stdout)
-
 	options = append(options, WithOutput(output))
+
 	return NewLogger(options...), nil
 }
 
