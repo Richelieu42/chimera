@@ -9,7 +9,8 @@ import (
 
 // TestNewLfsHook
 /*
-DEBUG
+输出到文件: 	所有级别
+输出到控制台: ERROR、PANIC、FATAL
 */
 func TestNewLfsHook(t *testing.T) {
 	logger, err := NewFileLogger("_test_lfshook.log")
