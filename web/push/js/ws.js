@@ -107,3 +107,25 @@ function processArrayBuffer(data, typeStr) {
         println(`on message(binary, ${typeStr}, no gzip): ${text}`)
     }
 }
+
+{
+    document.getElementById("sendBtn").onclick = function () {
+
+        let text = document.getElementById("textToSend").value;
+        if (!text) {
+            alert("Message to send is empty.");
+            return;
+        }
+
+        if (!channel) {
+            alert("channel == null");
+            return;
+        }
+        if (channel.readyState !== 1){
+            alert(`Channel(readyState: ${channel.readyState}) isn't ready.`);
+        }
+
+        println(`[发送消息] text: ${text}`)
+        channel.send(text);
+    };
+}
