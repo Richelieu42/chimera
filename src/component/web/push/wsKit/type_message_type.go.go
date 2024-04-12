@@ -7,11 +7,11 @@ type messageType struct {
 }
 
 var (
-	MessageTypeText = messageType{
+	MessageTypeText = &messageType{
 		value: websocket.TextMessage,
 	}
 
-	MessageTypeBinary = messageType{
+	MessageTypeBinary = &messageType{
 		value: websocket.BinaryMessage,
 	}
 )

@@ -3,6 +3,7 @@ package wsKit
 import (
 	"github.com/gorilla/websocket"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
 	"net/http"
 	"time"
 )
@@ -31,7 +32,11 @@ func DefaultUpgrader() *websocket.Upgrader {
 @param msgType		消息类型
 @param pongInterval	pong的周期（<=0则不发送pong）
 */
-func NewProcessor(upgrader *websocket.Upgrader, idGenerator func() (string, error), listener pushKit.Listener, messageType messageType, pongInterval time.Duration) (*WsProcessor, error) {
+func NewProcessor(upgrader *websocket.Upgrader, idGenerator func() (string, error), listener pushKit.Listener, messageType *messageType, pongInterval time.Duration) (*WsProcessor, error) {
+	if err := interfaceKit.AssertNotNil(messageType, "messageType"); err != nil {
+		return nil, err
+	}
+
 	if err := pushKit.CheckSetup(); err != nil {
 		return nil, err
 	}
