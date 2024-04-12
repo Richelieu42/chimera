@@ -2,7 +2,6 @@ package gzipKit
 
 import (
 	"compress/gzip"
-	"github.com/gogf/gf/v2/encoding/gcompress"
 )
 
 const (
@@ -65,5 +64,5 @@ func (opts *gzipOptions) Compress(data []byte) ([]byte, error) {
 		return data, nil
 	}
 	// (2) 进行压缩
-	return gcompress.Gzip(data, opts.level)
+	return Compress(data, opts.level)
 }
