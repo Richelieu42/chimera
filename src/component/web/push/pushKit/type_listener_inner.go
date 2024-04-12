@@ -17,8 +17,9 @@ func (listener *innerListener) OnHandshake(w http.ResponseWriter, r *http.Reques
 	BindId(channel, channel.GetId())
 }
 
+// OnMessage 仅针对WebSocket连接
 func (listener *innerListener) OnMessage(channel Channel, messageType int, data []byte) {
-	// 仅针对WebSocket连接
+	// 响应 WebSocket客户端 发来的 "ping"
 	if bytesKit.Equals(data, PingData) {
 		if err := channel.Push(PongData); err != nil {
 			logger.WithError(err).Error("Fail to pong.")
