@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
+	"github.com/richelieu-yang/chimera/v3/src/compress/gzipKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 	"time"
@@ -58,6 +59,12 @@ func (channel *WsChannel) PushMessage(messageType messageType, data []byte) (err
 
 	// 是否推送失败？
 	failFlag := false
+
+	// test
+	data, err = gzipKit.Gzip(data)
+	if err != nil {
+		return err
+	}
 
 	/* 写锁 */
 	channel.RWMutex.LockFunc(func() {

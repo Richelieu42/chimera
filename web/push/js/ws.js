@@ -42,10 +42,12 @@ function connect(url) {
         let data = e.data;
 
         if (data instanceof ArrayBuffer) {
+            console.log(isGzipCompressed(data));
+
             // 方法1
-            let decoder = new TextDecoder();
-            let text = decoder.decode(data);
-            println("on message(binary, ArrayBuffer): " + text);
+            // let decoder = new TextDecoder();
+            // let text = decoder.decode(data);
+            // println("on message(binary, ArrayBuffer): " + text);
 
             // 方法2
             // let blob = new Blob([data]);
@@ -62,18 +64,6 @@ function connect(url) {
             // };
         } else if (data instanceof Blob) {
             console.log("TODO");
-
-            // // 方法1
-            // let text = await data.text();
-            // println("on message(binary, Blob): " + text);
-
-            // 方法2
-            // let reader = new FileReader();
-            // reader.readAsText(data, "UTF-8");
-            // reader.onload = () => {
-            //     var text = reader.result;
-            //     println("on message(binary, Blob): " + text);
-            // };
         } else if (typeof data === "string") {
             let text = e.data;
             println("on message(text): " + text);
@@ -96,4 +86,24 @@ function disconnect() {
 
     channel.close();
     channel = null;
+}
+
+/*
+ * 作用: 判断数据是否为GZIP压缩，用于判断是否需要解压缩
+ *
+ * @param data 待判断的数据，ArrayBuffer类型
+ */
+function isGzipCompressed(data) {
+    // 这里仅作为示例，实际判断逻辑需根据数据源和协议来确定
+    // 例如，检查数据头部的GZIP标识符（两个字节：0x1f 0x8b）
+    const view = new DataView(data);
+    return view.getUint8(0) === 0x1f && view.getUint8(1) === 0x8b;
+}
+
+// 示例函数：检查数据是否为JSON格式（实际实现可能需要根据数据结构或协议来确定）
+function isJsonData(binaryData) {
+    // 这里仅作为示例，实际判断逻辑需根据数据源和协议来确定
+    // 例如，检查数据头部是否有常见的JSON起始字符（如 '{' 或 '['）
+    const firstByte = new Uint8Array(binaryData)[0];
+    return firstByte === 0x7B || firstByte === 0x5B; // '{' or '[' in ASCII
 }
