@@ -19,12 +19,12 @@ type WsChannel struct {
 
 	conn        *websocket.Conn
 	messageType *MessageType
-	interval    *timeKit.Interval
+	//interval    *timeKit.Interval
 }
 
 func (channel *WsChannel) Initialize() error {
 	if channel.PongInterval > 0 {
-		channel.interval = timeKit.SetInterval(context.TODO(), func(t time.Time) {
+		channel.Interval = timeKit.SetInterval(context.TODO(), func(t time.Time) {
 			if err := channel.Push(pushKit.PongData); err != nil {
 				pushKit.GetDefaultLogger().WithError(err).Error("Fail to pong.")
 				return
@@ -36,8 +36,8 @@ func (channel *WsChannel) Initialize() error {
 
 // Dispose 仅是释放资源，不会关闭通道（应当先关闭通道，再释放资源）.
 func (channel *WsChannel) Dispose() {
-	channel.interval.Stop()
-	channel.interval = nil
+	channel.Interval.Stop()
+	channel.Interval = nil
 }
 
 func (channel *WsChannel) Push(data []byte) error {
@@ -100,16 +100,4 @@ func (channel *WsChannel) Close(reason string) (err error) {
 		err = channel.conn.Close()
 	}
 	return
-}
-
-func (channel *WsChannel) BindGroup(group string) {
-	pushKit.BindGroup(channel, group)
-}
-
-func (channel *WsChannel) BindUser(user string) {
-	pushKit.BindUser(channel, user)
-}
-
-func (channel *WsChannel) BindBsid(bsid string) {
-	pushKit.BindBsid(channel, bsid)
 }

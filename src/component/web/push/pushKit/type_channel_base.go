@@ -2,8 +2,11 @@ package pushKit
 
 import (
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
+	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 	"time"
 )
+
+var _ Channel = &BaseChannel{}
 
 // BaseChannel
 /*
@@ -32,6 +35,7 @@ type BaseChannel struct {
 	Listeners Listeners
 
 	PongInterval time.Duration
+	Interval     *timeKit.Interval
 }
 
 // IsClosed （读锁）
@@ -165,5 +169,18 @@ func (channel *BaseChannel) Equals(c Channel) bool {
 	if c == nil {
 		return false
 	}
+
 	return channel.GetId() == c.GetId()
+}
+
+func (channel *BaseChannel) BindGroup(group string) {
+	BindGroup(channel, group)
+}
+
+func (channel *BaseChannel) BindUser(user string) {
+	BindUser(channel, user)
+}
+
+func (channel *BaseChannel) BindBsid(bsid string) {
+	BindBsid(channel, bsid)
 }

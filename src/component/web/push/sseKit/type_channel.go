@@ -19,15 +19,15 @@ var (
 type SseChannel struct {
 	pushKit.BaseChannel
 
-	w        http.ResponseWriter
-	r        *http.Request
-	msgType  *messageType
-	interval *timeKit.Interval
+	w       http.ResponseWriter
+	r       *http.Request
+	msgType *messageType
+	//interval *timeKit.Interval
 }
 
 func (channel *SseChannel) Initialize() error {
 	if channel.PongInterval > 0 {
-		channel.interval = timeKit.SetInterval(context.TODO(), func(t time.Time) {
+		channel.Interval = timeKit.SetInterval(context.TODO(), func(t time.Time) {
 			if err := channel.Push(pushKit.PongData); err != nil {
 				pushKit.GetDefaultLogger().WithError(err).Error("Fail to pong.")
 				return
@@ -39,8 +39,8 @@ func (channel *SseChannel) Initialize() error {
 
 // Dispose 仅是释放资源，不会关闭通道（应当先关闭通道，再释放资源）.
 func (channel *SseChannel) Dispose() {
-	channel.interval.Stop()
-	channel.interval = nil
+	channel.Interval.Stop()
+	channel.Interval = nil
 }
 
 // Push （写锁）推送消息给客户端.
@@ -90,16 +90,4 @@ func (channel *SseChannel) Close(reason string) error {
 		channel.CloseCh <- closeInfo
 	}
 	return nil
-}
-
-func (channel *SseChannel) BindGroup(group string) {
-	pushKit.BindGroup(channel, group)
-}
-
-func (channel *SseChannel) BindUser(user string) {
-	pushKit.BindUser(channel, user)
-}
-
-func (channel *SseChannel) BindBsid(bsid string) {
-	pushKit.BindBsid(channel, bsid)
 }
