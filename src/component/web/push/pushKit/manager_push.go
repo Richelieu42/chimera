@@ -42,7 +42,7 @@ func PushToBsid(data []byte, bsid string) (err error) {
 	bsidMap.RLockFunc(func() {
 		channel := bsidMap.Map[bsid]
 		if channel == nil {
-			err = errorKit.Newf("No channel for bsid(%s)", bsid)
+			err = errorKit.Wrapf(NoSuitableChannelError, "bsid(%s)", bsid)
 			return
 		}
 		err = channel.Push(data)
@@ -59,7 +59,7 @@ func PushToUser(data []byte, user string, exceptBsids []string) (err error) {
 	userMap.RLockFunc(func() {
 		userSet := userMap.Map[user]
 		if userSet == nil {
-			err = errorKit.Newf("No channels for user(%s)", user)
+			err = errorKit.Wrapf(NoSuitableChannelError, "user(%s)", user)
 			return
 		}
 
@@ -94,7 +94,7 @@ func PushToGroup(data []byte, group string, exceptBsids []string) (err error) {
 	groupMap.RLockFunc(func() {
 		groupSet := groupMap.Map[group]
 		if groupSet == nil {
-			err = errorKit.Newf("No channels for group(%s)", group)
+			err = errorKit.Wrapf(NoSuitableChannelError, "group(%s)", group)
 			return
 		}
 
