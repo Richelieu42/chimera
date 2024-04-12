@@ -12,6 +12,10 @@ import (
 	"time"
 )
 
+var (
+	_ pushKit.Channel = &SseChannel{}
+)
+
 type SseChannel struct {
 	pushKit.BaseChannel
 

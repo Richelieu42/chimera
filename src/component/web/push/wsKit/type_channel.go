@@ -10,6 +10,10 @@ import (
 	"time"
 )
 
+var (
+	_ pushKit.Channel = &WsChannel{}
+)
+
 type WsChannel struct {
 	pushKit.BaseChannel
 
