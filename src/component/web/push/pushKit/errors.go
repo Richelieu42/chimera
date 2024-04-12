@@ -13,6 +13,7 @@ var (
 	NoSuitableChannelError = errorKit.Newf("no suitable channel")
 )
 
+// IsNoSuitableChannelError 推送返回的error，是否是因为不存在对应的channel？
 func IsNoSuitableChannelError(err error) bool {
 	if err == nil {
 		return false
