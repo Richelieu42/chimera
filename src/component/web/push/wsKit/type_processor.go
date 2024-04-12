@@ -10,6 +10,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"time"
 )
@@ -77,6 +78,11 @@ func (p *wsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	})
 
 	go func() {
+		// test
+		defer func() {
+			logrus.Info("[TEST] receive goroutine ends...")
+		}()
+
 		/* 接收WebSocket客户端发来的消息 */
 		for {
 			messageType, data, err := conn.ReadMessage()
