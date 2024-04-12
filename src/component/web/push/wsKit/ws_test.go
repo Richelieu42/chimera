@@ -1,6 +1,7 @@
 package wsKit
 
 import (
+	"github.com/richelieu-yang/chimera/v3/src/core/bytesKit"
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
 
 	"fmt"
@@ -11,7 +12,6 @@ import (
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"testing"
-	"time"
 )
 
 type demoListener struct {
@@ -31,6 +31,10 @@ func (l *demoListener) OnHandshake(w http.ResponseWriter, r *http.Request, chann
 }
 
 func (l *demoListener) OnMessage(channel pushKit.Channel, messageType int, data []byte) {
+	if bytesKit.Equals(data, pushKit.PingData) {
+		return
+	}
+
 	logrus.WithFields(logrus.Fields{
 		"clientIP": channel.GetClientIP(),
 		"type":     channel.GetType(),
@@ -79,7 +83,7 @@ func TestWs(t *testing.T) {
 	pushKit.MustSetUp(pool, nil)
 
 	/* WebSocket */
-	processor, err := NewProcessor(nil, nil, &demoListener{}, MessageTypeBinary, time.Second*3)
+	processor, err := NewProcessor(nil, nil, &demoListener{}, MessageTypeBinary, -1)
 	if err != nil {
 		logrus.Fatal(err)
 	}
