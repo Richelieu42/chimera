@@ -27,9 +27,6 @@ disconnectBtn.onclick = function () {
     disconnect();
 };
 
-/**
- * PS: EventSource 没有onclose事件.
- */
 function connect(url) {
     disconnect();
 
