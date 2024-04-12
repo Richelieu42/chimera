@@ -1,7 +1,6 @@
 package wsKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/core/bytesKit"
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
 
 	"fmt"
@@ -9,6 +8,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/component/web/ginKit"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/poolKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/bytesKit"
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"testing"
@@ -35,13 +35,19 @@ func (l *demoListener) OnMessage(channel pushKit.Channel, messageType int, data 
 		return
 	}
 
+	msgText := string(data)
+	if msgText == "close" {
+		_ = channel.Close("主动关闭")
+		return
+	}
+
 	logrus.WithFields(logrus.Fields{
 		"clientIP": channel.GetClientIP(),
 		"type":     channel.GetType(),
 		"id":       channel.GetId(),
 
 		"MessageType": messageType,
-		"text":        string(data),
+		"text":        msgText,
 	}).Info("OnMessage")
 
 	text := fmt.Sprintf("length of received message: %d", len(data))
