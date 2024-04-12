@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
-	"github.com/richelieu-yang/chimera/v3/src/compress/gzipKit"
-	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 	"time"
 )
@@ -46,13 +44,13 @@ func (channel *WsChannel) Push(data []byte) error {
 @param MessageType MessageTypeText || MessageTypeBinary
 */
 func (channel *WsChannel) PushMessage(messageType *MessageType, data []byte) (err error) {
-	switch messageType {
-	case MessageTypeText:
-	case MessageTypeBinary:
-	default:
-		err = errorKit.Newf("invalid message type(%d)", messageType)
-		return
-	}
+	//switch messageType {
+	//case MessageTypeText:
+	//case MessageTypeBinary:
+	//default:
+	//	err = errorKit.Newf("invalid message type(%d)", messageType)
+	//	return
+	//}
 	if channel.Closed {
 		return pushKit.ChannelClosedError
 	}
@@ -60,11 +58,11 @@ func (channel *WsChannel) PushMessage(messageType *MessageType, data []byte) (er
 	// 是否推送失败？
 	failFlag := false
 
-	// test
-	data, err = gzipKit.Compress(data)
-	if err != nil {
-		return err
-	}
+	//// test
+	//data, err = gzipKit.Compress(data)
+	//if err != nil {
+	//	return err
+	//}
 
 	/* 写锁 */
 	channel.RWMutex.LockFunc(func() {
