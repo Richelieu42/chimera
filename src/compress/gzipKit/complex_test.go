@@ -12,7 +12,7 @@ func TestCompressComplexly(t *testing.T) {
 
 	{
 		// 压缩
-		data, err := CompressComplexly([]byte(json), WithContentLengthThreshold(-1))
+		data, err := CompressComplexly([]byte(json), WithCompressThreshold(-1))
 		if err != nil {
 			panic(err)
 		}
@@ -23,7 +23,7 @@ func TestCompressComplexly(t *testing.T) {
 
 	{
 		// 不压缩（266 < 300）
-		data, err := CompressComplexly([]byte(json), WithContentLengthThreshold(300))
+		data, err := CompressComplexly([]byte(json), WithCompressThreshold(300))
 		if err != nil {
 			panic(err)
 		}

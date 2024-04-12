@@ -8,8 +8,8 @@ const (
 	// DefaultLevel 默认的压缩级别，速度最快
 	DefaultLevel = gzip.BestSpeed
 
-	// DefaultContentLengthThreshold 默认的最小压缩长度阈值
-	DefaultContentLengthThreshold = -1
+	// DefaultCompressThreshold 默认的最小压缩长度阈值
+	DefaultCompressThreshold = -1
 )
 
 type (
@@ -17,12 +17,12 @@ type (
 		// level 压缩级别
 		level int
 
-		// contentLengthThreshold 最小压缩长度阈值
+		// compressThreshold 压缩阈值
 		/*
 			单位: byte
 			<= 0: ALL压缩
 		*/
-		contentLengthThreshold int
+		compressThreshold int
 	}
 
 	GzipOption func(opts *gzipOptions)
@@ -30,8 +30,8 @@ type (
 
 func loadOptions(options ...GzipOption) *gzipOptions {
 	opts := &gzipOptions{
-		level:                  DefaultLevel,
-		contentLengthThreshold: DefaultContentLengthThreshold,
+		level:             DefaultLevel,
+		compressThreshold: DefaultCompressThreshold,
 	}
 
 	for _, option := range options {
@@ -47,10 +47,10 @@ func WithLevel(level int) GzipOption {
 	}
 }
 
-// WithContentLengthThreshold 设置: 最小压缩长度阈值
-func WithContentLengthThreshold(contentLengthThreshold int) GzipOption {
+// WithCompressThreshold 设置: 最小压缩长度阈值
+func WithCompressThreshold(compressThreshold int) GzipOption {
 	return func(opts *gzipOptions) {
-		opts.contentLengthThreshold = contentLengthThreshold
+		opts.compressThreshold = compressThreshold
 	}
 }
 
@@ -59,7 +59,7 @@ func (opts *gzipOptions) Compress(data []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	if len(data) < opts.contentLengthThreshold {
+	if len(data) < opts.compressThreshold {
 		// (1) 不进行压缩
 		return data, nil
 	}
