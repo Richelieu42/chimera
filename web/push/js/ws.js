@@ -38,35 +38,23 @@ function connect(url) {
     channel.onopen = function () {
         println("onopen");
     };
-    channel.onmessage = async function (e) {
+    channel.onmessage = function (e) {
         let data = e.data;
 
         if (data instanceof ArrayBuffer) {
-            console.log(isGzipCompressed(data));
-
-            // 方法1
-            // let decoder = new TextDecoder();
-            // let text = decoder.decode(data);
-            // println("on message(binary, ArrayBuffer): " + text);
-
-            // 方法2
-            // let blob = new Blob([data]);
-            // let text = await blob.text();
-            // println("on message(binary, ArrayBuffer): " + text);
-
-            // 方法3
-            // let blob = new Blob([data]);
-            // let reader = new FileReader();
-            // reader.readAsText(blob, "UTF-8");
-            // reader.onload = () => {
-            //     var text = reader.result;
-            //     println("on message(binary, ArrayBuffer): " + text);
-            // };
+            processArrayBuffer(data, "ArrayBuffer")
         } else if (data instanceof Blob) {
-            console.log("TODO");
+            let blob = data
+
+            let reader = new FileReader();
+            reader.onload = function (event) {
+                let ab = event.target.result;
+                processArrayBuffer(ab, "Blob");
+            };
+            reader.readAsArrayBuffer(blob);
         } else if (typeof data === "string") {
             let text = e.data;
-            println("on message(text): " + text);
+            println("on message(text, no gzip): " + text);
         }
     };
     channel.onerror = function (e) {
@@ -106,4 +94,19 @@ function isJsonData(binaryData) {
     // 例如，检查数据头部是否有常见的JSON起始字符（如 '{' 或 '['）
     const firstByte = new Uint8Array(binaryData)[0];
     return firstByte === 0x7B || firstByte === 0x5B; // '{' or '[' in ASCII
+}
+
+function processArrayBuffer(data, typeStr) {
+    if (isGzipCompressed(data)) {
+        // 解压数据（ArrayBuffer => Uint8Array）
+        let decompressedData = pako.inflate(new Uint8Array(data));
+
+        let decoder = new TextDecoder();
+        let text = decoder.decode(decompressedData);
+        println(`on message(binary, ${typeStr}, gzip): ${text}`)
+    } else {
+        let decoder = new TextDecoder();
+        let text = decoder.decode(data);
+        println(`on message(binary, ${typeStr}, gzip): ${text}`)
+    }
 }
