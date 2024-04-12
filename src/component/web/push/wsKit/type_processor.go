@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-type WsProcessor struct {
+type wsProcessor struct {
 	pushKit.Processor
 
 	// upgrader 是并发安全的
@@ -26,11 +26,11 @@ type WsProcessor struct {
 	pongInterval time.Duration
 }
 
-func (p *WsProcessor) ProcessWithGin(ctx *gin.Context) {
+func (p *wsProcessor) ProcessWithGin(ctx *gin.Context) {
 	p.Process(ctx.Writer, ctx.Request)
 }
 
-func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
+func (p *wsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	PolyfillWebSocketRequest(r)
 
 	// 先判断是不是websocket请求
@@ -108,7 +108,7 @@ func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (p *WsProcessor) newChannel(r *http.Request, conn *websocket.Conn, closeCh chan string) (pushKit.Channel, error) {
+func (p *wsProcessor) newChannel(r *http.Request, conn *websocket.Conn, closeCh chan string) (pushKit.Channel, error) {
 	id, err := p.idGenerator()
 	if err != nil {
 		return nil, errorKit.Wrapf(err, "fail to generate id with idGenerator")

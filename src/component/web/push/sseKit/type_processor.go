@@ -11,20 +11,20 @@ import (
 	"time"
 )
 
-type SseProcessor struct {
+type sseProcessor struct {
 	pushKit.Processor
 
 	idGenerator  func() (string, error)
 	listeners    pushKit.Listeners
-	msgType      messageType
+	msgType      *messageType
 	pongInterval time.Duration
 }
 
-func (p *SseProcessor) ProcessWithGin(ctx *gin.Context) {
+func (p *sseProcessor) ProcessWithGin(ctx *gin.Context) {
 	p.Process(ctx.Writer, ctx.Request)
 }
 
-func (p *SseProcessor) Process(w http.ResponseWriter, r *http.Request) {
+func (p *sseProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	if err := IsSseSupported(w, r); err != nil {
 		p.listeners.OnFailure(w, r, err.Error())
 		return
@@ -64,7 +64,7 @@ func (p *SseProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request, closeCh chan string) (pushKit.Channel, error) {
+func (p *sseProcessor) newChannel(w http.ResponseWriter, r *http.Request, closeCh chan string) (pushKit.Channel, error) {
 	id, err := p.idGenerator()
 	if err != nil {
 		return nil, errorKit.Wrapf(err, "fail to generate id with idGenerator")

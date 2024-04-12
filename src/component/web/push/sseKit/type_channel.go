@@ -17,7 +17,7 @@ type SseChannel struct {
 
 	w        http.ResponseWriter
 	r        *http.Request
-	msgType  messageType
+	msgType  *messageType
 	interval *timeKit.Interval
 }
 
@@ -45,7 +45,7 @@ func (channel *SseChannel) Push(data []byte) error {
 }
 
 // PushMessage （写锁）推送消息给客户端.
-func (channel *SseChannel) PushMessage(msgType messageType, data []byte) (err error) {
+func (channel *SseChannel) PushMessage(msgType *messageType, data []byte) (err error) {
 	var str string
 	switch msgType {
 	case MessageTypeEncode:

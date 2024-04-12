@@ -32,12 +32,12 @@ func DefaultUpgrader() *websocket.Upgrader {
 @param msgType		消息类型
 @param pongInterval	pong的周期（<=0则不发送pong）
 */
-func NewProcessor(upgrader *websocket.Upgrader, idGenerator func() (string, error), listener pushKit.Listener, messageType *messageType, pongInterval time.Duration) (*WsProcessor, error) {
-	if err := interfaceKit.AssertNotNil(messageType, "messageType"); err != nil {
+func NewProcessor(upgrader *websocket.Upgrader, idGenerator func() (string, error), listener pushKit.Listener, messageType *messageType, pongInterval time.Duration) (pushKit.Processor, error) {
+	if err := pushKit.CheckSetup(); err != nil {
 		return nil, err
 	}
 
-	if err := pushKit.CheckSetup(); err != nil {
+	if err := interfaceKit.AssertNotNil(messageType, "messageType"); err != nil {
 		return nil, err
 	}
 
@@ -52,7 +52,7 @@ func NewProcessor(upgrader *websocket.Upgrader, idGenerator func() (string, erro
 		return nil, err
 	}
 
-	return &WsProcessor{
+	return &wsProcessor{
 		upgrader:     upgrader,
 		idGenerator:  idGenerator,
 		listeners:    listeners,
