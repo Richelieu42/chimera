@@ -57,7 +57,7 @@ func (p *sseProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	//	p.listeners.OnClose(channel, "Connection closed")
 	case <-r.Context().Done():
 		if channel.SetClosed() {
-			p.listeners.OnClose(channel, "Context done")
+			p.listeners.OnClose(channel, "Context of request is done.")
 		}
 	case closeInfo := <-channel.GetCloseCh():
 		p.listeners.OnClose(channel, closeInfo)
