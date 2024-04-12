@@ -1,7 +1,6 @@
 package pushKit
 
 import (
-	"context"
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 	"time"
@@ -184,18 +183,6 @@ func (channel *BaseChannel) BindUser(user string) {
 
 func (channel *BaseChannel) BindBsid(bsid string) {
 	BindBsid(channel, bsid)
-}
-
-func (channel *BaseChannel) Initialize() error {
-	if channel.PongInterval > 0 {
-		channel.Interval = timeKit.SetInterval(context.TODO(), func(t time.Time) {
-			if err := channel.Push(PongData); err != nil {
-				GetDefaultLogger().WithError(err).Error("Fail to pong.")
-				return
-			}
-		}, channel.PongInterval)
-	}
-	return nil
 }
 
 func (channel *BaseChannel) Dispose() {

@@ -1,5 +1,10 @@
 package pushKit
 
+func (channel *BaseChannel) Initialize() error {
+	//TODO implement me
+	panic("implement me")
+}
+
 func (channel *BaseChannel) Push(data []byte) error {
 	//TODO implement me
 	panic("implement me")

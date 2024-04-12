@@ -1,12 +1,15 @@
 package sseKit
 
 import (
+	"context"
 	"encoding/base64"
 	"fmt"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v3/src/crypto/base64Kit"
+	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 	"github.com/richelieu-yang/chimera/v3/src/urlKit"
 	"net/http"
+	"time"
 )
 
 var (
@@ -20,6 +23,18 @@ type SseChannel struct {
 
 	w http.ResponseWriter
 	r *http.Request
+}
+
+func (channel *SseChannel) Initialize() error {
+	if channel.PongInterval > 0 {
+		channel.Interval = timeKit.SetInterval(context.TODO(), func(t time.Time) {
+			if err := channel.Push(pushKit.PongData); err != nil {
+				pushKit.GetDefaultLogger().WithError(err).Error("Fail to pong.")
+				return
+			}
+		}, channel.PongInterval)
+	}
+	return nil
 }
 
 // Push （写锁）推送消息给客户端.

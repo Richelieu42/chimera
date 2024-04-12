@@ -1,10 +1,12 @@
 package wsKit
 
 import (
+	"context"
 	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v3/src/compress/gzipKit"
+	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 	"time"
 )
 
@@ -18,6 +20,18 @@ type WsChannel struct {
 	msgType *MessageType
 
 	conn *websocket.Conn
+}
+
+func (channel *WsChannel) Initialize() error {
+	if channel.PongInterval > 0 {
+		channel.Interval = timeKit.SetInterval(context.TODO(), func(t time.Time) {
+			if err := channel.Push(pushKit.PongData); err != nil {
+				pushKit.GetDefaultLogger().WithError(err).Error("Fail to pong.")
+				return
+			}
+		}, channel.PongInterval)
+	}
+	return nil
 }
 
 func (channel *WsChannel) Push(data []byte) error {
@@ -57,10 +71,12 @@ func (channel *WsChannel) PushMessage(messageType *MessageType, data []byte) (er
 	if abortFlag {
 		return
 	}
-	// Closed == true 的情况下，推送消息失败（基本上就是连接断开了）
-	closeInfo := fmt.Sprintf("Fail to push because of error(%s)", err.Error())
-	if channel.SetClosed() {
-		channel.CloseCh <- closeInfo
+	if err != nil {
+		// Closed == true 的情况下，推送消息失败（基本上就是连接断开了）
+		closeInfo := fmt.Sprintf("Fail to push because of error(%s)", err.Error())
+		if channel.SetClosed() {
+			channel.CloseCh <- closeInfo
+		}
 	}
 	return
 }
