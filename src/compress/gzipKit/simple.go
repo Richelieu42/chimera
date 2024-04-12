@@ -19,15 +19,17 @@ import (
 //)
 
 var (
-	Gzip func(data []byte, level ...int) ([]byte, error) = gcompress.Gzip
+	Compress func(data []byte, level ...int) ([]byte, error) = gcompress.Gzip
 
+	Uncompress func(data []byte) ([]byte, error) = gcompress.UnGzip
+)
+
+var (
 	GzipFile func(srcFilePath, dstFilePath string, level ...int) (err error) = gcompress.GzipFile
 
 	GzipPathWriter func(filePath string, writer io.Writer, level ...int) error = gcompress.GzipPathWriter
 )
 
 var (
-	UnGzip func(data []byte) ([]byte, error) = gcompress.UnGzip
-
 	UnGzipFile func(srcFilePath, dstFilePath string) error = gcompress.UnGzipFile
 )

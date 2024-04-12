@@ -18,8 +18,8 @@ func TestEntire(t *testing.T) {
 	fmt.Println("compressed:", string(compressed))
 	fmt.Println(len(compressed))
 
-	// Decompress
-	decompressed, err := Decompress(compressed)
+	// Uncompress
+	decompressed, err := Uncompress(compressed)
 	if err != nil {
 		panic(err)
 	}

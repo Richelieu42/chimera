@@ -25,11 +25,11 @@ func Compress(data []byte) (compressed []byte, err error) {
 	return
 }
 
-// Decompress
+// Uncompress
 /*
 PS: 参考 github.com/andybalholm/brotli 中的 "example_test.go".
 */
-func Decompress(compressed []byte) (data []byte, err error) {
+func Uncompress(compressed []byte) (data []byte, err error) {
 	reader := brotli.NewReader(bytes.NewBuffer(compressed))
 	buf := bytes.NewBuffer(nil)
 	if _, err = io.Copy(buf, reader); err != nil {

@@ -61,7 +61,7 @@ func (channel *WsChannel) PushMessage(messageType messageType, data []byte) (err
 	failFlag := false
 
 	// test
-	data, err = gzipKit.Gzip(data)
+	data, err = gzipKit.Compress(data)
 	if err != nil {
 		return err
 	}
