@@ -1,6 +1,8 @@
 package wsKit
 
 import (
+	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
+
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/ginKit"
@@ -70,12 +72,11 @@ func TestWs(t *testing.T) {
 	engine.Use(ginKit.NewCorsMiddleware(nil))
 
 	/* 初始化poolKit */
-	pool, err := poolKit.NewAntPool(1000)
+	pool, err := poolKit.NewAntPool(1024)
 	if err != nil {
 		panic(err)
 	}
 	pushKit.MustSetUp(pool, nil)
-	//pushKit.MustSetUp(pool, nil, pushKit.WithWsPongInterval(-1))
 
 	/* WebSocket */
 	processor, err := NewProcessor(nil, nil, &demoListener{}, MessageTypeBinary, time.Second*3)
