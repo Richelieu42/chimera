@@ -22,7 +22,7 @@ type wsProcessor struct {
 
 	idGenerator  func() (string, error)
 	listeners    pushKit.Listeners
-	msgType      *messageType
+	msgType      *MessageType
 	pongInterval time.Duration
 }
 

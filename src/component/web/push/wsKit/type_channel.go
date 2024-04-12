@@ -15,7 +15,7 @@ type WsChannel struct {
 	pushKit.BaseChannel
 
 	conn        *websocket.Conn
-	messageType *messageType
+	messageType *MessageType
 	interval    *timeKit.Interval
 }
 
@@ -43,9 +43,9 @@ func (channel *WsChannel) Push(data []byte) error {
 
 // PushMessage 推送消息给客户端.
 /*
-@param messageType MessageTypeText || MessageTypeBinary
+@param MessageType MessageTypeText || MessageTypeBinary
 */
-func (channel *WsChannel) PushMessage(messageType *messageType, data []byte) (err error) {
+func (channel *WsChannel) PushMessage(messageType *MessageType, data []byte) (err error) {
 	switch messageType {
 	case MessageTypeText:
 	case MessageTypeBinary:

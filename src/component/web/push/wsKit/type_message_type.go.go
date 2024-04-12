@@ -2,16 +2,22 @@ package wsKit
 
 import "github.com/gorilla/websocket"
 
-type messageType struct {
+type MessageType struct {
 	value int
 }
 
 var (
-	MessageTypeText = &messageType{
+	MessageTypeText = &MessageType{
 		value: websocket.TextMessage,
 	}
 
-	MessageTypeBinary = &messageType{
+	MessageTypeBinary = &MessageType{
 		value: websocket.BinaryMessage,
 	}
 )
+
+func NewGzipMessageType() *MessageType {
+	return &MessageType{
+		value: websocket.BinaryMessage,
+	}
+}

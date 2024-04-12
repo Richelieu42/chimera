@@ -34,7 +34,7 @@ func (l *demoListener) OnMessage(channel pushKit.Channel, messageType int, data 
 		"type":     channel.GetType(),
 		"id":       channel.GetId(),
 
-		"messageType": messageType,
+		"MessageType": messageType,
 		"text":        string(data),
 	}).Info("OnMessage")
 
