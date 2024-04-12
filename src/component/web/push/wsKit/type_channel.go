@@ -29,9 +29,6 @@ func (channel *WsChannel) Push(data []byte) error {
 @param MessageType MessageTypeText || MessageTypeBinary
 */
 func (channel *WsChannel) PushMessage(messageType *MessageType, data []byte) (err error) {
-	// 是否推送失败？
-	failFlag := false
-
 	/* gzip压缩 */
 	if messageType.gzipConfig != nil {
 		data, err = gzipKit.CompressComplexly(data, gzipKit.WithLevel(messageType.gzipConfig.Level), gzipKit.WithCompressThreshold(messageType.gzipConfig.CompressThreshold))
@@ -44,25 +41,27 @@ func (channel *WsChannel) PushMessage(messageType *MessageType, data []byte) (er
 		return pushKit.ChannelClosedError
 	}
 
+	abortFlag := false
+
 	/* 写锁 */
 	channel.RWMutex.LockFunc(func() {
 		if channel.Closed {
 			err = pushKit.ChannelClosedError
+			abortFlag = true
 			return
 		}
 
 		err = channel.conn.WriteMessage(messageType.value, data)
-		failFlag = err != nil
 	})
 
-	if failFlag {
-		// 推送消息失败，基本上就是连接断开了
-		closeInfo := fmt.Sprintf("Fail to push because of error(%s)", err.Error())
-		if channel.SetClosed() {
-			channel.CloseCh <- closeInfo
-		}
+	if abortFlag {
+		return
 	}
-
+	// Closed == true 的情况下，推送消息失败（基本上就是连接断开了）
+	closeInfo := fmt.Sprintf("Fail to push because of error(%s)", err.Error())
+	if channel.SetClosed() {
+		channel.CloseCh <- closeInfo
+	}
 	return
 }
 
