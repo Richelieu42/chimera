@@ -42,7 +42,7 @@ type Channel interface {
 	BindUser(user string)
 	BindBsid(bsid string)
 
-	GetCloseCh() chan string
-
 	Equals(c Channel) bool
+
+	GetCloseCh() chan string
 }
