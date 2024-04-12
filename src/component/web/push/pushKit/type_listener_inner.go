@@ -21,7 +21,7 @@ func (listener *innerListener) OnMessage(channel Channel, messageType int, data 
 	// 仅针对WebSocket连接
 	if bytesKit.Equals(data, PingData) {
 		if err := channel.Push(PongData); err != nil {
-			logger.WithError(err).Error("Fail to pong")
+			logger.WithError(err).Error("Fail to pong.")
 			return
 		}
 	}
