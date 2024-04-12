@@ -107,6 +107,6 @@ function processArrayBuffer(data, typeStr) {
     } else {
         let decoder = new TextDecoder();
         let text = decoder.decode(data);
-        println(`on message(binary, ${typeStr}, gzip): ${text}`)
+        println(`on message(binary, ${typeStr}, no gzip): ${text}`)
     }
 }
