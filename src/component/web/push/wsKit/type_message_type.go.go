@@ -10,6 +10,7 @@ var (
 	MessageTypeText = messageType{
 		value: websocket.TextMessage,
 	}
+
 	MessageTypeBinary = messageType{
 		value: websocket.BinaryMessage,
 	}

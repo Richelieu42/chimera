@@ -61,9 +61,11 @@ function connect(url) {
             //     println("on message(binary, ArrayBuffer): " + text);
             // };
         } else if (data instanceof Blob) {
-            // 方法1
-            let text = await data.text();
-            println("on message(binary, Blob): " + text);
+            console.log("TODO");
+
+            // // 方法1
+            // let text = await data.text();
+            // println("on message(binary, Blob): " + text);
 
             // 方法2
             // let reader = new FileReader();
