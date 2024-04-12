@@ -1,27 +1,21 @@
 package main
 
 import (
-	"fmt"
-	"github.com/richelieu-yang/chimera/v3/src/compress/gzipKit"
+	"github.com/gin-contrib/gzip"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	json := `{"method":1,"data":{"text":"[127.0.0.1:8888, unknown, pulsar] Hello, id of this channel is [coc8tnh97i60icb4ajs0]."}}`
-	fmt.Println(len(json))
+	r := gin.Default()
 
-	{
-		data, err := gzipKit.Gzip([]byte(json), 1)
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println(len(data))
-	}
+	// 创建Gzip实例并设置阈值（例如，仅对大于1KB的响应进行压缩）
+	gz := gzip.Gzip(gzip.BestSpeed)
+	gz.MinLength = 1024 // 设置最小压缩长度阈值为1KB
 
-	{
-		data, err := gzipKit.Gzip([]byte(json), 9)
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println(len(data))
-	}
+	// 将Gzip中间件添加到Gin引擎中
+	r.Use(gz)
+
+	// ... 其他路由和中间件配置 ...
+
+	r.Run(":8080")
 }
