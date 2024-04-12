@@ -101,7 +101,7 @@ func (p *wsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	select {
 	case <-r.Context().Done():
 		if channel.SetClosed() {
-			p.listeners.OnClose(channel, "Context done")
+			p.listeners.OnClose(channel, "Context of request is done.")
 		}
 	case closeInfo := <-channel.GetCloseCh():
 		p.listeners.OnClose(channel, closeInfo)
