@@ -1,6 +1,9 @@
 package pushKit
 
-import "github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+import (
+	"errors"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+)
 
 var (
 	NotSetupError = errorKit.Newf("haven’t been set up correctly")
@@ -9,3 +12,11 @@ var (
 
 	NoSuitableChannelError = errorKit.Newf("no suitable channel")
 )
+
+func IsNoSuitableChannelError(err error) bool {
+	if err == nil {
+		return false
+	}
+
+	return errors.Is(err, NoSuitableChannelError)
+}

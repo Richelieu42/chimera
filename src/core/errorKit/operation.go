@@ -11,6 +11,8 @@ var (
 		reports whether any error in err's tree matches target.
 
 		PS: 支持第三方依赖 "github.com/gogf/gf/v2/errors/gerror".
+
+		@param target 可以为nil
 	*/
 	Is func(err, target error) bool = errors.Is
 
