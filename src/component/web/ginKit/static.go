@@ -45,9 +45,6 @@ func StaticFS(group *gin.RouterGroup, relativePath string, httpFs http.FileSyste
 		return err
 	}
 
-	var engine = gin.Default()
-	engine.LoadHTMLFiles()
-
 	group.StaticFS(relativePath, httpFs)
 	return nil
 }
