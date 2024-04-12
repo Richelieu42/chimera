@@ -133,8 +133,8 @@ func (p *wsProcessor) newChannel(r *http.Request, conn *websocket.Conn, closeCh 
 			Listeners:    p.listeners,
 			PongInterval: p.pongInterval,
 		},
-		conn:        conn,
-		messageType: p.msgType,
+		conn:    conn,
+		msgType: p.msgType,
 	}
 	return channel, nil
 }

@@ -1,12 +1,10 @@
 package wsKit
 
 import (
-	"context"
 	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v3/src/compress/gzipKit"
-	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 	"time"
 )
 
@@ -17,31 +15,13 @@ var (
 type WsChannel struct {
 	pushKit.BaseChannel
 
-	conn        *websocket.Conn
-	messageType *MessageType
-	//interval    *timeKit.Interval
-}
+	msgType *MessageType
 
-func (channel *WsChannel) Initialize() error {
-	if channel.PongInterval > 0 {
-		channel.Interval = timeKit.SetInterval(context.TODO(), func(t time.Time) {
-			if err := channel.Push(pushKit.PongData); err != nil {
-				pushKit.GetDefaultLogger().WithError(err).Error("Fail to pong.")
-				return
-			}
-		}, channel.PongInterval)
-	}
-	return nil
-}
-
-// Dispose 仅是释放资源，不会关闭通道（应当先关闭通道，再释放资源）.
-func (channel *WsChannel) Dispose() {
-	channel.Interval.Stop()
-	channel.Interval = nil
+	conn *websocket.Conn
 }
 
 func (channel *WsChannel) Push(data []byte) error {
-	return channel.PushMessage(channel.messageType, data)
+	return channel.PushMessage(channel.msgType, data)
 }
 
 // PushMessage 推送消息给客户端.
