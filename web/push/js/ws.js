@@ -81,7 +81,7 @@ function disconnect() {
 function isGzipCompressed(data) {
     // 这里仅作为示例，实际判断逻辑需根据数据源和协议来确定
     // 例如，检查数据头部的GZIP标识符（两个字节：0x1f 0x8b）
-    const view = new DataView(data);
+    let view = new DataView(data);
     return view.getUint8(0) === 0x1f && view.getUint8(1) === 0x8b;
 }
 
@@ -89,7 +89,7 @@ function isGzipCompressed(data) {
 function isJsonData(binaryData) {
     // 这里仅作为示例，实际判断逻辑需根据数据源和协议来确定
     // 例如，检查数据头部是否有常见的JSON起始字符（如 '{' 或 '['）
-    const firstByte = new Uint8Array(binaryData)[0];
+    let firstByte = new Uint8Array(binaryData)[0];
     return firstByte === 0x7B || firstByte === 0x5B; // '{' or '[' in ASCII
 }
 
@@ -110,7 +110,6 @@ function processArrayBuffer(data, typeStr) {
 
 {
     document.getElementById("sendBtn").onclick = function () {
-
         let text = document.getElementById("textToSend").value;
         if (!text) {
             alert("Message to send is empty.");
@@ -121,7 +120,7 @@ function processArrayBuffer(data, typeStr) {
             alert("channel == null");
             return;
         }
-        if (channel.readyState !== 1){
+        if (channel.readyState !== 1) {
             alert(`Channel(readyState: ${channel.readyState}) isn't ready.`);
         }
 
