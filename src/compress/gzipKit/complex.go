@@ -1,9 +1,7 @@
 package gzipKit
 
-// Compress
-/*
-最小压缩长度阈值
-*/
-func Compress(data []byte, level, contentLengthThreshold int) {
+func Compress(data []byte, options ...GzipOption) ([]byte, error) {
+	opts := loadOptions(options...)
 
+	return opts.Compress(data)
 }

@@ -1,7 +1,16 @@
 package gzipKit
 
+import (
+	"compress/gzip"
+	"github.com/gogf/gf/v2/encoding/gcompress"
+)
+
 const (
-	DefaultContentLengthThreshold = 256
+	// DefaultLevel 默认的压缩级别，速度最快
+	DefaultLevel = gzip.BestSpeed
+
+	// DefaultContentLengthThreshold 默认的最小压缩长度阈值
+	DefaultContentLengthThreshold = -1
 )
 
 type (
@@ -9,7 +18,11 @@ type (
 		// level 压缩级别
 		level int
 
-		// contentLengthThreshold 最小压缩长度阈值，单位: byte
+		// contentLengthThreshold 最小压缩长度阈值
+		/*
+			单位: byte
+			<= 0: ALL压缩
+		*/
 		contentLengthThreshold int
 	}
 
@@ -18,7 +31,7 @@ type (
 
 func loadOptions(options ...GzipOption) *gzipOptions {
 	opts := &gzipOptions{
-		level:                  1,
+		level:                  DefaultLevel,
 		contentLengthThreshold: DefaultContentLengthThreshold,
 	}
 
@@ -40,4 +53,17 @@ func WithContentLengthThreshold(contentLengthThreshold int) GzipOption {
 	return func(opts *gzipOptions) {
 		opts.contentLengthThreshold = contentLengthThreshold
 	}
+}
+
+func (opts *gzipOptions) Compress(data []byte) ([]byte, error) {
+	if err := AssertValidLevel(opts.level); err != nil {
+		return nil, err
+	}
+
+	if len(data) < opts.contentLengthThreshold {
+		// (1) 不进行压缩
+		return data, nil
+	}
+	// (2) 进行压缩
+	return gcompress.Gzip(data, opts.level)
 }
