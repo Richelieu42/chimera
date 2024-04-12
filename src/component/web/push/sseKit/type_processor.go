@@ -67,9 +67,9 @@ func (p *sseProcessor) Process(w http.ResponseWriter, r *http.Request) {
 func (p *sseProcessor) newChannel(w http.ResponseWriter, r *http.Request, closeCh chan string) (pushKit.Channel, error) {
 	id, err := p.idGenerator()
 	if err != nil {
-		return nil, errorKit.Wrapf(err, "fail to generate id with idGenerator")
+		return nil, errorKit.Wrapf(err, "fail to generate id")
 	}
-	if err := strKit.AssertNotBlank(id, "id"); err != nil {
+	if err := strKit.AssertNotEmpty(id, "id"); err != nil {
 		return nil, err
 	}
 

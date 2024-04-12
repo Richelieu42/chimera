@@ -111,9 +111,9 @@ func (p *wsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 func (p *wsProcessor) newChannel(r *http.Request, conn *websocket.Conn, closeCh chan string) (pushKit.Channel, error) {
 	id, err := p.idGenerator()
 	if err != nil {
-		return nil, errorKit.Wrapf(err, "fail to generate id with idGenerator")
+		return nil, errorKit.Wrapf(err, "fail to generate id")
 	}
-	if err := strKit.AssertNotBlank(id, "id"); err != nil {
+	if err := strKit.AssertNotEmpty(id, "id"); err != nil {
 		return nil, err
 	}
 
@@ -133,8 +133,8 @@ func (p *wsProcessor) newChannel(r *http.Request, conn *websocket.Conn, closeCh 
 			Listeners:    p.listeners,
 			PongInterval: p.pongInterval,
 		},
-		conn:    conn,
 		msgType: p.msgType,
+		conn:    conn,
 	}
 	return channel, nil
 }
