@@ -1,5 +1,3 @@
-// Package ginKit
-// 静态资源相关
 package ginKit
 
 import (
