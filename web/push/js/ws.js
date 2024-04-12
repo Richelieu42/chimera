@@ -27,23 +27,6 @@ disconnectBtn.onclick = function () {
     disconnect();
 };
 
-// Send Message
-{
-    document.getElementById("sendBtn").onclick = function () {
-        var message = document.getElementById("message").value;
-
-        if (!message) {
-            alert("Message to send is empty!");
-            return;
-        }
-        if (!channel || channel.readyState !== WebSocket.OPEN) {
-            alert("WebSocket isn't ready!");
-            return;
-        }
-        channel.send(message);
-    };
-}
-
 /**
  * PS: EventSource 没有onclose事件.
  */
@@ -51,31 +34,47 @@ function connect(url) {
     disconnect();
 
     channel = new WebSocket(url);
+    channel.binaryType = "arraybuffer"; // "arraybuffer" 或者 "blob"
     channel.onopen = function () {
         println("onopen");
     };
-    channel.onmessage = function (e) {
-        var data = e.data;
+    channel.onmessage = async function (e) {
+        let data = e.data;
 
         if (data instanceof ArrayBuffer) {
-            let blob = new Blob([data]), reader = new FileReader();
+            // 方法1
+            let decoder = new TextDecoder();
+            let text = decoder.decode(data);
+            println("on message(binary, ArrayBuffer): " + text);
 
-            reader.readAsText(blob, "UTF-8");
-            reader.onload = () => {
-                var text = reader.result;
-                println("on binary message: " + text);
-            };
+            // 方法2
+            // let blob = new Blob([data]);
+            // let text = await blob.text();
+            // println("on message(binary, ArrayBuffer): " + text);
+
+            // 方法3
+            // let blob = new Blob([data]);
+            // let reader = new FileReader();
+            // reader.readAsText(blob, "UTF-8");
+            // reader.onload = () => {
+            //     var text = reader.result;
+            //     println("on message(binary, ArrayBuffer): " + text);
+            // };
         } else if (data instanceof Blob) {
-            var reader = new FileReader();
+            // 方法1
+            let text = await data.text();
+            println("on message(binary, Blob): " + text);
 
-            reader.readAsText(data, "UTF-8");
-            reader.onload = () => {
-                var text = reader.result;
-                println("on binary message: " + text);
-            };
+            // 方法2
+            // let reader = new FileReader();
+            // reader.readAsText(data, "UTF-8");
+            // reader.onload = () => {
+            //     var text = reader.result;
+            //     println("on message(binary, Blob): " + text);
+            // };
         } else if (typeof data === "string") {
-            var text = e.data;
-            println("on text message: " + text);
+            let text = e.data;
+            println("on message(text): " + text);
         }
     };
     channel.onerror = function (e) {
