@@ -81,7 +81,7 @@ func (channel *SseChannel) Close(reason string) error {
 	channel.Listeners.BeforeClosedByBackend(channel, closeInfo)
 
 	if channel.SetClosed() {
-		channel.CloseCh <- closeInfo
+		channel.GetCloseCh() <- closeInfo
 	}
 	return nil
 }

@@ -75,7 +75,7 @@ func (channel *WsChannel) PushMessage(messageType *MessageType, data []byte) (er
 		// Closed == true 的情况下，推送消息失败（基本上就是连接断开了）
 		closeInfo := fmt.Sprintf("Fail to push because of error(%s)", err.Error())
 		if channel.SetClosed() {
-			channel.CloseCh <- closeInfo
+			channel.GetCloseCh() <- closeInfo
 		}
 	}
 	return
@@ -91,7 +91,7 @@ func (channel *WsChannel) Close(reason string) (err error) {
 	time.Sleep(time.Millisecond * 3)
 
 	if channel.SetClosed() {
-		channel.CloseCh <- closeInfo
+		channel.GetCloseCh() <- closeInfo
 		err = channel.conn.Close()
 	}
 	return
