@@ -17,8 +17,6 @@ const (
 
 	HeaderAllow = "Allow"
 
-	HeaderVary = "Vary"
-
 	HeaderCacheControl = "Cache-Control"
 
 	HeaderContentType = "Content-Type"
@@ -26,6 +24,8 @@ const (
 	HeaderConnection = "Connection"
 
 	HeaderSetCookie = "Set-Cookie"
+
+	HeaderVary = "Vary"
 
 	HeaderUpgrade = "Upgrade"
 
