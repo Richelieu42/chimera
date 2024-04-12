@@ -6,20 +6,20 @@ import (
 )
 
 type MessageType struct {
-	*gzipKit.Config
+	GzipConfig *gzipKit.Config
 
 	value int
 }
 
 var (
 	MessageTypeText = &MessageType{
-		Config: nil,
-		value:  websocket.TextMessage,
+		GzipConfig: nil,
+		value:      websocket.TextMessage,
 	}
 
 	MessageTypeBinary = &MessageType{
-		Config: nil,
-		value:  websocket.BinaryMessage,
+		GzipConfig: nil,
+		value:      websocket.BinaryMessage,
 	}
 )
 
@@ -33,7 +33,7 @@ func NewGzipMessageType(level, compressThreshold int) (*MessageType, error) {
 	}
 
 	return &MessageType{
-		Config: &gzipKit.Config{
+		GzipConfig: &gzipKit.Config{
 			Level:             level,
 			CompressThreshold: compressThreshold,
 		},

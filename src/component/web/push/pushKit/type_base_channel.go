@@ -60,6 +60,7 @@ func (channel *BaseChannel) SetClosed() (flag bool) {
 		if channel.Closed {
 			return
 		}
+
 		channel.Closed = true
 		flag = true
 	})
