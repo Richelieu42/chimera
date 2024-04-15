@@ -74,6 +74,7 @@ require (
 	github.com/otiai10/gosseract/v2 v2.4.1
 	github.com/panjf2000/ants/v2 v2.9.1
 	github.com/pelletier/go-toml/v2 v2.2.1
+	github.com/pierrec/lz4/v4 v4.1.21
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
 	github.com/redis/go-redis/v9 v9.5.1
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
@@ -251,7 +252,6 @@ require (
 	github.com/onsi/ginkgo/v2 v2.16.0 // indirect
 	github.com/paulmach/orb v0.10.0 // indirect
 	github.com/pierrec/lz4 v2.0.5+incompatible // indirect
-	github.com/pierrec/lz4/v4 v4.1.18 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/power-devops/perfstat v0.0.0-20221212215047-62379fc7944b // indirect
