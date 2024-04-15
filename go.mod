@@ -8,7 +8,7 @@ require (
 	github.com/andybalholm/brotli v1.1.0
 	github.com/apache/pulsar-client-go v0.12.1
 	github.com/apache/rocketmq-clients/golang/v5 v5.1.0-rc.1
-	github.com/bytedance/sonic v1.11.3
+	github.com/bytedance/sonic v1.11.4
 	github.com/coocood/freecache v1.2.4
 	github.com/dablelv/cyan v0.0.54
 	github.com/davidbyttow/govips/v2 v2.14.0
@@ -166,9 +166,9 @@ require (
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
-	github.com/chenzhuoyu/base64x v0.0.0-20230717121745-296ad89f973d // indirect
-	github.com/chenzhuoyu/iasm v0.9.1 // indirect
 	github.com/cloudflare/circl v1.3.7 // indirect
+	github.com/cloudwego/base64x v0.1.0 // indirect
+	github.com/cloudwego/iasm v0.0.9 // indirect
 	github.com/coreos/go-semver v0.3.1 // indirect
 	github.com/coreos/go-systemd/v22 v22.5.0 // indirect
 	github.com/danieljoos/wincred v1.1.2 // indirect
