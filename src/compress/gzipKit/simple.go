@@ -11,17 +11,17 @@ import (
 //	// Compress 压缩.
 //	Compress func(bs []byte) []byte = codec.Gzip
 //
-//	// Uncompress 解压缩.
+//	// Decompress 解压缩.
 //	/*
 //	   PS: 大小限制: 100MB.
 //	*/
-//	Uncompress func(bs []byte) ([]byte, error) = codec.Gunzip
+//	Decompress func(bs []byte) ([]byte, error) = codec.Gunzip
 //)
 
 var (
 	Compress func(data []byte, level ...int) ([]byte, error) = gcompress.Gzip
 
-	Uncompress func(data []byte) ([]byte, error) = gcompress.UnGzip
+	Decompress func(data []byte) ([]byte, error) = gcompress.UnGzip
 )
 
 var (
