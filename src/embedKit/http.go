@@ -6,18 +6,21 @@ import (
 	"net/http"
 )
 
-func ToHttpFileSystem(embedFs embed.FS) (http.FileSystem, error) {
-	return http.FS(embedFs), nil
+func ToHttpFileSystem(embedFs embed.FS) http.FileSystem {
+	return http.FS(embedFs)
 }
 
 // NewHttpFileSystem
 /*
 @param dir 子目录
 */
-func NewHttpFileSystem(embedFs embed.FS, dir string) (http.FileSystem, error) {
-	subFs, err := fs.Sub(embedFs, dir)
+func NewHttpFileSystem(embedFs embed.FS, dir string) (httpFs http.FileSystem, err error) {
+	var subFs fs.FS
+	subFs, err = fs.Sub(embedFs, dir)
 	if err != nil {
-		return nil, err
+		return
 	}
-	return http.FS(subFs), nil
+
+	httpFs = http.FS(subFs)
+	return
 }
