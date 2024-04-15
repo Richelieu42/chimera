@@ -25,7 +25,7 @@ var (
 
 // NewGzipMessageType
 /*
-PS: 此种情况下，必定使用 websocket.BinaryMessage.
+PS: 此种情况下，必定使用 websocket.BinaryMessage（二进制数据）.
 */
 func NewGzipMessageType(level, compressThreshold int) (*MessageType, error) {
 	if err := gzipKit.AssertValidLevel(level); err != nil {
