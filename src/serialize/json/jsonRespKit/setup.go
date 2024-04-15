@@ -22,6 +22,10 @@ func MustSetUp(respProvider RespProvider, options ...Option) {
 	}
 }
 
+// SetUp
+/*
+Deprecated: Use i18nRespKit instead.
+*/
 func SetUp(respProvider RespProvider, options ...Option) (err error) {
 	defer func() {
 		if err != nil {
