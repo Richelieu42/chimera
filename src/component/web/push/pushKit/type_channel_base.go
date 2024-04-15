@@ -186,6 +186,7 @@ func (channel *BaseChannel) BindBsid(bsid string) {
 }
 
 func (channel *BaseChannel) Dispose() {
+	// 停止主动pong
 	channel.Interval.Stop()
 	channel.Interval = nil
 }
