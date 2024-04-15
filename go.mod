@@ -29,9 +29,7 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-kratos/kratos/v2 v2.7.3
 	github.com/go-oauth2/oauth2/v4 v4.5.2
-	github.com/go-oauth2/redis/v4 v4.1.1
 	github.com/go-playground/validator/v10 v10.19.0
-	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-redsync/redsync/v4 v4.13.0
 	github.com/goccy/go-json v0.10.2
 	github.com/gogf/gf/v2 v2.7.0
