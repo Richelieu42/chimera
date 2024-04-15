@@ -6,11 +6,7 @@ import (
 	"net/http"
 )
 
-func NewHttpFileSystem1(embedFs embed.FS, dir string) (http.FileSystem, error) {
-	//subFs, err := fs.Sub(embedFs, dir)
-	//if err != nil {
-	//	return nil, err
-	//}
+func ToHttpFileSystem(embedFs embed.FS) (http.FileSystem, error) {
 	return http.FS(embedFs), nil
 }
 
