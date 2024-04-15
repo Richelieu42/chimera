@@ -9,9 +9,14 @@ type Channel interface {
 	IsClosed() (rst bool)
 	// SetClosed
 	/*
-		PS: 返回值如果为true，应当 调用Listeners.OnClose() || 向closeCh发送数据.
+		PS: 返回值如果为true，应当 向closeCh发送数据 || 调用Listeners.OnClose().
 	*/
 	SetClosed() (flag bool)
+	// GetCloseCh 获取关闭通道.
+	/*
+		PS: 只有 调用SetClosed() && 返回值为true 的情况下，才能向通道中写数据.
+	*/
+	GetCloseCh() chan string
 
 	// Initialize 初始化Channel.
 	Initialize() error
@@ -43,6 +48,4 @@ type Channel interface {
 	BindBsid(bsid string)
 
 	Equals(c Channel) bool
-
-	GetCloseCh() chan string
 }

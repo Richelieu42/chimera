@@ -71,6 +71,14 @@ func (channel *BaseChannel) SetClosed() (flag bool) {
 	return
 }
 
+// GetCloseCh
+/*
+	PS: 只有 调用SetClosed() && 返回值为true 的情况下，才能向通道中写数据.
+*/
+func (channel *BaseChannel) GetCloseCh() chan string {
+	return channel.CloseCh
+}
+
 func (channel *BaseChannel) GetClientIP() string {
 	return channel.ClientIP
 }
@@ -158,10 +166,6 @@ func (channel *BaseChannel) SetData(data interface{}) {
 
 func (channel *BaseChannel) ClearData() {
 	channel.SetData(nil)
-}
-
-func (channel *BaseChannel) GetCloseCh() chan string {
-	return channel.CloseCh
 }
 
 // Equals 根据 id 判断是否相等.
