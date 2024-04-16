@@ -14,28 +14,14 @@ var (
 	NewReader func(src io.Reader) *brotli.Reader = brotli.NewReader
 )
 
-func Compress(data []byte) (compressed []byte, err error) {
-	// 默认压缩级别: 6
-	return CompressWithLevel(data, LevelDefaultCompression)
-}
-
-// CompressWithLevel
+// Compress
 /*
 PS: 参考 github.com/andybalholm/brotli 中的 "example_test.go".
 */
-func CompressWithLevel(data []byte, level int) (compressed []byte, err error) {
-	buf := bytes.NewBuffer(nil)
+func Compress(data []byte, options ...Lz4Option) (compressed []byte, err error) {
+	opts := loadOptions(options...)
 
-	brWriter := NewWriterWithLevel(buf, level)
-	_, err = brWriter.Write(data)
-	if err != nil {
-		return
-	}
-	if err = brWriter.Close(); err != nil {
-		return
-	}
-	compressed = buf.Bytes()
-	return
+	return opts.Compress(data)
 }
 
 // Decompress
