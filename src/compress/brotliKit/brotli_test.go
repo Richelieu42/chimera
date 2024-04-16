@@ -19,7 +19,7 @@ Hello, World! This is a sample byte slice to be compressed using LZ4.
 	fmt.Println(len(data))
 
 	// Compress
-	compressed, err := Compress(data)
+	compressed, err := CompressWithLevel(data, 6)
 	if err != nil {
 		panic(err)
 	}
@@ -27,8 +27,8 @@ Hello, World! This is a sample byte slice to be compressed using LZ4.
 	fmt.Println(len(compressed))
 	fmt.Println("---")
 
-	// Uncompress
-	decompressed, err := Uncompress(compressed)
+	// Decompress
+	decompressed, err := Decompress(compressed)
 	if err != nil {
 		panic(err)
 	}
