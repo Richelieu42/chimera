@@ -40,11 +40,16 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, opts *ginOpt
 	// gzip
 	/*
 		PS:
-		(1) 必须在 recoveryMiddleware 前面，为了万无一失还是放在最前面吧；
+		(1) 必须在 recoveryMiddleware 前面，为了万无一失还是放在 最前面 吧；
 		(2) gzip会使得响应头中的 Content-Length 不生效.
 	*/
 	gc := config.Gzip
 	if gc != nil {
+		if sliceKit.IsEmpty(gc.ExcludedExtensions) {
+			// 默认值
+			gc.ExcludedExtensions = []string{".png", ".gif", ".jpeg", ".jpg", ".webp"}
+		}
+
 		gzipMiddleware := NewGzipMiddleware(gc.Level,
 			gzip.WithExcludedExtensions(gc.ExcludedExtensions),
 			gzip.WithExcludedPaths(gc.ExcludedPaths),
