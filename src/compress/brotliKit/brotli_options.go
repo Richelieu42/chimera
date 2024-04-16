@@ -45,11 +45,15 @@ func WithCompressThreshold(compressThreshold int) Lz4Option {
 }
 
 func (opts *lz4Options) Compress(data []byte) ([]byte, error) {
-	if len(data) < opts.compressThreshold {
-		// 不压缩
-		return data, nil
+	if err := AssertValidLevel(opts.level); err != nil {
+		return nil, err
 	}
 
+	if len(data) < opts.compressThreshold {
+		// (1) 不压缩
+		return data, nil
+	}
+	// (2) 压缩
 	buf := bytes.NewBuffer(nil)
 	brWriter := NewWriterWithLevel(buf, opts.level)
 	if _, err := brWriter.Write(data); err != nil {

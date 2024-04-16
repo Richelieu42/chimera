@@ -18,8 +18,18 @@ import (
 //	Decompress func(bs []byte) ([]byte, error) = codec.Gunzip
 //)
 
+// Compress
+/*
+PS: 不涉及 compressThreshold 的话，建议直接使用 Compress.
+*/
+func Compress(data []byte, options ...GzipOption) ([]byte, error) {
+	opts := loadOptions(options...)
+
+	return opts.Compress(data)
+}
+
 var (
-	Compress func(data []byte, level ...int) ([]byte, error) = gcompress.Gzip
+	//Compress func(data []byte, level ...int) ([]byte, error) = gcompress.Gzip
 
 	Decompress func(data []byte) ([]byte, error) = gcompress.UnGzip
 )

@@ -45,7 +45,7 @@ func (channel *WsChannel) Push(data []byte) error {
 func (channel *WsChannel) PushMessage(messageType *MessageType, data []byte) (err error) {
 	/* gzip压缩 */
 	if messageType.gzipConfig != nil {
-		data, err = gzipKit.CompressComplexly(data, gzipKit.WithLevel(messageType.gzipConfig.Level), gzipKit.WithCompressThreshold(messageType.gzipConfig.CompressThreshold))
+		data, err = gzipKit.Compress(data, gzipKit.WithLevel(messageType.gzipConfig.Level), gzipKit.WithCompressThreshold(messageType.gzipConfig.CompressThreshold))
 		if err != nil {
 			return err
 		}
