@@ -11,7 +11,7 @@ const (
 
 // IsValidLevel
 /*
-@param level 有效范围: [-2, 9]
+@param level 有效范围: [0, 11]
 */
 func IsValidLevel(level int) bool {
 	return level >= LevelBestSpeed && level <= LevelBestCompression
