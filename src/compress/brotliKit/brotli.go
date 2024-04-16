@@ -6,6 +6,12 @@ import (
 	"io"
 )
 
+var (
+	NewWriter func(dst io.Writer) *brotli.Writer = brotli.NewWriter
+
+	NewReader func(src io.Reader) *brotli.Reader = brotli.NewReader
+)
+
 // Compress
 /*
 PS: 参考 github.com/andybalholm/brotli 中的 "example_test.go".
@@ -13,12 +19,12 @@ PS: 参考 github.com/andybalholm/brotli 中的 "example_test.go".
 func Compress(data []byte) (compressed []byte, err error) {
 	buf := bytes.NewBuffer(nil)
 
-	writer := brotli.NewWriter(buf)
-	_, err = writer.Write(data)
+	brWriter := brotli.NewWriter(buf)
+	_, err = brWriter.Write(data)
 	if err != nil {
 		return
 	}
-	if err = writer.Close(); err != nil {
+	if err = brWriter.Close(); err != nil {
 		return
 	}
 	compressed = buf.Bytes()
@@ -30,9 +36,9 @@ func Compress(data []byte) (compressed []byte, err error) {
 PS: 参考 github.com/andybalholm/brotli 中的 "example_test.go".
 */
 func Uncompress(compressed []byte) (data []byte, err error) {
-	reader := brotli.NewReader(bytes.NewBuffer(compressed))
+	brReader := brotli.NewReader(bytes.NewBuffer(compressed))
 	buf := bytes.NewBuffer(nil)
-	if _, err = io.Copy(buf, reader); err != nil {
+	if _, err = io.Copy(buf, brReader); err != nil {
 		return
 	}
 	data = buf.Bytes()

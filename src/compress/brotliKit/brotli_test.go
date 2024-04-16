@@ -7,7 +7,15 @@ import (
 )
 
 func TestEntire(t *testing.T) {
-	data := []byte("Don't communicate by sharing memory, share memory by communicating.Don't communicate by sharing memory, share memory by communicating.Don't communicate by sharing memory, share memory by communicating.")
+	data := []byte(`===
+Hello, World! This is a sample byte slice to be compressed using LZ4.
+Hello, World! This is a sample byte slice to be compressed using LZ4.
+Hello, World! This is a sample byte slice to be compressed using LZ4.
+Hello, World! This is a sample byte slice to be compressed using LZ4.
+Hello, World! This is a sample byte slice to be compressed using LZ4.
+Hello, World! This is a sample byte slice to be compressed using LZ4.
+Hello, World! This is a sample byte slice to be compressed using LZ4.
+---`)
 	fmt.Println(len(data))
 
 	// Compress
@@ -17,6 +25,7 @@ func TestEntire(t *testing.T) {
 	}
 	fmt.Println("compressed:", string(compressed))
 	fmt.Println(len(compressed))
+	fmt.Println("---")
 
 	// Uncompress
 	decompressed, err := Uncompress(compressed)
