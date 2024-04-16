@@ -2,7 +2,7 @@ package ioKit
 
 import "io"
 
-// Copy 从 源src 向 目标dst 复制数据.
+// Copy 读取 io.Reader实例 的数据并写入 io.Writer实例.
 /*
 复制会持续进行直到 src 没有更多的数据可读（即 src.Read() 返回 io.EOF 错误），或者发生错误.
 
@@ -10,7 +10,8 @@ PS:
 (1) 适用场景: 当不需要限制复制数据量时，直接使用 io.Copy 即可;
 (2) 会"读"reader.
 
-@param dst 实现了 io.Writer 接口的对象
+@param dst 	(1) 实现了 io.Writer 接口的对象
+			(2) 一般是 *bytes.Buffer 类型
 @param src 实现了 io.Reader 接口的对象，如文件、网络连接或字节缓冲
 @return written	表示实际复制的数据量（以字节为单位）
 @return err		在复制过程中遇到的第一个非 EOF 错误
