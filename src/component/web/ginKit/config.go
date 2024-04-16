@@ -54,6 +54,11 @@ type (
 
 	GzipConfig struct {
 		Level int `json:"level" yaml:"level" validate:"min=-1,max=9"`
+
 		//MinContentLength int64 `json:"minContentLength" yaml:"minContentLength" validate:"gt=0"`
+
+		ExcludedExtensions   []string `json:"excludedExtensions" yaml:"excludedExtensions"`
+		ExcludedPaths        []string `json:"excludedPaths" yaml:"excludedPaths"`
+		ExcludedPathsRegexps []string `json:"excludedPathsRegexps" yaml:"excludedPathsRegexps"`
 	}
 )

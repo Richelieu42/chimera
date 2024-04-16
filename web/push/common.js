@@ -5,7 +5,7 @@ var urlInput = document.getElementById("url"),
 
 init();
 
-function init(pre) {
+function init() {
     var url = localStorage[prefix + "url"] || "",
         group = localStorage[prefix + "group"] || "",
         user = localStorage[prefix + "user"] || "",
