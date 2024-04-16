@@ -50,7 +50,7 @@ func (l *demoListener) OnMessage(channel pushKit.Channel, messageType int, data 
 		"text":        msgText,
 	}).Info("OnMessage")
 
-	text := fmt.Sprintf("length of received message: %d", len(data))
+	text := fmt.Sprintf("Receive a message: %s", string(data))
 	if err := channel.Push([]byte(text)); err != nil {
 		logrus.WithError(err).Error("Fail to push when on message.")
 		return
@@ -89,7 +89,23 @@ func TestWs(t *testing.T) {
 	pushKit.MustSetUp(pool, nil)
 
 	/* WebSocket */
-	processor, err := NewProcessor(nil, nil, &demoListener{}, MessageTypeBinary, -1)
+	/* (1) brotli压缩 */
+	//msgType, err := NewBrotliMessageType(6, 128)
+	//if err != nil {
+	//	logrus.Fatal(err)
+	//}
+	//processor, err := NewProcessor(nil, nil, &demoListener{}, msgType, -1)
+
+	/* (2) gzip压缩 */
+	msgType, err := NewGzipMessageType(6, 128)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	processor, err := NewProcessor(nil, nil, &demoListener{}, msgType, -1)
+
+	/* (3) 二进制数据 */
+	//processor, err := NewProcessor(nil, nil, &demoListener{}, MessageTypeBinary, -1)
+
 	if err != nil {
 		logrus.Fatal(err)
 	}
