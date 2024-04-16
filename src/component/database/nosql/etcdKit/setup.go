@@ -17,8 +17,8 @@ import (
 var client *clientv3.Client
 var setupOnce sync.Once
 
-func MustSetUp(config *Config) {
-	if err := setUp(config); err != nil {
+func MustSetUp(config *Config, logPath string) {
+	if err := setUp(config, logPath); err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
@@ -30,8 +30,10 @@ TODO: 可以参考 go-zero 中 registry.go 的 internal.DialClient.
 
 PS:
 (1) 如果 Endpoints 无效，会返回error(context.DeadlineExceeded).
+
+@param logPath 为空则输出到控制台
 */
-func setUp(config *Config) (err error) {
+func setUp(config *Config, logPath string) (err error) {
 	if err = config.Check(); err != nil {
 		return
 	}
@@ -39,9 +41,9 @@ func setUp(config *Config) (err error) {
 	setupOnce.Do(func() {
 		/* etcd客户端日志输出 */
 		var logger *zap.Logger
-		if strKit.IsNotEmpty(config.LogPath) {
+		if strKit.IsNotEmpty(logPath) {
 			var writer io.Writer
-			writer, err = fileKit.CreateInAppendMode(config.LogPath)
+			writer, err = fileKit.CreateInAppendMode(logPath)
 			if err != nil {
 				return
 			}

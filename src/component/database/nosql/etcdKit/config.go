@@ -9,8 +9,6 @@ import (
 type (
 	Config struct {
 		Endpoints []string `json:"endpoints" yaml:"endpoints"`
-		// LogPath etcd客户端的日志输出（默认: 输出到控制台）
-		LogPath string `json:"logPath,optional" yaml:"logPath"`
 	}
 )
 
