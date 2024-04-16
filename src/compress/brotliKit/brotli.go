@@ -42,14 +42,18 @@ func CompressWithLevel(data []byte, level int) (compressed []byte, err error) {
 /*
 PS: 参考 github.com/andybalholm/brotli 中的 "example_test.go".
 */
-func Decompress(compressed []byte) (data []byte, err error) {
-	//brReader := brotli.NewReader(bytes.NewBuffer(compressed))
+func Decompress(compressed []byte) ([]byte, error) {
+	// brReader := brotli.NewReader(bytes.NewBuffer(compressed))
 
-	brReader := brotli.NewReader(bytes.NewReader(compressed))
+	brReader := NewReader(bytes.NewReader(compressed))
+
+	/* 方法1 */
 	buf := bytes.NewBuffer(nil)
-	if _, err = io.Copy(buf, brReader); err != nil {
-		return
+	if _, err := io.Copy(buf, brReader); err != nil {
+		return nil, err
 	}
-	data = buf.Bytes()
-	return
+	return buf.Bytes(), nil
+
+	/* 方法2 */
+	//return io.ReadAll(brReader)
 }
