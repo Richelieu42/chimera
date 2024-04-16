@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
+	"github.com/richelieu-yang/chimera/v3/src/compress/brotliKit"
 	"github.com/richelieu-yang/chimera/v3/src/compress/gzipKit"
 	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 	"time"
@@ -43,9 +44,15 @@ func (channel *WsChannel) Push(data []byte) error {
 @param MessageType MessageTypeText || MessageTypeBinary
 */
 func (channel *WsChannel) PushMessage(messageType *MessageType, data []byte) (err error) {
-	/* gzip压缩 */
 	if messageType.gzipConfig != nil {
+		/* gzip压缩 */
 		data, err = gzipKit.Compress(data, gzipKit.WithLevel(messageType.gzipConfig.Level), gzipKit.WithCompressThreshold(messageType.gzipConfig.CompressThreshold))
+		if err != nil {
+			return err
+		}
+	} else if messageType.brotliConfig != nil {
+		/* brotli压缩 */
+		data, err = brotliKit.Compress(data, brotliKit.WithLevel(messageType.brotliConfig.Level), brotliKit.WithCompressThreshold(messageType.brotliConfig.CompressThreshold))
 		if err != nil {
 			return err
 		}

@@ -5,27 +5,11 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/compress/gzipKit"
 )
 
-type MessageType struct {
-	gzipConfig *gzipKit.Config
-
-	value int
-}
-
-var (
-	MessageTypeText = &MessageType{
-		gzipConfig: nil,
-		value:      websocket.TextMessage,
-	}
-
-	MessageTypeBinary = &MessageType{
-		gzipConfig: nil,
-		value:      websocket.BinaryMessage,
-	}
-)
-
 // NewGzipMessageType
 /*
 PS: 此种情况下，必定使用 websocket.BinaryMessage（二进制数据）.
+
+@param compressThreshold 压缩阈值，单位: byte
 */
 func NewGzipMessageType(level, compressThreshold int) (*MessageType, error) {
 	if err := gzipKit.AssertValidLevel(level); err != nil {
@@ -33,10 +17,11 @@ func NewGzipMessageType(level, compressThreshold int) (*MessageType, error) {
 	}
 
 	return &MessageType{
+		value: websocket.BinaryMessage,
 		gzipConfig: &gzipKit.Config{
 			Level:             level,
 			CompressThreshold: compressThreshold,
 		},
-		value: websocket.BinaryMessage,
+		brotliConfig: nil,
 	}, nil
 }
