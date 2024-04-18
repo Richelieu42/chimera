@@ -89,23 +89,25 @@ func TestWs(t *testing.T) {
 	pushKit.MustSetUp(pool, nil)
 
 	/* WebSocket */
-	/* (1) brotli压缩 */
-	//msgType, err := NewBrotliMessageType(6, 128)
+	/* (1) 纯文本 */
+	//msgType := MessageTypeText
+
+	/* (2) 二进制（不压缩） */
+	//msgType := MessageTypeText
+
+	/* (3) 二进制（gzip压缩） */
+	//msgType, err := NewGzipMessageType(6, 128)
 	//if err != nil {
 	//	logrus.Fatal(err)
 	//}
-	//processor, err := NewProcessor(nil, nil, &demoListener{}, msgType, -1)
 
-	/* (2) gzip压缩 */
-	msgType, err := NewGzipMessageType(6, 128)
+	/* (4) 二进制（brotli压缩） */
+	msgType, err := NewBrotliMessageType(6, -1)
 	if err != nil {
 		logrus.Fatal(err)
 	}
+
 	processor, err := NewProcessor(nil, nil, &demoListener{}, msgType, -1)
-
-	/* (3) 二进制数据 */
-	//processor, err := NewProcessor(nil, nil, &demoListener{}, MessageTypeBinary, -1)
-
 	if err != nil {
 		logrus.Fatal(err)
 	}
