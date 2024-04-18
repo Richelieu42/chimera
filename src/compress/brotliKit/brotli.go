@@ -16,7 +16,9 @@ var (
 
 // Compress
 /*
-PS: 参考 github.com/andybalholm/brotli 中的 "example_test.go".
+PS:
+(1) 参考 github.com/andybalholm/brotli 中的 "example_test.go".
+(2) 前端的解压，可以参考 notes/_Vue3Projects/ws-client 中的 BrotliKit.
 */
 func Compress(data []byte, options ...Lz4Option) (compressed []byte, err error) {
 	opts := loadOptions(options...)

@@ -20,7 +20,7 @@ import (
 
 // Compress
 /*
-PS: 不涉及 compressThreshold 的话，建议直接使用 Compress.
+PS: 前端的解压，可以参考 notes/_Vue3Projects/ws-client 中的 GzipKit.
 */
 func Compress(data []byte, options ...GzipOption) ([]byte, error) {
 	opts := loadOptions(options...)
