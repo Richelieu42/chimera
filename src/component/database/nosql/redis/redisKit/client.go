@@ -161,5 +161,14 @@ func newClusterOptions(config *Config) (*redis.UniversalOptions, error) {
 
 	opts := newBaseOptions(config)
 	opts.Addrs = c.Addrs
+
+	opts.ReadOnly = false
+
+	/*
+		RouteByLatency 和 RouteRandomly 互斥.
+	*/
+	opts.RouteByLatency = true
+	opts.RouteRandomly = !opts.RouteByLatency
+
 	return opts, nil
 }
