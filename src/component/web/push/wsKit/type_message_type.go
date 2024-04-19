@@ -13,6 +13,10 @@ type MessageType struct {
 	brotliConfig *brotliKit.Config
 }
 
+func (msgType *MessageType) String() {
+
+}
+
 var (
 	MessageTypeText = &MessageType{
 		value:        websocket.TextMessage,
