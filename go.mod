@@ -8,7 +8,7 @@ require (
 	github.com/andybalholm/brotli v1.1.0
 	github.com/apache/pulsar-client-go v0.12.1
 	github.com/apache/rocketmq-clients/golang/v5 v5.1.0-rc.1
-	github.com/bytedance/sonic v1.11.4
+	github.com/bytedance/sonic v1.11.5
 	github.com/coocood/freecache v1.2.4
 	github.com/dablelv/cyan v0.0.54
 	github.com/davidbyttow/govips/v2 v2.14.0
@@ -34,7 +34,7 @@ require (
 	github.com/goccy/go-json v0.10.2
 	github.com/gogf/gf/v2 v2.7.0
 	github.com/golang-jwt/jwt/v5 v5.2.1
-	github.com/golang-module/carbon/v2 v2.3.10
+	github.com/golang-module/carbon/v2 v2.3.12
 	github.com/google/go-cmp v0.6.0
 	github.com/google/uuid v1.6.0
 	github.com/google/wire v0.6.0
@@ -164,12 +164,13 @@ require (
 	github.com/bits-and-blooms/bitset v1.4.0 // indirect
 	github.com/boltdb/bolt v1.3.1 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
+	github.com/bytedance/sonic/loader v0.1.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/cloudflare/circl v1.3.7 // indirect
-	github.com/cloudwego/base64x v0.1.0 // indirect
-	github.com/cloudwego/iasm v0.0.9 // indirect
+	github.com/cloudwego/base64x v0.1.3 // indirect
+	github.com/cloudwego/iasm v0.2.0 // indirect
 	github.com/coreos/go-semver v0.3.1 // indirect
 	github.com/coreos/go-systemd/v22 v22.5.0 // indirect
 	github.com/danieljoos/wincred v1.1.2 // indirect
