@@ -36,9 +36,14 @@ func TestSetUp(t *testing.T) {
 	client = client
 
 	{
+		fmt.Println("---")
+		fmt.Println(client.Set(context.TODO(), "c", "zzz", 0))
+		fmt.Println(client.Get(context.TODO(), "c"))
+		fmt.Println("---")
+
 		//fmt.Println(client.Ping(context.TODO()))
 
-		fmt.Println(client.IsStreamSupported(context.Background()))
+		//fmt.Println(client.IsStreamSupported(context.Background()))
 
 		//m := map[string]interface{}{}
 		//m["use"] = "pulsar"
