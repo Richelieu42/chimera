@@ -62,8 +62,9 @@ func (client *Client) GetUniversalClient() redis.UniversalClient {
 func NewClient(config *Config) (client *Client, err error) {
 	/* 先简化，再验证（以免通不过验证） */
 	config.Simplify()
+
 	if err = validateKit.Struct(config); err != nil {
-		err = errorKit.Wrapf(err, "Fail to verify")
+		err = errorKit.Wrapf(err, "fail to verify")
 		return
 	}
 
