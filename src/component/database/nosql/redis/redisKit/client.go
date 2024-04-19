@@ -173,7 +173,7 @@ func newClusterOptions(config *Config) (*redis.UniversalOptions, error) {
 		RouteByLatency 和 RouteRandomly 互斥.
 	*/
 	opts.RouteByLatency = true
-	opts.RouteRandomly = !opts.RouteByLatency
+	opts.RouteRandomly = false
 
 	return opts, nil
 }
