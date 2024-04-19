@@ -157,11 +157,13 @@ func newSentinelOptions(config *Config) (*redis.UniversalOptions, error) {
 
 // newClusterOptions cluster模式
 func newClusterOptions(config *Config) (*redis.UniversalOptions, error) {
-	c := config.Cluster
-
 	opts := newBaseOptions(config)
-	opts.Addrs = c.Addrs
+	opts.Addrs = config.Cluster.Addrs
 
+	/*
+		在 ClusterOptions 中设置 ReadOnly 为 false，这样客户端即使在执行只读操作时也不会尝试连接从节点。
+		这有助于保持整体逻辑清晰，即所有写操作都直接发送到主节点，而不会由于意外的读取配置而间接导致写入从节点。
+	*/
 	opts.ReadOnly = false
 
 	/*
