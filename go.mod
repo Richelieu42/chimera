@@ -71,6 +71,7 @@ require (
 	github.com/natefinch/lumberjack/v3 v3.0.0-alpha
 	github.com/nicksnyder/go-i18n/v2 v2.4.0
 	github.com/oklog/ulid/v2 v2.1.0
+	github.com/olahol/melody v1.2.1
 	github.com/otiai10/gosseract/v2 v2.4.1
 	github.com/panjf2000/ants/v2 v2.9.1
 	github.com/pelletier/go-toml/v2 v2.2.1
