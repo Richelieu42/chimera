@@ -7,7 +7,6 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v3/src/crypto/base64Kit"
 	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
-	"github.com/richelieu-yang/chimera/v3/src/urlKit"
 	"net/http"
 	"time"
 )
@@ -46,9 +45,6 @@ func (channel *SseChannel) Push(data []byte) error {
 func (channel *SseChannel) PushMessage(msgType *messageType, data []byte) (err error) {
 	var str string
 	switch msgType {
-	case MessageTypeEncode:
-		str = string(data)
-		str = urlKit.EncodeURIComponent(str)
 	case MessageTypeBase64:
 		str = base64Kit.EncodeToString(data, base64Kit.WithEncoding(base64.StdEncoding))
 	case MessageTypeRaw:
