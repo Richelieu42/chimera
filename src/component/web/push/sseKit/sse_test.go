@@ -25,9 +25,8 @@ func TestNewProcessor(t *testing.T) {
 	pushKit.MustSetUp(pool, nil)
 
 	/* SSE */
-	msgType := MessageTypeRaw
-	//msgType := MessageTypeEncode
-	//msgType := MessageTypeBase64
+	//msgType := MessageTypeRaw
+	msgType := MessageTypeBase64
 
 	processor, err := NewProcessor(nil, &demoListener{}, msgType, time.Second*10)
 	if err != nil {
