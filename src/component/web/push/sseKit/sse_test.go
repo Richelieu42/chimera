@@ -1,20 +1,19 @@
-package wsKit
+package sseKit
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v3/src/core/bytesKit"
-	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/ginKit"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/poolKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/bytesKit"
 	"github.com/sirupsen/logrus"
+	"net/http"
 	"testing"
+	"time"
 )
 
-func TestWs(t *testing.T) {
+func TestNewProcessor(t *testing.T) {
 	engine := gin.Default()
 	engine.Use(ginKit.NewCorsMiddleware(nil))
 
@@ -25,30 +24,16 @@ func TestWs(t *testing.T) {
 	}
 	pushKit.MustSetUp(pool, nil)
 
-	/* WebSocket */
-	/* (1) 纯文本 */
-	//msgType := MessageTypeText
+	/* SSE */
+	msgType := MessageTypeRaw
+	//msgType := MessageTypeEncode
+	//msgType := MessageTypeBase64
 
-	/* (2) 二进制（不压缩） */
-	//msgType := MessageTypeText
-
-	/* (3) 二进制（gzip压缩） */
-	//msgType, err := NewGzipMessageType(6, 128)
-	//if err != nil {
-	//	logrus.Fatal(err)
-	//}
-
-	/* (4) 二进制（brotli压缩） */
-	msgType, err := NewBrotliMessageType(6, -1)
+	processor, err := NewProcessor(nil, &demoListener{}, msgType, time.Second*10)
 	if err != nil {
 		logrus.Fatal(err)
 	}
-
-	processor, err := NewProcessor(nil, nil, &demoListener{}, msgType, -1)
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	engine.GET("/ws", processor.ProcessWithGin)
+	engine.GET("/sse", processor.ProcessWithGin)
 
 	if err := engine.Run(":12000"); err != nil {
 		logrus.Fatal(err)
