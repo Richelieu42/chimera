@@ -28,6 +28,10 @@ func (l *demoListener) OnHandshake(w http.ResponseWriter, r *http.Request, chann
 		"type":     channel.GetType(),
 		"id":       channel.GetId(),
 	}).Info("OnHandshake")
+
+	if err := channel.Push([]byte("test 测试")); err != nil {
+		logrus.WithError(err).Error("Fail to push when on handshake.")
+	}
 }
 
 func (l *demoListener) OnMessage(channel pushKit.Channel, messageType int, data []byte) {

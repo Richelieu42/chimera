@@ -1,75 +1,123 @@
 package main
 
 import (
-	"net/http"
-	"strings"
+	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
 
-	"github.com/google/uuid"
-	"github.com/olahol/melody"
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/ginKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/push/wsKit"
+	"github.com/richelieu-yang/chimera/v3/src/concurrency/poolKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/bytesKit"
+	"github.com/sirupsen/logrus"
+	"net/http"
 )
 
-type GopherInfo struct {
-	ID, X, Y string
+func main() {
+	engine := gin.Default()
+	engine.Use(ginKit.NewCorsMiddleware(nil))
+
+	/* 初始化poolKit */
+	pool, err := poolKit.NewAntPool(1024)
+	if err != nil {
+		panic(err)
+	}
+	pushKit.MustSetUp(pool, nil)
+
+	/* WebSocket */
+	/* (1) 纯文本 */
+	//msgType := MessageTypeText
+
+	/* (2) 二进制（不压缩） */
+	//msgType := MessageTypeText
+
+	/* (3) 二进制（gzip压缩） */
+	//msgType, err := NewGzipMessageType(6, 128)
+	//if err != nil {
+	//	logrus.Fatal(err)
+	//}
+
+	/* (4) 二进制（brotli压缩） */
+	msgType, err := wsKit.NewBrotliMessageType(6, -1)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+
+	processor, err := wsKit.NewProcessor(nil, nil, &demoListener{}, msgType, -1)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	engine.GET("/ws", processor.ProcessWithGin)
+
+	if err := engine.Run(":12000"); err != nil {
+		logrus.Fatal(err)
+	}
 }
 
-func main() {
-	m := melody.New()
+type demoListener struct {
+	pushKit.Listener
+}
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "index.html")
-	})
+func (l *demoListener) OnFailure(w http.ResponseWriter, r *http.Request, failureInfo string) {
+	logrus.WithField("failureInfo", failureInfo).Error("OnFailure")
+}
 
-	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
-		m.HandleRequest(w, r)
-	})
+func (l *demoListener) OnHandshake(w http.ResponseWriter, r *http.Request, channel pushKit.Channel) {
+	logrus.WithFields(logrus.Fields{
+		"clientIP": channel.GetClientIP(),
+		"type":     channel.GetType(),
+		"id":       channel.GetId(),
+	}).Info("OnHandshake")
 
-	m.HandleConnect(func(s *melody.Session) {
-		ss, _ := m.Sessions()
+	if err := channel.Push([]byte("test 测试")); err != nil {
+		logrus.WithError(err).Error("Fail to push when on handshake.")
+	}
+}
 
-		for _, o := range ss {
-			value, exists := o.Get("info")
+func (l *demoListener) OnMessage(channel pushKit.Channel, messageType int, data []byte) {
+	if bytesKit.Equals(data, pushKit.PingData) {
+		return
+	}
 
-			if !exists {
-				continue
-			}
+	msgText := string(data)
+	if msgText == "close" {
+		_ = channel.Close("主动关闭")
+		return
+	}
 
-			info := value.(*GopherInfo)
+	logrus.WithFields(logrus.Fields{
+		"clientIP": channel.GetClientIP(),
+		"type":     channel.GetType(),
+		"id":       channel.GetId(),
 
-			s.Write([]byte("set " + info.ID + " " + info.X + " " + info.Y))
-		}
+		"MessageType": messageType,
+		"text":        msgText,
+	}).Info("OnMessage")
 
-		id := uuid.NewString()
-		s.Set("info", &GopherInfo{id, "0", "0"})
+	text := fmt.Sprintf("Receive a message: %s", string(data))
+	if err := channel.Push([]byte(text)); err != nil {
+		logrus.WithError(err).Error("Fail to push when on message.")
+		return
+	}
+}
 
-		s.Write([]byte("iam " + id))
-	})
+func (l *demoListener) BeforeClosedByBackend(channel pushKit.Channel, closeInfo string) {
+	logrus.WithFields(logrus.Fields{
+		"clientIP": channel.GetClientIP(),
+		"type":     channel.GetType(),
+		"id":       channel.GetId(),
 
-	m.HandleDisconnect(func(s *melody.Session) {
-		value, exists := s.Get("info")
+		"closeInfo": closeInfo,
+	}).Info("BeforeClosedByBackend")
+}
 
-		if !exists {
-			return
-		}
+func (l *demoListener) OnClose(channel pushKit.Channel, closeInfo string, bsid, user, group string) {
+	logrus.WithFields(logrus.Fields{
+		"clientIP": channel.GetClientIP(),
+		"type":     channel.GetType(),
+		"id":       channel.GetId(),
 
-		info := value.(*GopherInfo)
-
-		m.BroadcastOthers([]byte("dis "+info.ID), s)
-	})
-
-	m.HandleMessage(func(s *melody.Session, msg []byte) {
-		p := strings.Split(string(msg), " ")
-		value, exists := s.Get("info")
-
-		if len(p) != 2 || !exists {
-			return
-		}
-
-		info := value.(*GopherInfo)
-		info.X = p[0]
-		info.Y = p[1]
-
-		m.BroadcastOthers([]byte("set "+info.ID+" "+info.X+" "+info.Y), s)
-	})
-
-	http.ListenAndServe(":5000", nil)
+		"closeInfo": closeInfo,
+	}).Info("OnClose")
 }
