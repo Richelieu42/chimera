@@ -30,8 +30,13 @@ gin:
       # 1~9:  不同的压缩级别（越大压缩比越高，但越慢越耗服务器性能）
       level: 9
       excludedExtensions: [ ".png", ".gif", ".jpeg", ".jpg", ".webp" ]
-#      excludedPaths: "/api.do"
-#      excludedPathsRegexps: [ "(.*)/api.do" ]
+      # e.g.
+      # 配置为 "/api.do"，(1) 能通过: http://127.0.0.1/api.do
+      #                  (2) 不能通过: http://127.0.0.1/g/api.do
+      excludedPaths:
+      # e.g.
+      # 配置为 "(.*)/api.do"，能通过: http://127.0.0.1/api.do、http://127.0.0.1/g/api.do
+      excludedPathsRegexps:
     # 全局对request body的大小限制（整数; 单位: MB; 默认: 0; <=0: 不做限制; >0: 进行限制）
     # 不建议在此处配置，想限制上传文件大小可以在handler中进行处理
     # TODO: 因为http.MaxBytesReader()，如果涉及"请求转发（代理）"，转发方不要全局配置此属性，否则会导致: 有时成功，有时代理失败（error），有时http客户端失败
