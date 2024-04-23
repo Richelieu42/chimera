@@ -11,8 +11,10 @@ import (
 )
 
 type JWT struct {
+	// Key 密钥
 	Key []byte
-	// shift 偏移量
+
+	// shift 偏移量（用于凯撒加解密）
 	shift int
 }
 
