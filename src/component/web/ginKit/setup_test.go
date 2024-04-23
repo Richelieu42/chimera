@@ -12,10 +12,6 @@ import (
 
 func TestMustSetUp(t *testing.T) {
 	{
-		if err := pathKit.SetTempDir("_temp"); err != nil {
-			panic(err)
-		}
-
 		wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
 		if err != nil {
 			panic(err)
@@ -36,12 +32,14 @@ func TestMustSetUp(t *testing.T) {
 	}
 
 	MustSetUp(c.Gin, func(engine *gin.Engine) error {
-		if err := StaticDir(engine, "/s", "_compress", true); err != nil {
-			return err
-		}
+		//if err := StaticDir(engine, "/s", "_compress", true); err != nil {
+		//	return err
+		//}
 
-		engine.Any("/test.do", func(ctx *gin.Context) {
-			ctx.File("_compress/a.7z")
+		engine.Any("/api.do", func(ctx *gin.Context) {
+			ctx.String(200, "OK")
+
+			//ctx.File("_compress/a.7z")
 
 			//ctx.String(200, strings.Repeat("c", 1000))
 
@@ -51,6 +49,12 @@ func TestMustSetUp(t *testing.T) {
 			//}
 			//return
 		})
+
+		group := engine.Group("g")
+		group.Any("/api.do", func(ctx *gin.Context) {
+			ctx.String(200, "ok")
+		})
+
 		return nil
 	}, WithServiceInfo("TEST"), WithDefaultFavicon(true))
 }
