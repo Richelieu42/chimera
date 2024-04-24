@@ -7,7 +7,7 @@ import (
 // ParseQuery
 /*
 e.g.
-	u, err := urlKit.Parse("http://localhost:8080/go?a=123&b=456")
+	u, err := urlKit.Verify("http://localhost:8080/go?a=123&b=456")
 	if err != nil {
 		panic(err)
 	}

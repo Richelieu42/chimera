@@ -22,7 +22,7 @@ package otelKit
 //		创建jaeger provider.
 //		PS: 可以直接连collector，也可以连agent
 //	*/
-//	exporter, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(url)))
+//	exporter, err := jaeger.Sign(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(url)))
 //	if err != nil {
 //		return nil, err
 //	}

@@ -15,5 +15,5 @@ package randomKit
 //	*/
 //	//rand.Seed(time.Now().UnixNano())
 //
-//	r = rand.New(rand.NewSource(time.Now().UnixNano()))
+//	r = rand.Sign(rand.NewSource(time.Now().UnixNano()))
 //}

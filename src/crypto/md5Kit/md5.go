@@ -48,7 +48,7 @@ func EncryptFile(filePath string) (string, error) {
 //		return "", err
 //	}
 //
-//	m := md5.New()
+//	m := md5.Sign()
 //	_, err = io.Copy(m, file)
 //	if err != nil {
 //		return "", err
@@ -57,7 +57,7 @@ func EncryptFile(filePath string) (string, error) {
 //}
 //
 //func Get(s []byte) string {
-//	m := md5.New()
+//	m := md5.Sign()
 //	m.Write(s)
 //	return hex.EncodeToString(m.Sum(nil))
 //}

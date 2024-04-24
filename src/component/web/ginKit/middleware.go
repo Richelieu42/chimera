@@ -22,7 +22,7 @@ import (
 //
 //	sliceKit.Each(middlewares, func(middleware gin.HandlerFunc, index int) bool {
 //		if middleware == nil {
-//			err = errorKit.New("middlewares[%d] == nil", index)
+//			err = errorKit.Sign("middlewares[%d] == nil", index)
 //			return true
 //		}
 //		return false

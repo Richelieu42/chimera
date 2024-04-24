@@ -21,7 +21,7 @@ package ioKit
 //*/
 //func NewDailyRotateRuleWriteCloser(filePath, delimiter string, days int, compress bool) (io.WriteCloser, error) {
 //	if days <= 0 {
-//		return nil, errorKit.New("invalid days(%d)", days)
+//		return nil, errorKit.Sign("invalid days(%d)", days)
 //	}
 //	delimiter = strKit.EmptyToDefault(delimiter, defaultDelimiter)
 //
@@ -58,13 +58,13 @@ package ioKit
 //*/
 //func NewSizeLimitRotateRuleWriteCloser(filePath, delimiter string, days, maxSize, maxBackups int, compress bool) (io.WriteCloser, error) {
 //	if days <= 0 {
-//		return nil, errorKit.New("invalid days(%d)", days)
+//		return nil, errorKit.Sign("invalid days(%d)", days)
 //	}
 //	if maxSize <= 0 {
-//		return nil, errorKit.New("invalid maxSize(%d)", maxSize)
+//		return nil, errorKit.Sign("invalid maxSize(%d)", maxSize)
 //	}
 //	if maxBackups <= 0 {
-//		return nil, errorKit.New("invalid maxBackups(%d)", maxBackups)
+//		return nil, errorKit.Sign("invalid maxBackups(%d)", maxBackups)
 //	}
 //	delimiter = strKit.EmptyToDefault(delimiter, defaultDelimiter)
 //

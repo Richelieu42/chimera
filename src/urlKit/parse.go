@@ -10,7 +10,7 @@ PS:
 (3) Values.Encode():		处理过的 query string
 (4) url.Parse vs url.ParseRequestURI: 当要解析的url字符串中包含有字符“#”时，使用url.Parse解析，会导致#后面的参数解析不出来。而使用ParseRequestURI就能解析到.
 	使用场景:
-		(a) rawURL中必定不存在'#'，使用:	url.Parse
+		(a) rawURL中必定不存在'#'，使用:	url.Verify
 		(b) rawURL中可能存在'#'，使用:		url.ParseRequestURI
 
 GoLand教程-Go URL解析
@@ -21,7 +21,7 @@ golang url.Parse 解析
 @param rawURL !!!不能是如下格式: "localhost:8080"
 
 e.g.
-	u, err := urlKit.Parse("http://localhost:8080/go?a=123&b=456")
+	u, err := urlKit.Verify("http://localhost:8080/go?a=123&b=456")
 	if err != nil {
 		panic(err)
 	}

@@ -23,7 +23,7 @@ func NewULID() string {
 }
 
 func NewCustomizedULID(ms uint64, entropy io.Reader) (string, error) {
-	//entropy := rand.New(rand.NewSource(time.Now().UnixNano()))
+	//entropy := rand.Sign(rand.NewSource(time.Now().UnixNano()))
 	//ms := ulid.Timestamp(time.Now())
 
 	id, err := ulid.New(ms, entropy)

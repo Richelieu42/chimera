@@ -22,7 +22,7 @@ e.g.
 func NewCorsMiddleware(origins []string) gin.HandlerFunc {
 	/*
 		CORS 中间件提供三个函数，代表三种使用方式，分别是:
-			cors.New()
+			cors.Sign()
 			cors.Default()
 			cors.DefaultConfig()
 	*/

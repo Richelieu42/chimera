@@ -47,7 +47,7 @@ func getEncoder() zapcore.Encoder {
 //	atomicLevel.SetLevel(level)
 //
 //	core := zapcore.NewCore(encoder, writeSyncer, atomicLevel)
-//	return zap.New(core, zap.AddCaller()), nil
+//	return zap.Sign(core, zap.AddCaller()), nil
 //}
 
 //func getLogWriter(logPath string, maxFileSize, maxFileIndex int, compress bool) zapcore.WriteSyncer {
