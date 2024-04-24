@@ -8,12 +8,12 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/crypto/caesarKit"
 )
 
-// Verify
+// Verify 验证JWT字符串.
 /*
 PS: 如果 token 过期（根据"exp"，有的话），会返回 error（可以通过 IsTokenExpiredError 判断）.
 
-@param key		密钥（secret）
-@param keyFunc	e.g.
+@param keyFunc 此函数的第一个返回值为密钥(secret)
+	e.g.
 	func(token *jwt.Token) (interface{}, error) {
 		// Don't forget to validate the alg is what you expect:
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -21,13 +21,10 @@ PS: 如果 token 过期（根据"exp"，有的话），会返回 error（可以�
 		}
 
 		// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
-		return Key, nil
+		return key, nil
 	}
 */
-func Verify(key []byte, tokenString string, keyFunc jwt.Keyfunc, options ...jwt.ParserOption) (jwt.MapClaims, error) {
-	if err := interfaceKit.AssertNotNil(key, "key"); err != nil {
-		return nil, err
-	}
+func Verify(tokenString string, keyFunc jwt.Keyfunc, options ...jwt.ParserOption) (jwt.MapClaims, error) {
 	if err := strKit.AssertNotEmpty(tokenString, "tokenString"); err != nil {
 		return nil, err
 	}
@@ -57,8 +54,8 @@ func Verify(key []byte, tokenString string, keyFunc jwt.Keyfunc, options ...jwt.
 	return claims, nil
 }
 
-func VerifyWithCaesar(caesarShift int, key []byte, cipherText string, keyFunc jwt.Keyfunc, options ...jwt.ParserOption) (jwt.MapClaims, error) {
+func VerifyWithCaesar(caesarShift int, cipherText string, keyFunc jwt.Keyfunc, options ...jwt.ParserOption) (jwt.MapClaims, error) {
 	tokenString := caesarKit.Decrypt(cipherText, caesarShift)
 
-	return Verify(key, tokenString, keyFunc, options...)
+	return Verify(tokenString, keyFunc, options...)
 }

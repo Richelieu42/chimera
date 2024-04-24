@@ -7,7 +7,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/crypto/caesarKit"
 )
 
-// Sign
+// Sign 生成JWT字符串.
 /*
 @param key		密钥（secret）
 @param method 	e.g. jwt.SigningMethodHS256 || jwt.SigningMethodHS384 || jwt.SigningMethodHS512
