@@ -13,7 +13,7 @@ import (
 PS: 如果 token 过期（根据"exp"，有的话），会返回 error（可以通过 IsTokenExpiredError 判断）.
 
 @param key		密钥（secret）
-@param keyFunc e.g.
+@param keyFunc	e.g.
 	func(token *jwt.Token) (interface{}, error) {
 		// Don't forget to validate the alg is what you expect:
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
