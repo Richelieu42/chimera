@@ -11,7 +11,7 @@ PS:
 (1) 单进程内生成唯一id，推荐使用 xid.
 (2) 一个进程（Process）内，生成的id不会重复.
 
-@return 长度(len())固定为20
+@return 长度固定为20
 
 e.g.
 	"ckic7hfnl531vbl645n0"

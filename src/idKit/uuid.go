@@ -5,9 +5,9 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 )
 
-// NewUUID UUIDv4
+// NewUUID UUID v4
 /*
-Deprecated: use NewULID instead.
+Deprecated: use NewULID or NewXid instead.
 
 PS:
 (1) 重复概率非常低，不建议用作分布式唯一id.
