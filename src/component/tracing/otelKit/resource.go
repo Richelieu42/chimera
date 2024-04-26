@@ -5,7 +5,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/sdk/resource"
-	semconv "go.opentelemetry.io/otel/semconv/v1.24.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.25.0"
 )
 
 func newDetailedResource(serviceName string, attributeMap map[string]string) (*resource.Resource, error) {
@@ -27,7 +27,7 @@ func newDetailedResource(serviceName string, attributeMap map[string]string) (*r
 		resource.WithAttributes(attributes...),
 	)
 	if err != nil {
-		return nil, errorKit.Newf("Fail to create resource")
+		return nil, errorKit.Newf("fail to create resource")
 	}
 	return res, nil
 }
