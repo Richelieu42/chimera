@@ -9,6 +9,7 @@ require (
 	github.com/apache/pulsar-client-go v0.12.1
 	github.com/apache/rocketmq-clients/golang/v5 v5.1.0-rc.1
 	github.com/bytedance/sonic v1.11.6
+	github.com/centrifugal/gocent/v3 v3.2.0
 	github.com/coocood/freecache v1.2.4
 	github.com/dablelv/cyan v0.0.54
 	github.com/davidbyttow/govips/v2 v2.14.0

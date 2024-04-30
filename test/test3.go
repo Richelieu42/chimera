@@ -1,9 +1,14 @@
 package main
 
 import (
-	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
+	"github.com/centrifugal/gocent/v3"
 )
 
 func main() {
-
+	client := gocent.New(gocent.Config{
+		Addr:       "",
+		GetAddr:    nil,
+		Key:        "",
+		HTTPClient: nil,
+	})
 }
