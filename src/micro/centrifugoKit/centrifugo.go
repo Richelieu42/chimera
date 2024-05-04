@@ -3,5 +3,9 @@ package centrifugoKit
 import "github.com/centrifugal/gocent/v3"
 
 var (
-	NerClient func(c gocent.Config) *gocent.Client = gocent.New
+	NewClient func(c gocent.Config) *gocent.Client = gocent.New
 )
+
+func a() {
+
+}
