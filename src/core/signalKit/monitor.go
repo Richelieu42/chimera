@@ -62,7 +62,7 @@ func MonitorExitSignalsSynchronously(callbacks ...func(sig os.Signal)) {
 	logrus.Fatalf("Process exits with signal(%s).", sig.String())
 }
 
-// runCallback 防止执行时发生 panic
+// runCallback 防止执行callback时发生 panic（参考了logrus中的runHandler）.
 func runCallback(sig os.Signal, callback func(sig os.Signal)) {
 	defer func() {
 		if err := recover(); err != nil {
