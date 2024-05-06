@@ -1,7 +1,6 @@
 package httpClientKit
 
 import (
-	"crypto/tls"
 	"net/http"
 	"time"
 )
@@ -28,14 +27,7 @@ type (
 )
 
 func (opts *options) newHttpClient() *http.Client {
-	return &http.Client{
-		Timeout: opts.timeout,
-		Transport: &http.Transport{
-			TLSClientConfig: &tls.Config{
-				InsecureSkipVerify: !opts.safe,
-			},
-		},
-	}
+	return NewHttpClient(opts.timeout, !opts.safe)
 }
 
 func loadOptions(s ...Option) *options {
