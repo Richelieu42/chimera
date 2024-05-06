@@ -41,6 +41,8 @@ import (
 
 // MonitorExitSignalsSynchronously 同步地监听.
 /*
+@param callbacks 可以不传
+
 PS:
 (1) 会 阻塞 调用此函数的goroutine;
 (2) 理论上，应该 由main goroutine调用此函数 && 此函数只能被调用1次;
