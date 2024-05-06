@@ -15,13 +15,13 @@ gin:
   # 是否开启pprof路由？（默认: false）
   # PS: 只应该在性能测试的时候才在代码中引入pprof.
   pprof: false
-  #  ssl:
-  #    # https server使用的端口（默认0: 不使用https server）
-  #    port: 443
-  #    # 证书文件(建议 .pem || .crt)
-  #    certFile: _chimera-lib/ssl.crt
-  #    # key文件(".key"后缀)
-  #    keyFile: _chimera-lib/ssl.key
+  ssl:
+    # https server使用的端口（默认0: 不使用https server）
+    port: 443
+    # 证书文件(建议 .pem || .crt)
+    certFile: _chimera-lib/ssl.crt
+    # key文件(".key"后缀)
+    keyFile: _chimera-lib/ssl.key
   middleware:
     gzip:
       # gzip的压缩级别
