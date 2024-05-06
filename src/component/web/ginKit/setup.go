@@ -151,6 +151,11 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 		return errorKit.Newf("both httpPort and httpsPort are invalid")
 	}
 
+	/*
+		优雅地重启或停止
+			https://gin-gonic.com/zh-cn/docs/examples/graceful-restart-or-stop/
+			https://github.com/gin-gonic/examples/blob/master/graceful-shutdown/graceful-shutdown/notify-without-context/server.go
+	*/
 	signalKit.MonitorExitSignalsSynchronously(func(sig os.Signal) {
 		var wg sync.WaitGroup
 
