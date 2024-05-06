@@ -1,6 +1,7 @@
 package signalKit
 
 import (
+	"github.com/richelieu-yang/chimera/v3/src/processKit"
 	"github.com/sirupsen/logrus"
 	"os"
 	"testing"
@@ -8,6 +9,8 @@ import (
 )
 
 func TestMonitorExitSignalsSynchronously(t *testing.T) {
+	logrus.Infof("pid: [%d]", processKit.PID)
+
 	logrus.RegisterExitHandler(func() {
 		logrus.Info("sleep1 starts...")
 		time.Sleep(time.Second)
@@ -15,7 +18,7 @@ func TestMonitorExitSignalsSynchronously(t *testing.T) {
 	})
 	logrus.RegisterExitHandler(func() {
 		logrus.Info("sleep2 starts...")
-		time.Sleep(time.Second * 3)
+		time.Sleep(time.Second)
 		logrus.Info("sleep2 ends...")
 	})
 
