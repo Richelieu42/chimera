@@ -7,7 +7,7 @@ import (
 
 // NewUUID UUID v4
 /*
-Deprecated: use NewULID or NewXid instead.
+Deprecated: use NewXid or NewULID instead.
 
 PS:
 (1) 重复概率非常低，不建议用作分布式唯一id.
