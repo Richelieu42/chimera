@@ -23,10 +23,10 @@ require (
 	github.com/gabriel-vasile/mimetype v1.4.3
 	github.com/gin-contrib/cors v1.7.2
 	github.com/gin-contrib/gzip v1.0.1
-	github.com/gin-contrib/pprof v1.4.0
-	github.com/gin-contrib/size v1.0.0
+	github.com/gin-contrib/pprof v1.5.0
+	github.com/gin-contrib/size v1.0.1
 	github.com/gin-contrib/sse v0.1.0
-	github.com/gin-contrib/static v1.1.1
+	github.com/gin-contrib/static v1.1.2
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-kratos/kratos/v2 v2.7.3
 	github.com/go-oauth2/oauth2/v4 v4.5.2
@@ -52,7 +52,7 @@ require (
 	github.com/hibiken/asynq v0.24.1
 	github.com/imroc/req/v3 v3.43.3
 	github.com/jackc/pgx/v5 v5.5.5
-	github.com/jedib0t/go-pretty/v6 v6.5.8
+	github.com/jedib0t/go-pretty/v6 v6.5.9
 	github.com/jinzhu/copier v0.4.0
 	github.com/joho/godotenv v1.5.1
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
@@ -95,7 +95,7 @@ require (
 	github.com/spf13/viper v1.18.2
 	github.com/tidwall/buntdb v1.3.0
 	github.com/tidwall/gjson v1.17.1
-	github.com/unidoc/unioffice v1.31.0
+	github.com/unidoc/unioffice v1.32.0
 	github.com/xuri/excelize/v2 v2.8.1
 	github.com/zeromicro/go-zero v1.6.4
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231030135404-af9ae855016f
@@ -111,18 +111,18 @@ require (
 	go.uber.org/atomic v1.11.0
 	go.uber.org/automaxprocs v1.5.3
 	go.uber.org/zap v1.27.0
-	golang.org/x/arch v0.7.0
+	golang.org/x/arch v0.8.0
 	golang.org/x/crypto v0.22.0
 	golang.org/x/exp v0.0.0-20240416160154-fe59bbe5cc7f
-	golang.org/x/image v0.15.0
+	golang.org/x/image v0.16.0
 	golang.org/x/mobile v0.0.0-20240404231514-09dbf07665ed
 	golang.org/x/mod v0.17.0
 	golang.org/x/net v0.24.0
-	golang.org/x/oauth2 v0.19.0
+	golang.org/x/oauth2 v0.20.0
 	golang.org/x/sync v0.7.0
-	golang.org/x/sys v0.19.0
-	golang.org/x/term v0.19.0
-	golang.org/x/text v0.14.0
+	golang.org/x/sys v0.20.0
+	golang.org/x/term v0.20.0
+	golang.org/x/text v0.15.0
 	golang.org/x/time v0.5.0
 	golang.org/x/tools v0.20.0
 	google.golang.org/grpc v1.63.2
@@ -141,8 +141,7 @@ require (
 require (
 	cloud.google.com/go v0.112.0 // indirect
 	cloud.google.com/go/bigquery v1.59.1 // indirect
-	cloud.google.com/go/compute v1.24.0 // indirect
-	cloud.google.com/go/compute/metadata v0.2.3 // indirect
+	cloud.google.com/go/compute/metadata v0.3.0 // indirect
 	cloud.google.com/go/iam v1.1.6 // indirect
 	contrib.go.opencensus.io/exporter/ocagent v0.6.0 // indirect
 	filippo.io/edwards25519 v1.1.0 // indirect
