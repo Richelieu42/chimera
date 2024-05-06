@@ -12,8 +12,7 @@ var (
 	/*
 		参考: go-zero 中的"core/proc/signals.go".
 	*/
-	//ExitSignals = []os.Signal{ /*syscall.SIGUSR1, syscall.SIGUSR2,*/ syscall.SIGTERM, syscall.SIGINT}
-	ExitSignals = []os.Signal{ /*syscall.SIGUSR1, syscall.SIGUSR2,*/ syscall.SIGTERM, syscall.SIGINT, os.Interrupt, os.Kill}
+	ExitSignals = []os.Signal{ /*syscall.SIGUSR1, syscall.SIGUSR2,*/ syscall.SIGTERM, syscall.SIGINT}
 
 	//// ExitSignals 会将程序退出的所有能捕捉的信号
 	///*
