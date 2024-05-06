@@ -46,13 +46,29 @@ PS:
 (2) 理论上，应该 由main goroutine调用此函数 && 此函数只能被调用1次;
 (3) 按实际需求，可能要和 logrus.RegisterExitHandler() 搭配使用.
 */
-func MonitorExitSignalsSynchronously(callback func(sig os.Signal)) {
+func MonitorExitSignalsSynchronously(callbacks ...func(sig os.Signal)) {
 	ch := make(chan os.Signal, 1)
 	signal.Notify(ch, ExitSignals...)
 
 	sig := <-ch
 	logrus.Warnf("Receive an exit signal(%s).", sig.String())
 
-	callback(sig)
+	for _, callback := range callbacks {
+		if callback == nil {
+			continue
+		}
+		runCallback(sig, callback)
+	}
 	logrus.Fatalf("Process exits with signal(%s).", sig.String())
+}
+
+// runCallback 防止执行时发生 panic
+func runCallback(sig os.Signal, callback func(sig os.Signal)) {
+	defer func() {
+		if err := recover(); err != nil {
+			logrus.WithField("err", err).Error("Recover from execute callback.")
+		}
+	}()
+
+	callback(sig)
 }
