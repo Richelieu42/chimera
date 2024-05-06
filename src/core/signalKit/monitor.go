@@ -4,7 +4,11 @@ import (
 	"github.com/sirupsen/logrus"
 	"os"
 	"os/signal"
+	"sync"
+	"time"
 )
+
+var exitOnce sync.Once
 
 // MonitorExitSignals 异步地监听退出信号（拦截关闭信号）.
 /*
@@ -28,7 +32,12 @@ func MonitorExitSignals(callbacks ...func(sig os.Signal)) {
 		for _, callback := range callbacks {
 			callback(sig)
 		}
-		logrus.WithField("signal", sig.String()).Fatal("Receive an exit signal.")
+
+		exitOnce.Do(func() {
+			time.Sleep(time.Second * 3)
+
+			logrus.Fatalf("Receive an exit signal(%s).", sig.String())
+		})
 	}()
 }
 
