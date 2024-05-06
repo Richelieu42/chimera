@@ -6,7 +6,7 @@ import (
 	"os/signal"
 )
 
-// MonitorExitSignals 监听退出信号（拦截关闭信号）.
+// MonitorExitSignals 异步地监听退出信号（拦截关闭信号）.
 /*
 可以参考 go-zero 中的 "core/proc/signals.go".
 
