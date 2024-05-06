@@ -25,11 +25,21 @@ func MonitorExitSignals(callbacks ...func(sig os.Signal)) {
 
 	go func() {
 		sig := <-ch
-
 		for _, callback := range callbacks {
 			callback(sig)
 		}
-
 		logrus.WithField("signal", sig.String()).Fatal("Receive an exit signal.")
 	}()
+}
+
+// MonitorExitSignalsSynchronously 同步地（会阻塞调用的goroutine）
+func MonitorExitSignalsSynchronously(callbacks ...func(sig os.Signal)) {
+	ch := make(chan os.Signal, 1)
+	signal.Notify(ch, ExitSignals...)
+
+	sig := <-ch
+	for _, callback := range callbacks {
+		callback(sig)
+	}
+	logrus.WithField("signal", sig.String()).Fatal("Receive an exit signal.")
 }
