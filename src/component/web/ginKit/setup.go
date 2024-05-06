@@ -1,16 +1,21 @@
 package ginKit
 
 import (
+	"context"
 	"errors"
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/signalKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v3/src/netKit"
+	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 	"github.com/richelieu-yang/chimera/v3/src/validateKit"
 	"github.com/sirupsen/logrus"
 	"net/http"
+	"os"
+	"sync"
 )
 
 // serviceInfo e.g."Agent-127.0.0.1:12345"
@@ -146,51 +151,36 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 		return errorKit.Newf("both httpPort and httpsPort are invalid")
 	}
 
-	select {}
+	signalKit.MonitorExitSignalsSynchronously(func(sig os.Signal) {
+		var wg sync.WaitGroup
 
-	//if sslConfig.Port != 0 {
-	//	if config.Port == 0 {
-	//		// (1) https port（本服务使用1个端口）
-	//		if err := netKit.AssertValidPort(sslConfig.Port); err != nil {
-	//			return errorKit.Wrapf(err, "Https port(%d) should be set to a valid value.", sslConfig.Port)
-	//		}
-	//		return engine.RunTLS(netKit.JoinHostnameAndPort(config.HostName, sslConfig.Port), sslConfig.CertFile, sslConfig.KeyFile)
-	//	}
-	//	// (2) https port + http port（本服务使用2个端口）
-	//	if err := netKit.AssertValidPort(sslConfig.Port); err != nil {
-	//		return errorKit.Wrapf(err, "Https port(%d) should be set to a valid value.", sslConfig.Port)
-	//	}
-	//	if err := netKit.AssertValidPort(config.Port); err != nil {
-	//		return errorKit.Wrapf(err, "Http port(%d) should be set to a valid value.", config.Port)
-	//	}
-	//	if config.Port == sslConfig.Port {
-	//		return errorKit.Newf("Http port and https port are same(%d).", config.Port)
-	//	}
-	//
-	//	go func() {
-	//		if err := engine.Run(netKit.JoinHostnameAndPort(config.HostName, config.Port)); err != nil {
-	//			logrus.WithError(err).WithFields(logrus.Fields{
-	//				"port": config.Port,
-	//			}).Fatalf("[%s, GIN] Fail to start http server.", consts.UpperProjectName)
-	//		}
-	//	}()
-	//	go func() {
-	//		time.Sleep(time.Millisecond * 20)
-	//
-	//		if err := engine.RunTLS(netKit.JoinHostnameAndPort(config.HostName, sslConfig.Port), sslConfig.CertFile, sslConfig.KeyFile); err != nil {
-	//			logrus.WithError(err).WithFields(logrus.Fields{
-	//				"port":     sslConfig.Port,
-	//				"certFile": sslConfig.CertFile,
-	//				"keyFile":  sslConfig.KeyFile,
-	//			}).Fatalf("[%s, GIN] Fail to start https server.", consts.UpperProjectName)
-	//		}
-	//	}()
-	//	select {}
-	//}
-	//// (3) http port（本服务使用1个端口）
-	//if err := netKit.AssertValidPort(config.Port); err != nil {
-	//	return errorKit.Wrapf(err, "Http port(%d) should be set to a valid value.", config.Port)
-	//}
+		ctx, cancel := context.WithTimeout(context.TODO(), timeKit.Second*5)
+		defer cancel()
+		if httpSrv != nil {
+			wg.Add(1)
+			go func() {
+				defer wg.Done()
 
-	return engine.Run(netKit.JoinHostnameAndPort(config.HostName, config.Port))
+				if err := httpSrv.Shutdown(ctx); err != nil {
+					logrus.WithError(err).Error("Fail to shut down http server.")
+					return
+				}
+				logrus.Info("Manager to shut down http server.")
+			}()
+		}
+		if httpsSrv != nil {
+			wg.Add(1)
+			go func() {
+				defer wg.Done()
+
+				if err := httpsSrv.Shutdown(ctx); err != nil {
+					logrus.WithError(err).Error("Fail to shut down https server.")
+					return
+				}
+				logrus.Info("Manager to shut down https server.")
+			}()
+		}
+		wg.Wait()
+	})
+	return nil
 }
