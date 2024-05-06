@@ -10,7 +10,8 @@ import (
 
 // NewClient
 /*
-@param httpClient 可以为nil（将使用默认值 httpClientKit.DefaultHttpClient）
+@param apiKey		centrifugo配置文件中的 api_key 项
+@param httpClient 	可以为nil（将使用默认值 httpClientKit.DefaultHttpClient）
 */
 func NewClient(addrs []string, apiKey string, httpClient *http.Client) (*gocent.Client, error) {
 	// addrs
