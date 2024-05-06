@@ -44,7 +44,8 @@ import (
 PS:
 (1) 会 阻塞 调用此函数的goroutine;
 (2) 理论上，应该 由main goroutine调用此函数 && 此函数只能被调用1次;
-(3) 按实际需求，可能要和 logrus.RegisterExitHandler() 搭配使用.
+(3) 按实际需求，可能要和 logrus.RegisterExitHandler() 搭配使用;
+(4) 执行顺序: 先执行 callbacks，再执行 logrus.RegisterExitHandler() 注册的handlers（有的话）.
 */
 func MonitorExitSignalsSynchronously(callbacks ...func(sig os.Signal)) {
 	ch := make(chan os.Signal, 1)

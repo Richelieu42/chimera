@@ -1,25 +1,27 @@
 package signalKit
 
 import (
-	"fmt"
-	"github.com/richelieu-yang/chimera/v3/src/processKit"
 	"github.com/sirupsen/logrus"
 	"os"
 	"testing"
 	"time"
 )
 
-func TestMonitorExitSignals(t *testing.T) {
-	MonitorExitSignals(func(sig os.Signal) {
-		logrus.Info("0", sig.String())
-		time.Sleep(time.Second * 3)
+func TestMonitorExitSignalsSynchronously(t *testing.T) {
+	logrus.RegisterExitHandler(func() {
+		logrus.Info("sleep1 starts...")
+		time.Sleep(time.Second)
+		logrus.Info("sleep1 ends...")
 	})
-	MonitorExitSignals(func(sig os.Signal) {
-		logrus.Info("1", sig.String())
+	logrus.RegisterExitHandler(func() {
+		logrus.Info("sleep2 starts...")
 		time.Sleep(time.Second * 3)
+		logrus.Info("sleep2 ends...")
 	})
 
-	fmt.Println(processKit.PID)
-
-	select {}
+	MonitorExitSignalsSynchronously(func(sig os.Signal) {
+		logrus.Info("sleep0 starts...")
+		time.Sleep(time.Second)
+		logrus.Info("sleep0 ends...")
+	})
 }
