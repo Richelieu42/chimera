@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-// NewClient
+// NewClient TODO: 待完善
 /*
 @param apiKey		centrifugo配置文件中的 api_key 项
 @param httpClient 	可以为nil（将使用默认值 httpClientKit.DefaultHttpClient）
@@ -40,7 +40,7 @@ func NewClient(addrs []string, apiKey string, httpClient *http.Client) (*gocent.
 	}
 	/* (2) 多个地址 */
 	getAddr := func() (string, error) {
-		// TODO:待完善
+		// TODO:
 		return "", nil
 	}
 	config := gocent.Config{
