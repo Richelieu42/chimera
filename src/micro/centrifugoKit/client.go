@@ -10,6 +10,7 @@ import (
 
 // NewClient TODO: 待完善
 /*
+@param addrs		e.g.[]string{"http://localhost:8000/api"}
 @param apiKey		centrifugo配置文件中的 api_key 项
 @param httpClient 	可以为nil（将使用默认值 httpClientKit.DefaultHttpClient）
 */
