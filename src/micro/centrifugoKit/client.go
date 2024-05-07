@@ -5,6 +5,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/component/web/request/httpClientKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/randomKit"
 	"net/http"
 )
 
@@ -41,8 +42,9 @@ func NewClient(addrs []string, apiKey string, httpClient *http.Client) (*gocent.
 	}
 	/* (2) 多个地址 */
 	getAddr := func() (string, error) {
-		// TODO:
-		return "", nil
+		// TODO: 处理 服务挂掉 等情况
+		i := randomKit.Int(0, len(addrs))
+		return addrs[i], nil
 	}
 	config := gocent.Config{
 		GetAddr:    getAddr,
