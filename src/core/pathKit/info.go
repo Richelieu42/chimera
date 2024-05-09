@@ -46,7 +46,10 @@ var (
 	*/
 	IsAbs func(path string) bool = filepath.IsAbs
 
-	// Abs 绝对路径(传参path相对于当前路径(os.Getwd())).
+	// Abs 绝对路径.
+	/*
+		@return 传参path相对于当前路径(os.Getwd())
+	*/
 	Abs func(path string) (string, error) = filepath.Abs
 
 	// VolumeName 返回分区名
@@ -54,7 +57,7 @@ var (
 	   PS: 非Windows平台，将返回"".
 
 	   e.g. Windows平台
-	   ("C:/a/b/c") => "C:"
+	   	("C:/a/b/c") => "C:"
 	*/
 	VolumeName func(path string) string = filepath.VolumeName
 
