@@ -35,7 +35,7 @@ func TestMustSetUp(t *testing.T) {
 
 	MustSetUp(c.Gin, func(engine *gin.Engine) error {
 		engine.Any("/api.do", func(ctx *gin.Context) {
-			base64Str := base64Kit.EncodeStringToString(`{"msg":"hello"}`)
+			base64Str := base64Kit.EncodeStringToString(`{"msg":"hello WORLD！"}`)
 			resp := &RPCResponse{
 				Result: &RPCResult{
 					B64Data: base64Str,

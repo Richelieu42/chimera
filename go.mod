@@ -27,7 +27,7 @@ require (
 	github.com/gin-contrib/size v1.0.1
 	github.com/gin-contrib/sse v0.1.0
 	github.com/gin-contrib/static v1.1.2
-	github.com/gin-gonic/gin v1.9.1
+	github.com/gin-gonic/gin v1.10.0
 	github.com/go-kratos/kratos/v2 v2.7.3
 	github.com/go-oauth2/oauth2/v4 v4.5.2
 	github.com/go-playground/validator/v10 v10.20.0
@@ -50,7 +50,7 @@ require (
 	github.com/hashicorp/raft v1.6.1
 	github.com/hashicorp/raft-boltdb v0.0.0-20231211162105-6c830fa4535e
 	github.com/hibiken/asynq v0.24.1
-	github.com/imroc/req/v3 v3.43.3
+	github.com/imroc/req/v3 v3.43.4
 	github.com/jackc/pgx/v5 v5.5.5
 	github.com/jedib0t/go-pretty/v6 v6.5.9
 	github.com/jinzhu/copier v0.4.0
@@ -95,7 +95,7 @@ require (
 	github.com/spf13/viper v1.18.2
 	github.com/tidwall/buntdb v1.3.0
 	github.com/tidwall/gjson v1.17.1
-	github.com/unidoc/unioffice v1.32.0
+	github.com/unidoc/unioffice v1.32.1
 	github.com/xuri/excelize/v2 v2.8.1
 	github.com/zeromicro/go-zero v1.6.4
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231030135404-af9ae855016f
