@@ -68,7 +68,9 @@ func (opts *proxyOptions) getClientIP(req *http.Request) string {
 @param reqUrlPath 	(1) 可以为nil（此时不修改 req.URL.Path）
 					(2) 非nil的话，个人感觉: 字符串的第一个字符应该是"/"
 @param extraQueryParams 	可以为nil
-@return 可能是 context.Canceled（可以用 == 进行比较）
+@return 可能的值:
+		(1) context.Canceled
+		(2) http.ErrAbortHandler，对应情况: 代理的 sse连接 或 http_stream连接(centrifugo) 断开时，会返回此error，可忽略
 
 更多可参考:
 httputil.NewSingleHostReverseProxy() https://m.bilibili.com/video/BV1H64y1u7D7?buvid=Y44D4D448DC195994A5A88CED2DA982C60DF&is_story_h5=false&mid=5%2BiuUUrTqJQOdIa1r3VR0g%3D%3D&p=1&plat_id=114&share_from=ugc&share_medium=iphone&share_plat=ios&share_session_id=8B36D2C9-4DCB-4BE5-80AD-F7D49E292B5F&share_source=WEIXIN&share_tag=s_i&timestamp=1680160438&unique_k=16bK0gz&up_id=456307879
