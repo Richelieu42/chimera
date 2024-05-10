@@ -90,20 +90,20 @@ var (
 	   ("*", "C:/a/b/c") => (true, <nil>)
 	   ("\\b", "b") => (false, <nil>)
 	*/
-	Match = filepath.Match
+	Match func(pattern, name string) (matched bool, err error) = filepath.Match
 
 	// Glob （正则相关）返回所有匹配的文件.
 	/*
 	   e.g.
 	   ("d:/test/*.txt") => ([d:\test\a.txt d:\test\b.txt], <nil>)
 	*/
-	Glob = filepath.Glob
+	Glob func(pattern string) (matches []string, err error) = filepath.Glob
 
 	// EvalSymlinks 返回链接文件的实际路径.
-	EvalSymlinks = filepath.EvalSymlinks
+	EvalSymlinks func(path string) (string, error) = filepath.EvalSymlinks
 )
 
-// CheckSkip 检查是否发生"路径穿越"（路径穿透）
+// CheckSkip 检查是否发生"路径穿越"（路径穿透）.
 /*
 @param path	 	父路径
 @param path1	子路径
