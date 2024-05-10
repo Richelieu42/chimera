@@ -161,6 +161,17 @@ func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, t
 			err = errorKit.Wrapf(e, "fail to proxy")
 		},
 	}
+
+	// Richelieu: 此处的 recover() 是针对 ReverseProxy.ServeHTTP() 中的panic
+	defer func() {
+		if obj := recover(); obj != nil {
+			if err1, ok := obj.(error); ok {
+				err = err1
+				return
+			}
+			err = errorKit.Newf("recover from %v", obj)
+		}
+	}()
 	reverseProxy.ServeHTTP(writer, req)
 
 	return

@@ -1,10 +1,25 @@
 package main
 
 import (
+	"errors"
 	"fmt"
-	"github.com/richelieu-yang/chimera/v3/src/dataSizeKit"
+	"net/http"
 )
 
 func main() {
-	fmt.Println(dataSizeKit.ToReadableIecString(1048576))
+	defer func() {
+		if obj := recover(); obj != nil {
+			err, ok := obj.(error)
+			fmt.Println("ok", ok)
+			if ok {
+				fmt.Println(errors.Is(err, http.ErrAbortHandler))
+			}
+		}
+	}()
+
+	test()
+}
+
+func test() {
+	panic(http.ErrAbortHandler)
 }
