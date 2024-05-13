@@ -31,5 +31,5 @@ const (
 
 	HeaderXXSSProtection = "X-XSS-Protection"
 
-	HeaderChimeraCors = "Chimera-Cors"
+	HeaderChimeraProxy = "Chimera-Proxy"
 )

@@ -126,7 +126,9 @@ func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, t
 	}
 
 	/* Richelieu: 在请求头加个标记 */
-	httpKit.SetHeader(req.Header, httpKit.HeaderChimeraCors, "1")
+	Mark(req.Header)
+
+	httpKit.SetHeader(req.Header, httpKit.HeaderChimeraProxy, "1")
 
 	/* polyfill header */
 	if opts.polyfillHeaders {
