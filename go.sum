@@ -2523,8 +2523,8 @@ github.com/zeebo/assert v1.3.0/go.mod h1:Pq9JiuJQpG8JLJdtkwrJESF0Foym2/D9XMU5ciN
 github.com/zeebo/xxh3 v1.0.2 h1:xZmwmqxHZA8AI603jOQ0tMqmBr9lPeFwGg6d+xy9DC0=
 github.com/zeebo/xxh3 v1.0.2/go.mod h1:5NWz9Sef7zIDm2JHfFlcQvNekmcEl9ekUZQQKCYaDcA=
 github.com/zeromicro/go-zero v1.5.4/go.mod h1:x/aUyLmSwRECvOyjOf+lhwThBOilJIY+s3slmPAeboA=
-github.com/zeromicro/go-zero v1.6.4 h1:GvZXxxwl1Lby/gIHxHwN/ZNmXl1WFJa1DvoVgqgttUs=
-github.com/zeromicro/go-zero v1.6.4/go.mod h1:dQ39Zoz20/6x/SUhFXyEEg8lWjl+CO3dzg8Je2xG63Q=
+github.com/zeromicro/go-zero v1.6.5 h1:JgsBa25/knnEL7+KQksbwktudIkNQvaAin0nisVgnSA=
+github.com/zeromicro/go-zero v1.6.5/go.mod h1:XjbssEVEzFKueAh0Fie5kNf+cRqFlQQk46fY9WgEGaM=
 github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231030135404-af9ae855016f h1:v3YWLaJjbADXBAALbbWCAq0Pm/xewsbNKwFOpVUrm8s=
 github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231030135404-af9ae855016f/go.mod h1:Hb7FtkJ38KlXtnm/7tsu0U+RErxOxdAQkr0uzKgKWVA=
 go.etcd.io/bbolt v1.3.2/go.mod h1:IbVyRI1SCnLcuJnV2u8VeU0CEYM7e686BmAb1XKL+uU=

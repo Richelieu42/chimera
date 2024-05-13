@@ -97,7 +97,7 @@ require (
 	github.com/tidwall/gjson v1.17.1
 	github.com/unidoc/unioffice v1.32.1
 	github.com/xuri/excelize/v2 v2.8.1
-	github.com/zeromicro/go-zero v1.6.4
+	github.com/zeromicro/go-zero v1.6.5
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231030135404-af9ae855016f
 	go.etcd.io/etcd/client/v3 v3.5.13
 	go.mongodb.org/mongo-driver v1.15.0
