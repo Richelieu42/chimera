@@ -36,7 +36,7 @@ func GetRawQuery(req *http.Request) string {
 	return req.URL.RawQuery
 }
 
-// GetRequestUrl 返回当前接口的url（包括query）.
+// GetRequestUrl 返回当前接口的url（带query）.
 func GetRequestUrl(req *http.Request) string {
 	return req.URL.String()
 
