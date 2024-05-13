@@ -125,10 +125,8 @@ func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, t
 		return errorKit.Newf("invalid scheme(%s)", scheme)
 	}
 
-	/* Richelieu: 在请求头加个标记 */
+	/* Richelieu: 在请求头加个标记，证明此请求被 chimera 代理过 */
 	Mark(req.Header)
-
-	httpKit.SetHeader(req.Header, httpKit.HeaderChimeraProxy, "1")
 
 	/* polyfill header */
 	if opts.polyfillHeaders {
