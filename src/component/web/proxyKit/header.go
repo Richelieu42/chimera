@@ -10,7 +10,7 @@ import (
 @param header 请求头
 */
 func Mark(header http.Header) {
-	httpKit.SetHeader(header, httpKit.HeaderChimeraProxy, "1")
+	httpKit.SetHeader(header, httpKit.HeaderChimeraProxy, "c")
 }
 
 // IsMarked 此请求是否被 chimera 代理过？
@@ -18,5 +18,5 @@ func Mark(header http.Header) {
 @param header 请求头
 */
 func IsMarked(header http.Header) bool {
-	return httpKit.GetHeader(header, httpKit.HeaderChimeraProxy) == "1"
+	return httpKit.GetHeader(header, httpKit.HeaderChimeraProxy) == "c"
 }
