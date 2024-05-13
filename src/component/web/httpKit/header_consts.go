@@ -30,4 +30,6 @@ const (
 	HeaderUpgrade = "Upgrade"
 
 	HeaderXXSSProtection = "X-XSS-Protection"
+
+	HeaderChimeraCors = "Chimera-Cors"
 )

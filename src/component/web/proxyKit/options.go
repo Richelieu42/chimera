@@ -120,11 +120,13 @@ func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, t
 	/* check scheme */
 	scheme := opts.scheme
 	switch scheme {
-	case "https":
-	case "http":
+	case "https", "http":
 	default:
 		return errorKit.Newf("invalid scheme(%s)", scheme)
 	}
+
+	/* Richelieu: 在请求头加个标记 */
+	httpKit.SetHeader(req.Header, httpKit.HeaderChimeraCors, "1")
 
 	/* polyfill header */
 	if opts.polyfillHeaders {
