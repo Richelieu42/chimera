@@ -125,9 +125,6 @@ func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, t
 		return errorKit.Newf("invalid scheme(%s)", scheme)
 	}
 
-	/* Richelieu: 在请求头加个标记，证明此请求被 chimera 代理过 */
-	Mark(req.Header)
-
 	/* polyfill header */
 	if opts.polyfillHeaders {
 		/*
@@ -142,6 +139,9 @@ func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, t
 			httpKit.SetHeader(req.Header, "X-Real-IP", opts.getClientIP(req))
 		}
 	}
+
+	/* Richelieu: 在请求头加个标记，证明此请求被 chimera 代理过 */
+	mark(req.Header)
 
 	/* proxy */
 	director := func(req *http.Request) {

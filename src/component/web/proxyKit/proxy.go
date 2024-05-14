@@ -2,7 +2,11 @@ package proxyKit
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"net/http"
+	"net/http/httputil"
+	"net/url"
 )
 
 // Proxy 代理请求（反向代理，请求转发）.
@@ -27,4 +31,35 @@ func ProxyWithGin(ctx *gin.Context, targetAddr string, options ...ProxyOption) e
 	opts.ctx = ctx
 
 	return opts.proxy(ctx.Writer, ctx.Request, targetAddr)
+}
+
+// ProxyToUrl
+/*
+@param targetUrl 可以是 url.Parse() 的返回值
+*/
+func ProxyToUrl(w http.ResponseWriter, r *http.Request, targetUrl *url.URL) (err error) {
+	/* reset Request.Body */
+	if err = httpKit.TryToResetRequestBody(r); err != nil {
+		return
+	}
+
+	/* Richelieu: 在请求头加个标记，证明此请求被 chimera 代理过 */
+	mark(r.Header)
+
+	reverseProxy := httputil.NewSingleHostReverseProxy(targetUrl)
+	reverseProxy.ErrorHandler = func(writer http.ResponseWriter, r *http.Request, err1 error) {
+		err = errorKit.Wrapf(err1, "fail to proxy")
+	}
+	// Richelieu: 此处的 recover() 是针对 ReverseProxy.ServeHTTP() 中的 panic(http.ErrAbortHandler)
+	defer func() {
+		if obj := recover(); obj != nil {
+			if err1, ok := obj.(error); ok {
+				err = err1
+				return
+			}
+			err = errorKit.Newf("recover from %v", obj)
+		}
+	}()
+	reverseProxy.ServeHTTP(w, r)
+	return
 }
