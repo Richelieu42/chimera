@@ -19,11 +19,11 @@ var target = "127.0.0.1:8000"
 func main() {
 	engine := gin.Default()
 
-	// gzip压缩
+	// gzip中间件
 	engine.Use(ginKit.NewGzipMiddleware(1, gzip.WithExcludedPaths([]string{"/connection/http_stream"})))
-	// 允许跨域
+	// cors中间件
 	engine.Use(ginKit.NewCorsMiddleware(nil))
-	// options
+	// options中间件
 	engine.Use(ginKit.NewOptionsMiddleware())
 
 	ginKit.BindHandlersToRoute(engine, "/connection/websocket", []string{http.MethodGet}, func(ctx *gin.Context) {
