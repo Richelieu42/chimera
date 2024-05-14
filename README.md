@@ -18,21 +18,22 @@ go get github.com/richelieu42/chimera
 - 业务自己的 config 包
 
 ## 参考
-(1) duke-git/lancet
-    官方API说明
-        https://www.golancet.cn/api/overview.html
-    支持300+常用功能的开源GO语言工具函数库
-        https://mp.weixin.qq.com/s?__biz=MzA4ODg0NDkzOA==&mid=2247498172&idx=1&sn=461d8429c094189f4e10732d00805339
-    github(3.2k): https://github.com/duke-git/lancet/blob/main/README_zh-CN.md
-(2) samber/lo
-    Golang.wps
-    github(14.2k): https://github.com/samber/lo
-(3) GoFramev2
-    https://goframe.org/pages/viewpage.action?pageId=1114859
-    github(10.4k): https://github.com/gogf/gf
+- duke-git/lancet  
+    官方API说明  
+        https://www.golancet.cn/api/overview.html  
+    支持300+常用功能的开源GO语言工具函数库  
+        https://mp.weixin.qq.com/s?__biz=MzA4ODg0NDkzOA==&mid=2247498172&idx=1&sn=461d8429c094189f4e10732d00805339  
+    github(3.2k): https://github.com/duke-git/lancet/blob/main/README_zh-CN.md  
+- samber/lo  
+    Golang.wps  
+    github(14.2k): https://github.com/samber/lo  
+- GoFramev2  
+    https://goframe.org/pages/viewpage.action?pageId=1114859  
+    github(10.4k): https://github.com/gogf/gf  
 
 ### TODOs
-github.com/duke-git/lancet/v2 v2.2.9 开始有问题
-    https://github.com/duke-git/lancet/issues/166
+
+
+
 
 
