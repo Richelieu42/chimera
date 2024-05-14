@@ -14,7 +14,6 @@ PS:
 func NewOptionsMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		if ctx.Request.Method == http.MethodOptions {
-
 			// 预检请求的返回结果能缓存多久？24h
 			ctx.Header("Access-Control-Max-Age", "86400")
 			ctx.Header("Access-Control-Allow-Credentials", "true")

@@ -70,8 +70,6 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, opts *ginOpt
 		origins = sliceKit.Uniq(origins)
 
 		engine.Use(NewCorsMiddleware(origins))
-	} else {
-		// 不配置cors
 	}
 
 	/* OPTIONS */

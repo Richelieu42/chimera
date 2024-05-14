@@ -26,7 +26,6 @@ func NewCorsMiddleware(origins []string) gin.HandlerFunc {
 			cors.Default()
 			cors.DefaultConfig()
 	*/
-
 	config := cors.Config{
 		// 允许的请求方式，默认值是 GET，POST，PUT，PATCH，DELETE，HEAD，和 OPTIONS
 		AllowMethods: []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"},
