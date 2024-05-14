@@ -167,7 +167,8 @@ func newClusterOptions(config *Config) (*redis.UniversalOptions, error) {
 		在 ClusterOptions 中设置 ReadOnly 为 false，这样客户端即使在执行只读操作时也不会尝试连接从节点。
 		这有助于保持整体逻辑清晰，即所有写操作都直接发送到主节点，而不会由于意外的读取配置而间接导致写入从节点。
 	*/
-	opts.ReadOnly = false
+	//opts.ReadOnly = false
+	opts.ReadOnly = config.Cluster.UseReplicasForReadOperations
 
 	/*
 		RouteByLatency 和 RouteRandomly 互斥.

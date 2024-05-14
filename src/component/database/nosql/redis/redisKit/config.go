@@ -48,6 +48,8 @@ type (
 			也可以是: 所有的 master + slave 的地址（推荐）.
 		*/
 		Addrs []string `json:"addrs" yaml:"addrs" validate:"required,gte=2,unique,dive,hostname_port"`
+
+		UseReplicasForReadOperations bool `json:"useReplicasForReadOperations" yaml:"useReplicasForReadOperations"`
 	}
 )
 

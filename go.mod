@@ -80,6 +80,7 @@ require (
 	github.com/pierrec/lz4/v4 v4.1.21
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
 	github.com/redis/go-redis/v9 v9.5.1
+	github.com/redis/rueidis v1.0.37
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/rs/xid v1.5.0
@@ -266,6 +267,7 @@ require (
 	github.com/prometheus/procfs v0.12.0 // indirect
 	github.com/quic-go/qpack v0.4.0 // indirect
 	github.com/quic-go/quic-go v0.41.0 // indirect
+	github.com/redis/rueidis/rueidiscompat v1.0.37 // indirect
 	github.com/refraction-networking/utls v1.6.3 // indirect
 	github.com/richardlehane/mscfb v1.0.4 // indirect
 	github.com/richardlehane/msoleps v1.0.3 // indirect

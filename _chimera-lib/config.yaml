@@ -93,6 +93,8 @@ redis:
     masterName: mymaster
     db: 0
   cluster:
+    # true: use replicas for read operations
+    useReplicasForReadOperations: false
     # 二选一:
     # (1) 所有的主节点（master），推荐
     # (2) 所有的主节点（master） + 所有的从节点（slave）
