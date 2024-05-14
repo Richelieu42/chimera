@@ -1,5 +1,11 @@
 package redisKit
 
+import (
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
+	"github.com/richelieu-yang/chimera/v3/src/validateKit"
+)
+
 type (
 	Config struct {
 		UserName string `json:"userName" yaml:"userName"`
@@ -74,4 +80,22 @@ func (config *Config) Simplify() {
 	default:
 		// do nothing
 	}
+}
+
+// Validate
+/*
+@param config 可能为nil
+*/
+func (config *Config) Validate() error {
+	if err := interfaceKit.AssertNotNil(config, "config"); err != nil {
+		return err
+	}
+
+	/* 先简化，再验证（以免通不过验证） */
+	config.Simplify()
+
+	if err := validateKit.Struct(config); err != nil {
+		return errorKit.Wrapf(err, "fail to verify")
+	}
+	return nil
 }

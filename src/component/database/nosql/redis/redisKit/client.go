@@ -6,7 +6,6 @@ import (
 	"github.com/redis/go-redis/v9"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
-	"github.com/richelieu-yang/chimera/v3/src/validateKit"
 	"time"
 )
 
@@ -60,12 +59,8 @@ func (client *Client) GetUniversalClient() redis.UniversalClient {
 		(2) Cluster模式下，第1个返回值的类型: *redis.ClusterClient.
 */
 func NewClient(config *Config) (client *Client, err error) {
-	/* 先简化，再验证（以免通不过验证） */
-	config.Simplify()
-
-	if err = validateKit.Struct(config); err != nil {
-		err = errorKit.Wrapf(err, "fail to verify")
-		return
+	if err := config.Validate(); err != nil {
+		return nil, err
 	}
 
 	var opts *redis.UniversalOptions
@@ -165,7 +160,7 @@ func newClusterOptions(config *Config) (*redis.UniversalOptions, error) {
 		Enables read-only commands on slave nodes.
 
 		在 ClusterOptions 中设置 ReadOnly 为 false，这样客户端即使在执行只读操作时也不会尝试连接从节点。
-		这有助于保持整体逻辑清晰，即所有写操作都直接发送到主节点，而不会由于意外的读取配置而间接导致写入从节点。
+		这有助于保持整体逻辑清晰，即所有读、写操作都直接发送到主节点，而不会由于意外的读取配置而间接导致写入从节点。
 	*/
 	//opts.ReadOnly = false
 	opts.ReadOnly = config.Cluster.UseReplicasForReadOperations
