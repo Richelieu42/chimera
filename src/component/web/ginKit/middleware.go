@@ -44,7 +44,7 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, opts *ginOpt
 		(2) gzip会使得响应头中的 Content-Length 不生效.
 	*/
 	gc := config.Gzip
-	if gc != nil {
+	if gc != nil && gc.Level != gzip.NoCompression {
 		if sliceKit.IsEmpty(gc.ExcludedExtensions) {
 			// 默认值
 			gc.ExcludedExtensions = []string{".png", ".gif", ".jpeg", ".jpg", ".webp"}
