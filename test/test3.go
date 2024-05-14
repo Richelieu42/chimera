@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"github.com/gin-contrib/gzip"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/push/wsKit"
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
 
@@ -20,9 +19,12 @@ func main() {
 	engine := gin.Default()
 
 	// gzip中间件
-	engine.Use(ginKit.NewGzipMiddleware(1, gzip.WithExcludedPaths([]string{"/connection/http_stream"})))
+	engine.Use(ginKit.NewGzipMiddleware(1))
+	//engine.Use(ginKit.NewGzipMiddleware(1, gzip.WithExcludedPaths([]string{"/connection/http_stream"})))
+
 	// cors中间件
 	engine.Use(ginKit.NewCorsMiddleware(nil))
+
 	// options中间件
 	engine.Use(ginKit.NewOptionsMiddleware())
 
