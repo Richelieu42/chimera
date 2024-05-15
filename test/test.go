@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/ginKit"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
@@ -18,8 +19,8 @@ func main() {
 	engine := gin.Default()
 
 	// gzip中间件
-	engine.Use(ginKit.NewGzipMiddleware(1))
-	//engine.Use(ginKit.NewGzipMiddleware(1, gzip.WithExcludedPaths([]string{"/connection/http_stream"})))
+	//engine.Use(ginKit.NewGzipMiddleware(1))
+	engine.Use(ginKit.NewGzipMiddleware(1, gzip.WithExcludedPaths([]string{"/connection/http_stream"})))
 	//engine.Use(ginKit.NewGzipMiddleware2(1, 0))
 
 	// cors中间件
@@ -50,14 +51,8 @@ func proxyToCentrifugo(ctx *gin.Context) {
 	// Richelieu: 删掉允许跨域头，以防双重允许跨域（centrifugo服务那边已经有允许跨域了）
 	httpKit.DelHeader(ctx.Writer.Header(), httpKit.HeaderAccessControlAllowOrigin)
 
-	if err := proxyKit.ProxyWithGin(ctx, target, proxyKit.WithErrorLogger(nil), proxyKit.WithModifyResponse(modifyResponse)); err != nil && !errors.Is(err, http.ErrAbortHandler) {
+	if err := proxyKit.ProxyWithGin(ctx, target, proxyKit.WithErrorLogger(nil)); err != nil && !errors.Is(err, http.ErrAbortHandler) {
 		logrus.WithError(err).WithField("route", httpKit.GetRoute(ctx.Request)).Error("Fail to proxy.")
 		return
 	}
-}
-
-func modifyResponse(response *http.Response) error {
-	// 修改 Connection 头为 "keep-alive"
-	response.Header.Set("Connection", "keep-alive")
-	return nil
 }
