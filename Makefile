@@ -1,5 +1,5 @@
-app=test3
-path=test/test3.go
+app=test
+path=test/test.go
 cgo=0
 
 # 制作者
