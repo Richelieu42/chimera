@@ -10,10 +10,8 @@ RSA加密算法是一种广泛使用的 "非对称加密" 方法.
 在线生成非对称加密公钥私钥对
     http://web.chacuo.net/netrsakeypair
 #### 通过openssl命令生成
-# 生成私钥
-openssl genrsa -out private.pem 2048
-# 生成公钥
-openssl rsa -in private.pem -outform PEM -pubout -out public.pem
+- 生成私钥，命令：openssl genrsa -out private.pem 2048
+- 生成公钥，命令：openssl rsa -in private.pem -outform PEM -pubout -out public.pem
 
 ## 参考
 Golang-RSA加密解密-数据无大小限制
