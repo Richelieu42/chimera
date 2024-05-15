@@ -7,5 +7,9 @@ import (
 )
 
 func main() {
-	fmt.Println(urlKit.EncodeURIComponent(":$"))
+	u, err := urlKit.Parse("http://127.0.0.1:80")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(u)
 }

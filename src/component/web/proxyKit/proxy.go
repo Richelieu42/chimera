@@ -17,20 +17,20 @@ import (
 
 @param w			e.g.ctx.Writer
 @param r 			e.g.ctx.Request
-@param targetAddr	e.g."127.0.0.1:12345"
-@param options 		可以不传
+@param host			e.g."127.0.0.1:12345"
+@param options 		optional
 */
-func Proxy(w http.ResponseWriter, r *http.Request, targetAddr string, options ...ProxyOption) error {
+func Proxy(w http.ResponseWriter, r *http.Request, host string, options ...ProxyOption) error {
 	opts := loadOptions(options...)
 
-	return opts.proxy(w, r, targetAddr)
+	return opts.proxy(w, r, host)
 }
 
-func ProxyWithGin(ctx *gin.Context, targetAddr string, options ...ProxyOption) error {
+func ProxyWithGin(ctx *gin.Context, host string, options ...ProxyOption) error {
 	opts := loadOptions(options...)
 	opts.ctx = ctx
 
-	return opts.proxy(ctx.Writer, ctx.Request, targetAddr)
+	return opts.proxy(ctx.Writer, ctx.Request, host)
 }
 
 // ProxyToUrl
