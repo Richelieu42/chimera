@@ -27,6 +27,7 @@ func NewGzipMiddleware2(level, minLength int) (middleware gin.HandlerFunc, err e
 		}
 
 		ctx.Header("Content-Encoding", "gzip")
+		ctx.Header("Vary", "Accept-Encoding")
 
 		// 创建一个 ResponseWriter 接口的包装器
 		grw := &gzipResponseWriter{
