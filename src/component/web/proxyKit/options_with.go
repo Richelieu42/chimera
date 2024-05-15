@@ -1,6 +1,9 @@
 package proxyKit
 
-import "log"
+import (
+	"log"
+	"net/http"
+)
 
 func WithScheme(scheme string) ProxyOption {
 	return func(opts *proxyOptions) {
@@ -54,5 +57,11 @@ func WithExtraQueryParams(extraQueryParams map[string][]string) ProxyOption {
 func WithPolyfillHeaders(polyfillHeaders bool) ProxyOption {
 	return func(opts *proxyOptions) {
 		opts.polyfillHeaders = polyfillHeaders
+	}
+}
+
+func WithModifyResponse(responseModifier func(*http.Response) error) ProxyOption {
+	return func(opts *proxyOptions) {
+		opts.responseModifier = responseModifier
 	}
 }
