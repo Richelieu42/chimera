@@ -1,18 +1,17 @@
-package main
+package ioKit
 
 import (
-	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
-
 	"github.com/sirupsen/logrus"
 	"io"
 	"os"
 	"strconv"
+	"testing"
 	"time"
 )
 
-func main() {
+func TestPipe(t *testing.T) {
 	// 创建一个管道
-	pr, pw := io.Pipe()
+	pr, pw := Pipe()
 
 	// 新建一个协程写入数据
 	go func() {
