@@ -1,90 +1,119 @@
 package main
 
 import (
-	"bytes"
 	"compress/gzip"
-	"github.com/gin-gonic/gin"
+	"context"
+	"errors"
+	"io"
+	"log"
 	"net/http"
+	"net/http/httputil"
+	"net/url"
 	"strings"
 )
 
 func main() {
-	r := gin.Default()
+	targetURL := "http://localhost:8000" // Replace with your backend server URL
+	proxyURL, err := url.Parse(targetURL)
+	if err != nil {
+		panic(err)
+	}
 
-	// 使用 GzipMiddleware 中间件
-	r.Use(GzipMiddleware(1000)) // 设置最小长度为 1024 字节
+	proxy := httputil.NewSingleHostReverseProxy(proxyURL)
 
-	// 测试路由
-	r.GET("/", func(c *gin.Context) {
-		c.String(http.StatusOK, strings.Repeat("H", 1001))
+	// Customize the Director function to handle request modifications
+	proxy.Director = func(req *http.Request) {
+		req.URL.Scheme = proxyURL.Scheme
+		req.URL.Host = proxyURL.Host
+		req.Host = proxyURL.Host
+		req.Header.Add("Accept-Encoding", "gzip")
+	}
+
+	// Customize the ModifyResponse function to handle responses
+	proxy.ModifyResponse = func(resp *http.Response) error {
+		// Check if the response is already gzip-encoded
+		if strings.Contains(resp.Header.Get("Content-Encoding"), "gzip") {
+			return nil
+		}
+
+		// Remove Content-Length because the content length will change after gzip compression
+		resp.Header.Del("Content-Length")
+		// Set the Content-Encoding header to indicate that the response is gzip-compressed
+		resp.Header.Set("Content-Encoding", "gzip")
+		// Add the Vary header to indicate that the response varies based on the Accept-Encoding header
+		resp.Header.Add("Vary", "Accept-Encoding")
+
+		pr, pw := io.Pipe()
+		gw := gzip.NewWriter(pw)
+
+		// Store the original body to close it later
+		origBody := resp.Body
+		resp.Body = io.NopCloser(pr)
+
+		// Use a goroutine to compress the response body and write to the pipe
+		go func() {
+			defer origBody.Close()
+			defer pw.Close()
+			defer gw.Close()
+
+			buf := make([]byte, 1024)
+			for {
+				n, err := origBody.Read(buf)
+				if n > 0 {
+					if _, err := gw.Write(buf[:n]); err != nil {
+						log.Printf("Error writing to gzip writer: %v", err)
+						return
+					}
+					if err := gw.Flush(); err != nil {
+						log.Printf("Error flushing gzip writer: %v", err)
+						return
+					}
+				}
+				if err != nil {
+					if errors.Is(err, io.EOF) {
+						break
+					}
+					if !errors.Is(err, context.Canceled) {
+						log.Printf("Error reading from response body: %v", err)
+					}
+					return
+				}
+			}
+		}()
+
+		return nil
+	}
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		proxy.ServeHTTP(w, r)
 	})
 
-	r.Run(":8080")
-}
-
-func GzipMiddleware(minLength int) gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		ctx.Header("Content-Encoding", "gzip")
-
-		// 创建一个 ResponseWriter 接口的包装器
-		grw := &gzipResponseWriter{
-			ResponseWriter: ctx.Writer,
-
-			minLength: minLength,
-			buffer:    bytes.NewBuffer(nil),
-		}
-		// 替换原始的 ResponseWriter 接口
-		ctx.Writer = grw
-
-		// 继续处理请求
-		ctx.Next()
-
-		//// 获取响应体大小
-		//bodySize := grw.buffer.Len()
-		//// 如果响应体大小小于配置的最小长度，则不进行压缩
-		//if bodySize < minLength {
-		//	grw.ResponseWriter.WriteHeader(http.StatusOK)
-		//	_, _ = grw.buffer.WriteTo(ctx.Writer)
-		//	return
-		//}
-
-		grw.WriteBody(ctx)
+	log.Println("Starting proxy server on :9000")
+	if err := http.ListenAndServe(":9000", nil); err != nil {
+		log.Fatalf("Error starting server: %v", err)
 	}
 }
 
-// 自定义的 ResponseWriter 接口的包装器
+func flushResponse(w http.ResponseWriter) {
+	if flusher, ok := w.(http.Flusher); ok {
+		flusher.Flush()
+	}
+}
+
 type gzipResponseWriter struct {
-	gin.ResponseWriter
-
-	minLength int
-
-	written bool
-	buffer  *bytes.Buffer
+	io.Writer
+	http.ResponseWriter
 }
 
-// 重写 Write 方法，将响应体写入缓冲区
-func (grw *gzipResponseWriter) Write(data []byte) (int, error) {
-	grw.written = true
-	return grw.buffer.Write(data)
+func (w gzipResponseWriter) Write(b []byte) (int, error) {
+	n, err := w.Writer.Write(b)
+	if err == nil {
+		flushResponse(w.ResponseWriter)
+	}
+	return n, err
 }
 
-// WriteBody 在请求结束时进行 gzip 压缩
-func (grw *gzipResponseWriter) WriteBody(ctx *gin.Context) {
-	if !grw.written {
-		return
-	}
-
-	if grw.buffer.Len() < grw.minLength {
-		// 不进行 gzip 压缩
-		ctx.Writer.Header().Del("Content-Encoding")
-
-		_, _ = grw.buffer.WriteTo(grw.ResponseWriter)
-		return
-	}
-
-	// 进行 gzip 压缩
-	writer, _ := gzip.NewWriterLevel(grw.ResponseWriter, gzip.BestSpeed)
-	defer writer.Close()
-	_, _ = grw.buffer.WriteTo(writer)
-	//_ = writer.Flush()
+func newGzipResponseWriter(w http.ResponseWriter) http.ResponseWriter {
+	gw := gzip.NewWriter(w)
+	return gzipResponseWriter{Writer: gw, ResponseWriter: w}
 }
