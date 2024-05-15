@@ -60,8 +60,8 @@ func WithPolyfillHeaders(polyfillHeaders bool) ProxyOption {
 	}
 }
 
-func WithModifyResponse(responseModifier func(*http.Response) error) ProxyOption {
+func WithModifyResponse(modifyResponse func(*http.Response) error) ProxyOption {
 	return func(opts *proxyOptions) {
-		opts.responseModifier = responseModifier
+		opts.modifyResponse = modifyResponse
 	}
 }

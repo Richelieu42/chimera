@@ -34,8 +34,8 @@ type (
 		// polyfillHeaders 是否额外处理请求头?
 		polyfillHeaders bool
 
-		// responseModifier 修改响应
-		responseModifier func(*http.Response) error
+		// modifyResponse 修改响应
+		modifyResponse func(*http.Response) error
 	}
 
 	ProxyOption func(opts *proxyOptions)
@@ -162,12 +162,12 @@ func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, t
 		}
 	}
 	reverseProxy := &httputil.ReverseProxy{
-		Director: director,
-		ErrorLog: opts.errorLogger,
+		Director:       director,
+		ErrorLog:       opts.errorLogger,
+		ModifyResponse: opts.modifyResponse,
 		ErrorHandler: func(rw http.ResponseWriter, req *http.Request, e error) {
 			err = errorKit.Wrapf(e, "fail to proxy")
 		},
-		ModifyResponse: nil,
 	}
 
 	// Richelieu: 此处的 recover() 是针对 ReverseProxy.ServeHTTP() 中的 panic(http.ErrAbortHandler)
