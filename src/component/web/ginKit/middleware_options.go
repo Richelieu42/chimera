@@ -2,6 +2,7 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
 	"net/http"
 )
 
@@ -21,9 +22,8 @@ func NewOptionsMiddleware() gin.HandlerFunc {
 			ctx.Header("Access-Control-Allow-Credentials", "true")
 			ctx.Header("Access-Control-Allow-Methods", "OPTIONS, GET, POST")
 			ctx.Header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
-
 			ctx.Header("Content-Type", "text/plain; charset=utf-8")
-			//ctx.Header("Content-Length", "0")
+			ctx.Header(httpKit.HeaderAccessControlAllowOrigin, httpKit.GetOrigin(ctx.Request.Header))
 
 			ctx.AbortWithStatus(http.StatusNoContent)
 			return

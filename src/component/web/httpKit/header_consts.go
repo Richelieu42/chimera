@@ -23,6 +23,8 @@ const (
 
 	HeaderConnection = "Connection"
 
+	HeaderOrigin = "Origin"
+
 	HeaderSetCookie = "Set-Cookie"
 
 	HeaderVary = "Vary"
