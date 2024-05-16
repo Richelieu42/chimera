@@ -15,6 +15,8 @@ const (
 
 	HeaderAccessControlAllowOrigin = "Access-Control-Allow-Origin"
 
+	HeaderAccessControlMaxAge = "Access-Control-Max-Age"
+
 	HeaderAllow = "Allow"
 
 	HeaderCacheControl = "Cache-Control"
