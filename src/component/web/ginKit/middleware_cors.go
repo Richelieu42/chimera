@@ -3,7 +3,8 @@ package ginKit
 import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"time"
+	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
+	"net/http"
 )
 
 // NewCorsMiddleware 新建一个cors中间件（自带对 OPTIONS请求 的处理）.
@@ -33,8 +34,10 @@ func NewCorsMiddleware(origins []string) gin.HandlerFunc {
 		AllowHeaders: []string{"Content-Type", "Content-Length", "Authorization", "Accept", "Origin", "X-Requested-With"},
 		// 可以在响应中显示的请求头
 		ExposeHeaders: []string{"Content-Length", "Content-Type", "Last-Modified"},
-		// 预请求的结果能被缓存多久
-		MaxAge: time.Hour * 12,
+
+		// 预检请求（OPTIONS）的结果能被缓存多久
+		MaxAge:                    timeKit.Day,
+		OptionsResponseStatusCode: http.StatusNoContent,
 
 		// 添加请求源是否允许使用通配符，例如 http://some-domain/*，https://api. 或 http://some.*.subdomain.com
 		AllowWildcard: true,
