@@ -22,7 +22,7 @@ func TestMustSetUp(t *testing.T) {
 	}
 	c := &config{}
 	confKit.MustLoad(path, c)
-	MustSetUp(c.Etcd)
+	MustSetUp(c.Etcd, "")
 
 	client, err := GetClient()
 	if err != nil {
