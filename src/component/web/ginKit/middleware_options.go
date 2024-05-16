@@ -11,8 +11,7 @@ import (
 Deprecated: NewCorsMiddleware 已经自带对 OPTIONS请求 的处理了.
 
 PS:
-(1) 需要先使用 NewCorsMiddleware;
-(2) 就算 NoRoute || NoMethod，也会走到中间件.
+(1) 就算 NoRoute || NoMethod，也会走到中间件.
 */
 func NewOptionsMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
