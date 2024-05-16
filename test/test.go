@@ -16,6 +16,8 @@ import (
 var target = "127.0.0.1:8000"
 
 func main() {
+	httpKit.GetRoute()
+
 	engine := gin.Default()
 
 	// gzip中间件

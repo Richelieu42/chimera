@@ -36,7 +36,7 @@ func loadOptions(options ...GinOption) *ginOptions {
 	opts := &ginOptions{
 		ServiceInfo:              "",
 		RecoveryMiddleware:       nil,
-		DefaultOptionsMiddleware: true,
+		DefaultOptionsMiddleware: false,
 		DefaultNoRouteHtml:       true,
 		DefaultNoMethod:          true,
 		DefaultFavicon:           true,

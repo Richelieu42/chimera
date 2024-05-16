@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// NewCorsMiddleware 新建一个cors中间件.
+// NewCorsMiddleware 新建一个cors中间件（自带对 OPTIONS请求 的处理）.
 /*
 「Go框架」 Gin 怎么实现允许前端跨域请求？
 	https://mp.weixin.qq.com/s/2eJUJKJ3Xu5jOYXAfknqtA
