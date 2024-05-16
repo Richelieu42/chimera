@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	port = 9001
+	port = 9000
 )
 
 func main() {
