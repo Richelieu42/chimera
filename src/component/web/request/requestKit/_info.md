@@ -24,6 +24,6 @@ https://req.cool/zh/docs/tutorial/handle-response/
 (2) resp.IsErrorState()
 Unmarshal结构体: resp.Unmarshal 或 resp.Into
 
-#### 请求超时（2选1; 推荐使用第1种）
+#### 请求超时（timeout; 2选1，推荐使用第1种）
 (1) 调用 Client.SetTimeout() 设置超时时间（imroc/req默认: 2 * time.Minute）
 (2) 调用 Request.Do() 时传参（context.Context类型）
