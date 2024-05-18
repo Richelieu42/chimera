@@ -8,6 +8,7 @@ e.g.
     }
 
 ## imroc/req
+- notes/Golang/WEB/req - http客户端.wps
 - [快速开始（中文）](https://req.cool/zh/docs/prologue/quickstart/)
 - [GO语言最好用的HTTP请求库](https://www.bilibili.com/video/BV1Mu4y197dA/)
 - [github](https://github.com/imroc/req)

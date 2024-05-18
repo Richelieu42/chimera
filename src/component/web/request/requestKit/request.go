@@ -13,5 +13,21 @@ func NewRequest(client *req.Client) (r *req.Request) {
 
 	r = client.R()
 
+	//r.SetPathParam()
+	//
+	//r.SetQueryParams()
+	//r.SetQueryParamsAnyType()
+	//
+	//r.SetHeaderNonCanonical()
+	//
+	//r.SetHeaders()
+	//r.SetBody()
+	//r.SetContentType(header.FormContentType)
+	//r.SetPathParams()
+	//r.SetQueryParams()
+	//r.SetQueryParamsAnyType()
+	//
+	//r.SetContentType()
+
 	return
 }
