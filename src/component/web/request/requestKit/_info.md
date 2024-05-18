@@ -8,12 +8,9 @@ e.g.
     }
 
 ## imroc/req
-GO语言最好用的HTTP请求库
-    https://www.bilibili.com/video/BV1Mu4y197dA/
-github(4k)
-    https://github.com/imroc/req
-快速开始（中文）
-    https://req.cool/zh/docs/prologue/quickstart/
+- [快速开始（中文）](https://req.cool/zh/docs/prologue/quickstart/)
+- [GO语言最好用的HTTP请求库](https://www.bilibili.com/video/BV1Mu4y197dA/)
+- [github](https://github.com/imroc/req)
 
 #### Close
 不需要手动调用 resp.Body.Close()（无论是 普通GET、POST请求 还是 下载请求）.
