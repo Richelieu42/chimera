@@ -29,6 +29,7 @@ func NewTextFormatter(timestampFormat string) *logrus.TextFormatter {
 
 	// 是否用""将字段的值包起来?
 	quoteFlag := true
+	colorFlag := false
 
 	return &logrus.TextFormatter{
 		/* 时间格式 */
@@ -39,8 +40,8 @@ func NewTextFormatter(timestampFormat string) *logrus.TextFormatter {
 		FullTimestamp: true,
 
 		/* 禁止颜色显示 */
-		DisableColors: true,
-		ForceColors:   false,
+		DisableColors: !colorFlag,
+		ForceColors:   colorFlag,
 
 		DisableQuote: !quoteFlag,
 		ForceQuote:   quoteFlag,
