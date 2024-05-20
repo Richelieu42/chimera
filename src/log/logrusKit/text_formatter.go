@@ -29,6 +29,7 @@ func NewTextFormatter(timestampFormat string) *logrus.TextFormatter {
 
 	// 是否用""将字段的值包起来?
 	quoteFlag := true
+	// Richelieu: 此处暂时固定为false，否则输出会很难看
 	colorFlag := false
 
 	return &logrus.TextFormatter{

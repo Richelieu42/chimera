@@ -4,8 +4,8 @@ version: '3'
 vars:
 #  APP: chimera
 #  SOURCE: internal/main.go
-  APP: test3
-  SOURCE: test/test3.go
+  APP: test
+  SOURCE: test/test.go
   # 0 || 1
   CGO_ENABLED: 0
   VERSION: 0.0.1
