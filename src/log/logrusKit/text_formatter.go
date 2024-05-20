@@ -46,6 +46,12 @@ func NewTextFormatter(timestampFormat string) *logrus.TextFormatter {
 		DisableQuote: !quoteFlag,
 		ForceQuote:   quoteFlag,
 
+		// Disables the truncation of the level text to 4 characters.
+		DisableLevelTruncation: false,
+		// PadLevelText Adds padding the level text so that all the levels output at the same length
+		// PadLevelText is a superset of the DisableLevelTruncation option
+		PadLevelText: false,
+
 		QuoteEmptyFields: true,
 
 		CallerPrettyfier: func(f *runtime.Frame) (funcName string, fileName string) {

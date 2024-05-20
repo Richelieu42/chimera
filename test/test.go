@@ -8,12 +8,10 @@ import (
 
 func main() {
 	textFormatter := logrusKit.NewDefaultTextFormatter()
-	textFormatter.PadLevelText = false
-	textFormatter.DisableLevelTruncation = false
 	logrus.SetFormatter(textFormatter)
 
 	logrus.WithField("1", "2").Debug("Debug")
-	logrus.Info("Info")
+	logrus.WithField("3", "4").Info("Info")
 	logrus.Warn("Warn")
 	logrus.Error("Error")
 }
