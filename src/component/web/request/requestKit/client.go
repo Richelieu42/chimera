@@ -34,6 +34,10 @@ func NewClient(debug bool, timeout time.Duration) (client *req.Client) {
 	client.SetJsonMarshal(api.Marshal).
 		SetJsonUnmarshal(api.Unmarshal)
 
+	/*
+		更高级的 GET 请求
+			https://req.cool/zh/docs/prologue/quickstart/#%e6%9b%b4%e9%ab%98%e7%ba%a7%e7%9a%84-get-%e8%af%b7%e6%b1%82
+	*/
 	client.EnableDumpEachRequest().
 		OnAfterResponse(func(client *req.Client, resp *req.Response) error {
 			if resp.Err != nil { // There is an underlying error, e.g. network error or unmarshal error.
