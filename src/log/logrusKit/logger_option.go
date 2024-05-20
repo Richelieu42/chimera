@@ -20,7 +20,12 @@ type (
 		// output 默认: os.Stderr
 		output io.Writer
 
-		// msgPrefix 日志输出的msg属性的前缀，(1) 默认: ""; (2) 非空的话，会拼接在msg前面
+		// msgPrefix
+		/*
+			日志输出的msg属性的前缀，
+			(1) 默认: ""
+			(2) 非空的话，会拼接在msg前面（但并不会在中间加上" "）
+		*/
 		msgPrefix string
 
 		// disableQuote 默认: false
