@@ -19,6 +19,7 @@ func TestNewLfsHook(t *testing.T) {
 	}
 
 	hook := NewLfsHook(lfshook.WriterMap{
+		logrus.WarnLevel:  os.Stdout,
 		logrus.ErrorLevel: os.Stdout,
 		logrus.PanicLevel: os.Stdout,
 		logrus.FatalLevel: os.Stdout,
