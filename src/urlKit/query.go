@@ -32,7 +32,7 @@ func ToEscapedQueryString[T ~map[string][]string](m T) string {
 
 // AddQueryParamsToValues
 /*
-@param queryParams !!!: 值中切片中的字符串应当是未处理（编码）过的
+@param queryParams 切片中的字符串应当是未处理（编码）过的
 @return 必定不为nil
 */
 func AddQueryParamsToValues(values url.Values, queryParams map[string][]string) url.Values {
@@ -60,6 +60,8 @@ func OverrideRawQuery(u *url.URL, queryParams map[string][]string) {
 // AddToRawQuery 增添请求的query.
 /*
 PS: 可能会修改 req.URL.RawQuery.
+
+@param queryParams 切片中的字符串应当是未处理（编码）过的
 */
 func AddToRawQuery(u *url.URL, queryParams map[string][]string) {
 	values := u.Query()

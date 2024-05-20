@@ -22,10 +22,16 @@ type (
 		// reqUrlPath 请求路由
 		reqUrlPath *string
 
-		// overrideQueryParams （优先级高于extraQueryParams）不会保留原先的queries
+		// overrideQueryParams （优先级高于extraQueryParams）不会保留原先的queries.
+		/*
+			PS: 切片中的字符串应当是未处理（编码）过的.
+		*/
 		overrideQueryParams map[string][]string
 
-		// extraQueryParams 会保留原先的queries
+		// extraQueryParams 会保留原先的queries.
+		/*
+			PS: 切片中的字符串应当是未处理（编码）过的.
+		*/
 		extraQueryParams map[string][]string
 
 		// errorLogger 错误日志（可以为nil，但不建议这么干，因为错误会输出到控制台（通过 log.Printf()），不利于错误定位）
