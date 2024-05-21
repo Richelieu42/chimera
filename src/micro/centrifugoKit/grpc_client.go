@@ -9,6 +9,13 @@ import (
 type GrpcClient struct {
 }
 
+func (client *GrpcClient) Batch(ctx context.Context) error {
+	// TODO
+	logrus.Warn("TODO")
+
+	return nil
+}
+
 func (client *GrpcClient) Publish(ctx context.Context, channel string, data []byte) error {
 	// TODO
 	logrus.Warn("TODO")
@@ -17,6 +24,20 @@ func (client *GrpcClient) Publish(ctx context.Context, channel string, data []by
 }
 
 func (client *GrpcClient) Broadcast(ctx context.Context, channels []string, data []byte) error {
+	// TODO
+	logrus.Warn("TODO")
+
+	return nil
+}
+
+func (client *GrpcClient) Presence(ctx context.Context, channel string) error {
+	// TODO
+	logrus.Warn("TODO")
+
+	return nil
+}
+
+func (client *GrpcClient) PresenceStats(ctx context.Context, channel string) error {
 	// TODO
 	logrus.Warn("TODO")
 

@@ -1,10 +1,17 @@
 package main
 
-import (
-	"fmt"
-	"github.com/richelieu-yang/chimera/v3/src/urlKit"
-)
+import "github.com/richelieu-yang/chimera/v3/src/core/mapKit"
+
+type bean struct {
+	A int `json:"a"`
+}
 
 func main() {
-	fmt.Println(urlKit.PolyfillUrl("http://example.com/users/{userId}", nil))
+	m := map[string]interface{}{
+		"a": 0,
+	}
+
+	var b *bean
+	mapKit.Decode(m, b)
+
 }
