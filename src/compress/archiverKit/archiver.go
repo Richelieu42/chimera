@@ -1,12 +1,36 @@
 package archiverKit
 
 import (
+	"compress/gzip"
 	"context"
 	"github.com/mholt/archiver/v4"
 	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/mapKit"
 	"io"
 )
+
+var (
+	zipFormat = &archiver.CompressedArchive{
+		Archival: archiver.Zip{},
+	}
+
+	tarGzFormat = &archiver.CompressedArchive{
+		Compression: archiver.Gz{
+			CompressionLevel: gzip.BestSpeed,
+		},
+		Archival: archiver.Tar{},
+	}
+)
+
+// ArchiveToZip 压缩为 .zip格式 的压缩文件.
+func ArchiveToZip(ctx context.Context, output io.Writer, mapper map[string]string, options *archiver.FromDiskOptions) error {
+	return archive(ctx, zipFormat, output, mapper, options)
+}
+
+// ArchiveToTarGz 压缩为 .tar.gz格式 的压缩文件.
+func ArchiveToTarGz(ctx context.Context, output io.Writer, mapper map[string]string, options *archiver.FromDiskOptions) error {
+	return archive(ctx, tarGzFormat, output, mapper, options)
+}
 
 // archive 压缩.
 /*
@@ -32,7 +56,7 @@ import (
 @param options	可以为nil
 
 */
-func archive(ctx context.Context, format archiver.CompressedArchive, output io.Writer, mapper map[string]string, options *archiver.FromDiskOptions) error {
+func archive(ctx context.Context, format *archiver.CompressedArchive, output io.Writer, mapper map[string]string, options *archiver.FromDiskOptions) error {
 	if ctx == nil {
 		ctx = context.TODO()
 	}
