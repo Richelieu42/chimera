@@ -33,8 +33,6 @@ func TestMustSetUp(t *testing.T) {
 	}
 
 	MustSetUp(c.Gin, func(engine *gin.Engine) error {
-		StaticDir(engine, "/s", "/Users/richelieu/Documents/ino/notes/_Vue3Projects/push-client/dist", true)
-
 		engine.Any("/test", func(ctx *gin.Context) {
 			ctx.String(200, "ok")
 		})
