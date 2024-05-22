@@ -47,13 +47,13 @@ gin:
       # 支持的Origin(s)，即响应头中的Access-Control-Allow-Origin
       # (1) 默认（origins配置项全注释了）: 支持所有的Origin（即动态支持请求的Origin，并非"*"）
       # (2) 支持通配符"*"
-    #      origins:
-    #        - "https://*.github.com"
-    #        - "https://api.*"
-    #        - "http://*"
-    #        - "*.golang.org"
-    #        - "https://facebook.com"
-    #        - "http://192.168.9.141:8080"
+#      origins:
+#        - "https://*.github.com"
+#        - "https://api.*"
+#        - "http://*"
+#        - "*.golang.org"
+#        - "https://facebook.com"
+#        - "http://192.168.9.141:8080"
     # 限流器（令牌桶算法）
     rateLimiter:
       # 每秒生成的令牌数.
