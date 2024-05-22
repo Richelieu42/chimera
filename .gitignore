@@ -19,6 +19,9 @@
 /src/test.go
 *.log
 *.gz
+*.7z
+*.rar
+*.zip
 
 # for macOS
 .DS_Store

@@ -29,7 +29,7 @@ func ArchiveToZip(ctx context.Context, output io.Writer, mapper map[string]strin
 
 // ArchiveToTarGz 压缩为 .tar.gz格式 的压缩文件.
 /*
-Deprecated: 目前有点问题，目录内的文件中存在中文的情况，会有丢失. e.g.压缩"/Users/richelieu/Documents/ino/images"目录
+Deprecated: 目前（github.com/mholt/archiver/v4 v4.0.0-alpha.8）有点问题，目录内的文件中存在中文的情况，会有丢失. e.g.压缩"/Users/richelieu/Documents/ino/images"目录
 */
 func ArchiveToTarGz(ctx context.Context, output io.Writer, mapper map[string]string, options *archiver.FromDiskOptions) error {
 	return archive(ctx, tarGzFormat, output, mapper, options)
