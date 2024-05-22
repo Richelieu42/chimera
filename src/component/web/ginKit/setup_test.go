@@ -1,7 +1,9 @@
 package ginKit
 
 import (
+	"github.com/mholt/archiver/v4"
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v3/src/config/viperKit"
@@ -34,7 +36,18 @@ func TestMustSetUp(t *testing.T) {
 
 	MustSetUp(c.Gin, func(engine *gin.Engine) error {
 		engine.Any("/test", func(ctx *gin.Context) {
-			ctx.String(200, "ok")
+			c := ctx.Request.Context()
+
+			archiver.FilesFromDisk()
+
+			select {
+			case <-c.Done():
+				logrus.Warn("c.Done()")
+			case <-time.After(time.Second * 10):
+				ctx.String(200, "OK")
+			}
+
+			//ctx.String(200, "ok")
 		})
 
 		return nil
