@@ -20,6 +20,8 @@ import (
 	"golang.org/x/text/currency"
 	"golang.org/x/time/rate"
 	"golang.org/x/tools/blog"
+	"google.golang.org/grpc"
+	"google.golang.org/protobuf/encoding/protojson"
 )
 
 func init() {
@@ -46,6 +48,12 @@ func init() {
 		var _ = otlptrace.Version()
 		var _ = otlptracehttp.NewClient
 		var _ = otlptracegrpc.NewClient
+	}
+
+	/* grpc && protobuf */
+	{
+		var _ *grpc.ConnectParams
+		var _ *protojson.UnmarshalOptions
 	}
 
 	/* github.com/jackc/pgx/v5 v5.5.3 是脆弱的 */
