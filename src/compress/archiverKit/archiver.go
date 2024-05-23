@@ -1,7 +1,6 @@
 package archiverKit
 
 import (
-	"compress/gzip"
 	"context"
 	"github.com/mholt/archiver/v4"
 	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
@@ -9,22 +8,9 @@ import (
 	"io"
 )
 
-var (
-	zipFormat = &archiver.CompressedArchive{
-		Archival: archiver.Zip{},
-	}
-
-	tarGzFormat = &archiver.CompressedArchive{
-		Compression: archiver.Gz{
-			CompressionLevel: gzip.BestSpeed,
-		},
-		Archival: archiver.Tar{},
-	}
-)
-
 // ArchiveToZip 压缩为 .zip格式 的压缩文件.
 func ArchiveToZip(ctx context.Context, output io.Writer, mapper map[string]string, options *archiver.FromDiskOptions) error {
-	return archive(ctx, zipFormat, output, mapper, options)
+	return archive(ctx, zipCompressedArchive, output, mapper, options)
 }
 
 // ArchiveToTarGz 压缩为 .tar.gz格式 的压缩文件.
@@ -32,12 +18,12 @@ func ArchiveToZip(ctx context.Context, output io.Writer, mapper map[string]strin
 Deprecated: 目前（github.com/mholt/archiver/v4 v4.0.0-alpha.8）有点问题，目录内的文件中存在中文的情况，会有丢失. e.g.压缩"/Users/richelieu/Documents/ino/images"目录
 */
 func ArchiveToTarGz(ctx context.Context, output io.Writer, mapper map[string]string, options *archiver.FromDiskOptions) error {
-	return archive(ctx, tarGzFormat, output, mapper, options)
+	return archive(ctx, tarGzCompressedArchive, output, mapper, options)
 }
 
 // archive 压缩.
 /*
-@param ctx		可用于中断压缩
+@param ctx		上下文（用于取消）
 				e.g. 请求被取消
 					gin中的 ctx.Request.Context() 作为传参
 @param format	e.g.
@@ -59,11 +45,11 @@ func ArchiveToTarGz(ctx context.Context, output io.Writer, mapper map[string]str
 @param options	可以为nil
 
 */
-func archive(ctx context.Context, format *archiver.CompressedArchive, output io.Writer, mapper map[string]string, options *archiver.FromDiskOptions) error {
+func archive(ctx context.Context, compressedArchive *archiver.CompressedArchive, output io.Writer, mapper map[string]string, options *archiver.FromDiskOptions) error {
 	if ctx == nil {
 		ctx = context.TODO()
 	}
-	if err := interfaceKit.AssertNotNil(format, "format"); err != nil {
+	if err := interfaceKit.AssertNotNil(compressedArchive, "compressedArchive"); err != nil {
 		return err
 	}
 	if err := interfaceKit.AssertNotNil(output, "output"); err != nil {
@@ -77,5 +63,5 @@ func archive(ctx context.Context, format *archiver.CompressedArchive, output io.
 	if err != nil {
 		return err
 	}
-	return format.Archive(ctx, output, files)
+	return compressedArchive.Archive(ctx, output, files)
 }
