@@ -1,4 +1,4 @@
-package jsonKit
+package jsonFieldKit
 
 import "github.com/tidwall/gjson"
 

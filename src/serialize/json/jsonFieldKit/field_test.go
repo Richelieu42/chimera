@@ -1,4 +1,4 @@
-package jsonKit
+package jsonFieldKit
 
 import (
 	"fmt"

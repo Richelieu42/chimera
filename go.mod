@@ -50,6 +50,7 @@ require (
 	github.com/hashicorp/raft-boltdb v0.0.0-20231211162105-6c830fa4535e
 	github.com/hibiken/asynq v0.24.1
 	github.com/imroc/req/v3 v3.43.5
+	github.com/itchyny/gojq v0.12.15
 	github.com/jackc/pgx/v5 v5.5.5
 	github.com/jedib0t/go-pretty/v6 v6.5.9
 	github.com/jinzhu/copier v0.4.0
@@ -96,7 +97,7 @@ require (
 	github.com/spf13/viper v1.18.2
 	github.com/tidwall/buntdb v1.3.1
 	github.com/tidwall/gjson v1.17.1
-	github.com/unidoc/unioffice v1.32.1
+	github.com/unidoc/unioffice v1.33.0
 	github.com/xuri/excelize/v2 v2.8.1
 	github.com/zeromicro/go-zero v1.6.5
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231030135404-af9ae855016f
@@ -238,6 +239,7 @@ require (
 	github.com/hhrutter/lzw v1.0.0 // indirect
 	github.com/hhrutter/tiff v1.0.1 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
+	github.com/itchyny/timefmt-go v0.1.5 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
 	github.com/jackc/puddle/v2 v2.2.1 // indirect
