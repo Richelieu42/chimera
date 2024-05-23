@@ -97,6 +97,7 @@ require (
 	github.com/spf13/viper v1.18.2
 	github.com/tidwall/buntdb v1.3.1
 	github.com/tidwall/gjson v1.17.1
+	github.com/ulikunitz/xz v0.5.12
 	github.com/unidoc/unioffice v1.33.0
 	github.com/xuri/excelize/v2 v2.8.1
 	github.com/zeromicro/go-zero v1.6.5
@@ -306,7 +307,6 @@ require (
 	github.com/tklauser/numcpus v0.6.1 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.12 // indirect
-	github.com/ulikunitz/xz v0.5.10 // indirect
 	github.com/valyala/fastrand v1.1.0 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
 	github.com/xdg-go/scram v1.1.2 // indirect
