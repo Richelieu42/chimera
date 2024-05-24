@@ -7,7 +7,7 @@ import (
 
 // PolyfillStringSlice
 /*
-@return 可能是一个新的slice
+@return 可能是一个新的slice实例
 */
 func PolyfillStringSlice(s []string) []string {
 	s = RemoveEmpty(s, true)
