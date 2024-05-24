@@ -16,8 +16,7 @@ func NewResolverBuilder(scheme string, hosts []string) (resolver.Builder, error)
 	if err := strKit.AssertNotEmpty(scheme, "scheme"); err != nil {
 		return nil, err
 	}
-	hosts = sliceKit.RemoveEmpty(hosts, true)
-	hosts = sliceKit.Uniq(hosts)
+	hosts = sliceKit.PolyfillStringSlice(hosts)
 	if err := sliceKit.AssertNotEmpty(hosts, "hosts"); err != nil {
 		return nil, err
 	}

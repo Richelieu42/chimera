@@ -17,8 +17,7 @@ import (
 */
 func NewClient(addrs []string, apiKey string, httpClient *http.Client) (*gocent.Client, error) {
 	// addrs
-	addrs = sliceKit.Uniq(addrs)
-	addrs = sliceKit.RemoveEmpty(addrs)
+	addrs = sliceKit.PolyfillStringSlice(addrs)
 	if err := sliceKit.AssertNotEmpty(addrs, "addrs"); err != nil {
 		return nil, err
 	}

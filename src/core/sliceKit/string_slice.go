@@ -40,6 +40,7 @@ func RemoveEmpty(s []string, trimArgs ...bool) []string {
 	if s == nil {
 		return nil
 	}
+
 	trimFlag := GetFirstItemWithDefault(false, trimArgs...)
 
 	rst := make([]string, 0, len(s))

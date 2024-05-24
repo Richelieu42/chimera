@@ -49,11 +49,12 @@ func (client *GrpcClient) PresenceStats(ctx context.Context, channel string) err
 
 // NewGrpcClient
 /*
-
- */
-func NewGrpcClient(hosts []string, grpcApiKey string) (client *GrpcClient, err error) {
-	hosts = sliceKit.RemoveEmpty(hosts, true)
-	hosts = sliceKit.Uniq(hosts)
+@param hosts		centrifugo服务的grpc地址列表 e.g.[]string{"127.0.0.1:10000", "127.0.0.1:10001"}
+@param scheme		grpc客户端负载均衡(slb)使用的scheme，可以为nil（将自动生成）
+@param grpcApiKey	对应centrifugo服务配置文件中的 "grpc_api_key"
+*/
+func NewGrpcClient(hosts []string, scheme string, grpcApiKey string) (client *GrpcClient, err error) {
+	hosts = sliceKit.PolyfillStringSlice(hosts)
 	if err = sliceKit.AssertNotEmpty(hosts, "hosts"); err != nil {
 		return
 	}

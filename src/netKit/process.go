@@ -1,7 +1,6 @@
 package netKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 )
 
@@ -10,20 +9,18 @@ import (
 @return 如果第二个返回值为nil，那么 len(第一个返回值) > 0
 */
 func ProcessAddresses(addresses []string) ([]string, error) {
-	if len(addresses) == 0 {
-		return nil, errorKit.Newf("len(addresses) == 0")
-	}
-	addrs := sliceKit.Uniq(sliceKit.RemoveEmpty(addresses, true))
-	if len(addrs) == 0 {
-		return nil, errorKit.Newf("len(addrs) == 0")
+	addresses = sliceKit.PolyfillStringSlice(addresses)
+	if err := sliceKit.AssertNotEmpty(addresses, "addresses"); err != nil {
+		return nil, err
 	}
 
-	for index, addr := range addrs {
-		a, err := ParseToAddress(addr)
+	s := make([]string, 0, len(addresses))
+	for index, address := range addresses {
+		a, err := ParseToAddress(address)
 		if err != nil {
 			return nil, err
 		}
-		addrs[index] = a.String()
+		s[index] = a.String()
 	}
-	return addrs, nil
+	return s, nil
 }

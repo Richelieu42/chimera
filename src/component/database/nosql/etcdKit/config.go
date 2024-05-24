@@ -1,7 +1,6 @@
 package etcdKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 )
@@ -17,10 +16,9 @@ func (config *Config) Check() error {
 		return err
 	}
 
-	config.Endpoints = sliceKit.Uniq(config.Endpoints)
-	config.Endpoints = sliceKit.RemoveEmpty(config.Endpoints, true)
-	if sliceKit.IsEmpty(config.Endpoints) {
-		return errorKit.Newf("config.Endpoints is empty")
+	config.Endpoints = sliceKit.PolyfillStringSlice(config.Endpoints)
+	if err := sliceKit.AssertNotEmpty(config.Endpoints, "config.Endpoints"); err != nil {
+		return err
 	}
 
 	return nil
