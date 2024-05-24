@@ -9,8 +9,9 @@ var (
 	// ExitSignals 会将程序退出的所有能捕捉的信号
 	/*
 		参考: go-zero中的"core/proc/signals.go".
+		2024/05/24: 应马瑞要求，添加: syscall.SIGINT
 	*/
-	ExitSignals = []os.Signal{syscall.SIGTERM}
+	ExitSignals = []os.Signal{syscall.SIGTERM, syscall.SIGINT}
 
 	//// ExitSignals 会将程序退出的所有能捕捉的信号
 	///*
