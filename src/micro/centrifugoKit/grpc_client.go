@@ -13,7 +13,7 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-// NewGrpcClient
+// NewGrpcClient centrifugo服务的grpc客户端，支持客户端负载均衡（slb）
 /*
 @param hosts		centrifugo服务的grpc地址列表 e.g.[]string{"127.0.0.1:10000", "127.0.0.1:10001"}
 @param scheme		grpc客户端负载均衡(slb)使用的scheme
