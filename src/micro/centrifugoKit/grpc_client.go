@@ -4,8 +4,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/richelieu-yang/chimera/v3/src/consts"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v3/src/idKit"
+	"github.com/richelieu-yang/chimera/v3/src/validateKit"
 	"github.com/sirupsen/logrus"
 )
 
@@ -56,6 +58,10 @@ func (client *GrpcClient) PresenceStats(ctx context.Context, channel string) err
 func NewGrpcClient(hosts []string, scheme string, grpcApiKey string) (client *GrpcClient, err error) {
 	hosts = sliceKit.PolyfillStringSlice(hosts)
 	if err = sliceKit.AssertNotEmpty(hosts, "hosts"); err != nil {
+		return
+	}
+	if err = validateKit.Var(hosts, "required,gte=1,unique,dive,hostname_port"); err != nil {
+		err = errorKit.Wrapf(err, "hosts is invalid")
 		return
 	}
 
