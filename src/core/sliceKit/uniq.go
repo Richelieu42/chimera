@@ -7,13 +7,16 @@ import "github.com/samber/lo"
 PS: 不会修改传参s.
 
 @param s 	可以为nil
-@return		必定不为nil（保底为空的slice实例）
+@return		可能为nil
 
 e.g.
 	s := sliceKit.Uniq([]interface{}{0, 1, 2, 0, "1", "2", "1"})
 	fmt.Println(s)	// [0 1 2 1 2]（前3个为int类型，后2个为string类型）
 */
 func Uniq[T comparable](s []T) []T {
+	if s == nil {
+		return nil
+	}
 	return lo.Uniq(s)
 }
 

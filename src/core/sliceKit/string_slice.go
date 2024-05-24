@@ -5,13 +5,14 @@ import (
 	"strings"
 )
 
-func PolyfillStringSlice(s []string) {
-	if s == nil {
-		return
-	}
-
+// PolyfillStringSlice
+/*
+@return 可能是一个新的slice
+*/
+func PolyfillStringSlice(s []string) []string {
 	s = RemoveEmpty(s, true)
 	s = Uniq(s)
+	return s
 }
 
 // Join []string => string
