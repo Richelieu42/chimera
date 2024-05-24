@@ -6,8 +6,10 @@ import (
 	"google.golang.org/grpc/resolver"
 )
 
-// NewResolverBuilder
+// NewResolverBuilder 用于: grpc客户端负载均衡(slb).
 /*
+PS: 第2个返回值为nil的情况下，应该将第1个返回值作为传参调用 resolver.Register().
+
 @param scheme 协议（不能有大写字符）
 */
 func NewResolverBuilder(scheme string, hosts []string) (resolver.Builder, error) {
