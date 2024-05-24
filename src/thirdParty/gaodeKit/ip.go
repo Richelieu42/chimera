@@ -4,6 +4,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/component/web/request/reqKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/ip/ipKit"
+	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonFieldKit"
 	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
 	"github.com/tidwall/gjson"
 )
@@ -33,7 +34,7 @@ func (client *Client) GetIpInfo(ip string) (*IpInfo, error) {
 		局域网ip响应:	{"status":"1","info":"OK","infocode":"10000","province":"局域网","city":[],"adcode":[],"rectangle":[]}
 		外网ip响应: 	{"status":"1","info":"OK","infocode":"10000","province":[],"city":[],"adcode":[],"rectangle":[]}
 	*/
-	field := jsonKit.GetField(jsonData, "province")
+	field := jsonFieldKit.GetField(jsonData, "province")
 	if field.Type == gjson.String {
 		if field.String() == "局域网" {
 			return &IpInfo{

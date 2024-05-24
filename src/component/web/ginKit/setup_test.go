@@ -1,7 +1,6 @@
 package ginKit
 
 import (
-	"github.com/mholt/archiver/v4"
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
 	"time"
 
@@ -37,8 +36,6 @@ func TestMustSetUp(t *testing.T) {
 	MustSetUp(c.Gin, func(engine *gin.Engine) error {
 		engine.Any("/test", func(ctx *gin.Context) {
 			c := ctx.Request.Context()
-
-			archiver.FilesFromDisk()
 
 			select {
 			case <-c.Done():
