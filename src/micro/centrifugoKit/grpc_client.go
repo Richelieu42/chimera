@@ -2,7 +2,10 @@ package centrifugoKit
 
 import (
 	"context"
+	"fmt"
+	"github.com/richelieu-yang/chimera/v3/src/consts"
 	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
+	"github.com/richelieu-yang/chimera/v3/src/idKit"
 	"github.com/sirupsen/logrus"
 )
 
@@ -44,12 +47,21 @@ func (client *GrpcClient) PresenceStats(ctx context.Context, channel string) err
 	return nil
 }
 
-func NewGrpcClient(hosts []string) (client *GrpcClient, err error) {
-	hosts = sliceKit.Uniq(hosts)
+// NewGrpcClient
+/*
+
+ */
+func NewGrpcClient(hosts []string, grpcApiKey string) (client *GrpcClient, err error) {
 	hosts = sliceKit.RemoveEmpty(hosts, true)
+	hosts = sliceKit.Uniq(hosts)
 	if err = sliceKit.AssertNotEmpty(hosts, "hosts"); err != nil {
 		return
 	}
+
+	scheme := fmt.Sprintf("%s-centrifugo-grpc-client-slb-%s", consts.LowerProjectName, idKit.NewXid())
+	//// Richelieu: scheme里面不能有大写字母
+	//scheme = strKit.ToLower(scheme)
+	target := fmt.Sprintf("%s:///hello", scheme)
 
 	// TODO
 	logrus.Warn("TODO")

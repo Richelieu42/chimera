@@ -5,6 +5,15 @@ import (
 	"strings"
 )
 
+func PolyfillStringSlice(s []string) {
+	if s == nil {
+		return
+	}
+
+	s = RemoveEmpty(s, true)
+	s = Uniq(s)
+}
+
 // Join []string => string
 /*
 @param sep 分隔符

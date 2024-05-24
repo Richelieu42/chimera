@@ -9,6 +9,10 @@ const (
 	// ProjectName 本库（项目）的名字
 	ProjectName = "chimera"
 
+	// LowerProjectName 全小写
+	LowerProjectName = "chimera"
+
+	// UpperProjectName 全大写
 	UpperProjectName = "CHIMERA"
 )
 
