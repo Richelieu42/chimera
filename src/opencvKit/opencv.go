@@ -6,7 +6,7 @@ import (
 	"image/color"
 )
 
-func main() {
+func Start() {
 	// 步骤1：打开摄像头设备
 	webcam, err := gocv.VideoCaptureDevice(0)
 	if err != nil {
