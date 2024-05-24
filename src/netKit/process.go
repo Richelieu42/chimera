@@ -15,12 +15,12 @@ func ProcessAddresses(addresses []string) ([]string, error) {
 	}
 
 	s := make([]string, 0, len(addresses))
-	for index, address := range addresses {
+	for _, address := range addresses {
 		a, err := ParseToAddress(address)
 		if err != nil {
 			return nil, err
 		}
-		s[index] = a.String()
+		s = append(s, a.String())
 	}
 	return s, nil
 }
