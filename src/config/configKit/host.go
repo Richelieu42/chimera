@@ -22,9 +22,9 @@ func PolyfillHosts(hosts []string, minCount int) ([]string, error) {
 	}
 
 	hosts = sliceKit.PolyfillStringSlice(hosts)
-	if err := sliceKit.AssertNotEmpty(hosts, "hosts"); err != nil {
-		return nil, err
-	}
+	//if err := sliceKit.AssertNotEmpty(hosts, "hosts"); err != nil {
+	//	return nil, err
+	//}
 	tag := fmt.Sprintf("required,gte=%d,unique,dive,hostname_port", minCount)
 	if err := validateKit.Var(hosts, tag); err != nil {
 		err = errorKit.Wrapf(err, "hosts is invalid")

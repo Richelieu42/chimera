@@ -2,13 +2,11 @@ package centrifugoKit
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
+	"github.com/richelieu-yang/chimera/v3/src/config/configKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v3/src/grpcKit"
 	"github.com/richelieu-yang/chimera/v3/src/idKit"
 	"github.com/richelieu-yang/chimera/v3/src/micro/centrifugoKit/apiproto"
-	"github.com/richelieu-yang/chimera/v3/src/validateKit"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/resolver"
@@ -27,12 +25,8 @@ import (
 */
 func NewGrpcClient(hosts []string, scheme string, grpcApiKey string) (*GrpcClient, error) {
 	/* hosts */
-	hosts = sliceKit.PolyfillStringSlice(hosts)
-	if err := sliceKit.AssertNotEmpty(hosts, "hosts"); err != nil {
-		return nil, err
-	}
-	if err := validateKit.Var(hosts, "required,gte=1,unique,dive,hostname_port"); err != nil {
-		err = errorKit.Wrapf(err, "hosts is invalid")
+	hosts, err := configKit.PolyfillHosts(hosts, 1)
+	if err != nil {
 		return nil, err
 	}
 
