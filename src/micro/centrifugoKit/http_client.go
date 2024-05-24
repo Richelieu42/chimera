@@ -9,13 +9,15 @@ import (
 	"net/http"
 )
 
-// NewClient TODO: 待完善
+// NewHttpClient TODO: 待完善
 /*
+Deprecated: (1)gocent依赖很久没更新了 (2)http客户端的负载均衡比较难搞，而grpc有现成的
+
 @param addrs		e.g.[]string{"http://localhost:8000/api"}
 @param apiKey		centrifugo配置文件中的 api_key 项
 @param httpClient 	可以为nil（将使用默认值 httpClientKit.DefaultHttpClient）
 */
-func NewClient(addrs []string, apiKey string, httpClient *http.Client) (*gocent.Client, error) {
+func NewHttpClient(addrs []string, apiKey string, httpClient *http.Client) (*gocent.Client, error) {
 	// addrs
 	addrs = sliceKit.PolyfillStringSlice(addrs)
 	if err := sliceKit.AssertNotEmpty(addrs, "addrs"); err != nil {

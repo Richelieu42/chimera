@@ -22,7 +22,7 @@ func TestNewClient(t *testing.T) {
 		panic(err)
 	}
 
-	client, err := NewClient(addrs, "4e75aa67-3423-4e10-86b3-cfab4febef55", nil)
+	client, err := NewHttpClient(addrs, "4e75aa67-3423-4e10-86b3-cfab4febef55", nil)
 	if err != nil {
 		panic(err)
 	}
