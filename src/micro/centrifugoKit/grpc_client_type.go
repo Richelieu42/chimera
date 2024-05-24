@@ -24,6 +24,10 @@ func (client *GrpcClient) Close() (err error) {
 	return
 }
 
+// PublishSimply
+/*
+@param data 必须是json!!!
+*/
 func (client *GrpcClient) PublishSimply(ctx context.Context, channel string, data []byte) (*apiproto.PublishResponse, error) {
 	in := &apiproto.PublishRequest{
 		Channel: channel,
@@ -32,6 +36,10 @@ func (client *GrpcClient) PublishSimply(ctx context.Context, channel string, dat
 	return client.Publish(ctx, in)
 }
 
+// BroadcastSimply
+/*
+@param data 必须是json!!!
+*/
 func (client *GrpcClient) BroadcastSimply(ctx context.Context, channels []string, data []byte) (*apiproto.BroadcastResponse, error) {
 	in := &apiproto.BroadcastRequest{
 		Channels: channels,

@@ -7,7 +7,8 @@ import (
 )
 
 func TestNewGrpcClient(t *testing.T) {
-	hosts := []string{"172.18.21.50:13001", "172.18.21.50:13002"}
+	//hosts := []string{"172.18.21.50:13001", "172.18.21.50:13002"}
+	hosts := []string{"127.0.0.1:10000"}
 	scheme := "ccc"
 	grpcApiKey := "2098e3e6-a41d-4004-8101-dbc3229e4cee"
 
@@ -18,7 +19,7 @@ func TestNewGrpcClient(t *testing.T) {
 	defer client.Close()
 
 	{
-		tmp, err := client.PublishSimply(context.TODO(), "test", []byte("Publish"))
+		tmp, err := client.PublishSimply(context.TODO(), "test", []byte(`{"ccc":"publish"}`))
 		if err != nil {
 			logrus.Fatal(err)
 		}
@@ -26,7 +27,7 @@ func TestNewGrpcClient(t *testing.T) {
 	}
 
 	{
-		tmp, err := client.BroadcastSimply(context.TODO(), []string{"test"}, []byte("Broadcast"))
+		tmp, err := client.BroadcastSimply(context.TODO(), []string{"test"}, []byte(`{"ccc":"broadcast"}`))
 		if err != nil {
 			logrus.Fatal(err)
 		}
