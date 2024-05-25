@@ -11,7 +11,6 @@ package netKit
 import (
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
-	"net"
 	"strconv"
 )
 
@@ -25,25 +24,6 @@ type (
 
 func (addr *Address) String() string {
 	return JoinHostnameAndPort(addr.Hostname, addr.Port)
-}
-
-// JoinHostPort
-/*
-e.g.
-	("127.0.0.1", "80")	=> "127.0.0.1:80"
-	("", "8888") 		=> ":8888"
-*/
-var JoinHostPort func(host, port string) string = net.JoinHostPort
-
-// JoinHostnameAndPort
-/*
-e.g.
-	fmt.Println(netKit.JoinHostnameAndPort("127.0.0.1", 80)) // 127.0.0.1:80
-	fmt.Println(netKit.JoinHostnameAndPort("", 8888))        // :8888
-*/
-func JoinHostnameAndPort(hostname string, port int) string {
-	//return fmt.Sprintf("%s:%d", hostname, port)
-	return net.JoinHostPort(hostname, strconv.Itoa(port))
 }
 
 // ParseToAddress
