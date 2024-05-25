@@ -42,16 +42,23 @@ func NewGrpcClient(hosts []string, scheme string, grpcApiKey string) (*GrpcClien
 		return nil, err
 	}
 
-	// Richelieu: target中的"hello"随意，甚至可以去掉
-	target := fmt.Sprintf("%s:///hello", scheme)
+	var target string
+	if len(hosts) > 1 {
+		/* slb */
+		builder, err := grpcKit.NewResolverBuilder(scheme, hosts)
+		if err != nil {
+			return nil, err
+		}
+		resolver.Register(builder)
 
-	/* slb */
-	builder, err := grpcKit.NewResolverBuilder(scheme, hosts)
-	if err != nil {
-		return nil, err
+		// Richelieu: target中的"hello"随意，甚至可以去掉
+		target = fmt.Sprintf("%s:///hello", scheme)
+	} else {
+		// 此种情况下，不使用 scheme
+		target = hosts[0]
 	}
-	resolver.Register(builder)
 
+	/* new client */
 	conn, err := grpc.NewClient(target,
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 		grpc.WithDefaultServiceConfig(`{"loadBalancingPolicy":"round_robin"}`),

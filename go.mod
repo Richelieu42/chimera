@@ -19,7 +19,7 @@ require (
 	github.com/emersion/go-message v0.18.1
 	github.com/fatih/structs v1.1.0
 	github.com/fsnotify/fsnotify v1.7.0
-	github.com/gabriel-vasile/mimetype v1.4.3
+	github.com/gabriel-vasile/mimetype v1.4.4
 	github.com/gin-contrib/cors v1.7.2
 	github.com/gin-contrib/gzip v1.0.1
 	github.com/gin-contrib/pprof v1.5.0
@@ -44,7 +44,7 @@ require (
 	github.com/h2non/bimg v1.1.9
 	github.com/hashicorp/consul/api v1.28.3
 	github.com/hashicorp/go-hclog v1.6.3
-	github.com/hashicorp/go-version v1.6.0
+	github.com/hashicorp/go-version v1.7.0
 	github.com/hashicorp/golang-lru/v2 v2.0.7
 	github.com/hashicorp/raft v1.6.1
 	github.com/hashicorp/raft-boltdb v0.0.0-20231211162105-6c830fa4535e
