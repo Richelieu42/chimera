@@ -118,7 +118,7 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 	var httpSrv *http.Server
 	if httpPort != 0 {
 		httpSrv = &http.Server{
-			Addr:    netKit.JoinHostnameAndPort(config.HostName, httpPort),
+			Addr:    netKit.JoinToHost(config.HostName, httpPort),
 			Handler: engine.Handler(),
 		}
 		logrus.Infof("Listening and serving HTTP on [%s]", httpSrv.Addr)
@@ -135,7 +135,7 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 	var httpsSrv *http.Server
 	if httpsPort != 0 {
 		httpsSrv = &http.Server{
-			Addr:    netKit.JoinHostnameAndPort(config.HostName, httpsPort),
+			Addr:    netKit.JoinToHost(config.HostName, httpsPort),
 			Handler: engine.Handler(),
 		}
 		logrus.Infof("Listening and serving HTTPS on [%s]", httpsSrv.Addr)
