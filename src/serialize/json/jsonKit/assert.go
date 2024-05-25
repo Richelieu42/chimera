@@ -6,7 +6,7 @@ import (
 )
 
 func AssertJson(data []byte, paramName string) error {
-	if IsJson(data) {
+	if !IsJson(data) {
 		return errorKit.NewfWithSkip(1, "[%s] param(name: %s) isn't a json, value: %s",
 			funcKit.GetFuncName(1), paramName, string(data))
 	}
@@ -14,7 +14,7 @@ func AssertJson(data []byte, paramName string) error {
 }
 
 func AssertJsonString(jsonStr string, paramName string) error {
-	if IsJsonString(jsonStr) {
+	if !IsJsonString(jsonStr) {
 		return errorKit.NewfWithSkip(1, "[%s] param(name: %s) isn't a json, value: %s",
 			funcKit.GetFuncName(1), paramName, jsonStr)
 	}
