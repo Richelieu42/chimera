@@ -51,7 +51,7 @@ require (
 	github.com/hibiken/asynq v0.24.1
 	github.com/imroc/req/v3 v3.43.5
 	github.com/itchyny/gojq v0.12.15
-	github.com/jackc/pgx/v5 v5.5.5
+	github.com/jackc/pgx/v5 v5.6.0
 	github.com/jedib0t/go-pretty/v6 v6.5.9
 	github.com/jinzhu/copier v0.4.0
 	github.com/joho/godotenv v1.5.1
@@ -116,7 +116,7 @@ require (
 	go.uber.org/zap v1.27.0
 	golang.org/x/arch v0.8.0
 	golang.org/x/crypto v0.23.0
-	golang.org/x/exp v0.0.0-20240506185415-9bf2ced13842
+	golang.org/x/exp v0.0.0-20240525044651-4c93da0ed11d
 	golang.org/x/image v0.16.0
 	golang.org/x/mobile v0.0.0-20240520174638-fa72addaaa1b
 	golang.org/x/mod v0.17.0
