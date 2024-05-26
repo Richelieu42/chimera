@@ -71,12 +71,12 @@ func (opts *proxyOptions) getClientIP(req *http.Request) string {
 
 // proxy
 /*
-@param errLogger 	可以为nil，但不建议这么干，因为错误会输出到控制台（通过 log.Printf()），不利于错误定位
-@param scheme 		"http" || "https"
-@param targetHost	e.g."127.0.0.1:8888"
+@param errLogger 		可以为nil，但不建议这么干，因为错误会输出到控制台（通过 log.Printf()），不利于错误定位
+@param scheme 			"http" || "https"
+@param targetHost		e.g."127.0.0.1:8888"
 @param requestUrlPath 	(1) 可以为nil（此时不修改 req.URL.Path）
-					(2) 非nil的话，个人感觉: 字符串的第一个字符应该是"/"
-@param extraQueryParams 	可以为nil
+						(2) 非nil的话，个人感觉: 字符串的第一个字符应该是"/"
+@param extraQueryParams	可以为nil
 @return 可能的值:
 		(1) context.Canceled
 		(2) http.ErrAbortHandler，对应情况: 代理的 sse连接 或 http_stream连接(centrifugo) 断开时，会返回此error，可忽略
