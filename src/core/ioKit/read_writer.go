@@ -5,6 +5,10 @@ import (
 )
 
 var (
+	NewBuffer func(s []byte) *bytes.Buffer = bytes.NewBuffer
+
+	NewBufferString func(str string) *bytes.Buffer = bytes.NewBufferString
+
 	// NewReadWriter bytes.Buffer 结构体 实现了 io.ReadWriter 接口
 	/*
 		@param s 可以为nil
