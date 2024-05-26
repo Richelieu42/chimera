@@ -19,8 +19,8 @@ type (
 		// scheme "http"（默认） || "https"
 		scheme string
 
-		// reqUrlPath 请求路由
-		reqUrlPath *string
+		// requestUrlPath 请求路由
+		requestUrlPath *string
 
 		// overrideQueryParams （优先级高于extraQueryParams）不会保留原先的queries.
 		/*
@@ -74,7 +74,7 @@ func (opts *proxyOptions) getClientIP(req *http.Request) string {
 @param errLogger 	可以为nil，但不建议这么干，因为错误会输出到控制台（通过 log.Printf()），不利于错误定位
 @param scheme 		"http" || "https"
 @param targetHost	e.g."127.0.0.1:8888"
-@param reqUrlPath 	(1) 可以为nil（此时不修改 req.URL.Path）
+@param requestUrlPath 	(1) 可以为nil（此时不修改 req.URL.Path）
 					(2) 非nil的话，个人感觉: 字符串的第一个字符应该是"/"
 @param extraQueryParams 	可以为nil
 @return 可能的值:
@@ -94,25 +94,25 @@ PS:
 
 e.g.	将 https://127.0.0.1:8888/test 转发给 http://127.0.0.1:8889/test
 传参可以是：
-(1) scheme=http targetHost=127.0.0.1:8889 reqUrlPath=nil
-(2) scheme=http targetHost=127.0.0.1:8889 reqUrlPath=&"/test"
+(1) scheme=http targetHost=127.0.0.1:8889 requestUrlPath=nil
+(2) scheme=http targetHost=127.0.0.1:8889 requestUrlPath=&"/test"
 传参不能是：
-(1) scheme=http targetHost=127.0.0.1:8889 reqUrlPath=&"test" （400 Bad Request）
+(1) scheme=http targetHost=127.0.0.1:8889 requestUrlPath=&"test" （400 Bad Request）
 
 e.g.1	将 https://127.0.0.1:8888/test 转发给 http://127.0.0.1:8889/test1
 传参可以是：
-(1) scheme=http targetHost=127.0.0.1:8889 reqUrlPath=&"/test1"
+(1) scheme=http targetHost=127.0.0.1:8889 requestUrlPath=&"/test1"
 传参不能是：
-(1) scheme=http targetHost=127.0.0.1:8889 reqUrlPath=&"test1"
+(1) scheme=http targetHost=127.0.0.1:8889 requestUrlPath=&"test1"
 
 e.g.2	将 https://127.0.0.1:8888/group/test 转发给 http://127.0.0.1:8889/test1
-scheme="http" targetHost="127.0.0.1:8889" reqUrlPath=ptrKit.ToPtr("/test1")
+scheme="http" targetHost="127.0.0.1:8889" requestUrlPath=ptrKit.ToPtr("/test1")
 
 e.g.3	将 https://127.0.0.1:8888/group/test 转发给 http://127.0.0.1:8889/group1/test1
-scheme="http" targetHost="127.0.0.1:8889" reqUrlPath=ptrKit.ToPtr("/group1/test1")
+scheme="http" targetHost="127.0.0.1:8889" requestUrlPath=ptrKit.ToPtr("/group1/test1")
 
 e.g.4	将 wss://127.0.0.1:8888/test 转发给 ws://127.0.0.1:80/ws/connect
-scheme="http" targetHost="127.0.0.1:80" reqUrlPath=ptrKit.ToPtr("/ws/connect")
+scheme="http" targetHost="127.0.0.1:80" requestUrlPath=ptrKit.ToPtr("/ws/connect")
 */
 func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, targetHost string) (err error) {
 	/* reset Request.Body */
@@ -156,8 +156,8 @@ func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, t
 	director := func(req *http.Request) {
 		req.URL.Scheme = opts.scheme
 		req.URL.Host = targetHost
-		if opts.reqUrlPath != nil {
-			req.URL.Path = *opts.reqUrlPath
+		if opts.requestUrlPath != nil {
+			req.URL.Path = *opts.requestUrlPath
 		}
 
 		// 可能会修改 req.URL.RawQuery
