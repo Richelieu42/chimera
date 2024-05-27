@@ -16,10 +16,10 @@ var NewLogger func(out io.Writer, prefix string, flag int) *log.Logger = log.New
 
 // NewFileLogger
 /*
-@param logPath 	(1) 文件不存在，会生成文件和父目录
-				(2) 文件存在，新的内容会 append
-@param prefix 	e.g."[TEST] "
-@param perm 	e.g.0666 || 0644
+@param logPath 	(1) 文件不存在，会生成文件和父目录;
+				(2) 文件存在，新的内容会 append.
+@param prefix 	e.g. "[TEST] "
+@param perm 	e.g. 0666 || 0644
 */
 func NewFileLogger(filePath, prefix string, perm os.FileMode) (*log.Logger, error) {
 	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
