@@ -1,6 +1,7 @@
 package logKit
 
 import (
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
 	"io"
 	"log"
@@ -15,8 +16,10 @@ var NewLogger func(out io.Writer, prefix string, flag int) *log.Logger = log.New
 
 // NewFileLogger
 /*
-@param logPath 	(1) 如果文件不存在，会生成文件和父目录
-				(2) 文件存在，新的内容会append
+@param logPath 	(1) 文件不存在，会生成文件和父目录
+				(2) 文件存在，新的内容会 append
+@param prefix 	e.g."[TEST] "
+@param perm 	e.g.0666 || 0644
 */
 func NewFileLogger(filePath, prefix string, perm os.FileMode) (*log.Logger, error) {
 	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
@@ -33,6 +36,9 @@ func NewFileLogger(filePath, prefix string, perm os.FileMode) (*log.Logger, erro
 	// 此处不能关闭writer，否则日志内容将写不进去
 	//defer f.Close()
 
-	flag := log.Ldate | log.Ltime | log.Lmicroseconds | log.Lmsgprefix
+	flag := log.Ldate | log.Ltime | log.Lmicroseconds | log.Lshortfile
+	if strKit.IsNotEmpty(prefix) {
+		flag |= log.Lmsgprefix
+	}
 	return NewLogger(f, prefix, flag), nil
 }
