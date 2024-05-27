@@ -43,7 +43,7 @@ func EncryptFile(filePath string) (string, error) {
 //path为 空字符串 或者 对应文件不存在 时，会报错：open : The system cannot find the file specified.
 //*/
 //func GetFromFile1(path string) (string, error) {
-//	file, err := os.Open(path)
+//	file, err := os.OpenReadOnly(path)
 //	if err != nil {
 //		return "", err
 //	}

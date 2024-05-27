@@ -7,15 +7,15 @@ import (
 )
 
 var (
-	// Open （只读模式）打开文件/目录.
+	// OpenReadOnly （只读模式）打开文件/目录.
 	/*
 		!!!: 只读权限 打开.
 	*/
-	Open func(path string) (*os.File, error) = gfile.Open
+	OpenReadOnly func(path string) (*os.File, error) = gfile.Open
 
 	// OpenFile （以指定 flag 和 perm）打开文件/目录.
 	/*
-		@param flag 详见".info"
+		@param flag 详见"_info.md".
 		@param perm	(1) 可以参考 "fileKit/consts.go"
 					(2) e.g.0666 || os.ModePerm ...
 	*/

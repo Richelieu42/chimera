@@ -22,11 +22,14 @@ PS:
 os.O_RDONLY	    只读模式(read-only)
 os.O_WRONLY	    只写模式(write-only)
 os.O_RDWR	    读写模式(read-write)
-os.O_APPEND	    追加模式(append)
+
 os.O_CREATE	    文件不存在就创建(create a new file if none exists.)
-os.O_EXCL	    与 O_CREATE 一起用，构成一个新建文件的功能，它要求文件必须不存在(used with O_CREATE, file must not exist)
+os.O_EXCL	    与 os.O_CREATE 一起用，构成一个新建文件的功能，它要求文件必须不存在(used with O_CREATE, file must not exist)
+
 os.O_SYNC	    同步方式打开，即不使用缓存，直接写入硬盘
+
 os.O_TRUNC	    打开并清空文件
+os.O_APPEND	    追加模式(append)
 
 ## mimetype
 h2non/filetype（Deprecated: 最后更新时间2021/1/21）:

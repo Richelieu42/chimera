@@ -37,7 +37,7 @@ var (
 //	if err := MkParentDirs(dest); err != nil {
 //		return 0, err
 //	}
-//	srcFile, err := os.Open(src)
+//	srcFile, err := os.OpenReadOnly(src)
 //	if err != nil {
 //		return 0, err
 //	}
