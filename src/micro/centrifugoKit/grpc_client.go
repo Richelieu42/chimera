@@ -54,7 +54,7 @@ func NewGrpcClient(hosts []string, scheme string, grpcApiKey string) (*GrpcClien
 		// Richelieu: target中的"hello"随意，甚至可以去掉
 		target = fmt.Sprintf("%s:///hello", scheme)
 	} else {
-		// 此种情况下，不使用 scheme
+		// 此种情况下（就一个host），不使用 scheme
 		target = hosts[0]
 	}
 
