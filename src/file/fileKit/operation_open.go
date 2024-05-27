@@ -7,19 +7,19 @@ import (
 )
 
 var (
-	// OpenReadOnly （只读模式）打开文件/目录.
-	/*
-		!!!: 只读权限 打开.
-	*/
-	OpenReadOnly func(path string) (*os.File, error) = gfile.Open
-
-	// OpenFile （以指定 flag 和 perm）打开文件/目录.
+	// Open （以指定 flag 和 perm）打开文件/目录.
 	/*
 		@param flag 详见"_info.md".
 		@param perm	(1) 可以参考 "fileKit/consts.go"
 					(2) e.g.0666 || os.ModePerm ...
 	*/
-	OpenFile func(path string, flag int, perm os.FileMode) (*os.File, error) = gfile.OpenFile
+	Open func(path string, flag int, perm os.FileMode) (*os.File, error) = gfile.OpenFile
+
+	// OpenReadOnly （只读模式）打开文件/目录.
+	/*
+		!!!: 只读权限 打开.
+	*/
+	OpenReadOnly func(path string) (*os.File, error) = gfile.Open
 )
 
 // Create 创建文件（读写权限、文件不存在就创建、打开并清空文件）.
@@ -40,7 +40,7 @@ func Create(filePath string) (*os.File, error) {
 	if err := AssertNotExistOrIsFile(filePath); err != nil {
 		return nil, err
 	}
-	return OpenFile(filePath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
+	return Open(filePath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
 }
 
 // CreateInAppendMode 创建文件（读写权限、文件不存在就创建、追加模式）.
@@ -53,7 +53,7 @@ func CreateInAppendMode(filePath string) (*os.File, error) {
 	if err := AssertNotExistOrIsFile(filePath); err != nil {
 		return nil, err
 	}
-	return OpenFile(filePath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
+	return Open(filePath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
 }
 
 // NewTemporaryFile 在指定目录下，生成临时文件.
