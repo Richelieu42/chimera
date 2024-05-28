@@ -1,12 +1,23 @@
 package main
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
-	"github.com/sirupsen/logrus"
+	"fmt"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 )
 
 func main() {
-	if err := jsonKit.AssertJsonString("[{}", "jsonStr"); err != nil {
-		logrus.Error(err.Error())
-	}
+	//if err := jsonKit.AssertJsonString("[{}", "jsonStr"); err != nil {
+	//	logrus.Error(err.Error())
+	//}
+
+	err := errorKit.Simplef("111")
+	fmt.Println(err.Error())
+
+	fmt.Println("===")
+
+	fmt.Printf("%v\n", err)
+
+	fmt.Println("===")
+
+	fmt.Printf("%+v\n", err)
 }
