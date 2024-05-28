@@ -6,11 +6,9 @@ import (
 )
 
 var (
-	// Is 传参err 的错误链中，是否存在和 传参target 匹配的error实例？
+	// Is 作用: 传参err 的错误链中，是否存在和 传参target 匹配的error实例？(reports whether any error in err's tree matches target.)
 	/*
-		Deprecated: 建议直接使用 errors.Is().
-
-		reports whether any error in err's tree matches target.
+		Deprecated: Use errors.Is() instead.
 
 		PS: 支持第三方依赖 "github.com/gogf/gf/v2/errors/gerror".
 
@@ -20,7 +18,7 @@ var (
 
 	// As
 	/*
-		Deprecated: 建议直接使用 errors.As().
+		Deprecated: Use errors.As() instead.
 
 		!!!:
 		对于传参target，
