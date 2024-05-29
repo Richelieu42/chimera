@@ -89,10 +89,18 @@ func Port(field interface{}) error {
 	return Var(field, "gt=0,lte=65535")
 }
 
+// Hostname
+/*
+通过的field: "www.yozo.com"、"10.0.9.141"
+*/
 func Hostname(field interface{}) error {
 	return Var(field, "hostname|ipv4")
 }
 
+// Host
+/*
+通过的field: "www.yozo.com:8888"、"10.0.9.141:80"
+*/
 func Host(field interface{}) error {
 	return Var(field, "hostname_port")
 }
