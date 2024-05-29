@@ -14,14 +14,14 @@ func AssertValidPort(port int) error {
 
 func AssertHost(host string) error {
 	if !IsHost(host) {
-		return errorKit.NewfWithSkip(1, "[%s] host(%d) is invalid", funcKit.GetFuncName(1), host)
+		return errorKit.NewfWithSkip(1, "[%s] host(%s) is invalid", funcKit.GetFuncName(1), host)
 	}
 	return nil
 }
 
 func AssertHostname(hostname string) error {
 	if !IsHostname(hostname) {
-		return errorKit.NewfWithSkip(1, "[%s] hostname(%d) is invalid", funcKit.GetFuncName(1), hostname)
+		return errorKit.NewfWithSkip(1, "[%s] hostname(%s) is invalid", funcKit.GetFuncName(1), hostname)
 	}
 	return nil
 }
