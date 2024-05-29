@@ -87,7 +87,7 @@ func Port(field interface{}) error {
 
 // Hostname
 /*
-通过的field: "www.yozo.com"、"10.0.9.141"
+能通过的: "localhost"、"127.0.0.1"、"www.yozo.com"、"10.0.9.141"
 */
 func Hostname(field interface{}) error {
 	return Var(field, "hostname|ipv4")
@@ -95,8 +95,8 @@ func Hostname(field interface{}) error {
 
 // Host
 /*
-通过的field: "www.yozo.com:8888"、"10.0.9.141:80"
-不能通过的field: "10.0.9.141:0"、"10.0.9.141:-1"
+能通过的: "localhost:8888"、"127.0.0.1:8888"、"www.yozo.com:8888"、"10.0.9.141:80"
+不通过的: "10.0.9.141:0"、"10.0.9.141:-1"
 */
 func Host(field interface{}) error {
 	return Var(field, "hostname_port")
