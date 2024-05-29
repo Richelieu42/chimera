@@ -114,9 +114,10 @@ scheme="http" targetHost="127.0.0.1:8889" requestUrlPath=ptrKit.ToPtr("/group1/t
 e.g.4	将 wss://127.0.0.1:8888/test 转发给 ws://127.0.0.1:80/ws/connect
 scheme="http" targetHost="127.0.0.1:80" requestUrlPath=ptrKit.ToPtr("/ws/connect")
 */
-func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, targetHost string) (err error) {
+func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, targetHost string) (err error) {
+
 	/* reset Request.Body */
-	if err = httpKit.TryToResetRequestBody(req); err != nil {
+	if err = httpKit.TryToResetRequestBody(r); err != nil {
 		return
 	}
 
@@ -140,17 +141,17 @@ func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, t
 			(0) X-Forwarded-Proto: 客户端与代理服务器（或负载均衡服务器）间的连接所采用的传输协议（HTTP 或 HTTPS）
 				!!!: 值不一定准确，除非 代理(s) 好好配合（有的话）.
 		*/
-		httpKit.SetHeader(req.Header, "X-Forwarded-Proto", httpKit.GetClientScheme(req))
+		httpKit.SetHeader(r.Header, "X-Forwarded-Proto", httpKit.GetClientScheme(r))
 
 		// (1) client ip
-		tmp := httpKit.GetClientIPFromHeader(req)
+		tmp := httpKit.GetClientIPFromHeader(r)
 		if strKit.IsEmpty(tmp) {
-			httpKit.SetHeader(req.Header, "X-Real-IP", opts.getClientIP(req))
+			httpKit.SetHeader(r.Header, "X-Real-IP", opts.getClientIP(r))
 		}
 	}
 
 	/* Richelieu: 在请求头加个标记，证明此请求被 chimera 代理过 */
-	mark(req.Header)
+	mark(r.Header)
 
 	/* proxy */
 	director := func(req *http.Request) {
@@ -160,7 +161,7 @@ func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, t
 			req.URL.Path = *opts.requestUrlPath
 		}
 
-		// 可能会修改 req.URL.RawQuery
+		// 可能会修改 r.URL.RawQuery
 		if opts.overrideQueryParams != nil {
 			urlKit.OverrideRawQuery(req.URL, opts.overrideQueryParams)
 		} else if opts.extraQueryParams != nil {
@@ -186,7 +187,7 @@ func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, t
 			err = errorKit.Newf("recover from %v", obj)
 		}
 	}()
-	reverseProxy.ServeHTTP(writer, req)
+	reverseProxy.ServeHTTP(w, r)
 
 	return
 }
