@@ -81,6 +81,7 @@ func File(field interface{}) error {
 	return Var(field, "file")
 }
 
+// Port 有效范围: (0, 65535]
 func Port(field interface{}) error {
 	return Var(field, "gt=0,lte=65535")
 }

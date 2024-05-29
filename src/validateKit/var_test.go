@@ -31,3 +31,30 @@ func TestJson(t *testing.T) {
 	fmt.Println(Json(`{"name":123}`))         // <nil>
 	fmt.Println(Json([]byte(`{"name":123}`))) // <nil>
 }
+
+func TestPort(t *testing.T) {
+	{
+		var tmp interface{} = 100
+		fmt.Println(Port(tmp)) // <nil>
+	}
+	{
+		var tmp interface{} = 100
+		fmt.Println(Port(tmp)) // <nil>
+	}
+	{
+		var tmp uint8 = 100
+		fmt.Println(Port(tmp)) // <nil>
+	}
+	{
+		var tmp uint = 100
+		fmt.Println(Port(tmp)) // <nil>
+	}
+	{
+		var tmp int = 100
+		fmt.Println(Port(tmp)) // <nil>
+	}
+	{
+		var tmp float32 = 100
+		fmt.Println(Port(tmp)) // <nil>
+	}
+}
