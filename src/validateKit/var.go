@@ -53,11 +53,7 @@ func HttpUrl(field interface{}) error {
 
 // Json 字符串值是否为有效的JSON.
 /*
-	e.g.
-		fmt.Println(validateKit.Json(""))   // Key: '' Error:Var validation for '' failed on the 'json' tag
-		fmt.Println(validateKit.Json("[]")) // <nil>
-		fmt.Println(validateKit.Json("{}")) // <nil>
-		fmt.Println(validateKit.Json("[}")) // Key: '' Error:Var validation for '' failed on the 'json' tag
+能通过的: `{"name":123}`、[]byte(`{"name":123}`)
 */
 func Json(field interface{}) error {
 	return Var(field, "json")

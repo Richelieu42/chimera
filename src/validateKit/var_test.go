@@ -21,8 +21,9 @@ func TestHost(t *testing.T) {
 }
 
 func TestJson(t *testing.T) {
-	fmt.Println(Json(""))             // Key: '' Error:Field validation for '' failed on the 'json' tag
-	fmt.Println(Json("[}"))           // Key: '' Error:Field validation for '' failed on the 'json' tag
-	fmt.Println(Json(`{name:123}`))   // Key: '' Error:Field validation for '' failed on the 'json' tag
-	fmt.Println(Json(`{"name":123}`)) // <nil>
+	fmt.Println(Json(""))                     // Key: '' Error:Field validation for '' failed on the 'json' tag
+	fmt.Println(Json("[}"))                   // Key: '' Error:Field validation for '' failed on the 'json' tag
+	fmt.Println(Json(`{name:123}`))           // Key: '' Error:Field validation for '' failed on the 'json' tag
+	fmt.Println(Json(`{"name":123}`))         // <nil>
+	fmt.Println(Json([]byte(`{"name":123}`))) // <nil>
 }
