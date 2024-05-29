@@ -100,6 +100,7 @@ func Hostname(field interface{}) error {
 // Host
 /*
 通过的field: "www.yozo.com:8888"、"10.0.9.141:80"
+不能通过的field: "10.0.9.141:0"、"10.0.9.141:-1"
 */
 func Host(field interface{}) error {
 	return Var(field, "hostname_port")
