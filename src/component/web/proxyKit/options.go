@@ -187,11 +187,12 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, targetHo
 		}
 	}()
 
-	/* 以防: 请求已经被取消了 */
+	// 以防: 请求已经被取消了
 	if err = r.Context().Err(); err != nil {
 		return
 	}
 
+	// 真正代理请求
 	reverseProxy.ServeHTTP(w, r)
 	return
 }
