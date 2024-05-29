@@ -19,3 +19,10 @@ func TestHost(t *testing.T) {
 	// 非法端口: -1
 	fmt.Println(Host("10.0.9.141:-1")) // Key: '' Error:Field validation for '' failed on the 'hostname_port' tag
 }
+
+func TestJson(t *testing.T) {
+	fmt.Println(Json(""))             // Key: '' Error:Field validation for '' failed on the 'json' tag
+	fmt.Println(Json("[}"))           // Key: '' Error:Field validation for '' failed on the 'json' tag
+	fmt.Println(Json(`{name:123}`))   // Key: '' Error:Field validation for '' failed on the 'json' tag
+	fmt.Println(Json(`{"name":123}`)) // <nil>
+}
