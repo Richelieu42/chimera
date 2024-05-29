@@ -2,11 +2,11 @@ package centrifugoKit
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v3/src/config/configKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v3/src/grpcKit"
 	"github.com/richelieu-yang/chimera/v3/src/idKit"
 	"github.com/richelieu-yang/chimera/v3/src/micro/centrifugoKit/apiproto"
+	"github.com/richelieu-yang/chimera/v3/src/netKit"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/resolver"
@@ -25,7 +25,7 @@ import (
 */
 func NewGrpcClient(hosts []string, scheme string, grpcApiKey string) (*GrpcClient, error) {
 	/* hosts */
-	hosts, err := configKit.PolyfillHosts(hosts, 1)
+	hosts, err := netKit.PolyfillHosts(hosts, 1)
 	if err != nil {
 		return nil, err
 	}

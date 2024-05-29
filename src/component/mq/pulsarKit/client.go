@@ -3,11 +3,11 @@ package pulsarKit
 import (
 	"github.com/apache/pulsar-client-go/pulsar"
 	"github.com/apache/pulsar-client-go/pulsar/log"
-	"github.com/richelieu-yang/chimera/v3/src/config/configKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v3/src/netKit"
 	"github.com/sirupsen/logrus"
 )
 
@@ -17,7 +17,7 @@ import (
 */
 func NewClient(addresses []string, logPath string) (pulsar.Client, error) {
 	/* url */
-	addresses, err := configKit.PolyfillHosts(addresses, 1)
+	addresses, err := netKit.PolyfillHosts(addresses, 1)
 	if err != nil {
 		return nil, err
 	}

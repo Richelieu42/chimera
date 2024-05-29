@@ -1,7 +1,9 @@
 package main
 
-import "github.com/richelieu-yang/chimera/v3/src/validateKit"
+import (
+	"github.com/richelieu-yang/chimera/v3/src/copyKit"
+)
 
 func main() {
-	validateKit.Email()
+	copyKit.Copy(nil, nil)
 }
