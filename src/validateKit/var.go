@@ -88,3 +88,11 @@ func File(field interface{}) error {
 func Port(field interface{}) error {
 	return Var(field, "gt=0,lte=65535")
 }
+
+func Hostname(field interface{}) error {
+	return Var(field, "hostname|ipv4")
+}
+
+func Host(field interface{}) error {
+	return Var(field, "hostname_port")
+}
