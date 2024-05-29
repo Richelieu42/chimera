@@ -8,14 +8,15 @@ import (
 )
 
 const (
-	DefaultHttpPort  = 80
+	DefaultHttpPort = 80
+
 	DefaultHttpsPort = 443
 
 	// MaxPort 65535 == 0xFFFF
 	MaxPort = 0xFFFF
 )
 
-// IsValidPort
+// IsPort 是否是有效的端口号？
 /*
 参考:
 (1) Java，hutool中的NetUtil.isValidPort()
@@ -29,7 +30,7 @@ const (
 @param obj 	(1) 支持的类型: reflect.Value、int、uint、string...
 			(2) 可以为nil
 */
-func IsValidPort(obj interface{}) bool {
+func IsPort(obj interface{}) bool {
 	if obj == nil {
 		return false
 	}
@@ -70,7 +71,7 @@ Java，hutool中的NetUtil.isUsableLocalPort()
 golang端口占用检测的使用	https://wenku.baidu.com/view/25716f5b01768e9951e79b89680203d8ce2f6af5.html
 */
 func IsLocalPortAvailable(port int) bool {
-	if !IsValidPort(int64(port)) {
+	if !IsPort(int64(port)) {
 		return false
 	}
 

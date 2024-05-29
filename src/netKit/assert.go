@@ -6,8 +6,22 @@ import (
 )
 
 func AssertValidPort(port int) error {
-	if !IsValidPort(int64(port)) {
+	if !IsPort(int64(port)) {
 		return errorKit.NewfWithSkip(1, "[%s] port(%d) is invalid", funcKit.GetFuncName(1), port)
+	}
+	return nil
+}
+
+func AssertHost(host string) error {
+	if !IsHost(host) {
+		return errorKit.NewfWithSkip(1, "[%s] host(%d) is invalid", funcKit.GetFuncName(1), host)
+	}
+	return nil
+}
+
+func AssertHostname(hostname string) error {
+	if !IsHostname(hostname) {
+		return errorKit.NewfWithSkip(1, "[%s] hostname(%d) is invalid", funcKit.GetFuncName(1), hostname)
 	}
 	return nil
 }
