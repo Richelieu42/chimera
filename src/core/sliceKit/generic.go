@@ -124,7 +124,7 @@ func Swap[T any](s []T, i, j int) {
 
 // GetFirstItemWithDefault 主要用于: 从不定参数(...)中取第一个值（不存在则取默认值）
 /*
-Deprecated: 考虑 性能 && import cycle 的场景下，不建议直接调用此方法（此方法仅供展示传参规范）.
+Deprecated: 不建议在本项目内部调用，以防import cycle.
 
 PS:
 (1) 因为Golang不支持方法重载；
