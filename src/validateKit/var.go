@@ -96,7 +96,7 @@ func Hostname(field interface{}) error {
 
 // Host
 /*
-能通过的: "localhost:8888"、"127.0.0.1:8888"、"www.yozo.com:8888"、"10.0.9.141:80"
+能通过的: ":8888"、"localhost:8888"、"127.0.0.1:8888"、"www.yozo.com:8888"、"10.0.9.141:80"
 不通过的: "10.0.9.141:0"、"10.0.9.141:-1"
 */
 func Host(field interface{}) error {

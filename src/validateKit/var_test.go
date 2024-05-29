@@ -13,6 +13,8 @@ func TestHostname(t *testing.T) {
 }
 
 func TestHost(t *testing.T) {
+	fmt.Println(Host(":8888")) // <nil>
+
 	fmt.Println(Host("localhost:8888"))    // <nil>
 	fmt.Println(Host("127.0.0.1:8888"))    // <nil>
 	fmt.Println(Host("www.yozo.com:8888")) // <nil>
