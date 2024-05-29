@@ -1,7 +1,6 @@
 package imageKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
 	"image"
 	"image/color"
@@ -18,7 +17,11 @@ func ToJpeg(src, dest string, qualityArgs ...int8) error {
 	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
 		return err
 	}
-	quality := sliceKit.GetFirstItemWithDefault(100, qualityArgs...)
+
+	var quality int8 = 100
+	if len(qualityArgs) > 0 {
+		quality = qualityArgs[0]
+	}
 
 	srcImage, _, err := DecodeWithPath(src)
 	destFile, err := os.Create(dest)

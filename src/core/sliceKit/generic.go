@@ -122,7 +122,7 @@ func Swap[T any](s []T, i, j int) {
 	s[i], s[j] = s[j], s[i]
 }
 
-// GetFirstItemWithDefault 主要用于: 从不定参数(...)中取第一个值（不存在则取默认值）
+// GetFirstElement 主要用于: 从不定参数(...)中取第一个值（不存在则取默认值）
 /*
 Deprecated: 不建议在本项目内部调用，以防import cycle.
 
@@ -132,7 +132,7 @@ PS:
 
 @param args 要么是: nil；要么是: 长度>=1的切片实例
 */
-func GetFirstItemWithDefault[T any](def T, args ...T) T {
+func GetFirstElement[T any](def T, args ...T) T {
 	if len(args) > 0 {
 		return args[0]
 	}
