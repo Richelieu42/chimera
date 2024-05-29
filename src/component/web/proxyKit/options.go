@@ -115,6 +115,10 @@ e.g.4	将 wss://127.0.0.1:8888/test 转发给 ws://127.0.0.1:80/ws/connect
 scheme="http" targetHost="127.0.0.1:80" requestUrlPath=ptrKit.ToPtr("/ws/connect")
 */
 func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, targetHost string) (err error) {
+	/* 以防: 请求已经被取消了 */
+	if err = r.Context().Err(); err != nil {
+		return
+	}
 
 	/* reset Request.Body */
 	if err = httpKit.TryToResetRequestBody(r); err != nil {
@@ -187,7 +191,12 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, targetHo
 			err = errorKit.Newf("recover from %v", obj)
 		}
 	}()
-	reverseProxy.ServeHTTP(w, r)
 
+	/* 以防: 请求已经被取消了 */
+	if err = r.Context().Err(); err != nil {
+		return
+	}
+
+	reverseProxy.ServeHTTP(w, r)
 	return
 }
