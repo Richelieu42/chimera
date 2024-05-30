@@ -177,18 +177,6 @@ func (channel *BaseChannel) Equals(c Channel) bool {
 	return channel.GetId() == c.GetId()
 }
 
-func (channel *BaseChannel) BindGroup(group string) {
-	BindGroup(channel, group)
-}
-
-func (channel *BaseChannel) BindUser(user string) {
-	BindUser(channel, user)
-}
-
-func (channel *BaseChannel) BindBsid(bsid string) {
-	BindBsid(channel, bsid)
-}
-
 func (channel *BaseChannel) Dispose() {
 	// 停止主动pong
 	channel.Interval.Stop()
