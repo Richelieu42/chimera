@@ -78,7 +78,7 @@ func (opts *proxyOptions) getClientIP(req *http.Request) string {
 						(2) 非nil的话，个人感觉: 字符串的第一个字符应该是"/"
 @param extraQueryParams	可以为nil
 @return 可能的值:
-		(1) context.Canceled		请求被取消了（代理服务和被代理的服务都能即时感知到）
+		(1) context.Canceled		http请求被取消了（代理服务和被代理的服务都能即时感知到）
 		(2) http.ErrAbortHandler	对应情况: 代理的 sse连接 或 http_stream连接(centrifugo) 断开时，会返回此error，可忽略
 		(3) ...
 
