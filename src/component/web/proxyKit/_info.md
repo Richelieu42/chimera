@@ -6,6 +6,6 @@
 项目路径: notes/_GolandProjects/proxy-port
 
 ## 代理http请求，修改响应的内容
-- notes/Golang/WEB/Golang - web.wps
+- notes/Golang/WEB/proxy（代理）.wps
 
 
