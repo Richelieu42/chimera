@@ -82,14 +82,14 @@ func (channel *SseChannel) Close(reason string) error {
 	return nil
 }
 
-func (channel *SseChannel) BindGroup(group string) {
-	pushKit.BindGroup(channel, group)
-}
-
-func (channel *SseChannel) BindUser(user string) {
-	pushKit.BindUser(channel, user)
-}
-
-func (channel *SseChannel) BindBsid(bsid string) {
-	pushKit.BindBsid(channel, bsid)
-}
+//func (channel *SseChannel) BindGroup(group string) {
+//	pushKit.BindGroup(channel, group)
+//}
+//
+//func (channel *SseChannel) BindUser(user string) {
+//	pushKit.BindUser(channel, user)
+//}
+//
+//func (channel *SseChannel) BindBsid(bsid string) {
+//	pushKit.BindBsid(channel, bsid)
+//}

@@ -104,14 +104,14 @@ func (channel *WsChannel) Close(reason string) (err error) {
 	return
 }
 
-func (channel *WsChannel) BindGroup(group string) {
-	pushKit.BindGroup(channel, group)
-}
-
-func (channel *WsChannel) BindUser(user string) {
-	pushKit.BindUser(channel, user)
-}
-
-func (channel *WsChannel) BindBsid(bsid string) {
-	pushKit.BindBsid(channel, bsid)
-}
+//func (channel *WsChannel) BindGroup(group string) {
+//	pushKit.BindGroup(channel, group)
+//}
+//
+//func (channel *WsChannel) BindUser(user string) {
+//	pushKit.BindUser(channel, user)
+//}
+//
+//func (channel *WsChannel) BindBsid(bsid string) {
+//	pushKit.BindBsid(channel, bsid)
+//}

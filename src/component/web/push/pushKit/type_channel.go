@@ -43,9 +43,9 @@ type Channel interface {
 	SetData(interface{})
 	ClearData()
 
-	BindGroup(group string)
-	BindUser(user string)
-	BindBsid(bsid string)
+	//BindGroup(group string)
+	//BindUser(user string)
+	//BindBsid(bsid string)
 
 	Equals(c Channel) bool
 }
