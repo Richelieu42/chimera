@@ -45,6 +45,9 @@ gin:
     cors:
       # 是否配置cors？默认: false（此时下面的 origins配置 将无效）
       access: true
+      # true: 	设置响应头 "Access-Control-Allow-Credentials" 为 "true"
+      #	false:	do nothing
+      allowCredentials: true
       # 支持的Origin(s)，即响应头中的Access-Control-Allow-Origin
       # (1) 默认（origins配置项全注释了）: 支持所有的Origin（即动态支持请求的Origin，并非"*"）
       # (2) 支持通配符"*"

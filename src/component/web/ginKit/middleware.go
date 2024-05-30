@@ -66,7 +66,7 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, opts *ginOpt
 	if cors.Access {
 		// 配置cors
 		origins := sliceKit.PolyfillStringSlice(cors.Origins)
-		engine.Use(NewCorsMiddleware(origins))
+		engine.Use(NewCorsMiddleware(origins, cors.AllowCredentials))
 	}
 
 	/* OPTIONS */

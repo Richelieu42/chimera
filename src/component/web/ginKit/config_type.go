@@ -43,7 +43,15 @@ type (
 
 	// CorsConfig cors（跨源资源共享）的配置
 	CorsConfig struct {
-		Access  bool     `json:"access" yaml:"access"`
+		Access bool `json:"access" yaml:"access"`
+
+		// AllowCredentials
+		/*
+			true: 	设置响应头 "Access-Control-Allow-Credentials" 为 "true"
+			false:	do nothing
+		*/
+		AllowCredentials bool `json:"allowCredentials" yaml:"allowCredentials"`
+
 		Origins []string `json:"origins" yaml:"origins" validate:"unique,dive,required"`
 	}
 

@@ -1,10 +1,13 @@
 package main
 
 import (
-	"fmt"
-	"github.com/richelieu-yang/chimera/v3/src/netKit"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	fmt.Println(netKit.AssertHost("127.0.0.1:100001"))
+	engine := gin.Default()
+
+	if err := engine.Run(":80"); err != nil {
+		panic(err)
+	}
 }

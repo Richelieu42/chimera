@@ -37,5 +37,5 @@ func TestMustSetUp(t *testing.T) {
 		})
 
 		return nil
-	}, WithServiceInfo("TEST"), WithDefaultFavicon(true))
+	}, WithServiceInfo("TEST"), WithDefaultFavicon(true), WithDefaultNoRouteHtml(true))
 }

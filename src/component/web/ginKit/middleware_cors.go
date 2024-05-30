@@ -20,7 +20,7 @@ import (
 e.g.
 	传参: []string{"https://*.github.com", "https://api.*", "http://*", "https://facebook.com", "*.golang.org"}
 */
-func NewCorsMiddleware(origins []string) gin.HandlerFunc {
+func NewCorsMiddleware(origins []string, allowCredentials bool) gin.HandlerFunc {
 	/*
 		CORS 中间件提供三个函数，代表三种使用方式，分别是:
 			cors.Sign()
@@ -42,7 +42,7 @@ func NewCorsMiddleware(origins []string) gin.HandlerFunc {
 		// 添加请求源是否允许使用通配符，例如 http://some-domain/*，https://api. 或 http://some.*.subdomain.com
 		AllowWildcard: true,
 		// 表示请求附带请求凭据时是否响应请求，例如 cookie、HTTP authentication 或客户端 SSL 证书
-		AllowCredentials: true,
+		AllowCredentials: allowCredentials,
 		// 允许使用常用的浏览器的扩展模式
 		AllowBrowserExtensions: true,
 		// 允许使用 WebSocket 协议

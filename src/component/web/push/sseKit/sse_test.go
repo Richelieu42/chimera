@@ -15,7 +15,7 @@ import (
 
 func TestNewProcessor(t *testing.T) {
 	engine := gin.Default()
-	engine.Use(ginKit.NewCorsMiddleware(nil))
+	engine.Use(ginKit.NewCorsMiddleware(nil, true))
 
 	/* 初始化poolKit */
 	pool, err := poolKit.NewAntPool(1024)
