@@ -33,7 +33,7 @@ func TestMustSetUp(t *testing.T) {
 	}
 
 	MustSetUp(c.Gin, func(engine *gin.Engine) error {
-		target := "127.0.0.1:10000"
+		target := "127.0.0.1:12000"
 
 		engine.Any("/test", func(ctx *gin.Context) {
 			if err := proxyKit.ProxyWithGin(ctx, target); err != nil {
