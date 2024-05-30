@@ -13,7 +13,7 @@ func BindId(channel Channel, id string) {
 
 	/* 写锁 */
 	idMap.LockFunc(func() {
-		if old, ok := bsidMap.Map[id]; ok {
+		if old, ok := idMap.Map[id]; ok {
 			_ = old.Close(fmt.Sprintf("id(%s) is replaced by new channel", id))
 		}
 		idMap.Map[id] = channel
