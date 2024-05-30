@@ -42,6 +42,7 @@ gin:
     # 不建议在此处配置，想限制上传文件大小可以在handler中进行处理
     # TODO: 因为http.MaxBytesReader()，如果涉及"请求转发（代理）"，转发方不要全局配置此属性，否则会导致: 有时成功，有时代理失败（error），有时http客户端失败
     bodyLimit: -1
+    # 启用cors的情况下，如果请求头中Origin为空（即非跨域请求），do nothing直接通过
     cors:
       # 是否配置cors？默认: false（此时下面的 origins配置 将无效）
       access: true
@@ -64,7 +65,7 @@ gin:
       r: 1000
       # 令牌桶的容量
       b: 2000
-    # 请求的响应头
+    # 额外设置的响应头
     responseHeaders:
       X-XSS-Protection: "1;mode=block"
       Strict-Transport-Security: "max-age=31536000; includeSubDomains; preload"
