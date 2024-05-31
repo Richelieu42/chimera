@@ -95,7 +95,7 @@ tasks:
       TAGS: '{{default "" .TAGS}}'
       UPX: '{{default "false" .UPX}}'
       NOAVX: '{{if and (eq .TAGS "sonic avx") (ne .ARCH "amd64")}}-noavx{{end}}'
-      NAME: '{{.APP}}-{{.OS}}-{{.ARCH}}{{.NOAVX}}{{.EXT}}'
+      NAME: '{{.APP}}-{{.VERSION}}-{{.OS}}-{{.ARCH}}{{.NOAVX}}{{.EXT}}'
       TARGET: '{{.NAME}}'
     cmds:
       - echo {{.TARGET}}
