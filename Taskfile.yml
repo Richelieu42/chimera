@@ -2,8 +2,8 @@ version: '3'
 
 # 全局变量
 vars:
-#  APP: chimera
-#  SOURCE: internal/main.go
+  #  APP: chimera
+  #  SOURCE: internal/main.go
   APP: test
   SOURCE: test/test.go
   # 0 || 1
@@ -94,7 +94,7 @@ tasks:
       EXT: '{{if eq .OS "windows"}}.exe{{end}}'
       TAGS: '{{default "" .TAGS}}'
       UPX: '{{default "false" .UPX}}'
-      NOAVX: '{{if and (eq .TAGS "sonic avx") (ne .ARCH "amd64")}}-noavx{{end}}'
+      NOAVX: '{{if and (eq .ARCH "amd64") (ne .TAGS "sonic avx")}}-noavx{{end}}'
       NAME: '{{.APP}}-{{.VERSION}}-{{.OS}}-{{.ARCH}}{{.NOAVX}}{{.EXT}}'
       TARGET: '{{.NAME}}'
     cmds:
