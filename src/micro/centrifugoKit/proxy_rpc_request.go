@@ -21,6 +21,7 @@ func ParseToRpcRequest(ctx *gin.Context) (*proxyproto.RPCRequest, error) {
 	if err := ctx.Bind(rpcRequest); err != nil {
 		return nil, err
 	}
+	// Richelieu: 此时，rpcRequest.Data 和 rpcRequest.B64Data 只有一个有值
 
 	if rpcRequest.B64Data != "" {
 		// Centrifugo服务的 proxy_binary_encoding 配置项为 true 的情况
