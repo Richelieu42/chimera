@@ -51,8 +51,14 @@ Return custom disconnect
 	https://centrifugal.dev/docs/server/proxy#return-custom-disconnect
 
 @param code		有效范围: [4000, 4999]
-			 	(1) [4000,4499]: 给客户端一个重新连接的建议.（客户端收到后会断开连接，但会重连）
-			 	(2) [4500,4999]: 的代码是终端代码-客户端接收到它后不会重新连接。（客户端收到后会断开连接，且不会重连）
+ 			  	(1) [4000,4499]: 给客户端一个重新连接的建议.
+			  		(a) 客户端收到后会断开连接，但会重连;
+			  		(b) 不会触发前端的 disconnected 事件;
+			 		(c) Code 和 Reason 可以从前端的 connecting 事件中得知.
+			  	(2) [4500,4999]: terminal codes，客户端接收到它后不会重新连接.
+			  		(a) 客户端收到后会断开连接，且不会重连;
+			  		(b) 会触发前端的 disconnected 事件;
+			  		(c) Code 和 Reason 可以从前端的 disconnected 事件中得知.
 @param reason 	请记住，由于WebSocket协议的限制和离心机内部协议的需要，你需要保持断开原因字符串不超过32个ASCII符号(即最大32字节)。
 */
 func PackToRpcResponseWithCustomDisconnect(code uint32, reason string) (*proxyproto.RPCResponse, error) {
