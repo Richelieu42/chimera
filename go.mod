@@ -7,7 +7,7 @@ require (
 	github.com/alwindoss/morse v1.0.1
 	github.com/andybalholm/brotli v1.1.0
 	github.com/apache/pulsar-client-go v0.12.1
-	github.com/apache/rocketmq-clients/golang/v5 v5.1.0-rc.1
+	github.com/apache/rocketmq-clients/golang/v5 v5.1.1-rc1
 	github.com/bytedance/sonic v1.11.8
 	github.com/centrifugal/centrifuge v0.32.2
 	github.com/centrifugal/gocent/v3 v3.2.0
@@ -118,7 +118,7 @@ require (
 	go.uber.org/zap v1.27.0
 	golang.org/x/arch v0.8.0
 	golang.org/x/crypto v0.23.0
-	golang.org/x/exp v0.0.0-20240530194437-404ba88c7ed0
+	golang.org/x/exp v0.0.0-20240531132922-fd00a4e0eefc
 	golang.org/x/image v0.16.0
 	golang.org/x/mobile v0.0.0-20240520174638-fa72addaaa1b
 	golang.org/x/mod v0.17.0
