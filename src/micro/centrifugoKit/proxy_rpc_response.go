@@ -30,10 +30,16 @@ func PackToRpcResponse(jsonData []byte, base64Flag bool) *proxyproto.RPCResponse
 
 // PackToRpcResponseWithCustomError 返回自定义错误.
 /*
-@param code
-@param message
+Return custom error
+	https://centrifugal.dev/docs/server/proxy#return-custom-error
+
+@param code 有效范围: [400, 1999]
 */
-func PackToRpcResponseWithCustomError(code uint32, message string, temporary bool) *proxyproto.RPCResponse {
+func PackToRpcResponseWithCustomError(code uint32, message string, temporary bool) (*proxyproto.RPCResponse, error) {
+	if code < 400 || code > 1999 {
+		return nil, errorKit.Newf("error code(%d) isn't in range[400, 1999]", code)
+	}
+
 	return &proxyproto.RPCResponse{
 		Result: nil,
 		Error: &proxyproto.Error{
@@ -42,7 +48,7 @@ func PackToRpcResponseWithCustomError(code uint32, message string, temporary boo
 			Temporary: temporary,
 		},
 		Disconnect: nil,
-	}
+	}, nil
 }
 
 // PackToRpcResponseWithCustomDisconnect 返回自定义断开.
@@ -62,13 +68,13 @@ Return custom disconnect
 @param reason 	请记住，由于WebSocket协议的限制和离心机内部协议的需要，你需要保持断开原因字符串不超过32个ASCII符号(即最大32字节)。
 */
 func PackToRpcResponseWithCustomDisconnect(code uint32, reason string) (*proxyproto.RPCResponse, error) {
-	if code < 4000 || code >= 5000 {
-		return nil, errorKit.Newf("code(%d) isn't in range()", code)
+	if code < 4000 || code > 4999 {
+		return nil, errorKit.Newf("disconnect code(%d) isn't in range[4000, 4999]", code)
 	}
 
 	length := len(reason)
 	if length > 32 {
-		return nil, errorKit.Newf("reason(length: %d, value: %s) is too long", length, reason)
+		return nil, errorKit.Newf("disconnect reason(length: %d, value: %s) is too long", length, reason)
 	}
 
 	return &proxyproto.RPCResponse{
