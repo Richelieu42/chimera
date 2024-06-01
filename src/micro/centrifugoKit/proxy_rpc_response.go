@@ -8,7 +8,7 @@ import (
 
 // PackToRpcResponse
 /*
-@param base64Flag true: 对响应内容进行base64编码
+@param base64Flag 是否对 传参jsonData 进行base64编码？
 */
 func PackToRpcResponse(jsonData []byte, base64Flag bool) *proxyproto.RPCResponse {
 	resp := &proxyproto.RPCResponse{
