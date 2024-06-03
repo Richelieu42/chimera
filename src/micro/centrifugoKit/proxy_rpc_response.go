@@ -35,9 +35,14 @@ Return custom error
 
 @param code 有效范围: [400, 1999]
 */
-func PackToRpcResponseWithCustomError(code uint32, message string, temporary bool) (*proxyproto.RPCResponse, error) {
+func PackToRpcResponseWithCustomError(code uint32, message string, temporaryArgs ...bool) (*proxyproto.RPCResponse, error) {
 	if code < 400 || code > 1999 {
 		return nil, errorKit.Newf("error code(%d) isn't in range[400, 1999]", code)
+	}
+
+	temporary := false
+	if len(temporaryArgs) > 0 {
+		temporary = temporaryArgs[0]
 	}
 
 	return &proxyproto.RPCResponse{
