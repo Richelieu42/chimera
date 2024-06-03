@@ -3,6 +3,7 @@ package ginKit
 import (
 	"embed"
 	"github.com/gin-gonic/gin"
+	"io/fs"
 	"net/http"
 	"testing"
 )
@@ -11,13 +12,19 @@ import (
 var tmpFs embed.FS
 
 /*
-url: http://127.0.0.1/a/b/_test/a.txt
+url: http://127.0.0.1/a/b/a.txt
 */
 func TestStaticFS(t *testing.T) {
+	// 通过 fs.Sub函数，获取 一个embed.FS实例 的 子embed.FS实例
+	subFs, err := fs.Sub(tmpFs, "_test")
+	if err != nil {
+		panic(err)
+	}
+
 	engine := gin.Default()
 
 	group := engine.Group("a")
-	if err := StaticFS(group, "b", http.FS(tmpFs)); err != nil {
+	if err := StaticFS(group, "b", http.FS(subFs)); err != nil {
 		panic(err)
 	}
 
