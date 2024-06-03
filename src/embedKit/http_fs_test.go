@@ -10,7 +10,7 @@ import (
 var tmpEfs embed.FS
 
 func TestNewHttpFileSystem(t *testing.T) {
-	httpFs, err := NewHttpFileSystem(tmpEfs, "c")
+	httpFs, err := NewSubHttpFileSystem(tmpEfs, "c")
 	if err != nil {
 		panic(err)
 	}

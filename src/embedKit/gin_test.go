@@ -15,7 +15,7 @@ func TestNewHttpFileSystemWithGin(t *testing.T) {
 	engine := gin.Default()
 
 	{
-		httpFileSystem, err := NewHttpFileSystem(efs, "c")
+		httpFileSystem, err := NewSubHttpFileSystem(efs, "c")
 		if err != nil {
 			panic(err)
 		}
