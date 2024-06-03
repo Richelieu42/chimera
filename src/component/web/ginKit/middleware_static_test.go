@@ -9,6 +9,10 @@ func TestNewStaticMiddleware(t *testing.T) {
 	engine := gin.Default()
 	engine.RedirectTrailingSlash = false
 
+	/*
+		e.g.
+		http://127.0.0.1/a.txt
+	*/
 	m, err := NewStaticMiddleware("/", "_test", false)
 	if err != nil {
 		panic(err)
