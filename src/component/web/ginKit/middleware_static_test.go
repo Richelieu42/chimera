@@ -10,7 +10,7 @@ func TestNewStaticMiddleware(t *testing.T) {
 	engine.RedirectTrailingSlash = false
 
 	/*
-		e.g.
+		e.g. 路由不包含传参_test
 		http://127.0.0.1/a.txt
 	*/
 	m, err := NewStaticMiddleware("/", "_test", false)
