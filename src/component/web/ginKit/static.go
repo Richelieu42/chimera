@@ -10,7 +10,9 @@ import (
 // StaticFile 静态资源（单个文件）
 /*
 @param relativePath	路由
-@param filePath 	相对路径（对于项目的根目录(working directory)，而非main()所在的目录（虽然他们常常是同一个）） || 绝对路径
+@param filePath 	文件路径
+					(1) 相对路径（相对于项目的根目录working directory)
+					(2) 绝对路径
 */
 func StaticFile(group gin.IRoutes, relativePath, filePath string) error {
 	if err := fileKit.AssertExistAndIsFile(filePath); err != nil {
@@ -26,15 +28,19 @@ func StaticFile(group gin.IRoutes, relativePath, filePath string) error {
 PS: 适用场景: 静态资源与已绑定路由不冲突的情况（如果冲突的话，建议使用 NewStaticMiddleware）.
 
 @param relativePath		路由
-@param root				相对路径（对于项目的根目录(working directory)，而非main()所在的目录（虽然他们常常是同一个）） || 绝对路径
-@param listDirectory 	是否列出目录下的文件，true: 当目录下不存 index.html 文件时，会列出该目录下的所有文件（正式环境不推荐，因为不安全）
+@param dirPath 			文件路径
+						(1) 相对路径（相对于项目的根目录working directory)
+						(2) 绝对路径
+@param listDirectory 	是否列出目录下的文件？
+						(1) true: 当目录下不存 index.html 文件时，会列出该目录下的所有文件（正式环境不推荐，因为不安全）
+						(2) false: 不列出，这样比较安全
 */
-func StaticDir(group gin.IRoutes, relativePath, root string, listDirectory bool) error {
-	if err := fileKit.AssertExistAndIsDir(root); err != nil {
+func StaticDir(group gin.IRoutes, relativePath, dirPath string, listDirectory bool) error {
+	if err := fileKit.AssertExistAndIsDir(dirPath); err != nil {
 		return err
 	}
 
-	fs := gin.Dir(root, listDirectory)
+	fs := gin.Dir(dirPath, listDirectory)
 	return StaticFS(group, relativePath, fs)
 }
 
