@@ -27,7 +27,7 @@ func NewStaticMiddleware(urlPrefix string, dirPath string, indexes bool) (gin.Ha
 
 // NewStaticMiddlewareWithEmbedFolder
 /*
-Deprecated: github.com/gin-contrib/static v1.1.2有问题，详见_test.go，看后续会不会修复。
+Deprecated: github.com/gin-contrib/static v1.1.2有问题，详见对应测试文件，看后续会不会修复。
 */
 func NewStaticMiddlewareWithEmbedFolder(urlPrefix string, fsEmbed embed.FS, targetPath string) gin.HandlerFunc {
 	fs := static.EmbedFolder(fsEmbed, targetPath)
