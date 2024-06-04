@@ -134,7 +134,7 @@ require (
 	google.golang.org/protobuf v1.34.1
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/driver/bigquery v1.2.0
-	gorm.io/driver/clickhouse v0.6.0
+	gorm.io/driver/clickhouse v0.6.1
 	gorm.io/driver/mysql v1.5.6
 	gorm.io/driver/postgres v1.5.7
 	gorm.io/driver/sqlite v1.5.5
@@ -154,8 +154,8 @@ require (
 	github.com/99designs/go-keychain v0.0.0-20191008050251-8e49817e8af4 // indirect
 	github.com/99designs/keyring v1.2.1 // indirect
 	github.com/AthenZ/athenz v1.10.39 // indirect
-	github.com/ClickHouse/ch-go v0.58.2 // indirect
-	github.com/ClickHouse/clickhouse-go/v2 v2.15.0 // indirect
+	github.com/ClickHouse/ch-go v0.61.5 // indirect
+	github.com/ClickHouse/clickhouse-go/v2 v2.23.2 // indirect
 	github.com/DataDog/zstd v1.5.2 // indirect
 	github.com/FZambia/eagle v0.1.0 // indirect
 	github.com/adamzy/cedar-go v0.0.0-20170805034717-80a9c64b256d // indirect
@@ -200,7 +200,7 @@ require (
 	github.com/fyne-io/glfw-js v0.0.0-20220120001248-ee7290d23504 // indirect
 	github.com/fyne-io/image v0.0.0-20220602074514-4956b0afb3d2 // indirect
 	github.com/go-faster/city v1.0.1 // indirect
-	github.com/go-faster/errors v0.6.1 // indirect
+	github.com/go-faster/errors v0.7.1 // indirect
 	github.com/go-gl/gl v0.0.0-20211210172815-726fda9656d6 // indirect
 	github.com/go-gl/glfw/v3.3/glfw v0.0.0-20240306074159-ea2d69986ecb // indirect
 	github.com/go-logr/logr v1.4.1 // indirect
@@ -271,7 +271,7 @@ require (
 	github.com/natefinch/lumberjack v2.0.0+incompatible // indirect
 	github.com/nwaples/rardecode/v2 v2.0.0-beta.2 // indirect
 	github.com/onsi/ginkgo/v2 v2.16.0 // indirect
-	github.com/paulmach/orb v0.10.0 // indirect
+	github.com/paulmach/orb v0.11.1 // indirect
 	github.com/pierrec/lz4 v2.0.5+incompatible // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
