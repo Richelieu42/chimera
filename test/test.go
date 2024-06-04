@@ -10,7 +10,13 @@ import (
 
 func main() {
 	// Forwards incoming requests to whatever location URL points to, adds proper forwarding headers
-	fwd := forward.New(false)
+	//fwd := forward.New(false)
+	/*
+		passHostHeader:
+		(1) true:
+		(2) false:
+	*/
+	fwd := forward.New(true)
 	lb, err := roundrobin.New(fwd)
 	if err != nil {
 		panic(err)

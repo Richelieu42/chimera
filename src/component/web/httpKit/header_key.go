@@ -25,6 +25,8 @@ const (
 
 	HeaderConnection = "Connection"
 
+	HeaderHost = "Host"
+
 	HeaderOrigin = "Origin"
 
 	HeaderSetCookie = "Set-Cookie"
