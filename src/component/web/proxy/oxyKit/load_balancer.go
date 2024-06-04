@@ -20,11 +20,11 @@ var (
 /*
 @param reverseProxy	可以为nil（将采用默认值）
 @param servers 		e.g. []string{"http://localhost:8001", "http://localhost:8002"}
-@param errHandler	可以为nil
+@param errHandler	可以为nil，将采用默认值
+@param logger		可以为nil，但不建议这么干
 @param verbose		true: 详细的信息
-@param log			可以为nil
 */
-func NewLoadBalancerHandler(reverseProxy *httputil.ReverseProxy, servers []string, errHandler utils.ErrorHandler, verbose bool, logger utils.Logger) (func(http.ResponseWriter, *http.Request), error) {
+func NewLoadBalancerHandler(reverseProxy *httputil.ReverseProxy, servers []string, errHandler utils.ErrorHandler, logger utils.Logger, verbose bool) (func(http.ResponseWriter, *http.Request), error) {
 	if reverseProxy == nil {
 		reverseProxy = defaultOxyReverseProxy
 	}
