@@ -1,8 +1,10 @@
 package errorKit
 
 import (
+	"errors"
 	"fmt"
 	"github.com/redis/go-redis/v9"
+	"net"
 	"testing"
 )
 
@@ -21,6 +23,23 @@ func TestIs(t *testing.T) {
 	fmt.Println(Is(err1, err2)) // false
 }
 
+func TestAs(t *testing.T) {
+	var err error = &net.DNSError{
+		IsTimeout: true,
+	}
+
+	var c net.Error
+	if errors.As(err, &c) {
+		fmt.Println(c.Timeout())
+	}
+	fmt.Println("===")
+	/*
+		output:
+		true
+		===
+	*/
+}
+
 type myError struct {
 	Text string
 }
@@ -29,8 +48,8 @@ func (err myError) Error() string {
 	return err.Text
 }
 
-// TestAs receiver为"值类型"
-func TestAs(t *testing.T) {
+// TestAs1 receiver为"值类型"
+func TestAs1(t *testing.T) {
 	err := myError{
 		Text: "cyy",
 	}
@@ -54,8 +73,8 @@ func (err *myError1) Error() string {
 	return err.Text
 }
 
-// TestAs1 receiver为"指针类型"
-func TestAs1(t *testing.T) {
+// TestAs2 receiver为"指针类型"
+func TestAs2(t *testing.T) {
 	err := &myError1{
 		Text: "cyy",
 	}

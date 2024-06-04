@@ -3,6 +3,7 @@ package oxyKit
 import (
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
+	"github.com/sirupsen/logrus"
 	"github.com/vulcand/oxy/v2/buffer"
 	"github.com/vulcand/oxy/v2/forward"
 	"github.com/vulcand/oxy/v2/roundrobin"
@@ -20,11 +21,10 @@ var (
 /*
 @param reverseProxy	可以为nil（将采用默认值）
 @param servers 		e.g. []string{"http://localhost:8001", "http://localhost:8002"}
-@param errHandler	可以为nil，将采用默认值
-@param logger		可以为nil，但不建议这么干
+@param logrusLogger	可以为nil，但不建议这么干，因为会无输出
 @param verbose		true: 详细的信息
 */
-func NewLoadBalancerHandler(reverseProxy *httputil.ReverseProxy, servers []string, errHandler utils.ErrorHandler, logger utils.Logger, verbose bool) (func(http.ResponseWriter, *http.Request), error) {
+func NewLoadBalancerHandler(reverseProxy *httputil.ReverseProxy, servers []string, logrusLogger *logrus.Logger, verbose bool) (func(http.ResponseWriter, *http.Request), error) {
 	if reverseProxy == nil {
 		reverseProxy = defaultOxyReverseProxy
 	}
@@ -32,9 +32,19 @@ func NewLoadBalancerHandler(reverseProxy *httputil.ReverseProxy, servers []strin
 	if err := sliceKit.AssertNotEmpty(servers, "servers"); err != nil {
 		return nil, err
 	}
-	if logger == nil {
+
+	var errHandler utils.ErrorHandler
+	var logger utils.Logger
+
+	if logrusLogger == nil {
 		// 不输出
+		errHandler = utils.DefaultHandler
 		logger = &utils.NoopLogger{}
+	} else {
+		errHandler = &errorHandler{
+			logger: logrusLogger,
+		}
+		logger = NewLogger(logrusLogger)
 	}
 
 	lb, err := roundrobin.New(reverseProxy,
