@@ -1,17 +1,18 @@
 package main
 
-import "github.com/richelieu-yang/chimera/v3/src/core/mapKit"
-
-type bean struct {
-	A int `json:"a"`
-}
+import (
+	"github.com/gin-gonic/gin"
+	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
+)
 
 func main() {
-	m := map[string]interface{}{
-		"a": 0,
+	engine := gin.Default()
+
+	engine.Any("/test", func(ctx *gin.Context) {
+		ctx.String(200, "8002")
+	})
+
+	if err := engine.Run(":8002"); err != nil {
+		panic(err)
 	}
-
-	var b *bean
-	mapKit.Decode(m, b)
-
 }

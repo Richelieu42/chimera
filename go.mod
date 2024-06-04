@@ -101,6 +101,7 @@ require (
 	github.com/tidwall/gjson v1.17.1
 	github.com/ulikunitz/xz v0.5.12
 	github.com/unidoc/unioffice v1.33.0
+	github.com/vulcand/oxy/v2 v2.0.0
 	github.com/xuri/excelize/v2 v2.8.1
 	github.com/zeromicro/go-zero v1.6.5
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231030135404-af9ae855016f
@@ -158,6 +159,7 @@ require (
 	github.com/ClickHouse/clickhouse-go/v2 v2.23.2 // indirect
 	github.com/DataDog/zstd v1.5.2 // indirect
 	github.com/FZambia/eagle v0.1.0 // indirect
+	github.com/HdrHistogram/hdrhistogram-go v1.1.2 // indirect
 	github.com/adamzy/cedar-go v0.0.0-20170805034717-80a9c64b256d // indirect
 	github.com/alibabacloud-go/debug v0.0.0-20190504072949-9472017b5c68 // indirect
 	github.com/alibabacloud-go/tea v1.1.17 // indirect
@@ -228,6 +230,7 @@ require (
 	github.com/googleapis/enterprise-certificate-proxy v0.3.2 // indirect
 	github.com/googleapis/gax-go/v2 v2.12.3 // indirect
 	github.com/gopherjs/gopherjs v1.17.2 // indirect
+	github.com/gravitational/trace v1.1.16-0.20220114165159-14a9a7dd6aaf // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.20.0 // indirect
 	github.com/gsterjov/go-libsecret v0.0.0-20161001094733-a6f4afe4910c // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
@@ -250,6 +253,7 @@ require (
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
+	github.com/jonboulle/clockwork v0.2.2 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/jsummers/gobmp v0.0.0-20151104160322-e2ba15ffa76e // indirect
 	github.com/klauspost/pgzip v1.2.5 // indirect
@@ -258,6 +262,7 @@ require (
 	github.com/liuzl/cedar-go v0.0.0-20170805034717-80a9c64b256d // indirect
 	github.com/liuzl/da v0.0.0-20180704015230-14771aad5b1d // indirect
 	github.com/lufia/plan9stats v0.0.0-20230326075908-cb1d2100619a // indirect
+	github.com/mailgun/multibuf v0.1.2 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
@@ -291,6 +296,7 @@ require (
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
 	github.com/segmentio/asm v1.2.0 // indirect
 	github.com/segmentio/encoding v0.4.0 // indirect
+	github.com/segmentio/fasthash v1.0.3 // indirect
 	github.com/shoenig/go-m1cpu v0.1.6 // indirect
 	github.com/signalsciences/ac v1.2.0 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
@@ -313,6 +319,7 @@ require (
 	github.com/ugorji/go/codec v1.2.12 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fastrand v1.1.0 // indirect
+	github.com/vulcand/predicate v1.2.0 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
 	github.com/xdg-go/scram v1.1.2 // indirect
 	github.com/xdg-go/stringprep v1.0.4 // indirect
