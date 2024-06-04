@@ -3,21 +3,20 @@ package main
 import (
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
 
+	"fmt"
+	"github.com/richelieu-yang/chimera/v3/src/netKit"
+
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 )
 
 func main() {
+	port := 8001
+
 	engine := gin.Default()
-
 	engine.Any("/test", func(ctx *gin.Context) {
-		logrus.Infof("Host: [%s]", ctx.Request.Host)
-		logrus.Infof("URL.Host: [%s]", ctx.Request.URL.Host)
-
-		ctx.String(200, "8001")
+		ctx.String(200, fmt.Sprintf("This is [%d].", port))
 	})
-
-	if err := engine.Run(":8001"); err != nil {
+	if err := engine.Run(netKit.JoinToHost("", port)); err != nil {
 		panic(err)
 	}
 }

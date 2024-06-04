@@ -1,21 +1,22 @@
 package main
 
 import (
-	"errors"
-	"fmt"
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
-	"net"
+
+	"fmt"
+	"github.com/richelieu-yang/chimera/v3/src/netKit"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	var err error = &net.ParseError{
-		Type: "Type",
-		Text: "Text",
-	}
+	port := 8002
 
-	var c net.Error
-	if errors.As(err, &c) {
-		fmt.Println(c.Timeout())
+	engine := gin.Default()
+	engine.Any("/test", func(ctx *gin.Context) {
+		ctx.String(200, fmt.Sprintf("This is [%d].", port))
+	})
+	if err := engine.Run(netKit.JoinToHost("", port)); err != nil {
+		panic(err)
 	}
-	fmt.Println("===")
 }

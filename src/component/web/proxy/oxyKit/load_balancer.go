@@ -67,7 +67,8 @@ func NewLoadBalancerHandler(reverseProxy *httputil.ReverseProxy, servers []strin
 	// buf will read the request body and will replay the request again in case if forward returned status
 	// corresponding to nework error (e.g. Gateway Timeout)
 	buf, err := buffer.New(lb,
-		buffer.Retry(`IsNetworkError() && Attempts() <= 2`),
+		// `IsNetworkError() && Attempts() < 3`: 最多试 3 次
+		buffer.Retry(`IsNetworkError() && Attempts() < 3`),
 		buffer.ErrorHandler(errHandler),
 		buffer.Verbose(verbose),
 		buffer.Logger(logger),

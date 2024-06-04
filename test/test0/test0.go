@@ -4,23 +4,19 @@ import (
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
 
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
-	"strconv"
-)
+	"github.com/richelieu-yang/chimera/v3/src/netKit"
 
-var (
-	port = 9000
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	port := 8000
+
 	engine := gin.Default()
-
 	engine.Any("/test", func(ctx *gin.Context) {
-		ctx.String(200, strconv.Itoa(port))
+		ctx.String(200, fmt.Sprintf("This is [%d].", port))
 	})
-
-	if err := engine.Run(fmt.Sprintf(":%d", port)); err != nil {
-		logrus.Fatal(err)
+	if err := engine.Run(netKit.JoinToHost("", port)); err != nil {
+		panic(err)
 	}
 }
