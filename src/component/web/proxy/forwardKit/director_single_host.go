@@ -1,6 +1,7 @@
 package forwardKit
 
 import (
+	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
 	"net/http"
 	"net/url"
 	"strings"
@@ -10,10 +11,15 @@ import (
 /*
 TODO: 参考了 httputil.NewSingleHostReverseProxy，后续要实时更新（Golang版本升级）.
 */
-func NewSingleHostDirector(target *url.URL) func(req *http.Request) {
-	return func(req *http.Request) {
+func NewSingleHostDirector(target *url.URL) (director func(req *http.Request), err error) {
+	if err = interfaceKit.AssertNotNil(target, "target"); err != nil {
+		return
+	}
+
+	director = func(req *http.Request) {
 		rewriteRequestURL(req, target)
 	}
+	return
 }
 
 func rewriteRequestURL(req *http.Request, target *url.URL) {

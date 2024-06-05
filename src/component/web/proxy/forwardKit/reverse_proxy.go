@@ -13,8 +13,8 @@ type ReverseProxy struct {
 	*httputil.ReverseProxy
 }
 
-// Proxy 代理请求.
-func (rp *ReverseProxy) Proxy(w http.ResponseWriter, r *http.Request) (err error) {
+// Forward 代理请求.
+func (rp *ReverseProxy) Forward(w http.ResponseWriter, r *http.Request) (err error) {
 	if err = interfaceKit.AssertNotNil(rp, "rp"); err != nil {
 		return
 	}
