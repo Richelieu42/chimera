@@ -170,8 +170,8 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, targetHo
 	}
 	reverseProxy := &httputil.ReverseProxy{
 		Director:       director,
-		ErrorLog:       opts.errorLogger,
 		ModifyResponse: opts.modifyResponse,
+		ErrorLog:       opts.errorLogger,
 		ErrorHandler: func(rw http.ResponseWriter, req *http.Request, err1 error) {
 			err = err1
 		},

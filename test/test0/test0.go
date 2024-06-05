@@ -4,9 +4,8 @@ import (
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
 
 	"fmt"
-	"github.com/richelieu-yang/chimera/v3/src/netKit"
-
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v3/src/netKit"
 )
 
 func main() {
