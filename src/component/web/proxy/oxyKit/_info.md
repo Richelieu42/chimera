@@ -2,6 +2,11 @@
 
 - [github 2k](https://github.com/vulcand/oxy)
 
+#### Attempts
+
+尝试次数.
+一个服务失败，算一次，然后找下一个服务，直至 成功 或 达到次数上限.
+
 #### 缺陷
 
 - 没有健康检查机制;
