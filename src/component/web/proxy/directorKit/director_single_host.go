@@ -8,7 +8,7 @@ import (
 
 // NewSingleHostDirector
 /*
-参考: httputil.NewSingleHostReverseProxy
+TODO: 参考了 httputil.NewSingleHostReverseProxy，后续要实时更新（Golang版本升级）.
 */
 func NewSingleHostDirector(target *url.URL) func(req *http.Request) {
 	return func(req *http.Request) {
