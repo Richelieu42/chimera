@@ -1,4 +1,4 @@
-package directorKit
+package forwardKit
 
 type (
 	directorOptions struct {
