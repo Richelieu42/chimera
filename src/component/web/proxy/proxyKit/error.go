@@ -9,6 +9,8 @@ import (
 
 // IsNegligibleError 是否是可忽略的代理error？
 /*
+Deprecated: Use forwardKit instead.
+
 PS: 如果返回值为true，说明请求已经结束了，无需再响应内容给http客户端了.
 */
 func IsNegligibleError(err error) bool {
@@ -22,6 +24,9 @@ func IsNegligibleError(err error) bool {
 }
 
 // IsProxyDialError 代理请求返回的error，是否是因为dial目标地址失败？
+/*
+Deprecated: Use forwardKit instead.
+*/
 func IsProxyDialError(err error) bool {
 	opErr := &net.OpError{}
 	if errors.As(err, &opErr) {
