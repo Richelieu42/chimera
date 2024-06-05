@@ -14,4 +14,6 @@ func TestNewFileLogger(t *testing.T) {
 	logger.Println("0")
 	logger.Println("1")
 	logger.Println("2")
+	logger.Printf("---")
+	logger.Println("4")
 }
