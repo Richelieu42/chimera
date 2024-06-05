@@ -20,6 +20,8 @@ var (
 
 // NewLoadBalancerHandler
 /*
+Deprecated: 详见 _info.md
+
 @param reverseProxy	可以为nil（将采用默认值）
 @param servers 		e.g. []string{"http://localhost:8001", "http://localhost:8002"}
 @param logrusLogger	可以为nil，但不建议这么干，因为会无输出
