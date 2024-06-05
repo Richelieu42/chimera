@@ -11,6 +11,8 @@ import (
 
 // Proxy 代理请求（反向代理，请求转发）.
 /*
+Deprecated: Use forwardKit instead.
+
 调用此方法就行请求转发前，按照实际场景可以:
 (1) POST请求，覆盖 request body;
 (2) 变更请求头（request header）.
@@ -26,6 +28,10 @@ func Proxy(w http.ResponseWriter, r *http.Request, host string, options ...Proxy
 	return opts.proxy(w, r, host)
 }
 
+// ProxyWithGin
+/*
+Deprecated: Use forwardKit instead.
+*/
 func ProxyWithGin(ctx *gin.Context, host string, options ...ProxyOption) error {
 	opts := loadOptions(options...)
 	opts.ctx = ctx
@@ -35,6 +41,8 @@ func ProxyWithGin(ctx *gin.Context, host string, options ...ProxyOption) error {
 
 // ProxyToUrl
 /*
+Deprecated: Use forwardKit instead.
+
 项目实战：用 Go 创建一个简易负载均衡器
 	https://mp.weixin.qq.com/s/pe0CQa3tdrUmC86OSRBNeg
 

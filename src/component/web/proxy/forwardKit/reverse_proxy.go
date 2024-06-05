@@ -1,6 +1,7 @@
 package forwardKit
 
 import (
+	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
 	"log"
@@ -27,7 +28,11 @@ func (rp *ReverseProxy) Forward(w http.ResponseWriter, r *http.Request) (err err
 		err = errorKit.Newf("recover from %v", obj)
 	}
 
-	// Richelieu: 请求转发前再检查下，以防请求已经被取消了
+	/* Richelieu: try to reset http.Request.Body */
+	if err = httpKit.TryToResetRequestBody(r); err != nil {
+		return
+	}
+	/* Richelieu: 请求转发前再检查下，以防请求已经被取消了 */
 	if err = r.Context().Err(); err != nil {
 		return err
 	}

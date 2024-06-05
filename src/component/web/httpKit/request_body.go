@@ -49,12 +49,12 @@ func MakeRequestBodySeekable(req *http.Request) error {
 
 func TryToResetRequestBody(req *http.Request) error {
 	if err := ResetRequestBody(req); err != nil {
-		if !errors.Is(err, NotSeekableError) {
-			// (1) 重置失败
-			return err
+		if errors.Is(err, NotSeekableError) {
+			// (1) 请求体无法重置，此时忽略此error
+			return nil
 		}
-		// (2) 请求体无法重置
-		return nil
+		// (2) 重置失败
+		return err
 	}
 	return nil
 }
