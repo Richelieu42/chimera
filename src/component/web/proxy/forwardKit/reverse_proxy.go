@@ -26,6 +26,10 @@ func (rp *ReverseProxy) Forward(w http.ResponseWriter, r *http.Request) (err err
 		}
 		err = errorKit.Newf("recover from %v", obj)
 	}
+	if err = r.Context().Err(); err != nil {
+		// case: 请求已经被取消了
+		return err
+	}
 	rp.ReverseProxy.ServeHTTP(w, r)
 	return
 }
