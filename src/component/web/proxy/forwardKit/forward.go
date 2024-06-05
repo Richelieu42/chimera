@@ -35,12 +35,26 @@ func ForwardToUrl(w http.ResponseWriter, r *http.Request, errorLog *log.Logger, 
 	return
 }
 
+// ForwardToHost
+/*
+@param errorLog 可以为nil
+*/
 func ForwardToHost(w http.ResponseWriter, r *http.Request, errorLog *log.Logger, host string, options ...DirectorOption) (err error) {
+	return ForwardToHostComplexly(w, r, errorLog, nil, nil, host, options...)
+}
+
+// ForwardToHostComplexly
+/*
+@param errorLog 		可以为nil
+@param transport		可以为nil
+@param modifyResponse	可以为nil
+*/
+func ForwardToHostComplexly(w http.ResponseWriter, r *http.Request, errorLog *log.Logger, transport http.RoundTripper, modifyResponse func(*http.Response) error, host string, options ...DirectorOption) (err error) {
 	director, err := NewDirector(host, options...)
 	if err != nil {
 		return
 	}
-	rp, err := NewReverseProxy(director, nil, nil, errorLog, nil)
+	rp, err := NewReverseProxy(director, transport, modifyResponse, errorLog, nil)
 	if err != nil {
 		return
 	}
