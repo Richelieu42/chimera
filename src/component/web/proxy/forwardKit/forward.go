@@ -30,6 +30,7 @@ func ForwardToUrl(w http.ResponseWriter, r *http.Request, errorLog *log.Logger, 
 			errorLog.Printf("Fail to forward request to url(%s).", url)
 		}
 	}
+
 	err = rp.Forward(w, r)
 	return
 }
