@@ -2,7 +2,6 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v3/src/component/web/proxy/proxyKit"
 	"github.com/richelieu-yang/chimera/v3/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v3/src/consts"
 	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
@@ -33,18 +32,8 @@ func TestMustSetUp(t *testing.T) {
 	}
 
 	MustSetUp(c.Gin, func(engine *gin.Engine) error {
-		target := "127.0.0.1:12000"
-
 		engine.Any("/test", func(ctx *gin.Context) {
-			if err := proxyKit.ProxyWithGin(ctx, target); err != nil {
-				if !proxyKit.IsNegligibleError(err) {
-					logrus.WithError(err).Error("Fail to proxy.")
-					ctx.AbortWithStatus(500)
-					return
-				}
-				logrus.WithError(err).Debug("A negligible error.")
-				return
-			}
+			ctx.String(200, "ok")
 			return
 		})
 
