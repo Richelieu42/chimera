@@ -3,7 +3,6 @@ package httpKit
 import (
 	"bufio"
 	"bytes"
-	"errors"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/ioKit"
 	"github.com/richelieu-yang/chimera/v3/src/urlKit"
@@ -47,16 +46,11 @@ func MakeRequestBodySeekable(req *http.Request) error {
 	return nil
 }
 
-func TryToResetRequestBody(req *http.Request) error {
-	if err := ResetRequestBody(req); err != nil {
-		if errors.Is(err, NotSeekableError) {
-			// (1) 请求体无法重置，此时忽略此error
-			return nil
-		}
-		// (2) 重置失败
-		return err
+func TryToResetRequestBody(req *http.Request) (err error) {
+	if seeker, ok := req.Body.(io.Seeker); ok {
+		_, err = ioKit.SeekToStart(seeker)
 	}
-	return nil
+	return
 }
 
 // ResetRequestBody 重置请求体，以防: 已经读完body了，请求转发给别人，别人收到的请求没内容.
