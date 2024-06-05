@@ -1,6 +1,7 @@
 package oxyKit
 
 import (
+	"fmt"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 	"github.com/sirupsen/logrus"
@@ -64,11 +65,15 @@ func NewLoadBalancerHandler(reverseProxy *httputil.ReverseProxy, servers []strin
 			return nil, errorKit.Wrapf(err, "lb.UpsertServer() fails with server(%s)", server)
 		}
 	}
+	/*
+		Richelieu: 有几个服务，就最多重试几次.
+		e.g. `IsNetworkError() && Attempts() < 3`: 最多试 3 次
+	*/
+	predicate := fmt.Sprintf("IsNetworkError() && Attempts() < %d", len(servers))
 	// buf will read the request body and will replay the request again in case if forward returned status
 	// corresponding to nework error (e.g. Gateway Timeout)
 	buf, err := buffer.New(lb,
-		// `IsNetworkError() && Attempts() < 3`: 最多试 3 次
-		buffer.Retry(`IsNetworkError() && Attempts() < 3`),
+		buffer.Retry(predicate),
 		buffer.ErrorHandler(errHandler),
 		buffer.Verbose(verbose),
 		buffer.Logger(logger),
