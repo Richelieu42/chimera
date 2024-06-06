@@ -1,51 +1,15 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/vulcand/oxy/v2/buffer"
-	"github.com/vulcand/oxy/v2/forward"
-	"github.com/vulcand/oxy/v2/roundrobin"
-	"net/url"
+	"fmt"
+	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
 )
 
 func main() {
-	// Forwards incoming requests to whatever location URL points to, adds proper forwarding headers
-	//fwd := forward.New(false)
-	/*
-		@param passHostHeader 是否传递请求头中的Host头？
-		(1) true:	被代理服务收到请求，请求头中包含Host: 127.0.0.1:8000（原始请求的Host）
-		(2) false:	被代理服务收到请求，请求头中包含Host: localhost:8001（Host被修改了，现在是被代理服务的Host）
-		(3) 建议使用: true
-	*/
-	fwd := forward.New(true)
-	lb, err := roundrobin.New(fwd)
-	if err != nil {
+	str := `\"{\\\"jsonParams\\\":{\\\"method\\\":95,\\\"fileId\\\":\\\"ff3f56f238364821ab4beb5b68f4d45945243258\\\",\\\"params\\\":{\\\"operId\\\":\\\"192.168.134.1$0\\\",\\\"fileId\\\":\\\"ff3f56f238364821ab4beb5b68f4d45945243258\\\"}},\\\"fileId\\\":\\\"ff3f56f238364821ab4beb5b68f4d45945243258\\\",\\\"header\\\":{\\\"Yozo-Authorization\\\":\\\"Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTc3MjI0OTksImZmM2Y1NmYyMzgzNjQ4MjFhYjRiZWI1YjY4ZjRkNDU5NDUyNDMyNTgiOiIxOTIuMTY4LjEzNC4xIn0.S3UFYl6lN2uKEzOOI9WCy1-JQhfInXrYqQ3jLzQdXRTpvExipXshY5cNX_d1lSNc5pZogUzvHbxOEmbaMgRQVw\\\"},\\\"target\\\":\\\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJNYW5hZ2VyIiwiaG9zdCI6IjE5Mi4xNjguMTM0LjEiLCJodHRwUG9ydCI6MTAwMDAsImdycGNQb3J0IjoxOTAwMH0.XnvArmQ2uha-ib48OAFbnmrY5IuVz19dXGBlConPe2o\\\"}\"`
+	var m map[string]interface{}
+	if err := jsonKit.UnmarshalFromString(str, &m); err != nil {
 		panic(err)
 	}
-
-	servers := []string{"http://localhost:8001", "http://localhost:8002"}
-	for _, s := range servers {
-		u, err := url.Parse(s)
-		if err != nil {
-			panic(err)
-		}
-		if err := lb.UpsertServer(u); err != nil {
-			panic(err)
-		}
-	}
-
-	// buf will read the request body and will replay the request again in case if forward returned status
-	// corresponding to nework error (e.g. Gateway Timeout)
-	buf, err := buffer.New(lb, buffer.Retry(`IsNetworkError() && Attempts() < 2`))
-	if err != nil {
-		panic(err)
-	}
-
-	engine := gin.Default()
-	engine.Any("/test", func(ctx *gin.Context) {
-		buf.ServeHTTP(ctx.Writer, ctx.Request)
-	})
-	if err := engine.Run(":8000"); err != nil {
-		panic(err)
-	}
+	fmt.Println(jsonKit.MarshalIndentToString(m, "", "    "))
 }

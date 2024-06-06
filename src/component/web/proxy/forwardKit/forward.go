@@ -24,14 +24,18 @@ func ForwardToUrl(w http.ResponseWriter, r *http.Request, errorLog *log.Logger, 
 		return
 	}
 	rp.ErrorLog = errorLog
+	var tmpErr error
 	rp.ErrorHandler = func(w http.ResponseWriter, r *http.Request, err1 error) {
-		err = err1
+		tmpErr = err1
 		if errorLog != nil {
-			errorLog.Printf("Fail to forward request to url(%s), error: %s.", url, err.Error())
+			errorLog.Printf("Fail to forward request to url(%s), error: %s.", url, err1.Error())
 		}
 	}
 
 	err = rp.Forward(w, r)
+	if err == nil {
+		err = tmpErr
+	}
 	return
 }
 
@@ -58,13 +62,17 @@ func ForwardToHostComplexly(w http.ResponseWriter, r *http.Request, errorLog *lo
 	if err != nil {
 		return
 	}
+	var tmpErr error
 	rp.ErrorHandler = func(w http.ResponseWriter, r *http.Request, err1 error) {
-		err = err1
+		tmpErr = err1
 		if errorLog != nil {
-			errorLog.Printf("Fail to forward request to host(%s), error: %s.", host, err.Error())
+			errorLog.Printf("Fail to forward request to host(%s), error: %s.", host, err1.Error())
 		}
 	}
 
 	err = rp.Forward(w, r)
+	if err == nil {
+		err = tmpErr
+	}
 	return
 }
