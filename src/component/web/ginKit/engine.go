@@ -8,7 +8,10 @@ import (
 func DefaultEngine() *gin.Engine {
 	engine := gin.New()
 
-	// true: enable fallback Context.Deadline(), Context.Done(), Context.Err() and Context.Value() when Context.Request.Context() is not nil
+	/*
+		默认: false
+		true: enable fallback Context.Deadline(), Context.Done(), Context.Err() and Context.Value() when Context.Request.Context() is not nil
+	*/
 	engine.ContextWithFallback = true
 
 	// 默认: true
