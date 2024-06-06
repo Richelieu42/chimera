@@ -5,7 +5,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
 )
 
-func NewEngine() *gin.Engine {
+func DefaultEngine() *gin.Engine {
 	engine := gin.New()
 
 	// true: enable fallback Context.Deadline(), Context.Done(), Context.Err() and Context.Value() when Context.Request.Context() is not nil

@@ -70,7 +70,7 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 	// Richelieu：从目前表现来看，虽然gin和logrus都可以设置颜色，但在此处,只要gin允许了，logrus的logger是否允许就无效了
 	gin.DefaultWriter = logrus.StandardLogger().Out
 
-	engine := NewEngine()
+	engine := DefaultEngine()
 
 	// pprof
 	if config.Pprof {
