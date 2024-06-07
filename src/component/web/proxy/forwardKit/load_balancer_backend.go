@@ -2,12 +2,16 @@ package forwardKit
 
 import (
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
+	"github.com/richelieu-yang/chimera/v3/src/idKit"
 	"net/http/httputil"
 )
 
 type (
 	Backend struct {
 		mutexKit.RWMutex
+
+		Id string
 
 		Access bool
 
@@ -31,6 +35,13 @@ func (be *Backend) IsAccess() (access bool) {
 }
 
 func NewBackend(rp *httputil.ReverseProxy) (*Backend, error) {
+	if err := interfaceKit.AssertNotNil(rp, "rp"); err != nil {
+		return nil, err
+	}
 
-	return nil, nil
+	return &Backend{
+		Id:           idKit.NewXid(),
+		Access:       true,
+		ReverseProxy: rp,
+	}, nil
 }
