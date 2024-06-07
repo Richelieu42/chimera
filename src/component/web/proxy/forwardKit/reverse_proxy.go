@@ -46,11 +46,15 @@ func (rp *ReverseProxy) Forward(w http.ResponseWriter, r *http.Request) (err err
 	return
 }
 
-// wrap 不能为nil
-func wrap(proxy *httputil.ReverseProxy) *ReverseProxy {
-	return &ReverseProxy{
-		ReverseProxy: proxy,
+// WrapToReverseProxy *httputil.ReverseProxy => *forwardKit.ReverseProxy
+func WrapToReverseProxy(reverseProxy *httputil.ReverseProxy) (*ReverseProxy, error) {
+	if err := interfaceKit.AssertNotNil(reverseProxy, "reverseProxy"); err != nil {
+		return nil, err
 	}
+
+	return &ReverseProxy{
+		ReverseProxy: reverseProxy,
+	}, nil
 }
 
 // NewSingleHostReverseProxy
@@ -63,7 +67,7 @@ func NewSingleHostReverseProxy(target *url.URL) (*ReverseProxy, error) {
 	}
 
 	tmp := httputil.NewSingleHostReverseProxy(target)
-	return wrap(tmp), nil
+	return WrapToReverseProxy(tmp)
 }
 
 // NewReverseProxy
@@ -90,5 +94,5 @@ func NewReverseProxy(director func(*http.Request), transport http.RoundTripper, 
 		ErrorLog:     errLog,
 		ErrorHandler: errHandler,
 	}
-	return wrap(tmp), nil
+	return WrapToReverseProxy(tmp)
 }
