@@ -7,9 +7,7 @@ import (
 
 // NewXid Xid是一个全局唯一的ID生成器，它使用Mongo Object ID算法来生成全局唯一的ID.
 /*
-PS:
-(1) 单进程内生成唯一id，推荐使用 xid.
-(2) 一个进程（Process）内，生成的id不会重复.
+PS: 排除 时钟回拨 的情况下，一个进程（Process）内，生成的id不会重复.
 
 @return (1) 长度固定为20
 		(2) 组成: 小写字母（a-f）、数字（0-9）

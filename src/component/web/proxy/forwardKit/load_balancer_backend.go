@@ -30,7 +30,7 @@ func (be *Backend) IsAccess() (access bool) {
 	return
 }
 
-func NewBackend() (*Backend, error) {
+func NewBackend(rp *httputil.ReverseProxy) (*Backend, error) {
 
 	return nil, nil
 }
