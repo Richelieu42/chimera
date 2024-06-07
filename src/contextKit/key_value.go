@@ -13,7 +13,7 @@ func WithKeyValue[K comparable, V any](ctx context.Context, k K, v V) context.Co
 // WithKeyValueMap 在现有的上下文 (context) 中存储 多个 键值对，并返回一个新的上下文.
 /*
 Deprecated: 如果传参m的元素数量多，可能会导致嵌套太多层，这样不太好.
-			如果 键值对多 || 会频繁修改键值对，建议使用 gorilla/context.
+			如果 键值对多 || 会频繁修改键值对，建议使用 gorilla/context（可能导致内存泄露!!!）.
 
 @param ctx 不能为nil
 */
