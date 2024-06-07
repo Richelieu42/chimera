@@ -2,19 +2,30 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v3/src/dataSizeKit"
+	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/proxy/forwardKit"
+	"github.com/richelieu-yang/chimera/v3/src/netKit"
+	"net/url"
 )
 
 func main() {
-	fmt.Println(dataSizeKit.ToReadableIecString(314572800))
+	port := 80
 
-	//fmt.Println(dataSizeKit.MiB * 300)
+	u, err := url.Parse("http://127.0.0.1:8000")
+	if err != nil {
+		panic(err)
+	}
+	rp, err := forwardKit.NewSingleHostReverseProxy(u)
+	if err != nil {
+		panic(err)
+	}
 
-	//ctx := context.WithValue(context.TODO(), "a", "A")
-	//ctx = context.WithValue(ctx, "b", true)
-	//ctx = context.WithValue(ctx, "c", 996)
-	//
-	//fmt.Println(ctx.Value("a")) // A
-	//fmt.Println(ctx.Value("b")) // true
-	//fmt.Println(ctx.Value("c")) // 996
+	engine := gin.Default()
+	engine.Any("/test", func(ctx *gin.Context) {
+
+		ctx.String(200, fmt.Sprintf("This is [%d].", port))
+	})
+	if err := engine.Run(netKit.JoinToHost("", port)); err != nil {
+		panic(err)
+	}
 }

@@ -59,7 +59,8 @@ func WrapToReverseProxy(reverseProxy *httputil.ReverseProxy) (*ReverseProxy, err
 
 // NewSingleHostReverseProxy
 /*
-	@param target 不能为nil，否则会panic
+@param 	target 不能为nil，否则会panic
+@return !!!: Transport、ModifyResponse、ErrorLog、ErrorHandler 等字段为nil
 */
 func NewSingleHostReverseProxy(target *url.URL) (*ReverseProxy, error) {
 	if err := interfaceKit.AssertNotNil(target, "target"); err != nil {
