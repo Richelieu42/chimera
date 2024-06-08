@@ -11,12 +11,6 @@ import (
 @param url			目标url
 */
 func ForwardToUrl(w http.ResponseWriter, r *http.Request, errLog *log.Logger, url string) (err error) {
-	//u, err := urlKit.Parse(url)
-	//if err != nil {
-	//	err = errorKit.Wrapf(err, "invalid url(%s)", url)
-	//	return
-	//}
-
 	rp, err := NewSingleHostReverseProxyWithUrl(url, errLog)
 	if err != nil {
 		return
