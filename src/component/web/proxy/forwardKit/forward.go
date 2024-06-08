@@ -17,6 +17,7 @@ func ForwardToSingleHost(w http.ResponseWriter, r *http.Request, url string, err
 	if err != nil {
 		return
 	}
+
 	return rp.Forward(w, r)
 }
 
@@ -41,9 +42,11 @@ func ForwardToHostComplexly(w http.ResponseWriter, r *http.Request, host string,
 	if err != nil {
 		return err
 	}
+
 	rp, err := NewReverseProxy(director, transport, modifyResponse, errLog, nil)
 	if err != nil {
 		return err
 	}
+
 	return rp.Forward(w, r)
 }
