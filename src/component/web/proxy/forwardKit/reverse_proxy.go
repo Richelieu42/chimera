@@ -12,10 +12,14 @@ import (
 )
 
 type ReverseProxy struct {
+	// !!!: 此处不能是 *httputil.ReverseProxy，因为会在 Forward 方法体内修改receiver的字段，但不希望修改方法体外的.
 	httputil.ReverseProxy
 }
 
 // Forward 请求转发（代理请求; proxy）.
+/*
+!!!: 此方法的receiver不能为指针类型，因为会在方法体内修改receiver的字段，但不希望修改方法体外的.
+*/
 func (rp ReverseProxy) Forward(w http.ResponseWriter, r *http.Request) (err error) {
 	if err = interfaceKit.AssertNotNil(rp, "rp"); err != nil {
 		return
