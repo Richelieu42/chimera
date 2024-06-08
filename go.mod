@@ -12,7 +12,7 @@ require (
 	github.com/centrifugal/centrifuge v0.32.2
 	github.com/centrifugal/gocent/v3 v3.2.0
 	github.com/coocood/freecache v1.2.4
-	github.com/davidbyttow/govips/v2 v2.14.0
+	github.com/davidbyttow/govips/v2 v2.15.0
 	github.com/deckarep/golang-set/v2 v2.6.0
 	github.com/duke-git/lancet/v2 v2.3.1
 	github.com/emersion/go-imap v1.2.1
@@ -39,6 +39,7 @@ require (
 	github.com/google/go-cmp v0.6.0
 	github.com/google/uuid v1.6.0
 	github.com/google/wire v0.6.0
+	github.com/gorilla/context v1.1.2
 	github.com/gorilla/securecookie v1.1.2
 	github.com/gorilla/sessions v1.2.2
 	github.com/gorilla/websocket v1.5.1
@@ -81,7 +82,7 @@ require (
 	github.com/pelletier/go-toml/v2 v2.2.2
 	github.com/pierrec/lz4/v4 v4.1.21
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
-	github.com/redis/go-redis/v9 v9.5.2
+	github.com/redis/go-redis/v9 v9.5.3
 	github.com/redis/rueidis v1.0.38
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/robfig/cron/v3 v3.0.1
@@ -230,7 +231,6 @@ require (
 	github.com/googleapis/enterprise-certificate-proxy v0.3.2 // indirect
 	github.com/googleapis/gax-go/v2 v2.12.3 // indirect
 	github.com/gopherjs/gopherjs v1.17.2 // indirect
-	github.com/gorilla/context v1.1.2 // indirect
 	github.com/gravitational/trace v1.1.16-0.20220114165159-14a9a7dd6aaf // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.20.0 // indirect
 	github.com/gsterjov/go-libsecret v0.0.0-20161001094733-a6f4afe4910c // indirect
