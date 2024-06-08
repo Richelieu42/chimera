@@ -69,8 +69,9 @@ func WrapToReverseProxy(reverseProxy *httputil.ReverseProxy) (*ReverseProxy, err
 
 // NewSingleHostReverseProxyWithUrl
 /*
-@param urlStr 		e.g."http://127.0.0.1:8000"
-						"http://127.0.0.1:8000/a"
+@param urlStr 		目标url
+					e.g. 	"http://127.0.0.1:8000": 将请求转发给"http://127.0.0.1:8000"，请求路由不变
+					e.g.1 	"http://127.0.0.1:8000/a": 将请求转发给"http://127.0.0.1:8000"，请求路由的最前面加上"/a"
 @param 	errLog 		可以为nil（即无输出，但不推荐这么干）
 @return !!!: Transport、ModifyResponse、ErrorHandler 等字段为nil
 */

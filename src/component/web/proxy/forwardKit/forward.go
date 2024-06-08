@@ -22,7 +22,8 @@ func ForwardToSingleHost(w http.ResponseWriter, r *http.Request, url string, err
 
 // ForwardToHost
 /*
-@param errorLog 可以为nil（即无输出，但不推荐这么干）
+@param host		e.g."127.0.0.1:80"
+@param errLog 	可以为nil（即无输出，但不推荐这么干）
 */
 func ForwardToHost(w http.ResponseWriter, r *http.Request, host string, errLog *log.Logger, options ...DirectorOption) error {
 	return ForwardToHostComplexly(w, r, host, errLog, nil, nil, options...)
@@ -30,7 +31,8 @@ func ForwardToHost(w http.ResponseWriter, r *http.Request, host string, errLog *
 
 // ForwardToHostComplexly
 /*
-@param errLogger 		可以为nil（即无输出，但不推荐这么干）
+@param host				e.g."127.0.0.1:80"
+@param errLog	 		可以为nil（即无输出，但不推荐这么干）
 @param transport		可以为nil
 @param modifyResponse	可以为nil
 */
