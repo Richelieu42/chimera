@@ -9,6 +9,7 @@ import (
 /*
 @param errLogger	可以为nil（即无输出，但不推荐这么干）
 @param url			目标url
+					e.g. "http://127.0.0.1:8000": 将请求转发给它，且路由不变
 */
 func ForwardToUrl(w http.ResponseWriter, r *http.Request, url string, errLog *log.Logger) (err error) {
 	rp, err := NewSingleHostReverseProxyWithUrl(url, errLog)
