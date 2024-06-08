@@ -12,11 +12,11 @@ import (
 )
 
 type ReverseProxy struct {
-	*httputil.ReverseProxy
+	httputil.ReverseProxy
 }
 
 // Forward 请求转发（代理请求; proxy）.
-func (rp *ReverseProxy) Forward(w http.ResponseWriter, r *http.Request) (err error) {
+func (rp ReverseProxy) Forward(w http.ResponseWriter, r *http.Request) (err error) {
 	if err = interfaceKit.AssertNotNil(rp, "rp"); err != nil {
 		return
 	}
@@ -63,13 +63,13 @@ func WrapToReverseProxy(reverseProxy *httputil.ReverseProxy) (*ReverseProxy, err
 	}
 
 	return &ReverseProxy{
-		ReverseProxy: reverseProxy,
+		ReverseProxy: *reverseProxy,
 	}, nil
 }
 
 // NewSingleHostReverseProxyWithUrl
 /*
-@param targetUrl 	e.g."http://127.0.0.1:8000/test"
+@param targetUrl 	e.g."http://127.0.0.1:8000"
 @param 	errLog 		可以为nil（即无输出，但不推荐这么干）
 @return !!!: Transport、ModifyResponse、ErrorHandler 等字段为nil
 */
