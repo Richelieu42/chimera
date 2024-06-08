@@ -16,9 +16,6 @@ type ReverseProxy struct {
 }
 
 // Forward 请求转发（代理请求; proxy）.
-/*
-@return !!!: 此方法的返回值需要注意，就算为nil，也有可能请求转发失败，还需要看 http.ReverseProxy.ErrorHandler.
-*/
 func (rp *ReverseProxy) Forward(w http.ResponseWriter, r *http.Request) (err error) {
 	if err = interfaceKit.AssertNotNil(rp, "rp"); err != nil {
 		return
@@ -33,7 +30,7 @@ func (rp *ReverseProxy) Forward(w http.ResponseWriter, r *http.Request) (err err
 		err = errorKit.Newf("recover from %v", obj)
 	}
 
-	// 设置ErrorHandler字段，以免请求转发失败时没有error
+	// ### 设置ErrorHandler字段，以免请求转发失败时返回的error == nil
 	old := rp.ErrorHandler
 	rp.ErrorHandler = func(w http.ResponseWriter, r *http.Request, e error) {
 		err = e
