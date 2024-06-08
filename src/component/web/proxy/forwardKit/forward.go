@@ -10,7 +10,7 @@ import (
 @param errLogger	可以为nil（即无输出，但不推荐这么干）
 @param url			目标url
 */
-func ForwardToUrl(w http.ResponseWriter, r *http.Request, errLog *log.Logger, url string) (err error) {
+func ForwardToUrl(w http.ResponseWriter, r *http.Request, url string, errLog *log.Logger) (err error) {
 	rp, err := NewSingleHostReverseProxyWithUrl(url, errLog)
 	if err != nil {
 		return
@@ -22,7 +22,7 @@ func ForwardToUrl(w http.ResponseWriter, r *http.Request, errLog *log.Logger, ur
 /*
 @param errorLog 可以为nil（即无输出，但不推荐这么干）
 */
-func ForwardToHost(w http.ResponseWriter, r *http.Request, errLog *log.Logger, host string, options ...DirectorOption) error {
+func ForwardToHost(w http.ResponseWriter, r *http.Request, host string, errLog *log.Logger, options ...DirectorOption) error {
 	return ForwardToHostComplexly(w, r, errLog, nil, nil, host, options...)
 }
 

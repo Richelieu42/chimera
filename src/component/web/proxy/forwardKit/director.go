@@ -11,15 +11,14 @@ import (
 /*
 @param targetHost hostname || hostname:port
 */
-func NewDirector(targetHost string, options ...DirectorOption) (dewDirector func(req *http.Request), err error) {
+func NewDirector(targetHost string, options ...DirectorOption) (director func(req *http.Request), err error) {
 	if err = validateKit.Var(targetHost, "hostname|ipv4|hostname_port"); err != nil {
 		err = errorKit.Newf("invalid targetHost(%s)", targetHost)
 		return
 	}
 
 	opts := loadOptions(options...)
-
-	dewDirector = func(req *http.Request) {
+	director = func(req *http.Request) {
 		req.URL.Scheme = opts.scheme
 		req.URL.Host = targetHost
 		if opts.requestUrlPath != nil {
