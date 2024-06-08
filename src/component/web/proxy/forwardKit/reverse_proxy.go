@@ -4,6 +4,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"log"
 	"net/http"
 	"net/http/httputil"
@@ -69,18 +70,36 @@ func WrapToReverseProxy(reverseProxy *httputil.ReverseProxy) (*ReverseProxy, err
 	}, nil
 }
 
-// NewSingleHostReverseProxy
+// NewSingleHostReverseProxyWithUrl
 /*
-@param 	target 不能为nil，否则会panic
-@param 	errLog 可以为nil（即无输出，但不推荐这么干）
+@param targetUrl 	e.g."http://127.0.0.1:8000/test"
+@param 	errLog 		可以为nil（即无输出，但不推荐这么干）
 @return !!!: Transport、ModifyResponse、ErrorHandler 等字段为nil
 */
-func NewSingleHostReverseProxy(target *url.URL, errLog *log.Logger) (*ReverseProxy, error) {
-	if err := interfaceKit.AssertNotNil(target, "target"); err != nil {
+func NewSingleHostReverseProxyWithUrl(targetUrl string, errLog *log.Logger) (*ReverseProxy, error) {
+	if err := strKit.AssertNotEmpty(targetUrl, "targetUrl"); err != nil {
+		return nil, err
+	}
+	u, err := url.Parse(targetUrl)
+	if err != nil {
+		return nil, errorKit.Newf("invalid targetUrl(%s)", targetUrl)
+	}
+
+	return NewSingleHostReverseProxy(u, errLog)
+}
+
+// NewSingleHostReverseProxy
+/*
+@param target 不能为nil，否则会panic
+@param errLog 可以为nil（即无输出，但不推荐这么干）
+@return !!!: Transport、ModifyResponse、ErrorHandler 等字段为nil
+*/
+func NewSingleHostReverseProxy(u *url.URL, errLog *log.Logger) (*ReverseProxy, error) {
+	if err := interfaceKit.AssertNotNil(u, "u"); err != nil {
 		return nil, err
 	}
 
-	tmp := httputil.NewSingleHostReverseProxy(target)
+	tmp := httputil.NewSingleHostReverseProxy(u)
 	tmp.ErrorLog = errLog
 
 	return WrapToReverseProxy(tmp)
