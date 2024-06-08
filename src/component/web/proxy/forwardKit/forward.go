@@ -5,13 +5,14 @@ import (
 	"net/http"
 )
 
-// ForwardToUrl 代理请求到目标url.
+// ForwardToSingleHost 代理请求.
 /*
 @param errLogger	可以为nil（即无输出，但不推荐这么干）
 @param url			目标url
-					e.g. "http://127.0.0.1:8000": 将请求转发给它，且路由不变
+					e.g. 	"http://127.0.0.1:8000": 将请求转发给"http://127.0.0.1:8000"，请求路由不变
+					e.g.1 	"http://127.0.0.1:8000/a": 将请求转发给"http://127.0.0.1:8000"，请求路由不变
 */
-func ForwardToUrl(w http.ResponseWriter, r *http.Request, url string, errLog *log.Logger) (err error) {
+func ForwardToSingleHost(w http.ResponseWriter, r *http.Request, url string, errLog *log.Logger) (err error) {
 	rp, err := NewSingleHostReverseProxyWithUrl(url, errLog)
 	if err != nil {
 		return

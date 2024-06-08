@@ -17,7 +17,7 @@ func TestForwardToUrl(t *testing.T) {
 	engine := gin.Default()
 	engine.Any("/test", func(ctx *gin.Context) {
 		errLog := logKit.NewStdoutLogger("")
-		err := ForwardToUrl(ctx.Writer, ctx.Request, url, errLog)
+		err := ForwardToSingleHost(ctx.Writer, ctx.Request, url, errLog)
 		if err != nil {
 			logrus.WithError(err).Info("Fail to forward.")
 			ctx.String(500, err.Error())
