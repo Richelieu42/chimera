@@ -19,12 +19,10 @@ func ForwardToUrl(w http.ResponseWriter, r *http.Request, errLog *log.Logger, ur
 		return
 	}
 
-	rp, err := NewSingleHostReverseProxy(u)
+	rp, err := NewSingleHostReverseProxy(u, errLog)
 	if err != nil {
 		return
 	}
-	rp.ErrorLog = errLog
-
 	return rp.Forward(w, r)
 }
 

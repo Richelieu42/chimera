@@ -72,14 +72,17 @@ func WrapToReverseProxy(reverseProxy *httputil.ReverseProxy) (*ReverseProxy, err
 // NewSingleHostReverseProxy
 /*
 @param 	target 不能为nil，否则会panic
-@return !!!: Transport、ModifyResponse、ErrorLog、ErrorHandler 等字段为nil
+@param 	errLog 可以为nil（即无输出，但不推荐这么干）
+@return !!!: Transport、ModifyResponse、ErrorHandler 等字段为nil
 */
-func NewSingleHostReverseProxy(target *url.URL) (*ReverseProxy, error) {
+func NewSingleHostReverseProxy(target *url.URL, errLog *log.Logger) (*ReverseProxy, error) {
 	if err := interfaceKit.AssertNotNil(target, "target"); err != nil {
 		return nil, err
 	}
 
 	tmp := httputil.NewSingleHostReverseProxy(target)
+	tmp.ErrorLog = errLog
+
 	return WrapToReverseProxy(tmp)
 }
 
@@ -90,7 +93,7 @@ PS: 对于 httputil.ReverseProxy 结构体，Rewrite 和 Director 只能有一�
 @param director			不能为nil!!!
 @param transport		可以为nil
 @param modifyResponse	可以为nil
-@param errLog			可以为nil
+@param errLog			可以为nil（即无输出，但不推荐这么干）
 @param errHandler		可以为nil
 */
 func NewReverseProxy(director func(*http.Request), transport http.RoundTripper, modifyResponse func(*http.Response) error, errLog *log.Logger, errHandler func(http.ResponseWriter, *http.Request, error)) (*ReverseProxy, error) {
