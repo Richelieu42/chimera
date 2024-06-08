@@ -4,17 +4,20 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v3/src/log/logKit"
 	"github.com/sirupsen/logrus"
-	"log"
-	"os"
 	"testing"
 )
 
+/*
+访问url: http://127.0.0.1/test
+效果: 	将 http://127.0.0.1/test 转发给 http://127.0.0.1:8000/test
+*/
 func TestForwardToUrl(t *testing.T) {
-	engine := gin.Default()
+	url := "http://127.0.0.1:8000"
 
+	engine := gin.Default()
 	engine.Any("/test", func(ctx *gin.Context) {
-		errLogger := logKit.NewLogger(os.Stdout, "", log.Ldate|log.Ltime|log.Lmicroseconds|log.Lshortfile)
-		err := ForwardToUrl(ctx.Writer, ctx.Request, errLogger, "http://localhost:20000/test")
+		errLog := logKit.NewStdoutLogger("")
+		err := ForwardToUrl(ctx.Writer, ctx.Request, errLog, url)
 		if err != nil {
 			logrus.WithError(err).Info("Fail to forward.")
 			ctx.String(500, err.Error())
@@ -23,7 +26,6 @@ func TestForwardToUrl(t *testing.T) {
 		logrus.Info("Manager to forward.")
 		return
 	})
-
 	if err := engine.Run(":80"); err != nil {
 		panic(err)
 	}

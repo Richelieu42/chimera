@@ -9,7 +9,8 @@ import (
 )
 
 /*
-访问url: http://127.0.0.1:80/test
+访问url: http://127.0.0.1/test
+效果: 	将 http://127.0.0.1/test 转发给 http://127.0.0.1:8000/test
 */
 func TestNewSingleHostReverseProxyWithUrl(t *testing.T) {
 	port := 80
