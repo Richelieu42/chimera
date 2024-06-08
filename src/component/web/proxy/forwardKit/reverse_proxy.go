@@ -5,6 +5,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/urlKit"
 	"log"
 	"net/http"
 	"net/http/httputil"
@@ -73,15 +74,15 @@ func WrapToReverseProxy(reverseProxy *httputil.ReverseProxy) (*ReverseProxy, err
 @param 	errLog 		可以为nil（即无输出，但不推荐这么干）
 @return !!!: Transport、ModifyResponse、ErrorHandler 等字段为nil
 */
-func NewSingleHostReverseProxyWithUrl(targetUrl string, errLog *log.Logger) (*ReverseProxy, error) {
-	if err := strKit.AssertNotEmpty(targetUrl, "targetUrl"); err != nil {
+func NewSingleHostReverseProxyWithUrl(url string, errLog *log.Logger) (*ReverseProxy, error) {
+	if err := strKit.AssertNotEmpty(url, "url"); err != nil {
 		return nil, err
 	}
-	u, err := url.Parse(targetUrl)
-	if err != nil {
-		return nil, errorKit.Newf("invalid targetUrl(%s)", targetUrl)
-	}
 
+	u, err := urlKit.Parse(url)
+	if err != nil {
+		return nil, errorKit.Newf("invalid url(%s)", url)
+	}
 	return NewSingleHostReverseProxy(u, errLog)
 }
 
