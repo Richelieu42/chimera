@@ -23,16 +23,16 @@ func TestNewSingleHostReverseProxyWithUrl(t *testing.T) {
 			ctx.String(500, err.Error())
 			return
 		}
-		// Richelieu: 此处应该为 true
+		// (1) Richelieu: 此处应该为 true
 		fmt.Printf("rp.ErrorHandler == nil? [%t]\n", rp.ErrorHandler == nil)
 
 		if err := rp.Forward(ctx.Writer, ctx.Request); err != nil {
-			// Richelieu: 此处应该为 true
+			// (2) Richelieu: 此处应该为 true
 			fmt.Printf("rp.ErrorHandler == nil? [%t]\n", rp.ErrorHandler == nil)
 			ctx.String(500, err.Error())
 			return
 		}
-		// Richelieu: 此处应该为 true
+		// (2) Richelieu: 此处应该为 true
 		fmt.Printf("rp.ErrorHandler == nil? [%t]\n", rp.ErrorHandler == nil)
 		return
 	})
