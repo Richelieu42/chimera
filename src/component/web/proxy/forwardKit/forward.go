@@ -20,7 +20,7 @@ func ForwardToSingleHost(w http.ResponseWriter, r *http.Request, url string, err
 	return rp.Forward(w, r)
 }
 
-// ForwardToHost
+// ForwardToHost 代理请求.
 /*
 @param host		e.g."127.0.0.1:80"
 @param errLog 	可以为nil（即无输出，但不推荐这么干）
@@ -29,7 +29,7 @@ func ForwardToHost(w http.ResponseWriter, r *http.Request, host string, errLog *
 	return ForwardToHostComplexly(w, r, host, errLog, nil, nil, options...)
 }
 
-// ForwardToHostComplexly
+// ForwardToHostComplexly 代理请求.
 /*
 @param host				e.g."127.0.0.1:80"
 @param errLog	 		可以为nil（即无输出，但不推荐这么干）
