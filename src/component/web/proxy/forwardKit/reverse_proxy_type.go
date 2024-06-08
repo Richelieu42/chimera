@@ -31,7 +31,7 @@ func (rp ReverseProxy) Forward(w http.ResponseWriter, r *http.Request) (err erro
 		err = errorKit.Newf("recover from %v", obj)
 	}
 
-	// ### 设置ErrorHandler字段，以免请求转发失败时 err == nil
+	// ### 设置ErrorHandler字段，以免请求转发失败时 err == nil，但并不会影响外部的rp，因为receiver的类型不是指针类型
 	old := rp.ErrorHandler
 	rp.ErrorHandler = func(w http.ResponseWriter, r *http.Request, e error) {
 		err = e
