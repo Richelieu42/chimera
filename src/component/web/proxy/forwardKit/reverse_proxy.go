@@ -19,10 +19,6 @@ type ReverseProxy struct {
 @return !!!: 此方法的返回值需要注意，就算为nil，也有可能请求转发失败，还需要看 http.ReverseProxy.ErrorHandler.
 */
 func (rp *ReverseProxy) Forward(w http.ResponseWriter, r *http.Request) (err error) {
-	if err = interfaceKit.AssertNotNil(rp, "rp"); err != nil {
-		return
-	}
-
 	// 主要针对: http.ReverseProxy.ServeHTTP() 中的 panic(http.ErrAbortHandler)
 	if obj := recover(); obj != nil {
 		if err1, ok := obj.(error); ok {
@@ -32,6 +28,20 @@ func (rp *ReverseProxy) Forward(w http.ResponseWriter, r *http.Request) (err err
 		err = errorKit.Newf("recover from %v", obj)
 	}
 
+	if err = interfaceKit.AssertNotNil(rp, "rp"); err != nil {
+		return
+	}
+
+	// ErrorHandler
+	old := rp.ErrorHandler
+	rp.ErrorHandler = func(w http.ResponseWriter, r *http.Request, e error) {
+		err = e
+		if rp.ErrorLog != nil {
+			rp.ErrorLog.Println(e)
+		}
+
+		old(w, r, e)
+	}
 	// Richelieu: try to reset http.Request.Body
 	if err = httpKit.TryToResetRequestBody(r); err != nil {
 		return
