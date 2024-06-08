@@ -14,6 +14,15 @@ import (
 */
 var NewLogger func(out io.Writer, prefix string, flag int) *log.Logger = log.New
 
+// NewStdoutLogger 输出到控制台（os.Stdout）.
+func NewStdoutLogger(prefix string) *log.Logger {
+	flag := log.Ldate | log.Ltime | log.Lmicroseconds | log.Lshortfile
+	if strKit.IsNotEmpty(prefix) {
+		flag |= log.Lmsgprefix
+	}
+	return NewLogger(os.Stdout, prefix, flag)
+}
+
 // NewFileLogger
 /*
 @param logPath 	(1) 文件不存在，会生成文件和父目录;
