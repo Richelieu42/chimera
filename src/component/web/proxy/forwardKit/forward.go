@@ -23,7 +23,7 @@ func ForwardToUrl(w http.ResponseWriter, r *http.Request, url string, errLog *lo
 @param errorLog 可以为nil（即无输出，但不推荐这么干）
 */
 func ForwardToHost(w http.ResponseWriter, r *http.Request, host string, errLog *log.Logger, options ...DirectorOption) error {
-	return ForwardToHostComplexly(w, r, errLog, nil, nil, host, options...)
+	return ForwardToHostComplexly(w, r, host, errLog, nil, nil, options...)
 }
 
 // ForwardToHostComplexly
@@ -32,7 +32,7 @@ func ForwardToHost(w http.ResponseWriter, r *http.Request, host string, errLog *
 @param transport		可以为nil
 @param modifyResponse	可以为nil
 */
-func ForwardToHostComplexly(w http.ResponseWriter, r *http.Request, errLog *log.Logger, transport http.RoundTripper, modifyResponse func(*http.Response) error, host string, options ...DirectorOption) error {
+func ForwardToHostComplexly(w http.ResponseWriter, r *http.Request, host string, errLog *log.Logger, transport http.RoundTripper, modifyResponse func(*http.Response) error, options ...DirectorOption) error {
 	director, err := NewDirector(host, options...)
 	if err != nil {
 		return err
