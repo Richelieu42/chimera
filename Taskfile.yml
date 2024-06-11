@@ -2,8 +2,6 @@ version: '3'
 
 # 全局变量
 vars:
-  #  APP: chimera
-  #  SOURCE: internal/main.go
   APP: test
   SOURCE: test/test.go
   # 0 || 1
@@ -52,15 +50,15 @@ tasks:
   windows-386:
     cmds:
       - task: build
-        vars: { OS: windows, ARCH: 386, CC: i686-w64-mingw32-gcc, CXX: i686-w64-mingw32-g++, TAGS: jsoniter, UPX: true }
+        vars: { OS: windows, ARCH: 386, CC: i686-w64-mingw32-gcc, CXX: i686-w64-mingw32-g++, TAGS: go_json, UPX: true }
   windows-amd64:
     cmds:
       - task: build
-        vars: { OS: windows, ARCH: amd64, CC: x86_64-w64-mingw32-gcc, CXX: x86_64-w64-mingw32-g++, TAGS: jsoniter, UPX: true }
+        vars: { OS: windows, ARCH: amd64, CC: x86_64-w64-mingw32-gcc, CXX: x86_64-w64-mingw32-g++, TAGS: go_json, UPX: true }
   darwin-arm64:
     cmds:
       - task: build
-        vars: { OS: darwin, ARCH: arm64, TAGS: jsoniter, UPX: false }
+        vars: { OS: darwin, ARCH: arm64, TAGS: go_json, UPX: false }
   linux-amd64:
     cmds:
       - task: build
@@ -68,23 +66,23 @@ tasks:
   linux-amd64-noavx:
     cmds:
       - task: build
-        vars: { OS: linux, ARCH: amd64, CC: x86_64-linux-musl-gcc, CXX: x86_64-linux-musl-g++, TAGS: jsoniter, UPX: true }
+        vars: { OS: linux, ARCH: amd64, CC: x86_64-linux-musl-gcc, CXX: x86_64-linux-musl-g++, TAGS: go_json, UPX: true }
   linux-arm64:
     cmds:
       - task: build
-        vars: { OS: linux, ARCH: arm64, CC: x86_64-linux-musl-gcc, CXX: x86_64-linux-musl-g++, TAGS: jsoniter, UPX: true }
+        vars: { OS: linux, ARCH: arm64, CC: x86_64-linux-musl-gcc, CXX: x86_64-linux-musl-g++, TAGS: go_json, UPX: true }
   linux-mips64:
     cmds:
       - task: build
-        vars: { OS: linux, ARCH: mips64, CC: x86_64-linux-musl-gcc, CXX: x86_64-linux-musl-g++, TAGS: jsoniter, UPX: false }
+        vars: { OS: linux, ARCH: mips64, CC: x86_64-linux-musl-gcc, CXX: x86_64-linux-musl-g++, TAGS: go_json, UPX: false }
   linux-mips64le:
     cmds:
       - task: build
-        vars: { OS: linux, ARCH: mips64le, CC: x86_64-linux-musl-gcc, CXX: x86_64-linux-musl-g++, TAGS: jsoniter, UPX: false }
+        vars: { OS: linux, ARCH: mips64le, CC: x86_64-linux-musl-gcc, CXX: x86_64-linux-musl-g++, TAGS: go_json, UPX: false }
   linux-loong64:
     cmds:
       - task: build
-        vars: { OS: linux, ARCH: loong64, CC: x86_64-linux-musl-gcc, CXX: x86_64-linux-musl-g++, TAGS: jsoniter, UPX: false }
+        vars: { OS: linux, ARCH: loong64, CC: x86_64-linux-musl-gcc, CXX: x86_64-linux-musl-g++, TAGS: go_json, UPX: false }
   build:
     vars:
       OS: '{{default "UNKNOWN" .OS}}'
