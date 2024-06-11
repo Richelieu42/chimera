@@ -13,6 +13,9 @@ import (
 func NewClient(insecureSkipVerify bool) (client *req.Client) {
 	client = req.C()
 
+	/* （默认启用）启用自动检测字符集并解码为utf-8 */
+	client.EnableAutoDecode()
+
 	/* json序列化和反序列化 */
 	client.SetJsonMarshal(jsonKit.Marshal)
 	client.SetJsonUnmarshal(jsonKit.Unmarshal)
