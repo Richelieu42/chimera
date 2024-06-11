@@ -13,8 +13,11 @@ import (
 func NewClient(insecureSkipVerify bool) (client *req.Client) {
 	client = req.C()
 
-	/* （默认启用）启用自动检测字符集并解码为utf-8 */
+	/* （imroc/req默认启用）启用自动检测字符集并解码为utf-8 */
 	client.EnableAutoDecode()
+
+	/* （imroc/req默认启用）启用压缩 */
+	client.EnableCompression()
 
 	/* json序列化和反序列化 */
 	client.SetJsonMarshal(jsonKit.Marshal)
@@ -23,10 +26,7 @@ func NewClient(insecureSkipVerify bool) (client *req.Client) {
 	/* 伪装成Chrome浏览器发起请求，主要针对: 反爬虫检测 */
 	client.ImpersonateChrome()
 
-	/* 启用压缩 */
-	client.EnableCompression()
-
-	/* https证书验证 */
+	/* （imroc/req默认不跳过）https证书验证 */
 	if insecureSkipVerify {
 		client.EnableInsecureSkipVerify()
 	} else {
