@@ -1,9 +1,16 @@
 package reqKit
 
-import "time"
+import (
+	"github.com/richelieu-yang/chimera/v3/src/core/mathKit"
+	"time"
+)
 
 const (
+	// MinTimeout 最小超时时间
 	MinTimeout = time.Second * 3
+
+	// DefaultTimeout 默认超时时间
+	DefaultTimeout = time.Second * 30
 )
 
 type (
@@ -27,7 +34,7 @@ type (
 
 func loadClientOptions(options ...ClientOption) *clientOptions {
 	opts := &clientOptions{
-		Timeout:            0,
+		Timeout:            DefaultTimeout,
 		InsecureSkipVerify: false,
 	}
 
@@ -35,9 +42,7 @@ func loadClientOptions(options ...ClientOption) *clientOptions {
 		option(opts)
 	}
 
-	if opts.Timeout < MinTimeout {
-		opts.Timeout = MinTimeout
-	}
+	opts.Timeout = mathKit.Max(opts.Timeout, MinTimeout)
 
 	return opts
 }
