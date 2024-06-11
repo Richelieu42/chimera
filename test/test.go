@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/imroc/req/v3"
+	"github.com/sirupsen/logrus"
 )
 
 type APIResponse struct {
@@ -11,8 +12,15 @@ type APIResponse struct {
 }
 
 func main() {
+	var logger req.Logger = logrus.StandardLogger()
+	fmt.Println(logger)
+
 	var resp APIResponse
 	c := req.C()
+
+	c.SetScheme()
+	c.SetProxyURL()
+	c.SetBaseURL()
 
 	c.R().Do()
 

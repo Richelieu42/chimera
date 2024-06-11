@@ -1,6 +1,7 @@
 package reqKit
 
 import (
+	"github.com/imroc/req/v3"
 	"github.com/richelieu-yang/chimera/v3/src/core/mathKit"
 	"time"
 )
@@ -17,8 +18,8 @@ type (
 	clientOptions struct {
 		// Timeout
 		/*
-
-		 */
+			超时时间（发送请求的整个周期，includes connection time, any redirects, and reading the response body）
+		*/
 		Timeout time.Duration
 
 		// InsecureSkipVerify
@@ -27,6 +28,9 @@ type (
 			false: 不跳过证书验证（默认; 更加安全）
 		*/
 		InsecureSkipVerify bool
+
+		// Logger 日志输出
+		Logger req.Logger
 	}
 
 	ClientOption func(*clientOptions)
@@ -36,6 +40,7 @@ func loadClientOptions(options ...ClientOption) *clientOptions {
 	opts := &clientOptions{
 		Timeout:            DefaultTimeout,
 		InsecureSkipVerify: false,
+		Logger:             nil,
 	}
 
 	for _, option := range options {
@@ -56,5 +61,11 @@ func WithTimeout(timeout time.Duration) ClientOption {
 func WithInsecureSkipVerify(insecureSkipVerify bool) ClientOption {
 	return func(options *clientOptions) {
 		options.InsecureSkipVerify = insecureSkipVerify
+	}
+}
+
+func WithLogger(logger req.Logger) ClientOption {
+	return func(options *clientOptions) {
+		options.Logger = logger
 	}
 }
