@@ -1,4 +1,8 @@
-//go:build !(linux || windows || darwin)
+//go:build !((linux || windows || darwin) && sonic && avx && go1.17 && amd64)
+
+/*
+	//go:build !(linux || windows || darwin)
+*/
 
 package jsonKit
 
@@ -31,7 +35,7 @@ func (i *impl) UnmarshalFromString(str string, v interface{}) error {
 func init() {
 	library = "encoding/json"
 
-	i := &impl{}
-	defaultApi = i
-	stdApi = i
+	tmp := &impl{}
+	defaultApi = tmp
+	stdApi = tmp
 }
