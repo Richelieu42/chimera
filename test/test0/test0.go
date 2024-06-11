@@ -1,21 +1,23 @@
 package main
 
 import (
+	"github.com/imroc/req/v3"
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
-
-	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v3/src/netKit"
 )
 
 func main() {
-	port := 8000
+	req.DefaultClient()
+	req.SetDefaultClient()
 
-	engine := gin.Default()
-	engine.Any("/test", func(ctx *gin.Context) {
-		ctx.String(200, fmt.Sprintf("This is [%d].", port))
+	req.C().ImpersonateChrome()
+	req.C().ImpersonateFirefox()
+	req.C().ImpersonateSafari()
+	req.C().Impersona
+
+	req.DevMode()
+	req.EnableForceHTTP1()
+
+	req.AddCommonRetryCondition(func(resp *req.Response, err error) bool {
+
 	})
-	if err := engine.Run(netKit.JoinToHost("", port)); err != nil {
-		panic(err)
-	}
 }
