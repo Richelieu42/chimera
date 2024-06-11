@@ -6,6 +6,7 @@ key: 不区分大小写
 package httpKit
 
 import (
+	"bytes"
 	"github.com/richelieu-yang/chimera/v3/src/core/mapKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
@@ -17,6 +18,19 @@ func HeaderToMap(header http.Header) map[string]interface{} {
 	return mapKit.MapValues(header, func(value []string, key string) interface{} {
 		return value
 	})
+}
+
+// HeaderToString Converts http header to a string.
+func HeaderToString(header http.Header) (string, error) {
+	if header == nil {
+		return "", nil
+	}
+
+	buf := new(bytes.Buffer)
+	if err := header.Write(buf); err != nil {
+		return "", err
+	}
+	return buf.String(), nil
 }
 
 // SetHeader
