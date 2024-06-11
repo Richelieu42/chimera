@@ -21,5 +21,7 @@ func NewClient() (client *req.Client) {
 func NewRetryClient() (client *req.Client) {
 	client = NewClient()
 
+	// TODO:
+
 	return
 }
