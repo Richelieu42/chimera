@@ -5,7 +5,12 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
 )
 
-func NewClient() (client *req.Client) {
+// NewClient
+/*
+@param insecureSkipVerify 	true:  跳过证书验证
+							false: 不跳过证书验证（默认; 更加安全）
+*/
+func NewClient(insecureSkipVerify bool) (client *req.Client) {
 	client = req.C()
 
 	/* json序列化和反序列化 */
@@ -15,11 +20,22 @@ func NewClient() (client *req.Client) {
 	/* 伪装成Chrome浏览器发起请求，主要针对: 反爬虫检测 */
 	client.ImpersonateChrome()
 
+	/* 启用压缩 */
+	client.EnableCompression()
+
+	/* https证书验证 */
+	if insecureSkipVerify {
+		client.EnableInsecureSkipVerify()
+	} else {
+		// 推荐正式环境使用，更安全
+		client.DisableInsecureSkipVerify()
+	}
+
 	return
 }
 
-func NewRetryClient() (client *req.Client) {
-	client = NewClient()
+func NewRetryClient(insecureSkipVerify bool) (client *req.Client) {
+	client = NewClient(insecureSkipVerify)
 
 	// TODO:
 
