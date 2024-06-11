@@ -1,75 +1,56 @@
 package reqKit
 
 import (
-	"fmt"
 	"github.com/imroc/req/v3"
 	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
-	"time"
 )
 
-type Client struct {
-	*req.Client
+func NewClient(insecureSkipVerify bool, options ...ClientOption) (client *req.Client) {
+	opts := loadClientOptions(options...)
+	client = req.C()
 
-	// maxRetryTimes 最大重试次数
-	maxRetryTimes int
-}
-
-var defaultClient = NewClient(3)
-
-// GetDefaultClient
-/*
-重用Client https://req.cool/zh/docs/tutorial/best-practices/#%e9%87%8d%e7%94%a8-client
-	不要每次发请求都创建 Client，造成不必要的开销，通常可以复用 同一Client 发所有请求.
-
-!!!:
-(1) 不修改返回值的话，可以调用此方法；否则调用 NewClient;
-(2) 最大重试次数 == 3.
-*/
-func GetDefaultClient() *Client {
-	return defaultClient
-}
-
-// NewClient
-/*
-参考:
-使用req封装SDK https://req.cool/zh/docs/prologue/quickstart/#%e4%bd%bf%e7%94%a8-req-%e5%b0%81%e8%a3%85-sdk
-*/
-func NewClient(maxRetryTimes int) *Client {
-	if maxRetryTimes <= 0 {
-		maxRetryTimes = 3
-	}
-
-	client := req.C()
-
-	// timeout
-	client.SetTimeout(time.Second * 10)
-
-	// 自动探测字符集并解码到 utf-8（默认就是启用）
+	/*
+		启用自动检测字符集并解码为utf-8
+		（imroc/req默认: 启用）
+	*/
 	client.EnableAutoDecode()
 
-	// 不验证非法的证书（默认验证）
-	client.EnableInsecureSkipVerify()
+	/*
+		启用压缩
+		（imroc/req默认: 启用）
+	*/
+	client.EnableCompression()
 
-	// 自定义 Marshal 和 Unmarshal
-	api := jsonKit.GetDefaultApi()
-	client.SetJsonMarshal(api.Marshal).
-		SetJsonUnmarshal(api.Unmarshal)
+	/*
+		disable sending GET method requests with body
+		（imroc/req默认: 启用，即发送GET请求时附带body）
+	*/
+	client.DisableAllowGetMethodPayload()
 
-	client.EnableDumpEachRequest().
-		OnAfterResponse(func(client *req.Client, resp *req.Response) error {
-			if resp.Err != nil { // There is an underlying error, e.g. network error or unmarshal error.
-				return nil
-			}
-			if !resp.IsSuccessState() {
-				// Neither a success response nor a error response, record details to help troubleshooting
-				resp.Err = fmt.Errorf("bad status: %s\nraw content:\n%s", resp.Status, resp.Dump())
-				return nil
-			}
-			return nil
-		})
+	/* json序列化和反序列化 */
+	client.SetJsonMarshal(jsonKit.Marshal).
+		SetJsonUnmarshal(jsonKit.Unmarshal)
 
-	return &Client{
-		Client:        client,
-		maxRetryTimes: maxRetryTimes,
+	/* 伪装成Chrome浏览器发起请求，主要针对: 反爬虫检测 */
+	client.ImpersonateChrome()
+
+	/*
+		超时时间（发送请求的整个周期，includes connection time, any redirects, and reading the response body）
+		(1) imroc/req默认: 2min
+		(2) 0: no timeout
+	*/
+	client.SetTimeout(opts.Timeout)
+
+	/*
+		https证书验证
+		（imroc/req默认: 不跳过）
+	*/
+	if opts.InsecureSkipVerify {
+		client.EnableInsecureSkipVerify()
+	} else {
+		// 推荐正式环境使用，更安全
+		client.DisableInsecureSkipVerify()
 	}
+
+	return
 }

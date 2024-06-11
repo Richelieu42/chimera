@@ -11,7 +11,7 @@ import (
 	"os"
 )
 
-// Upload Deprecated: Use reqKit instead.
+// Upload Deprecated: Use req111Kit instead.
 func Upload(url string, fileParams map[string]string, options ...Option) (int, []byte, error) {
 	resp, err := UploadForResponse(url, fileParams, options...)
 	if err != nil {
@@ -26,7 +26,7 @@ func Upload(url string, fileParams map[string]string, options ...Option) (int, [
 	return resp.StatusCode, data, nil
 }
 
-// UploadForResponse Deprecated: Use reqKit instead.
+// UploadForResponse Deprecated: Use req111Kit instead.
 /*
 @param fileParams 	(1)可以为nil或空;
 					(2)key: 键, value: 要上传文件的路径.

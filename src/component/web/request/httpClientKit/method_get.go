@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-// Get Deprecated: Use reqKit instead.
+// Get Deprecated: Use req111Kit instead.
 func Get(url string, options ...Option) (int, []byte, error) {
 	resp, err := GetForResponse(url, options...)
 	if err != nil {
@@ -22,7 +22,7 @@ func Get(url string, options ...Option) (int, []byte, error) {
 	return resp.StatusCode, data, nil
 }
 
-// GetForResponse Deprecated: Use reqKit instead.
+// GetForResponse Deprecated: Use req111Kit instead.
 /*
 !!!: 第2个返回值 == nil 的情况下，需要手动调用 resp.Body.Close() 来手动关闭 第1个返回值.
 */

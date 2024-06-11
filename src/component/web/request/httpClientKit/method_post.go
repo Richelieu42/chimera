@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-// Post Deprecated: Use reqKit instead.
+// Post Deprecated: Use req111Kit instead.
 func Post(url string, options ...Option) (int, []byte, error) {
 	resp, err := PostForResponse(url, options...)
 	if err != nil {
@@ -23,7 +23,7 @@ func Post(url string, options ...Option) (int, []byte, error) {
 	return resp.StatusCode, data, nil
 }
 
-// PostForResponse Deprecated: Use reqKit instead.
+// PostForResponse Deprecated: Use req111Kit instead.
 /*
 !!!: 第2个返回值 == nil 的情况下，需要手动调用 resp.Body.Close() 来手动关闭 第1个返回值.
 */

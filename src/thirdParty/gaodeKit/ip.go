@@ -1,7 +1,7 @@
 package gaodeKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/component/web/request/reqKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/request/req111Kit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/ip/ipKit"
 	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonFieldKit"
@@ -22,7 +22,7 @@ func (client *Client) GetIpInfo(ip string) (*IpInfo, error) {
 		return nil, err
 	}
 
-	_, jsonData, err := reqKit.Get(ipUrl, map[string][]string{
+	_, jsonData, err := req111Kit.Get(ipUrl, map[string][]string{
 		"key": {client.key},
 		"ip":  {ip},
 	})

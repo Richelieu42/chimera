@@ -1,7 +1,7 @@
 package timeKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/component/web/request/reqKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/request/req111Kit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"time"
@@ -36,7 +36,7 @@ func GetNetworkTime() (time.Time, string, error) {
 	var ch = make(chan *bean, len(networkTimeSources))
 
 	// 共用一个client
-	client := reqKit.NewClient(3)
+	client := req111Kit.NewClient(3)
 	client.SetTimeout(timeout)
 	client.SetTLSHandshakeTimeout(timeout)
 
@@ -61,7 +61,7 @@ func GetNetworkTime() (time.Time, string, error) {
 	}
 }
 
-func getNetworkTimeBySource(client *reqKit.Client, url string) (time.Time, error) {
+func getNetworkTimeBySource(client *req111Kit.Client, url string) (time.Time, error) {
 	resp, err := client.SimpleGet(url, nil)
 	if err != nil {
 		return time.Time{}, err

@@ -1,7 +1,7 @@
 package gaodeKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/component/web/request/reqKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/request/req111Kit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
 )
@@ -15,7 +15,7 @@ const (
 @param city 城市编码
 */
 func (client *Client) GetLive(city string) (*Live, error) {
-	_, data, err := reqKit.Get(weatherUrl, map[string][]string{
+	_, data, err := req111Kit.Get(weatherUrl, map[string][]string{
 		"key":        {client.key},
 		"city":       {city},
 		"extensions": {"base"},
@@ -56,7 +56,7 @@ func (client *Client) GetTodayCast(city string) (*Cast, error) {
 @param city 城市编码
 */
 func (client *Client) GetForecast(city string) (*Forecast, error) {
-	_, data, err := reqKit.Get(weatherUrl, map[string][]string{
+	_, data, err := req111Kit.Get(weatherUrl, map[string][]string{
 		"key":        {client.key},
 		"city":       {city},
 		"extensions": {"all"},
