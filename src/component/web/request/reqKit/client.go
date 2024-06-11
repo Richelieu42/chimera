@@ -5,7 +5,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
 )
 
-func NewClient(insecureSkipVerify bool, options ...ClientOption) (client *req.Client) {
+func NewClient(options ...ClientOption) (client *req.Client) {
 	opts := loadClientOptions(options...)
 	client = req.C()
 
