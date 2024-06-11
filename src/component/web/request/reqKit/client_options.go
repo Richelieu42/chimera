@@ -30,17 +30,21 @@ type (
 		InsecureSkipVerify bool
 
 		// Logger 日志输出
+		/*
+			nil: 不输出
+		*/
 		Logger req.Logger
 	}
 
 	ClientOption func(*clientOptions)
 )
 
-func loadClientOptions(options ...ClientOption) *clientOptions {
+func loadClientOptions(baseClient *req.Client, options ...ClientOption) *clientOptions {
 	opts := &clientOptions{
 		Timeout:            DefaultTimeout,
 		InsecureSkipVerify: false,
-		Logger:             nil,
+		// imroc/req默认: 输出到 os.Stdout
+		Logger: baseClient.GetLogger(),
 	}
 
 	for _, option := range options {

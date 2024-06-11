@@ -6,8 +6,8 @@ import (
 )
 
 func NewClient(options ...ClientOption) (client *req.Client) {
-	opts := loadClientOptions(options...)
 	client = req.C()
+	opts := loadClientOptions(client, options...)
 
 	/*
 		启用自动检测字符集并解码为utf-8
@@ -51,6 +51,12 @@ func NewClient(options ...ClientOption) (client *req.Client) {
 		// 推荐正式环境使用，更安全
 		client.DisableInsecureSkipVerify()
 	}
+
+	/*
+		logger
+		（imroc/req默认: 输出到 os.Stdout）
+	*/
+	client.SetLogger(opts.Logger)
 
 	return
 }
