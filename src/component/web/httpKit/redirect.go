@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-// Redirect 请求重定向
+// Redirect 请求重定向.
 /*
 PS:
 301: http.StatusMovedPermanently 	表示资源已被永久移动到新位置，以后对该资源的请求都应使用新的URL。
@@ -19,6 +19,10 @@ PS:
 (1) 302：当重定向后的操作不需要保持原请求方法（例如将POST转换为GET是可以接受的）时使用。
 (2) 307：当需要保持原请求方法（例如POST必须保持为POST）时使用，以确保请求数据和操作的正确传递。
 
+@param url 	e.g. 完整的网址
+				"https://www.baidu.com"
+			e.g.1 仅仅是路由
+				"/b"
 @param code (1) [300, 308] || 201
 			(2) Richelieu: 推荐使用 307 或 308
 */
