@@ -9,6 +9,8 @@ func NewClient(options ...ClientOption) (client *req.Client) {
 	client = req.C()
 	opts := loadClientOptions(client, options...)
 
+	client.DevMode()
+
 	/*
 		启用自动检测字符集并解码为utf-8
 		（imroc/req默认: 启用）

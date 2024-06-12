@@ -16,6 +16,8 @@ const (
 
 type (
 	clientOptions struct {
+		Dev bool
+
 		// Timeout
 		/*
 			超时时间（发送请求的整个周期，includes connection time, any redirects, and reading the response body）
@@ -41,8 +43,9 @@ type (
 
 func loadClientOptions(baseClient *req.Client, options ...ClientOption) *clientOptions {
 	opts := &clientOptions{
+		Dev:                false,
 		Timeout:            DefaultTimeout,
-		InsecureSkipVerify: false,
+		InsecureSkipVerify: true,
 		// imroc/req默认: 输出到 os.Stdout
 		Logger: baseClient.GetLogger(),
 	}
@@ -54,6 +57,12 @@ func loadClientOptions(baseClient *req.Client, options ...ClientOption) *clientO
 	opts.Timeout = mathKit.Max(opts.Timeout, MinTimeout)
 
 	return opts
+}
+
+func WithDev(dev bool) ClientOption {
+	return func(options *clientOptions) {
+		options.Dev = dev
+	}
 }
 
 func WithTimeout(timeout time.Duration) ClientOption {
