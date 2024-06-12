@@ -1,8 +1,6 @@
 package third
 
 import (
-	"github.com/jackc/pgx/v5"
-	"github.com/ulikunitz/xz"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
@@ -56,13 +54,8 @@ func init() {
 		var _ *protojson.UnmarshalOptions
 	}
 
-	/* github.com/jackc/pgx/v5 v5.5.3 是脆弱的 */
-	{
-		var _ *pgx.ConnConfig
-	}
-
-	/* github.com/ulikunitz/xz v0.5.10 是脆弱的 */
-	{
-		var _ xz.Writer
-	}
+	///* github.com/ulikunitz/xz v0.5.10 是脆弱的 */
+	//{
+	//	var _ xz.Writer
+	//}
 }
