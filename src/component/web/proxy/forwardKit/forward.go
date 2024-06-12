@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-// ForwardToSingleHost 代理请求.
+// ForwardToSingleHost 代理请求（请求的scheme不会变）.
 /*
 @param errLogger	可以为nil（即无输出，但不推荐这么干）
 @param url			目标url
