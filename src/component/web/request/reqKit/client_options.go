@@ -59,9 +59,9 @@ func loadClientOptions(baseClient *req.Client, options ...ClientOption) *clientO
 	return opts
 }
 
-func WithDev(dev bool) ClientOption {
+func WithDev() ClientOption {
 	return func(options *clientOptions) {
-		options.Dev = dev
+		options.Dev = true
 	}
 }
 

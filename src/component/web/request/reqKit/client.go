@@ -9,7 +9,10 @@ func NewClient(options ...ClientOption) (client *req.Client) {
 	client = req.C()
 	opts := loadClientOptions(client, options...)
 
-	client.DevMode()
+	/* 开发者模式（甩锅） */
+	if opts.Dev {
+		client.DevMode()
+	}
 
 	/*
 		启用自动检测字符集并解码为utf-8
