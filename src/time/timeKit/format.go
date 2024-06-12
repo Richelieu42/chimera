@@ -1,7 +1,6 @@
 package timeKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"time"
 )
 
@@ -11,17 +10,18 @@ type (
 
 // FormatCurrent 格式化 当前时间 为 字符串.
 /*
-@param format 可以为""
+@param formats 可以为""
 
 e.g.
 	("2006-01-02T15:04:05.000") => "2023-08-17T16:05:14.985"
 */
-func FormatCurrent[F ~string](format F) string {
-	if strKit.IsEmpty(string(format)) {
-		format = F(FormatCommon)
+func FormatCurrent[F ~string](f F) string {
+	var format = string(f)
+	if format == "" {
+		format = string(FormatEntire)
 	}
 
-	return time.Now().Format(string(format))
+	return time.Now().Format(format)
 }
 
 // Format time.Time => string

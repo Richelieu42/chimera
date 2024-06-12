@@ -24,7 +24,7 @@ time=2023-03-23 16:46:23.398+08:00 level=info msg=[CHIMERA, OS] arch: [arm64]. f
 */
 func NewTextFormatter(timestampFormat string) *logrus.TextFormatter {
 	if strKit.IsEmpty(timestampFormat) {
-		timestampFormat = string(timeKit.FormatEntire2)
+		timestampFormat = string(timeKit.FormatEntireWithoutT)
 	}
 
 	// 是否用""将字段的值包起来?

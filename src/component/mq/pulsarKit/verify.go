@@ -103,7 +103,7 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath, uli
 	}
 	defer producer.Close()
 
-	timeStr := timeKit.FormatCurrent(timeKit.FormatCommon)
+	timeStr := timeKit.FormatCurrent(timeKit.FormatEntire)
 	texts := []string{
 		fmt.Sprintf("%s&&%s&&%s", timeStr, ulid, "$0"),
 		fmt.Sprintf("%s&&%s&&%s", timeStr, ulid, "$1"),

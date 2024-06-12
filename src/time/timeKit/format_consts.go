@@ -3,18 +3,24 @@ package timeKit
 import "time"
 
 const (
-	FormatRFC3339     TimeFormat = time.RFC3339
-	FormatRFC3339Nano TimeFormat = time.RFC3339Nano
+	FormatCommon         TimeFormat = "2006-01-02T15:04:05.000"
+	FormatCommonWithoutT TimeFormat = "2006-01-02 15:04:05.000"
+
+	FormatRFC3339         TimeFormat = time.RFC3339 // "2006-01-02T15:04:05Z07:00"
+	FormatRFC3339WithoutT TimeFormat = "2006-01-02 15:04:05Z07:00"
+	FormatRFC3339Nano     TimeFormat = time.RFC3339Nano // "2006-01-02T15:04:05.999999999Z07:00"
+
+	FormatEntire         TimeFormat = "2006-01-02T15:04:05.000Z07:00 MST"
+	FormatEntireWithoutT TimeFormat = "2006-01-02 15:04:05.000Z07:00 MST"
 
 	// FormatNetwork 网络的格式
-	FormatNetwork  TimeFormat = FormatRFC1123
-	FormatRFC1123  TimeFormat = time.RFC1123
-	FormatRFC1123Z TimeFormat = time.RFC1123Z
+	FormatNetwork  TimeFormat = FormatRFC1123 // "Mon, 02 Jan 2006 15:04:05 MST"
+	FormatRFC1123  TimeFormat = time.RFC1123  // "Mon, 02 Jan 2006 15:04:05 MST"
+	FormatRFC1123Z TimeFormat = time.RFC1123Z // "Mon, 02 Jan 2006 15:04:05 -0700"
 
-	// FormatDate 日期格式（年月日）
-	FormatDate TimeFormat = "2006-01-02"
-	// FormatDateTime 日期时间格式（年月日时分秒）
-	FormatDateTime TimeFormat = time.DateTime
+	FormatDateOnly TimeFormat = time.DateOnly // "2006-01-02"
+	FormatTimeOnly TimeFormat = time.TimeOnly // "15:04:05"
+	FormatDateTime TimeFormat = time.DateTime // "2006-01-02 15:04:05"
 
 	// FormatFileName 用于作为文件名（或目录名）的一部分
 	/*
@@ -23,12 +29,6 @@ const (
 		(2) Windows OS，文件名不支持: \ / : * ? " < > |
 	*/
 	FormatFileName TimeFormat = "2006-01-02T15.04.05.000"
-
-	FormatCommon      TimeFormat = "2006-01-02 15:04:05.000"
-	FormatCommonWithT TimeFormat = "2006-01-02T15:04:05.000"
-
-	FormatEntire      TimeFormat = "2006-01-02 15:04:05.000Z07:00 MST"
-	FormatEntireWithT TimeFormat = "2006-01-02T15:04:05.000Z07:00 MST"
 
 	FormatB TimeFormat = "2006-01-02 3:04:05.000 PM Mon Jan"
 	FormatC TimeFormat = "3:04:05.000 PM Mon Jan"
