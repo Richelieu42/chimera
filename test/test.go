@@ -1,35 +1,24 @@
 package main
 
 import (
-	"fmt"
-	"github.com/imroc/req/v3"
-	"github.com/sirupsen/logrus"
+	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
-type APIResponse struct {
-	Origin string `json:"origin"`
-	Url    string `json:"url"`
-}
-
 func main() {
-	var logger req.Logger = logrus.StandardLogger()
-	fmt.Println(logger)
+	router := gin.Default()
 
-	var resp APIResponse
-	c := req.C()
+	// 定义一个处理 GET 请求的路由
+	router.GET("/redirect", func(c *gin.Context) {
+		// 通过 c.Redirect 方法进行重定向
+		c.Redirect(http.StatusMovedPermanently, "https://www.example.com")
+	})
 
-	c.SetScheme()
-	c.SetProxyURL()
-	c.SetBaseURL()
+	// 定义一个处理根路径的路由
+	router.GET("/", func(c *gin.Context) {
+		c.String(http.StatusOK, "Hello, World!")
+	})
 
-	c.R().Do()
-
-	err := c.Post("https://httpbin.org/post"). // method + url
-							SetBody("hello"). // set request body
-							Do().             // send request
-							Into(&resp)       // unmarshal response body
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println("My IP is", resp.Origin)
+	// 启动 HTTP 服务，监听 8080 端口
+	router.Run(":8080")
 }
