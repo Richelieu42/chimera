@@ -13,6 +13,8 @@ import (
 /*
 获取https过期时间
 	https://www.topgoer.cn/docs/gochajian/gofdgjh
+
+PS: 进返回第一个证书信息.
 */
 func GetCertificateInfo(url string) (info *x509.Certificate, err error) {
 	if !strKit.StartWith(url, "https://") {
@@ -37,6 +39,4 @@ func GetCertificateInfo(url string) (info *x509.Certificate, err error) {
 
 	info = resp.TLS.PeerCertificates[0]
 	return
-	//fmt.Println("过期时间:", certInfo.NotAfter)
-	//fmt.Println("组织信息:", certInfo.Subject)
 }
