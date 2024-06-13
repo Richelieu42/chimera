@@ -14,12 +14,11 @@ import (
 获取https过期时间
 	https://www.topgoer.cn/docs/gochajian/gofdgjh
 
-PS: 进返回第一个证书信息.
+@return 仅返回第一个证书信息（有多个的话）
 */
-func GetCertificateInfo(url string) (info *x509.Certificate, err error) {
+func GetCertificateInfo(url string) (*x509.Certificate, error) {
 	if !strKit.StartWith(url, "https://") {
-		err = errorKit.Newf("invalid url(%s)", url)
-		return
+		return nil, errorKit.Newf("invalid url(%s)", url)
 	}
 
 	client := &http.Client{
@@ -33,10 +32,13 @@ func GetCertificateInfo(url string) (info *x509.Certificate, err error) {
 
 	resp, err := client.Get(url)
 	if err != nil {
-		return
+		return nil, err
 	}
 	defer resp.Body.Close()
 
-	info = resp.TLS.PeerCertificates[0]
-	return
+	certs := resp.TLS.PeerCertificates
+	if len(certs) == 0 {
+		return nil, errorKit.Newf("length of certs is zero")
+	}
+	return certs[0], nil
 }

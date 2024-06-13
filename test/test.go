@@ -1,7 +1,16 @@
 package main
 
-import "github.com/richelieu-yang/chimera/v3/src/time/timeKit"
+import (
+	"fmt"
+)
 
 func main() {
-	timeKit.FormatCurrent()
+	var m map[string]interface{}
+	fmt.Println(len(m))
+
+	var s []string = nil
+	var s1 []string = []string{}
+
+	fmt.Println(len(s))
+	fmt.Println(len(s1))
 }
