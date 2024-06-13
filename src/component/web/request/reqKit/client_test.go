@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v3/src/netKit"
+	"github.com/sirupsen/logrus"
 	"testing"
 )
 
@@ -20,7 +21,8 @@ func TestNewClient(t *testing.T) {
 		}
 	}()
 
-	client := NewClient(WithDev())
+	//client := NewClient()
+	client := NewClient(WithDev(), WithLogger(logrus.StandardLogger()))
 
 	data, err := client.Post("http://127.0.0.1:8001/test").Do().ToBytes()
 	if err != nil {
