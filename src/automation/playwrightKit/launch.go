@@ -11,8 +11,8 @@ import (
 // LaunchBrowser
 /*
 @param browserName 		浏览器名称
-@param tempDirPath 		用于存放浏览器和操作系统的依赖
-@param launchOptions 	可以为nil，将采用默认值(headless)
+@param driverDir 		用于存放浏览器和操作系统的依赖（初次执行会下载，会有点慢）
+@param launchOptions 	可以为nil，将采用默认值(headless == true)
 */
 func LaunchBrowser(browserName string, driverDir string, installFlag bool,
 	launchOptions *playwright.BrowserTypeLaunchOptions) (pw *playwright.Playwright, browser playwright.Browser, err error) {
