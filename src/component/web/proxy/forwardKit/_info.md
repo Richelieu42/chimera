@@ -5,6 +5,7 @@
 
 ## 建议
 
-代理请求失败时，建议返回状态码502(http.StatusBadGateway).
+代理请求失败时，建议返回状态码502(http.StatusBadGateway, 网关错误).
+![_502.png](_502.png)
 
 
