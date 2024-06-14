@@ -2,15 +2,15 @@ package main
 
 import (
 	"fmt"
+	"github.com/richelieu-yang/chimera/v3/src/dataSizeKit"
+	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 )
 
 func main() {
-	var m map[string]interface{}
-	fmt.Println(len(m))
 
-	var s []string = nil
-	var s1 []string = []string{}
+	fmt.Println(timeKit.FormatCurrent("2006-01-02T15:04:05.000Z07:00 MST"))
 
-	fmt.Println(len(s))
-	fmt.Println(len(s1))
+	fmt.Println(timeKit.FormatCurrent("2006-01-02 15:04:05 -0700 MST"))
+
+	fmt.Println(dataSizeKit.MiB * 512)
 }
