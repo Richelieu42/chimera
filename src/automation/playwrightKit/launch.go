@@ -3,6 +3,7 @@ package playwrightKit
 import (
 	"github.com/playwright-community/playwright-go"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
 	"os"
 	"strings"
 )
@@ -13,6 +14,11 @@ import (
 */
 func LaunchBrowser(browserName string, tempDirPath string, installFlag bool,
 	launchOptions *playwright.BrowserTypeLaunchOptions) (pw *playwright.Playwright, browser playwright.Browser, err error) {
+
+	if err = fileKit.AssertNotExistOrIsDir(tempDirPath); err != nil {
+		return
+	}
+
 	if browserName == "" {
 		browserName = BrowserNameChromium
 	}
