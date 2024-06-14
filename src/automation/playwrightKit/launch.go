@@ -14,10 +14,10 @@ import (
 @param tempDirPath 		用于存放浏览器和操作系统的依赖
 @param launchOptions 	可以为nil，将采用默认值(headless)
 */
-func LaunchBrowser(browserName string, tempDirPath string, installFlag bool,
+func LaunchBrowser(browserName string, driverDir string, installFlag bool,
 	launchOptions *playwright.BrowserTypeLaunchOptions) (pw *playwright.Playwright, browser playwright.Browser, err error) {
 
-	if err = fileKit.AssertNotExistOrIsDir(tempDirPath); err != nil {
+	if err = fileKit.AssertNotExistOrIsDir(driverDir, true); err != nil {
 		return
 	}
 
@@ -33,7 +33,7 @@ func LaunchBrowser(browserName string, tempDirPath string, installFlag bool,
 	}
 
 	runOptions := &playwright.RunOptions{
-		DriverDirectory:     tempDirPath,
+		DriverDirectory:     driverDir,
 		SkipInstallBrowsers: false,
 		Browsers:            []string{browserName},
 		Verbose:             true,
