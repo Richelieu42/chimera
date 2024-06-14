@@ -10,7 +10,9 @@ import (
 
 // LaunchBrowser
 /*
-@param launchOptions 可以为nil
+@param browserName 		浏览器名称
+@param tempDirPath 		用于存放浏览器和操作系统的依赖
+@param launchOptions 	可以为nil，将采用默认值(headless)
 */
 func LaunchBrowser(browserName string, tempDirPath string, installFlag bool,
 	launchOptions *playwright.BrowserTypeLaunchOptions) (pw *playwright.Playwright, browser playwright.Browser, err error) {

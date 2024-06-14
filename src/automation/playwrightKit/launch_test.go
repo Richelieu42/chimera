@@ -2,13 +2,24 @@ package playwrightKit
 
 import (
 	"github.com/playwright-community/playwright-go"
+	"github.com/richelieu-yang/chimera/v3/src/consts"
+	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
+	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
 	"github.com/sirupsen/logrus"
 	"testing"
 	"time"
 )
 
 func TestLaunchBrowser(t *testing.T) {
-	_, browser, err := LaunchBrowser(BrowserNameChromium, "_temp", true, &playwright.BrowserTypeLaunchOptions{
+	{
+		wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
+		if err != nil {
+			panic(err)
+		}
+		logrus.Infof("wd: [%s].", wd)
+	}
+
+	_, browser, err := LaunchBrowser(BrowserNameChromium, "_playwright-deps", true, &playwright.BrowserTypeLaunchOptions{
 		Headless: playwright.Bool(false),
 	})
 	if err != nil {
