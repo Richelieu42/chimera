@@ -17,6 +17,19 @@ import (
 func LaunchBrowser(browserName string, driverDir string, installFlag bool,
 	launchOptions *playwright.BrowserTypeLaunchOptions) (pw *playwright.Playwright, browser playwright.Browser, err error) {
 
+	defer func() {
+		if err != nil {
+			if browser != nil {
+				_ = browser.Close()
+				browser = nil
+			}
+			if pw != nil {
+				_ = pw.Stop()
+				pw = nil
+			}
+		}
+	}()
+
 	if err = fileKit.AssertNotExistOrIsDir(driverDir, true); err != nil {
 		return
 	}
@@ -50,7 +63,7 @@ func LaunchBrowser(browserName string, driverDir string, installFlag bool,
 	}
 	pw, err = playwright.Run(runOptions)
 	if err != nil {
-		err = errorKit.Wrapf(err, "fail to start playwright")
+		err = errorKit.Wrapf(err, "fail to run playwright")
 		return
 	}
 
