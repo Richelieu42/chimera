@@ -19,12 +19,14 @@ func TestLaunchBrowser(t *testing.T) {
 		logrus.Infof("wd: [%s].", wd)
 	}
 
-	_, browser, err := LaunchBrowser(BrowserNameChromium, "_playwright-deps", true, &playwright.BrowserTypeLaunchOptions{
+	pw, browser, err := LaunchBrowser(BrowserNameChromium, "_playwright-deps", true, &playwright.BrowserTypeLaunchOptions{
 		Headless: playwright.Bool(false),
 	})
 	if err != nil {
 		panic(err)
 	}
+	defer pw.Stop()
+	defer browser.Close()
 
 	page, err := browser.NewPage()
 	if err != nil {
@@ -35,5 +37,4 @@ func TestLaunchBrowser(t *testing.T) {
 	}
 
 	time.Sleep(time.Second * 10)
-
 }

@@ -44,11 +44,13 @@ func LaunchBrowser(browserName string, driverDir string, installFlag bool,
 	if installFlag {
 		err = playwright.Install(runOptions)
 		if err != nil {
+			err = errorKit.Wrapf(err, "fail to install dependencies")
 			return
 		}
 	}
 	pw, err = playwright.Run(runOptions)
 	if err != nil {
+		err = errorKit.Wrapf(err, "fail to start playwright")
 		return
 	}
 
@@ -66,6 +68,10 @@ func LaunchBrowser(browserName string, driverDir string, installFlag bool,
 	default:
 		// Richelieu: 理论上代码不会走到此处
 		err = errorKit.Newf("invalid browserName(%s)", browserName)
+		return
+	}
+	if err != nil {
+		err = errorKit.Wrapf(err, "fail to launch browser(%s)", browserName)
 	}
 	return
 }
