@@ -23,6 +23,14 @@ func main() {
 	defer pw.Stop()
 	defer browser.Close()
 
+	ctx, err := browser.NewContext()
+	if err != nil {
+		panic(err)
+	}
+	page, err := ctx.NewPage()
+	if err != nil {
+		panic(err)
+	}
 	page, err := browser.NewPage()
 	if err != nil {
 		panic(err)
@@ -41,11 +49,7 @@ func main() {
 			// 此时不会继续接受输入
 			logrus.Info("you needn't to input text")
 		case "pages":
-			contexts := browser.Contexts()
-			var pages []playwright.Page
-			for _, context := range contexts {
-				pages = append(pages, context.Pages()...)
-			}
+			pages := playwrightKit.GetBrowserPages(browser)
 			logrus.Infof("len(pages): %d", len(pages))
 			for _, page := range pages {
 				logrus.Infof("page.URL(): %s", page.URL())
