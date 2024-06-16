@@ -23,14 +23,14 @@ func main() {
 	defer pw.Stop()
 	defer browser.Close()
 
-	ctx, err := browser.NewContext()
-	if err != nil {
-		panic(err)
-	}
-	page, err := ctx.NewPage()
-	if err != nil {
-		panic(err)
-	}
+	//ctx, err := browser.NewContext()
+	//if err != nil {
+	//	panic(err)
+	//}
+	//page, err := ctx.NewPage()
+	//if err != nil {
+	//	panic(err)
+	//}
 	page, err := browser.NewPage()
 	if err != nil {
 		panic(err)
