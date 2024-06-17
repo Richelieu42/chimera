@@ -3,6 +3,8 @@ package reqKit
 import (
 	"github.com/imroc/req/v3"
 	"github.com/richelieu-yang/chimera/v3/src/core/mathKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
+	"os"
 	"time"
 )
 
@@ -41,13 +43,15 @@ type (
 	ClientOption func(*clientOptions)
 )
 
-func loadClientOptions(baseClient *req.Client, options ...ClientOption) *clientOptions {
+func loadClientOptions(options ...ClientOption) *clientOptions {
+	logger := logrusKit.NewLogger(logrusKit.WithOutput(os.Stdout), logrusKit.WithMsgPrefix("[imroc/req] "))
+
 	opts := &clientOptions{
 		Dev:                false,
 		Timeout:            DefaultTimeout,
 		InsecureSkipVerify: true,
 		// imroc/req默认: 输出到 os.Stdout
-		Logger: baseClient.GetLogger(),
+		Logger: logger,
 	}
 
 	for _, option := range options {

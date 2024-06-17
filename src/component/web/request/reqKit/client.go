@@ -7,7 +7,7 @@ import (
 
 func NewClient(options ...ClientOption) (client *req.Client) {
 	client = req.C()
-	opts := loadClientOptions(client, options...)
+	opts := loadClientOptions(options...)
 
 	/* 开发者模式（甩锅） */
 	if opts.Dev {

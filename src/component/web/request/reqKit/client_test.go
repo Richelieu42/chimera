@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v3/src/netKit"
-	"github.com/sirupsen/logrus"
 	"testing"
+	"time"
 )
 
 func TestNewClient(t *testing.T) {
@@ -21,9 +21,11 @@ func TestNewClient(t *testing.T) {
 		}
 	}()
 
-	//client := NewClient()
-	client := NewClient(WithDev(), WithLogger(logrus.StandardLogger()))
+	// 等一会，让web服务先启动
+	time.Sleep(time.Millisecond * 100)
 
+	//client := NewClient()
+	client := NewClient(WithDev())
 	data, err := client.Post("http://127.0.0.1:8001/test").Do().ToBytes()
 	if err != nil {
 		panic(err)
