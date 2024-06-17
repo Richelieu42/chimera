@@ -19,6 +19,8 @@ func TestLaunchBrowser(t *testing.T) {
 		logrus.Infof("wd: [%s].", wd)
 	}
 
+	url := "https://www.moulem.com/"
+
 	pw, browser, err := LaunchBrowser(BrowserNameChromium, "_playwright-deps", true, &playwright.BrowserTypeLaunchOptions{
 		Headless: playwright.Bool(false),
 	})
@@ -27,14 +29,51 @@ func TestLaunchBrowser(t *testing.T) {
 	}
 	defer pw.Stop()
 	defer browser.Close()
-
-	page, err := browser.NewPage()
+	bctx, err := browser.NewContext()
 	if err != nil {
-		logrus.Fatalf("could not create page: %v", err)
+		panic(err)
 	}
-	if _, err = page.Goto("https://news.ycombinator.com"); err != nil {
-		logrus.Fatalf("could not goto: %v", err)
+	page, err := bctx.NewPage()
+	if err != nil {
+		panic(err)
+	}
+	if _, err = page.Goto(url); err != nil {
+		panic(err)
 	}
 
+	logrus.Info("sleep starts")
 	time.Sleep(time.Second * 10)
+	logrus.Info("sleep ends")
+
+	{
+		locator := page.Locator("input#search")
+		count, err := locator.Count()
+		if err != nil {
+			panic(err)
+		}
+		logrus.Infof("count: %d", count)
+		if err := locator.Fill("hello world!"); err != nil {
+			panic(err)
+		}
+	}
+
+	{
+		locator := page.Locator("input#searchBtn")
+		count, err := locator.Count()
+		if err != nil {
+			panic(err)
+		}
+		logrus.Infof("count: %d", count)
+		if err := locator.Click(); err != nil {
+			panic(err)
+		}
+	}
+
+	//resp, err := page.Reload()
+	//if err != nil {
+	//	panic(err)
+	//}
+	//logrus.Infof("reload: %t", resp.Ok())
+
+	select {}
 }

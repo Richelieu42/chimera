@@ -51,10 +51,14 @@ tasks:
     cmds:
       - task: build
         vars: { OS: windows, ARCH: 386, CC: i686-w64-mingw32-gcc, CXX: i686-w64-mingw32-g++, TAGS: go_json, UPX: true }
-  windows-amd64:
+  windows-amd64-noavx:
     cmds:
       - task: build
         vars: { OS: windows, ARCH: amd64, CC: x86_64-w64-mingw32-gcc, CXX: x86_64-w64-mingw32-g++, TAGS: go_json, UPX: true }
+  windows-amd64:
+    cmds:
+      - task: build
+        vars: { OS: windows, ARCH: amd64, CC: x86_64-w64-mingw32-gcc, CXX: x86_64-w64-mingw32-g++, TAGS: sonic avx, UPX: true }
   darwin-arm64:
     cmds:
       - task: build
