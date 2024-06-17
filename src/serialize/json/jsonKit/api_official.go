@@ -1,9 +1,3 @@
-//go:build !((linux || windows || darwin) && sonic && avx && go1.17 && amd64)
-
-/*
-	//go:build !(linux || windows || darwin)
-*/
-
 package jsonKit
 
 //import "encoding/json"
