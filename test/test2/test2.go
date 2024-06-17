@@ -1,15 +1,15 @@
 package main
 
 import (
-	"github.com/goccy/go-json"
-	"github.com/richelieu-yang/chimera/v3/src/idKit"
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
+	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
 
 	"fmt"
 )
 
 func main() {
-	json.Marshal()
+	fmt.Println(jsonKit.GetLibrary())
 
-	fmt.Println(idKit.NewXid())
+	//json.Marshal()
+	//fmt.Println(idKit.NewXid())
 }
