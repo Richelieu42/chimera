@@ -31,32 +31,44 @@ func main() {
 	}
 
 	logrus.Info("sleep starts")
-	time.Sleep(time.Second * 10)
+	time.Sleep(time.Second * 6)
 	logrus.Info("sleep ends")
 
 	{
-		locator := page.Locator("input#search")
-		count, err := locator.Count()
+		data, err := page.Screenshot(playwright.PageScreenshotOptions{
+			Path:     playwright.String("_test.png"),
+			Type:     playwright.ScreenshotTypePng,
+			FullPage: playwright.Bool(true),
+		})
 		if err != nil {
 			panic(err)
 		}
-		logrus.Infof("count: %d", count)
-		if err := locator.Fill("hello world!"); err != nil {
-			panic(err)
-		}
+		logrus.Info(len(data))
 	}
 
-	{
-		locator := page.Locator("input#searchBtn")
-		count, err := locator.Count()
-		if err != nil {
-			panic(err)
-		}
-		logrus.Infof("count: %d", count)
-		if err := locator.Click(); err != nil {
-			panic(err)
-		}
-	}
+	//{
+	//	locator := page.Locator("input#search")
+	//	count, err := locator.Count()
+	//	if err != nil {
+	//		panic(err)
+	//	}
+	//	logrus.Infof("count: %d", count)
+	//	if err := locator.Fill("hello world!"); err != nil {
+	//		panic(err)
+	//	}
+	//}
+	//
+	//{
+	//	locator := page.Locator("input#searchBtn")
+	//	count, err := locator.Count()
+	//	if err != nil {
+	//		panic(err)
+	//	}
+	//	logrus.Infof("count: %d", count)
+	//	if err := locator.Click(); err != nil {
+	//		panic(err)
+	//	}
+	//}
 
 	//resp, err := page.Reload()
 	//if err != nil {
