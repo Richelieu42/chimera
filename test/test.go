@@ -1,80 +1,23 @@
 package main
 
 import (
-	"github.com/playwright-community/playwright-go"
-	"github.com/richelieu-yang/chimera/v3/src/automation/playwrightKit"
 	"github.com/sirupsen/logrus"
-	"time"
 )
 
 func main() {
-	url := "https://www.moulem.com/"
+	// 创建一个新的 logrus Logger 实例
+	logger := logrus.New()
 
-	pw, browser, err := playwrightKit.LaunchBrowser(playwrightKit.BrowserNameChromium, "_playwright-deps", true, &playwright.BrowserTypeLaunchOptions{
-		Headless: playwright.Bool(false),
+	// 配置 TextFormatter 带上颜色
+	logger.SetFormatter(&logrus.TextFormatter{
+		ForceColors:      true,                  // 强制颜色输出
+		FullTimestamp:    true,                  // 显示完整时间戳
+		TimestampFormat:  "2006-01-02 15:04:05", // 自定义时间戳格式
+		QuoteEmptyFields: false,                 // 对空字段加引号
 	})
-	if err != nil {
-		panic(err)
-	}
-	defer pw.Stop()
-	defer browser.Close()
-	bctx, err := browser.NewContext()
-	if err != nil {
-		panic(err)
-	}
-	page, err := bctx.NewPage()
-	if err != nil {
-		panic(err)
-	}
-	if _, err = page.Goto(url); err != nil {
-		panic(err)
-	}
 
-	logrus.Info("sleep starts")
-	time.Sleep(time.Second * 6)
-	logrus.Info("sleep ends")
-
-	{
-		data, err := page.Screenshot(playwright.PageScreenshotOptions{
-			Path:     playwright.String("_test.png"),
-			Type:     playwright.ScreenshotTypePng,
-			FullPage: playwright.Bool(true),
-		})
-		if err != nil {
-			panic(err)
-		}
-		logrus.Info(len(data))
-	}
-
-	//{
-	//	locator := page.Locator("input#search")
-	//	count, err := locator.Count()
-	//	if err != nil {
-	//		panic(err)
-	//	}
-	//	logrus.Infof("count: %d", count)
-	//	if err := locator.Fill("hello world!"); err != nil {
-	//		panic(err)
-	//	}
-	//}
-	//
-	//{
-	//	locator := page.Locator("input#searchBtn")
-	//	count, err := locator.Count()
-	//	if err != nil {
-	//		panic(err)
-	//	}
-	//	logrus.Infof("count: %d", count)
-	//	if err := locator.Click(); err != nil {
-	//		panic(err)
-	//	}
-	//}
-
-	//resp, err := page.Reload()
-	//if err != nil {
-	//	panic(err)
-	//}
-	//logrus.Infof("reload: %t", resp.Ok())
-
-	select {}
+	// 示例日志输出
+	logger.Info("This is an info message")
+	logger.Warn("This is a warning message")
+	logger.Error("This is an error message")
 }

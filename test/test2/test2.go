@@ -1,18 +1,19 @@
 package main
 
 import (
-	"github.com/playwright-community/playwright-go"
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
-	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
-
-	"fmt"
+	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
-	fmt.Println(jsonKit.GetLibrary())
+	logrusKit.MustSetUp(nil)
 
-	playwright.String()
-
-	//json.Marshal()
-	//fmt.Println(idKit.NewXid())
+	// 示例日志输出
+	logrus.WithFields(logrus.Fields{
+		"a": 0,
+		"b": 1,
+	}).Info("This is an info message1111111111111")
+	logrus.Warn("This is a warning message")
+	logrus.Error("This is an error message")
 }
