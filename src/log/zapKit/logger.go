@@ -3,18 +3,13 @@ package zapKit
 import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"os"
 )
 
 // NewLogger
 /*
-@param out 		可以为nil，将输出到os.Stdout
-@param options 	可以为nil，默认: DEBUG级别、人类可读的多行输出
+@param options 	可以为nil，默认: 输出到os.Stdout、DEBUG级别、人类可读的多行输出
 */
-func NewLogger(out zapcore.WriteSyncer, options ...LoggerOption) (logger *zap.Logger) {
-	if out == nil {
-		out = zapcore.AddSync(os.Stdout)
-	}
+func NewLogger(options ...LoggerOption) (logger *zap.Logger) {
 	opts := loadOptions(options...)
 
 	encoderConfig := zap.NewProductionEncoderConfig()
@@ -28,7 +23,7 @@ func NewLogger(out zapcore.WriteSyncer, options ...LoggerOption) (logger *zap.Lo
 		encoder = zapcore.NewJSONEncoder(encoderConfig)
 	}
 
-	core := zapcore.NewCore(encoder, out, opts.Level)
+	core := zapcore.NewCore(encoder, opts.WriteSyncer, opts.Level)
 	logger = zap.New(core, zap.WithCaller(opts.Caller))
 	return
 }

@@ -9,7 +9,7 @@ import (
 
 func TestNewLogger(t *testing.T) {
 	{
-		logger := NewLogger(nil)
+		logger := NewLogger()
 		defer logger.Sync()
 
 		logger.Debug("This is a debug message", zap.String("key", "value"))
@@ -21,7 +21,7 @@ func TestNewLogger(t *testing.T) {
 	fmt.Println("------")
 
 	{
-		logger := NewLogger(nil, WithOutputTypeJson())
+		logger := NewLogger(WithOutputTypeJson())
 		defer logger.Sync()
 
 		logger.Debug("This is a debug message", zap.String("key", "value"))

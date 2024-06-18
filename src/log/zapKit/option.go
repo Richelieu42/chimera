@@ -1,6 +1,9 @@
 package zapKit
 
-import "go.uber.org/zap/zapcore"
+import (
+	"go.uber.org/zap/zapcore"
+	"os"
+)
 
 const (
 	// OutputTypeConsole 人类可读的多行输出
@@ -14,8 +17,12 @@ type (
 	outputType uint8
 
 	loggerOptions struct {
+		WriteSyncer zapcore.WriteSyncer
+
+		// OutputType 输出类型
 		OutputType outputType
 
+		// Level 日志级别
 		Level zapcore.Level
 
 		// Caller true: 输出带有caller字段
@@ -34,6 +41,7 @@ func (opts *loggerOptions) IsOutputTypeConsole() bool {
 
 func loadOptions(options ...LoggerOption) *loggerOptions {
 	opts := &loggerOptions{
+		WriteSyncer: nil,
 		OutputType:  OutputTypeConsole,
 		Level:       zapcore.DebugLevel,
 		Caller:      true,
@@ -45,6 +53,10 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 		option(opts)
 	}
 
+	// WriteSyncer
+	if opts.WriteSyncer == nil {
+		opts.WriteSyncer = zapcore.AddSync(os.Stdout)
+	}
 	// OutputType
 	switch opts.OutputType {
 	case OutputTypeConsole, OutputTypeJson:
@@ -98,5 +110,17 @@ func WithCaller(caller bool) LoggerOption {
 func WithEncodeLevel(encodeLevel zapcore.LevelEncoder) LoggerOption {
 	return func(opts *loggerOptions) {
 		opts.EncodeLevel = encodeLevel
+	}
+}
+
+func WithEncodeTime(encodeTime zapcore.TimeEncoder) LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.EncodeTime = encodeTime
+	}
+}
+
+func WithWriteSyncer(writeSyncer zapcore.WriteSyncer) LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.WriteSyncer = writeSyncer
 	}
 }
