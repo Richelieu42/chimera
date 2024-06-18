@@ -18,10 +18,11 @@ type (
 
 		Level zapcore.Level
 
-		ColorWhenConsoleEncoder bool
-
 		// Caller true: 输出带有caller字段
 		Caller bool
+
+		EncodeLevel zapcore.LevelEncoder
+		EncodeTime  zapcore.TimeEncoder
 	}
 
 	LoggerOption func(opts *loggerOptions)
@@ -33,20 +34,38 @@ func (opts *loggerOptions) IsOutputTypeConsole() bool {
 
 func loadOptions(options ...LoggerOption) *loggerOptions {
 	opts := &loggerOptions{
-		OutputType:              OutputTypeConsole,
-		Level:                   zapcore.DebugLevel,
-		ColorWhenConsoleEncoder: true,
-		Caller:                  true,
+		OutputType:  OutputTypeConsole,
+		Level:       zapcore.DebugLevel,
+		Caller:      true,
+		EncodeLevel: nil,
+		EncodeTime:  nil,
 	}
 
 	for _, option := range options {
 		option(opts)
 	}
 
+	// OutputType
 	switch opts.OutputType {
 	case OutputTypeConsole, OutputTypeJson:
 	default:
 		opts.OutputType = OutputTypeConsole
+	}
+	// EncodeLevel
+	if opts.EncodeLevel == nil {
+		if opts.IsOutputTypeConsole() {
+			opts.EncodeLevel = zapcore.CapitalColorLevelEncoder
+		} else {
+			opts.EncodeLevel = zapcore.CapitalLevelEncoder
+		}
+	}
+	// EncodeTime
+	if opts.EncodeTime == nil {
+		if opts.IsOutputTypeConsole() {
+			opts.EncodeTime = zapcore.ISO8601TimeEncoder
+		} else {
+			opts.EncodeTime = zapcore.EpochTimeEncoder
+		}
 	}
 
 	return opts
@@ -70,14 +89,14 @@ func WithLevel(level zapcore.Level) LoggerOption {
 	}
 }
 
-func WithColorWhenConsoleEncoder(colorWhenConsoleEncoder bool) LoggerOption {
-	return func(opts *loggerOptions) {
-		opts.ColorWhenConsoleEncoder = colorWhenConsoleEncoder
-	}
-}
-
 func WithCaller(caller bool) LoggerOption {
 	return func(opts *loggerOptions) {
 		opts.Caller = caller
+	}
+}
+
+func WithEncodeLevel(encodeLevel zapcore.LevelEncoder) LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.EncodeLevel = encodeLevel
 	}
 }

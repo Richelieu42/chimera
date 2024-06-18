@@ -18,13 +18,8 @@ func NewLogger(out zapcore.WriteSyncer, options ...LoggerOption) (logger *zap.Lo
 	opts := loadOptions(options...)
 
 	encoderConfig := zap.NewProductionEncoderConfig()
-	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
-
-	if opts.IsOutputTypeConsole() && opts.ColorWhenConsoleEncoder {
-		encoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
-	} else {
-		encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
-	}
+	encoderConfig.EncodeTime = opts.EncodeTime
+	encoderConfig.EncodeLevel = opts.EncodeLevel
 
 	var encoder zapcore.Encoder
 	if opts.IsOutputTypeConsole() {
