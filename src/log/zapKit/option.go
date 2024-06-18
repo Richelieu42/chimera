@@ -28,6 +28,9 @@ type (
 		// Caller true: 输出带有caller字段
 		Caller bool
 
+		// Development 是否是开发环境？会影响 zap.Logger 的DPanic方法
+		Development bool
+
 		EncodeLevel zapcore.LevelEncoder
 		EncodeTime  zapcore.TimeEncoder
 	}
@@ -45,6 +48,7 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 		OutputType:  OutputTypeConsole,
 		Level:       zapcore.DebugLevel,
 		Caller:      true,
+		Development: false,
 		EncodeLevel: nil,
 		EncodeTime:  nil,
 	}
