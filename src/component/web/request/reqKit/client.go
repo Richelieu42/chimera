@@ -5,6 +5,17 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
 )
 
+var (
+	defClient = NewClient()
+)
+
+func SetDefaultClient(client *req.Client) {
+	if client == nil {
+		return
+	}
+	defClient = client
+}
+
 func NewClient(options ...ClientOption) (client *req.Client) {
 	client = req.C()
 	opts := loadClientOptions(options...)

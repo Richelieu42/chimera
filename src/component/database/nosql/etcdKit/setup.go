@@ -50,7 +50,7 @@ func setUp(config *Config, logPath string) (err error) {
 
 			// logger日志级别 等同于 logrus的全局日志级别
 			var level zapcore.Level
-			level, err = zapKit.ParseLevel(logrus.GetLevel().String())
+			level, err = zapKit.StringToLevel(logrus.GetLevel().String())
 			if err != nil {
 				return
 			}
