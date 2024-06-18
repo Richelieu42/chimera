@@ -128,3 +128,9 @@ func WithWriteSyncer(writeSyncer zapcore.WriteSyncer) LoggerOption {
 		opts.WriteSyncer = writeSyncer
 	}
 }
+
+func WithDevelopment() LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.Development = true
+	}
+}
