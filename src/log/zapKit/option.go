@@ -29,6 +29,10 @@ type (
 		Caller bool
 
 		// Development 是否是开发环境？会影响 zap.Logger 的DPanic方法
+		/*
+			true:	开发环境
+			false:	生产环境
+		*/
 		Development bool
 
 		EncodeLevel zapcore.LevelEncoder
@@ -61,7 +65,7 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 	if opts.WriteSyncer == nil {
 		opts.WriteSyncer = zapcore.AddSync(os.Stdout)
 	}
-	// OutputType
+	// outputType
 	switch opts.OutputType {
 	case OutputTypeConsole, OutputTypeJson:
 	default:
