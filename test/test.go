@@ -7,16 +7,34 @@ import (
 )
 
 func main() {
-	// JSON Encoder
-	jsonEncoder := zapcore.NewJSONEncoder(zap.NewProductionEncoderConfig())
-	// Console Encoder
-	consoleEncoder := zapcore.NewConsoleEncoder(zap.NewDevelopmentEncoderConfig())
+	logger, _ := zap.NewProduction()
+	defer logger.Sync()
 
-	// 创建Logger，使用JSON格式
-	loggerJSON := zap.New(zapcore.NewCore(jsonEncoder, zapcore.AddSync(os.Stdout), zap.InfoLevel))
-	loggerJSON.Info("This is a JSON formatted log", zap.String("key", "value"))
+	prefixLogger := logger.With(zap.String("prefix", "[PREFIX]"))
 
-	// 创建Logger，使用Console格式
-	loggerConsole := zap.New(zapcore.NewCore(consoleEncoder, zapcore.AddSync(os.Stdout), zap.InfoLevel))
-	loggerConsole.Info("This is a Console formatted log", zap.String("key", "value"))
+	prefixLogger.Info("This is a log message")
+}
+
+func NewLogger() *zap.Logger {
+	jsonFlag := true
+
+	encoderConfig := zap.NewProductionEncoderConfig()
+	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
+	encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
+	//encoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
+
+	var encoder zapcore.Encoder
+	if jsonFlag {
+		encoder = zapcore.NewJSONEncoder(encoderConfig)
+	} else {
+		encoder = zapcore.NewConsoleEncoder(encoderConfig)
+	}
+
+	// Create a core that writes logs to stdout
+	core := zapcore.NewCore(encoder, zapcore.AddSync(os.Stdout), zapcore.DebugLevel)
+
+	// Create a logger with the core
+	logger := zap.New(core, zap.AddCaller())
+
+	return logger
 }

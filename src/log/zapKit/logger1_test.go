@@ -13,7 +13,7 @@ func TestNewLogger(t *testing.T) {
 		panic(err)
 	}
 
-	logger, err := NewLogger(writer, zap.InfoLevel)
+	logger, err := NewLogger1(writer, zap.InfoLevel)
 	if err != nil {
 		panic(err)
 	}

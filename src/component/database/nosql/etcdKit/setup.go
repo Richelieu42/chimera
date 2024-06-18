@@ -55,7 +55,7 @@ func setUp(config *Config, logPath string) (err error) {
 				return
 			}
 
-			logger, err = zapKit.NewLogger(writer, level)
+			logger, err = zapKit.NewLogger1(writer, level)
 			if err != nil {
 				return
 			}

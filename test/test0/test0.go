@@ -2,32 +2,29 @@ package main
 
 import (
 	"go.uber.org/zap"
-	"time"
+	"go.uber.org/zap/zapcore"
 )
 
 func main() {
-	url := "https:///www.baidu.com"
+	logger, _ := zap.NewDevelopment()
 
-	zap.New()
+	logger.Debug("This is a debug message.")
+	logger.Info("This is an info message.")
+	logger.Warn("This is an warn message.")
+	logger.Error("This is an error message.")
 
-	zap.Config{}
-	zap.SamplingConfig{}
+	zap.LevelFlag()
+	zap.NewAtomicLevel()
+	zap.ParseAtomicLevel()
 
-	zap.NewDevelopment()
-	zap.NewProduction()
-	zap.NewExample()
-	zap.NewNop()
+	zapcore.ParseLevel()
+	zapcore.LevelOf()
 
-	zap.L()
+	zapcore.NewConsoleEncoder()
+	zapcore.NewJSONEncoder()
 
-	logger, _ := zap.NewProduction()
-	defer logger.Sync() // flushes buffer, if any
-	sugar := logger.Sugar()
-	sugar.Infow("failed to fetch URL",
-		// Structured context as loosely typed key-value pairs.
-		"url", url,
-		"attempt", 3,
-		"backoff", time.Second,
-	)
-	sugar.Infof("Failed to fetch URL: %s", url)
+	zap.NewDevelopmentEncoderConfig()
+
+	zapcore.NewJSONEncoder()
+	zapcore.NewJSONEncoder()
 }
