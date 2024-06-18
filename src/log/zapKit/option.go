@@ -27,6 +27,10 @@ type (
 	LoggerOption func(opts *loggerOptions)
 )
 
+func (opts *loggerOptions) IsOutputTypeConsole() bool {
+	return opts.OutputType == OutputTypeConsole
+}
+
 func loadOptions(options ...LoggerOption) *loggerOptions {
 	opts := &loggerOptions{
 		OutputType:              OutputTypeConsole,
@@ -46,4 +50,34 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 	}
 
 	return opts
+}
+
+func WithOutputTypeJson() LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.OutputType = OutputTypeJson
+	}
+}
+
+func WithOutputTypeConsole() LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.OutputType = OutputTypeConsole
+	}
+}
+
+func WithLevel(level zapcore.Level) LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.Level = level
+	}
+}
+
+func WithColorWhenConsoleEncoder(colorWhenConsoleEncoder bool) LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.ColorWhenConsoleEncoder = colorWhenConsoleEncoder
+	}
+}
+
+func WithCaller(caller bool) LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.Caller = caller
+	}
 }
