@@ -1,40 +1,17 @@
 package main
 
 import (
+	"context"
+	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
-	"os"
 )
 
 func main() {
-	logger, _ := zap.NewProduction()
+	logger := zapKit.NewLogger(zapKit.WithOutputTypeJson())
 	defer logger.Sync()
 
-	prefixLogger := logger.With(zap.String("prefix", "[PREFIX]"))
-
-	prefixLogger.Info("This is a log message")
-}
-
-func NewLogger() *zap.Logger {
-	jsonFlag := true
-
-	encoderConfig := zap.NewProductionEncoderConfig()
-	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
-	encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
-	//encoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
-
-	var encoder zapcore.Encoder
-	if jsonFlag {
-		encoder = zapcore.NewJSONEncoder(encoderConfig)
-	} else {
-		encoder = zapcore.NewConsoleEncoder(encoderConfig)
-	}
-
-	// Create a core that writes logs to stdout
-	core := zapcore.NewCore(encoder, zapcore.AddSync(os.Stdout), zapcore.DebugLevel)
-
-	// Create a logger with the core
-	logger := zap.New(core, zap.AddCaller())
-
-	return logger
+	logger.Debug("This is a debug message", zap.String("key", "value"))
+	logger.Info("This is an info message")
+	logger.Warn("This is a warning message")
+	logger.Error("This is an error message0\nThis is an error message1", zap.String("key", "value"), zap.Error(context.Canceled))
 }
