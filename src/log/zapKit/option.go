@@ -18,6 +18,13 @@ type (
 	outputType uint8
 
 	loggerOptions struct {
+		// Development 是否是开发环境？会影响 zap.Logger 的DPanic方法
+		/*
+			true:	开发环境
+			false:	（默认）生产环境
+		*/
+		Development bool
+
 		WriteSyncer zapcore.WriteSyncer
 
 		// OutputType 输出类型
@@ -27,14 +34,8 @@ type (
 		Level zapcore.Level
 
 		// Caller true: 输出带有caller字段
-		Caller bool
-
-		// Development 是否是开发环境？会影响 zap.Logger 的DPanic方法
-		/*
-			true:	开发环境
-			false:	生产环境
-		*/
-		Development bool
+		Caller     bool
+		CallerSkip uint
 
 		EncodeLevel zapcore.LevelEncoder
 		EncodeTime  zapcore.TimeEncoder
@@ -92,6 +93,12 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 	return opts
 }
 
+func WithDevelopment(flag bool) LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.Development = flag
+	}
+}
+
 func WithOutputTypeJson() LoggerOption {
 	return func(opts *loggerOptions) {
 		opts.OutputType = OutputTypeJson
@@ -116,6 +123,12 @@ func WithCaller(caller bool) LoggerOption {
 	}
 }
 
+func WithCallerSkip(skip uint) LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.CallerSkip = skip
+	}
+}
+
 func WithEncodeLevel(encodeLevel zapcore.LevelEncoder) LoggerOption {
 	return func(opts *loggerOptions) {
 		opts.EncodeLevel = encodeLevel
@@ -128,32 +141,22 @@ func WithEncodeTime(encodeTime zapcore.TimeEncoder) LoggerOption {
 	}
 }
 
-func WithWriteSyncer(writeSyncer zapcore.WriteSyncer) LoggerOption {
-	return func(opts *loggerOptions) {
-		opts.WriteSyncer = writeSyncer
-	}
-}
-
 // WithWriter 设置输出
 func WithWriter(w io.Writer) LoggerOption {
 	return func(opts *loggerOptions) {
-		if w != nil {
-			opts.WriteSyncer = NewWriteSyncer(w)
+		if w == nil {
+			return
 		}
+		opts.WriteSyncer = NewWriteSyncer(w)
 	}
 }
 
-// WithLockedWriter 设置输出（会给输出加锁，并发安全地!!!）
+// WithLockedWriter 设置输出（会给输出加锁，使并发安全!!!）
 func WithLockedWriter(w io.Writer) LoggerOption {
 	return func(opts *loggerOptions) {
-		if w != nil {
-			opts.WriteSyncer = NewWriteSyncerWithLock(w)
+		if w == nil {
+			return
 		}
-	}
-}
-
-func WithDevelopment(flag bool) LoggerOption {
-	return func(opts *loggerOptions) {
-		opts.Development = flag
+		opts.WriteSyncer = NewWriteSyncerWithLock(w)
 	}
 }
