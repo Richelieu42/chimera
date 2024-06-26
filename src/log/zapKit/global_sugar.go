@@ -6,6 +6,9 @@ func Debugf(template string, args ...interface{}) {
 }
 
 // Debugw 结构化输出的信息日志，使用键值对的方式输出，更加适合记录结构化数据.
+/*
+@param keysAndValues e.g. "key", "value", "flag", true
+*/
 func Debugw(msg string, keysAndValues ...interface{}) {
 	sl.Debugw(msg, keysAndValues...)
 }
