@@ -37,3 +37,8 @@ func NewLogger(options ...LoggerOption) (logger *zap.Logger) {
 	logger = zap.New(core, zapOptions...)
 	return
 }
+
+func NewSugarLogger(options ...LoggerOption) *zap.SugaredLogger {
+	logger := NewLogger(options...)
+	return logger.Sugar()
+}
