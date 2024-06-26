@@ -9,7 +9,7 @@ import (
 
 func TestNewLogger(t *testing.T) {
 	{
-		logger := NewLogger()
+		logger := NewLogger(WithOutputTypeConsole(), WithInitialFields(zap.Bool("c", true)))
 		defer logger.Sync()
 
 		logger.Debug("This is a debug message", zap.String("key", "value"))
