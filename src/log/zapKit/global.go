@@ -7,7 +7,10 @@ var (
 )
 
 func init() {
-	sl = NewSugarLogger()
+	/*
+		WithCallerSkip(1): 跳过1层，因为进行了1层封装
+	*/
+	sl = NewSugarLogger(WithCallerSkip(1))
 }
 
 func Info(args ...interface{}) {
