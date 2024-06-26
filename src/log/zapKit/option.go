@@ -163,11 +163,17 @@ func WithLockedWriter(w io.Writer) LoggerOption {
 }
 
 // WithWriteSyncer 设置输出.
-func WithWriteSyncer(writeSyncer zapcore.WriteSyncer) LoggerOption {
+func WithWriteSyncer(writeSyncers ...zapcore.WriteSyncer) LoggerOption {
 	return func(opts *loggerOptions) {
-		if writeSyncer == nil {
+		sliceKit.P
+
+		switch len(writeSyncers) {
+		case 0:
 			return
+		case 1:
+			opts.WriteSyncer = writeSyncers[0]
+		default:
+			opts.WriteSyncer = MultiWriteSyncer(writeSyncers...)
 		}
-		opts.WriteSyncer = writeSyncer
 	}
 }

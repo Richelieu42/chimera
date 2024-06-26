@@ -1,32 +1,30 @@
 package main
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
-	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
+	"fmt"
+	"reflect"
 )
 
+// RemoveZeroValues removes zero values from a generic slice
+/*
+PS: 使用了反射，性能可能有问题，要避免大量调用!!!
+*/
+func RemoveZeroValues[T comparable](slice []T) []T {
+	var result []T
+	var zeroValue T
+
+	for _, v := range slice {
+		if !reflect.DeepEqual(v, zeroValue) {
+			result = append(result, v)
+		}
+	}
+	return result
+}
+
 func main() {
-	zapcore.NewMultiWriteSyncer()
-	zapcore.NewLazyWith()
+	intSlice := []int{0, 1, 2, 0, 3, 0, 4}
+	stringSlice := []string{"", "hello", "", "world", ""}
 
-	defer zapKit.Sync()
-
-	//zapKit.Info("hello", "world")
-	zapKit.Info("hello", zap.String("key", "value"), zap.Bool("flag", true))
-	//zapKit.Infof("hello %s", "world")
-	//zapKit.Infow("hello")
-	//zapKit.Infoln("hello", "world")
-	//
-	//zapKit.Infow("This is an info message with structured data",
-	//	"key1", "value1",
-	//	"key2", 42,
-	//)
-
-	logger := zapKit.NewLogger()
-	logger.Info("hello", zap.String("key", "value"), zap.Bool("flag", true))
-
-	logger.Info()
-
-	logger.Sugar().Info("hello", zap.String("key", "value"), zap.Bool("flag", true))
+	fmt.Println(RemoveZeroValues(intSlice))    // Output: [1 2 3 4]
+	fmt.Println(RemoveZeroValues(stringSlice)) // Output: [hello world]
 }
