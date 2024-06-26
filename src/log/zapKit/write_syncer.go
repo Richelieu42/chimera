@@ -15,3 +15,8 @@ func NewWriteSyncerWithLock(w io.Writer) zapcore.WriteSyncer {
 	ws := zapcore.AddSync(w)
 	return zapcore.Lock(ws)
 }
+
+// MultiWriteSyncer 类似于 io.MultiWriter.
+func MultiWriteSyncer(ws ...zapcore.WriteSyncer) zapcore.WriteSyncer {
+	return zapcore.NewMultiWriteSyncer(ws...)
+}
