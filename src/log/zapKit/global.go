@@ -1,8 +1,13 @@
 package zapKit
 
-import "go.uber.org/zap"
+import (
+	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
+	"go.uber.org/zap"
+)
 
 var (
+	globalMutex = new(mutexKit.RWMutex)
+
 	l  *zap.Logger
 	sl *zap.SugaredLogger
 )
@@ -15,8 +20,9 @@ func init() {
 	sl = l.Sugar()
 }
 
-func Sync() error {
-	return sl.Sync()
+func Sync() {
+	_ = l.Sync()
+	_ = sl.Sync()
 }
 
 func Debug(msg string, fields ...zap.Field) {
@@ -46,17 +52,3 @@ func DPanic(msg string, fields ...zap.Field) {
 func Fatal(msg string, fields ...zap.Field) {
 	l.Fatal(msg, fields...)
 }
-
-//// Infof 格式化输出的信息日志，类似于 fmt.Printf
-//func Infof(template string, args ...interface{}) {
-//	sl.Infof(template, args...)
-//}
-//
-//// Infow 结构化输出的信息日志
-//func Infow(msg string, keysAndValues ...interface{}) {
-//	sl.Infow(msg, keysAndValues...)
-//}
-//
-//func Infoln(args ...interface{}) {
-//	sl.Infoln(args...)
-//}
