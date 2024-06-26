@@ -55,10 +55,7 @@ func setUp(config *Config, logPath string) (err error) {
 				return
 			}
 
-			logger, err = zapKit.NewSugarLogger(writer, level)
-			if err != nil {
-				return
-			}
+			logger = zapKit.NewLogger(zapKit.WithLevel(level), zapKit.WithWriteSyncer(zapcore.AddSync(writer)))
 		}
 
 		v3Config := clientv3.Config{
