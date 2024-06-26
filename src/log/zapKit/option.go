@@ -133,8 +133,8 @@ func WithWriteSyncer(writeSyncer zapcore.WriteSyncer) LoggerOption {
 	}
 }
 
-func WithDevelopment() LoggerOption {
+func WithDevelopment(flag bool) LoggerOption {
 	return func(opts *loggerOptions) {
-		opts.Development = true
+		opts.Development = flag
 	}
 }
