@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"go.uber.org/zap"
 	"go.uber.org/zap/buffer"
 	"go.uber.org/zap/zapcore"
@@ -23,16 +24,18 @@ func main() {
 	// 创建编码器配置
 	encoderConfig := zap.NewProductionEncoderConfig()
 	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
+	encoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
 
 	// 创建控制台编码器
-	consoleEncoder := zapcore.NewConsoleEncoder(encoderConfig)
+	encoder := zapcore.NewConsoleEncoder(encoderConfig)
 
-	// 创建带前缀的控制台编码器
-	prefix := "[A] "
-	prefixConsoleEncoder := &prefixEncoder{
-		Encoder: consoleEncoder,
-		prefix:  prefix,
-	}
+	//// 创建带前缀的控制台编码器
+	//prefix := "[A] "
+	//prefixConsoleEncoder := &prefixEncoder{
+	//	Encoder: encoder,
+	//	prefix:  prefix,
+	//}
+	prefixConsoleEncoder := zapKit.NewPrefixEncoder(encoder, "[A] ")
 
 	core := zapcore.NewCore(prefixConsoleEncoder, zapcore.AddSync(os.Stdout), zapcore.DebugLevel)
 	//// 创建正常日志级别的核心

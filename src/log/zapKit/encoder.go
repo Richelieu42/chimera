@@ -18,6 +18,14 @@ func (pe *prefixEncoder) EncodeEntry(entry zapcore.Entry, fields []zapcore.Field
 	return pe.Encoder.EncodeEntry(entry, fields)
 }
 
+// Clone !!!: 必须要重写(Overriding)此方法，否则会有问题，e.g.后续调用 zapcore.ioCore.With().
+func (pe *prefixEncoder) Clone() zapcore.Encoder {
+	return &prefixEncoder{
+		Encoder: pe.Encoder.Clone(),
+		prefix:  pe.prefix,
+	}
+}
+
 // NewPrefixEncoder 会给msg字段加上前缀.
 /*
 @param encoder 不能为nil

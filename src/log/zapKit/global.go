@@ -10,11 +10,11 @@ var (
 )
 
 func init() {
-	/*
-		WithCallerSkip(1): 跳过1层，因为进行了1层封装
-	*/
-	l = NewLogger(WithCallerSkip(1))
-	s = l.Sugar()
+	///*
+	//	WithCallerSkip(1): 跳过1层，因为进行了1层封装
+	//*/
+	//l = NewLogger(WithCallerSkip(1))
+	//s = l.Sugar()
 }
 
 // ReplaceGlobalLoggers
