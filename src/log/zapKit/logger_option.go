@@ -62,6 +62,9 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 		LevelEnabler: zapcore.DebugLevel,
 		WriteSyncer:  nil,
 
+		OtherLevelEnabler: nil,
+		OtherWriteSyncer:  nil,
+
 		Caller:        true,
 		CallerSkip:    0,
 		MessagePrefix: "",
