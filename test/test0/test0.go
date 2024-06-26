@@ -2,28 +2,66 @@ package main
 
 import (
 	"go.uber.org/zap"
+	"go.uber.org/zap/buffer"
+	"go.uber.org/zap/zapcore"
+	"os"
 )
 
+// 自定义编码器来给日志消息添加前缀
+type prefixEncoder struct {
+	zapcore.Encoder
+	prefix string
+}
+
+func (pe *prefixEncoder) EncodeEntry(entry zapcore.Entry, fields []zapcore.Field) (*buffer.Buffer, error) {
+	// 给msg字段加上前缀
+	entry.Message = pe.prefix + entry.Message
+	return pe.Encoder.EncodeEntry(entry, fields)
+}
+
 func main() {
-	logger, _ := zap.NewDevelopment()
+	// 创建一个文件日志输出
+	file, _ := os.Create("logfile.log")
+	fileWriter := zapcore.AddSync(file)
 
-	logger.Debug("This is a debug message.")
-	logger.Info("This is an info message.")
-	logger.Warn("This is an warn message.")
-	logger.Error("This is an error message.")
+	// 创建一个控制台输出
+	consoleWriter := zapcore.AddSync(os.Stdout)
 
-	//zap.LevelFlag()
-	//zap.NewAtomicLevel()
-	//zap.ParseAtomicLevel()
-	//
-	//zapcore.ParseLevel()
-	//zapcore.LevelOf()
-	//
-	//zapcore.NewConsoleEncoder()
-	//zapcore.NewJSONEncoder()
-	//
-	//zap.NewDevelopmentEncoderConfig()
-	//
-	//zapcore.NewJSONEncoder()
-	//zapcore.NewJSONEncoder()
+	// 创建编码器配置
+	encoderConfig := zap.NewProductionEncoderConfig()
+	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
+
+	// 创建基本编码器
+	jsonEncoder := zapcore.NewJSONEncoder(encoderConfig)
+
+	// 创建带前缀的编码器
+	prefix := "myPrefix: "
+	prefixJsonEncoder := &prefixEncoder{
+		Encoder: jsonEncoder,
+		prefix:  prefix,
+	}
+
+	// 创建正常日志级别的核心
+	infoLevel := zap.LevelEnablerFunc(func(level zapcore.Level) bool {
+		return level < zapcore.ErrorLevel
+	})
+	infoCore := zapcore.NewCore(prefixJsonEncoder, fileWriter, infoLevel)
+
+	// 创建错误日志级别的核心
+	errorLevel := zap.LevelEnablerFunc(func(level zapcore.Level) bool {
+		return level >= zapcore.ErrorLevel
+	})
+	errorCore := zapcore.NewCore(prefixJsonEncoder, zapcore.NewMultiWriteSyncer(fileWriter, consoleWriter), errorLevel)
+
+	// 合并核心
+	core := zapcore.NewTee(infoCore, errorCore)
+
+	// 创建Logger
+	logger := zap.New(core, zap.AddCaller())
+
+	defer logger.Sync() // 刷新所有缓冲
+
+	// 测试日志
+	logger.Info("This is an info message")
+	logger.Error("This is an error message")
 }
