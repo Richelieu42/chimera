@@ -1,8 +1,22 @@
 package main
 
-import "github.com/richelieu-yang/chimera/v3/src/log/zapKit"
+import (
+	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
+	"go.uber.org/zap"
+)
 
 func main() {
-	zapKit.Info("hello")
+	defer zapKit.Sync()
+
+	zapKit.Info("hello", "world")
+	zapKit.Info("hello", zap.String("key", "value"), zap.Bool("flag", true))
 	zapKit.Infof("hello %s", "world")
+	zapKit.Infow("hello")
+	zapKit.Infoln("hello", "world")
+
+	zapKit.Infow("This is an info message with structured data",
+		"key1", "value1",
+		"key2", 42,
+	)
+
 }
