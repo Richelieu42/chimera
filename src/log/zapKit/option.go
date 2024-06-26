@@ -142,7 +142,7 @@ func WithEncodeTime(encodeTime zapcore.TimeEncoder) LoggerOption {
 	}
 }
 
-// WithWriter 设置输出
+// WithWriter 设置输出.
 func WithWriter(w io.Writer) LoggerOption {
 	return func(opts *loggerOptions) {
 		if w == nil {
@@ -152,12 +152,22 @@ func WithWriter(w io.Writer) LoggerOption {
 	}
 }
 
-// WithLockedWriter 设置输出（会给输出加锁，使并发安全!!!）
+// WithLockedWriter 设置输出（会给输出加锁，使并发安全!!!）.
 func WithLockedWriter(w io.Writer) LoggerOption {
 	return func(opts *loggerOptions) {
 		if w == nil {
 			return
 		}
 		opts.WriteSyncer = NewWriteSyncerWithLock(w)
+	}
+}
+
+// WithWriteSyncer 设置输出.
+func WithWriteSyncer(writeSyncer zapcore.WriteSyncer) LoggerOption {
+	return func(opts *loggerOptions) {
+		if writeSyncer == nil {
+			return
+		}
+		opts.WriteSyncer = writeSyncer
 	}
 }

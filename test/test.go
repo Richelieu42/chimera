@@ -3,9 +3,13 @@ package main
 import (
 	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
 
 func main() {
+	zapcore.NewMultiWriteSyncer()
+	zapcore.NewLazyWith()
+
 	defer zapKit.Sync()
 
 	//zapKit.Info("hello", "world")
