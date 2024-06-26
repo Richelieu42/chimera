@@ -1,10 +1,8 @@
 package zapKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"io"
 	"os"
 )
 
@@ -27,13 +25,15 @@ type (
 		*/
 		Development bool
 
-		WriteSyncer zapcore.WriteSyncer
-
 		// OutputType 输出类型
 		OutputType outputType
 
-		// Level 日志级别
-		Level zapcore.Level
+		// LevelEnabler 日志级别，支持的类型: zapcore.Level、zapcore.LevelEnabler
+		LevelEnabler zapcore.LevelEnabler
+		WriteSyncer  zapcore.WriteSyncer
+
+		OtherLevelEnabler zapcore.LevelEnabler
+		OtherWriteSyncer  zapcore.WriteSyncer
 
 		// Caller true: 输出带有caller字段
 		Caller     bool
@@ -56,10 +56,12 @@ func (opts *loggerOptions) IsOutputTypeConsole() bool {
 
 func loadOptions(options ...LoggerOption) *loggerOptions {
 	opts := &loggerOptions{
-		Development:   false,
-		WriteSyncer:   nil,
-		OutputType:    OutputTypeConsole,
-		Level:         zapcore.DebugLevel,
+		Development: false,
+		OutputType:  OutputTypeConsole,
+
+		LevelEnabler: zapcore.DebugLevel,
+		WriteSyncer:  nil,
+
 		Caller:        true,
 		CallerSkip:    0,
 		MessagePrefix: "",
@@ -120,11 +122,11 @@ func WithOutputTypeConsole() LoggerOption {
 	}
 }
 
-func WithLevel(level zapcore.Level) LoggerOption {
-	return func(opts *loggerOptions) {
-		opts.Level = level
-	}
-}
+//func WithLevel(level zapcore.Level) LoggerOption {
+//	return func(opts *loggerOptions) {
+//		opts.Level = level
+//	}
+//}
 
 func WithCaller(caller bool) LoggerOption {
 	return func(opts *loggerOptions) {
@@ -150,43 +152,6 @@ func WithEncodeTime(encodeTime zapcore.TimeEncoder) LoggerOption {
 	}
 }
 
-// WithWriter 设置输出.
-func WithWriter(w io.Writer) LoggerOption {
-	return func(opts *loggerOptions) {
-		if w == nil {
-			return
-		}
-		opts.WriteSyncer = NewWriteSyncer(w)
-	}
-}
-
-// WithLockedWriter 设置输出（会给输出加锁，使并发安全!!!）.
-func WithLockedWriter(w io.Writer) LoggerOption {
-	return func(opts *loggerOptions) {
-		if w == nil {
-			return
-		}
-		opts.WriteSyncer = NewWriteSyncerWithLock(w)
-	}
-}
-
-// WithWriteSyncer 设置输出.
-func WithWriteSyncer(writeSyncers ...zapcore.WriteSyncer) LoggerOption {
-	writeSyncers = sliceKit.RemoveZeroValues(writeSyncers)
-
-	return func(opts *loggerOptions) {
-		switch len(writeSyncers) {
-		case 0:
-			// do nothing
-			return
-		case 1:
-			opts.WriteSyncer = writeSyncers[0]
-		default:
-			opts.WriteSyncer = MultiWriteSyncer(writeSyncers...)
-		}
-	}
-}
-
 func WithInitialFields(fields ...zap.Field) LoggerOption {
 	return func(opts *loggerOptions) {
 		opts.InitialFields = fields
@@ -196,5 +161,33 @@ func WithInitialFields(fields ...zap.Field) LoggerOption {
 func WithMessagePrefix(prefix string) LoggerOption {
 	return func(opts *loggerOptions) {
 		opts.MessagePrefix = prefix
+	}
+}
+
+// WithLevelEnabler 第 1 个输出.
+func WithLevelEnabler(levelEnabler zapcore.LevelEnabler) LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.LevelEnabler = levelEnabler
+	}
+}
+
+// WithWriteSyncer 第 1 个输出.
+func WithWriteSyncer(writeSyncer zapcore.WriteSyncer) LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.WriteSyncer = writeSyncer
+	}
+}
+
+// WithOtherLevelEnabler 第 2 个输出.
+func WithOtherLevelEnabler(levelEnabler zapcore.LevelEnabler) LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.OtherLevelEnabler = levelEnabler
+	}
+}
+
+// WithOtherWriteSyncer 第 2 个输出.
+func WithOtherWriteSyncer(writeSyncer zapcore.WriteSyncer) LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.OtherWriteSyncer = writeSyncer
 	}
 }

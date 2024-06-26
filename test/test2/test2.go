@@ -1,24 +1,10 @@
 package main
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"go.uber.org/zap"
-	"go.uber.org/zap/buffer"
 	"go.uber.org/zap/zapcore"
 	"os"
 )
-
-// 自定义编码器来给日志消息添加前缀
-type prefixEncoder struct {
-	zapcore.Encoder
-	prefix string
-}
-
-func (pe *prefixEncoder) EncodeEntry(entry zapcore.Entry, fields []zapcore.Field) (*buffer.Buffer, error) {
-	// 给msg字段加上前缀
-	entry.Message = pe.prefix + entry.Message
-	return pe.Encoder.EncodeEntry(entry, fields)
-}
 
 func main() {
 	// 创建编码器配置
@@ -29,29 +15,23 @@ func main() {
 	// 创建控制台编码器
 	encoder := zapcore.NewConsoleEncoder(encoderConfig)
 
-	//// 创建带前缀的控制台编码器
-	//prefix := "[A] "
-	//prefixConsoleEncoder := &prefixEncoder{
-	//	Encoder: encoder,
-	//	prefix:  prefix,
-	//}
-	prefixConsoleEncoder := zapKit.NewPrefixEncoder(encoder, "[A] ")
+	tmp0 := zapcore.AddSync(os.Stdout)
+	tmp1 := zapcore.AddSync(os.Stderr)
 
-	core := zapcore.NewCore(prefixConsoleEncoder, zapcore.AddSync(os.Stdout), zapcore.DebugLevel)
-	//// 创建正常日志级别的核心
-	//infoLevel := zap.LevelEnablerFunc(func(level zapcore.Level) bool {
-	//	return level < zapcore.ErrorLevel
-	//})
-	//infoCore := zapcore.NewCore(prefixConsoleEncoder, fileWriter, infoLevel)
-	//
-	//// 创建错误日志级别的核心
-	//errorLevel := zap.LevelEnablerFunc(func(level zapcore.Level) bool {
-	//	return level >= zapcore.ErrorLevel
-	//})
-	//errorCore := zapcore.NewCore(prefixConsoleEncoder, zapcore.NewMultiWriteSyncer(fileWriter, consoleWriter), errorLevel)
-	//
-	//// 合并核心
-	//core := zapcore.NewTee(infoCore, errorCore)
+	// 创建正常日志级别的核心
+	infoLevel := zap.LevelEnablerFunc(func(level zapcore.Level) bool {
+		return level < zapcore.ErrorLevel
+	})
+	infoCore := zapcore.NewCore(encoder, tmp0, infoLevel)
+
+	// 创建错误日志级别的核心
+	errorLevel := zap.LevelEnablerFunc(func(level zapcore.Level) bool {
+		return level >= zapcore.ErrorLevel
+	})
+	errorCore := zapcore.NewCore(encoder, zapcore.NewMultiWriteSyncer(tmp0, tmp1), errorLevel)
+
+	// 合并核心
+	core := zapcore.NewTee(infoCore, errorCore)
 
 	// 创建Logger
 	logger := zap.New(core, zap.AddCaller())
@@ -59,6 +39,8 @@ func main() {
 	defer logger.Sync() // 刷新所有缓冲
 
 	// 测试日志
-	logger.Info("This is an info message")
-	logger.Error("This is an error message")
+	logger.Debug("debug")
+	logger.Info("info")
+	logger.Warn("warn")
+	logger.Error("error")
 }
