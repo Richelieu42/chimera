@@ -39,6 +39,8 @@ type (
 		Caller     bool
 		CallerSkip int
 
+		MessagePrefix string
+
 		InitialFields []zap.Field
 
 		EncodeLevel zapcore.LevelEncoder
@@ -60,6 +62,7 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 		Level:         zapcore.DebugLevel,
 		Caller:        true,
 		CallerSkip:    0,
+		MessagePrefix: "",
 		InitialFields: nil,
 		EncodeLevel:   nil,
 		EncodeTime:    nil,
@@ -187,5 +190,11 @@ func WithWriteSyncer(writeSyncers ...zapcore.WriteSyncer) LoggerOption {
 func WithInitialFields(fields ...zap.Field) LoggerOption {
 	return func(opts *loggerOptions) {
 		opts.InitialFields = fields
+	}
+}
+
+func WithMessagePrefix(prefix string) LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.MessagePrefix = prefix
 	}
 }

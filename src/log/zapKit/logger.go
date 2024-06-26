@@ -25,6 +25,7 @@ func NewLogger(options ...LoggerOption) (logger *zap.Logger) {
 	} else {
 		encoder = zapcore.NewJSONEncoder(encoderConfig)
 	}
+	encoder = NewPrefixEncoder(encoder, opts.MessagePrefix)
 
 	/* core */
 	core := zapcore.NewCore(encoder, opts.WriteSyncer, opts.Level)
