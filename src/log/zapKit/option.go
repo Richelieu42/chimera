@@ -2,6 +2,7 @@ package zapKit
 
 import (
 	"go.uber.org/zap/zapcore"
+	"io"
 	"os"
 )
 
@@ -130,6 +131,24 @@ func WithEncodeTime(encodeTime zapcore.TimeEncoder) LoggerOption {
 func WithWriteSyncer(writeSyncer zapcore.WriteSyncer) LoggerOption {
 	return func(opts *loggerOptions) {
 		opts.WriteSyncer = writeSyncer
+	}
+}
+
+// WithWriter 设置输出
+func WithWriter(w io.Writer) LoggerOption {
+	return func(opts *loggerOptions) {
+		if w != nil {
+			opts.WriteSyncer = NewWriteSyncer(w)
+		}
+	}
+}
+
+// WithLockedWriter 设置输出（会给输出加锁，并发安全地!!!）
+func WithLockedWriter(w io.Writer) LoggerOption {
+	return func(opts *loggerOptions) {
+		if w != nil {
+			opts.WriteSyncer = NewWriteSyncerWithLock(w)
+		}
 	}
 }
 
