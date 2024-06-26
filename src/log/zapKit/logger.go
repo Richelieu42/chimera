@@ -28,7 +28,7 @@ func NewLogger(options ...LoggerOption) (logger *zap.Logger) {
 	encoder = NewPrefixEncoder(encoder, opts.MessagePrefix)
 
 	/* core */
-	core := zapcore.NewCore(encoder, opts.WriteSyncer, opts.Level)
+	core := zapcore.NewCore(encoder, opts.WriteSyncer, opts.LevelEnabler)
 	if len(opts.InitialFields) > 0 {
 		core = core.With(opts.InitialFields)
 	}
