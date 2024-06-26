@@ -1,6 +1,7 @@
 package zapKit
 
 import (
+	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 	"go.uber.org/zap/zapcore"
 	"io"
 	"os"
@@ -164,9 +165,9 @@ func WithLockedWriter(w io.Writer) LoggerOption {
 
 // WithWriteSyncer 设置输出.
 func WithWriteSyncer(writeSyncers ...zapcore.WriteSyncer) LoggerOption {
-	return func(opts *loggerOptions) {
-		sliceKit.P
+	writeSyncers = sliceKit.RemoveZeroValues(writeSyncers)
 
+	return func(opts *loggerOptions) {
 		switch len(writeSyncers) {
 		case 0:
 			return
