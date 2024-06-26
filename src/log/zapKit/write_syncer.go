@@ -5,12 +5,12 @@ import (
 	"io"
 )
 
-// NewWriteSyncer
+// NewWriteSyncer io.Writer => zapcore.WriteSyncer
 func NewWriteSyncer(w io.Writer) zapcore.WriteSyncer {
 	return zapcore.AddSync(w)
 }
 
-// NewWriteSyncerWithLock
+// NewWriteSyncerWithLock io.Writer => （线程安全的）zapcore.WriteSyncer
 func NewWriteSyncerWithLock(w io.Writer) zapcore.WriteSyncer {
 	ws := zapcore.AddSync(w)
 	return zapcore.Lock(ws)
