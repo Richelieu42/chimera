@@ -20,13 +20,6 @@ func (pe *prefixEncoder) EncodeEntry(entry zapcore.Entry, fields []zapcore.Field
 }
 
 func main() {
-	// 创建一个文件日志输出
-	file, _ := os.Create("logfile.log")
-	fileWriter := zapcore.AddSync(file)
-
-	// 创建一个控制台输出
-	consoleWriter := zapcore.AddSync(os.Stdout)
-
 	// 创建编码器配置
 	encoderConfig := zap.NewProductionEncoderConfig()
 	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
@@ -35,26 +28,27 @@ func main() {
 	consoleEncoder := zapcore.NewConsoleEncoder(encoderConfig)
 
 	// 创建带前缀的控制台编码器
-	prefix := "myPrefix: "
+	prefix := "[A] "
 	prefixConsoleEncoder := &prefixEncoder{
 		Encoder: consoleEncoder,
 		prefix:  prefix,
 	}
 
-	// 创建正常日志级别的核心
-	infoLevel := zap.LevelEnablerFunc(func(level zapcore.Level) bool {
-		return level < zapcore.ErrorLevel
-	})
-	infoCore := zapcore.NewCore(prefixConsoleEncoder, fileWriter, infoLevel)
-
-	// 创建错误日志级别的核心
-	errorLevel := zap.LevelEnablerFunc(func(level zapcore.Level) bool {
-		return level >= zapcore.ErrorLevel
-	})
-	errorCore := zapcore.NewCore(prefixConsoleEncoder, zapcore.NewMultiWriteSyncer(fileWriter, consoleWriter), errorLevel)
-
-	// 合并核心
-	core := zapcore.NewTee(infoCore, errorCore)
+	core := zapcore.NewCore(prefixConsoleEncoder, zapcore.AddSync(os.Stdout), zapcore.DebugLevel)
+	//// 创建正常日志级别的核心
+	//infoLevel := zap.LevelEnablerFunc(func(level zapcore.Level) bool {
+	//	return level < zapcore.ErrorLevel
+	//})
+	//infoCore := zapcore.NewCore(prefixConsoleEncoder, fileWriter, infoLevel)
+	//
+	//// 创建错误日志级别的核心
+	//errorLevel := zap.LevelEnablerFunc(func(level zapcore.Level) bool {
+	//	return level >= zapcore.ErrorLevel
+	//})
+	//errorCore := zapcore.NewCore(prefixConsoleEncoder, zapcore.NewMultiWriteSyncer(fileWriter, consoleWriter), errorLevel)
+	//
+	//// 合并核心
+	//core := zapcore.NewTee(infoCore, errorCore)
 
 	// 创建Logger
 	logger := zap.New(core, zap.AddCaller())

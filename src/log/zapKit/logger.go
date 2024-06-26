@@ -17,8 +17,8 @@ func NewLogger(options ...LoggerOption) (logger *zap.Logger) {
 
 	/* encoder */
 	encoderConfig := zap.NewProductionEncoderConfig()
-	encoderConfig.EncodeTime = opts.EncodeTime
-	encoderConfig.EncodeLevel = opts.EncodeLevel
+	//encoderConfig.EncodeTime = opts.EncodeTime
+	//encoderConfig.EncodeLevel = opts.EncodeLevel
 	var encoder zapcore.Encoder
 	if opts.IsOutputTypeConsole() {
 		encoder = zapcore.NewConsoleEncoder(encoderConfig)
