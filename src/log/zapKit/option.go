@@ -35,7 +35,7 @@ type (
 
 		// Caller true: 输出带有caller字段
 		Caller     bool
-		CallerSkip uint
+		CallerSkip int
 
 		EncodeLevel zapcore.LevelEncoder
 		EncodeTime  zapcore.TimeEncoder
@@ -50,11 +50,12 @@ func (opts *loggerOptions) IsOutputTypeConsole() bool {
 
 func loadOptions(options ...LoggerOption) *loggerOptions {
 	opts := &loggerOptions{
+		Development: false,
 		WriteSyncer: nil,
 		OutputType:  OutputTypeConsole,
 		Level:       zapcore.DebugLevel,
 		Caller:      true,
-		Development: false,
+		CallerSkip:  0,
 		EncodeLevel: nil,
 		EncodeTime:  nil,
 	}
@@ -123,7 +124,7 @@ func WithCaller(caller bool) LoggerOption {
 	}
 }
 
-func WithCallerSkip(skip uint) LoggerOption {
+func WithCallerSkip(skip int) LoggerOption {
 	return func(opts *loggerOptions) {
 		opts.CallerSkip = skip
 	}

@@ -34,6 +34,8 @@ func NewLogger(options ...LoggerOption) (logger *zap.Logger) {
 	if opts.Development {
 		zapOptions = append(zapOptions, zap.Development())
 	}
+	zapOptions = append(zapOptions, zap.AddCallerSkip(opts.CallerSkip))
+
 	logger = zap.New(core, zapOptions...)
 	return
 }
