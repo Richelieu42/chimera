@@ -60,7 +60,7 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 		OutputType:  OutputTypeConsole,
 
 		LevelEnabler: zapcore.DebugLevel,
-		WriteSyncer:  nil,
+		WriteSyncer:  zapcore.AddSync(os.Stdout),
 
 		OtherLevelEnabler: nil,
 		OtherWriteSyncer:  nil,
@@ -77,10 +77,6 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 		option(opts)
 	}
 
-	// WriteSyncer
-	if opts.WriteSyncer == nil {
-		opts.WriteSyncer = zapcore.AddSync(os.Stdout)
-	}
 	// outputType
 	switch opts.OutputType {
 	case OutputTypeConsole, OutputTypeJson:
@@ -167,28 +163,36 @@ func WithMessagePrefix(prefix string) LoggerOption {
 	}
 }
 
-// WithLevelEnabler 第 1 个输出.
+// WithLevelEnabler 第 1 个输出（不能为nil）.
 func WithLevelEnabler(levelEnabler zapcore.LevelEnabler) LoggerOption {
 	return func(opts *loggerOptions) {
+		if levelEnabler == nil {
+			return
+		}
+
 		opts.LevelEnabler = levelEnabler
 	}
 }
 
-// WithWriteSyncer 第 1 个输出.
+// WithWriteSyncer 第 1 个输出（不能为nil）.
 func WithWriteSyncer(writeSyncer zapcore.WriteSyncer) LoggerOption {
 	return func(opts *loggerOptions) {
+		if writeSyncer == nil {
+			return
+		}
+
 		opts.WriteSyncer = writeSyncer
 	}
 }
 
-// WithOtherLevelEnabler 第 2 个输出.
+// WithOtherLevelEnabler 第 2 个输出（可以为nil）.
 func WithOtherLevelEnabler(levelEnabler zapcore.LevelEnabler) LoggerOption {
 	return func(opts *loggerOptions) {
 		opts.OtherLevelEnabler = levelEnabler
 	}
 }
 
-// WithOtherWriteSyncer 第 2 个输出.
+// WithOtherWriteSyncer 第 2 个输出（可以为nil）.
 func WithOtherWriteSyncer(writeSyncer zapcore.WriteSyncer) LoggerOption {
 	return func(opts *loggerOptions) {
 		opts.OtherWriteSyncer = writeSyncer
