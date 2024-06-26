@@ -1,15 +1,12 @@
 package zapKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"go.uber.org/zap"
 )
 
 var (
-	globalMutex = new(mutexKit.RWMutex)
-
-	l  *zap.Logger
-	sl *zap.SugaredLogger
+	l *zap.Logger
+	s *zap.SugaredLogger
 )
 
 func init() {
@@ -17,12 +14,33 @@ func init() {
 		WithCallerSkip(1): 跳过1层，因为进行了1层封装
 	*/
 	l = NewLogger(WithCallerSkip(1))
-	sl = l.Sugar()
+	s = l.Sugar()
+}
+
+// ReplaceGlobalLoggers
+/*
+PS: 有需要的话，应该在应用初始化时调用此方法，即在最前面设置全局logger.
+*/
+func ReplaceGlobalLoggers(logger *zap.Logger) {
+	if logger == nil {
+		return
+	}
+
+	l = logger
+	s = logger.Sugar()
+}
+
+func L() *zap.Logger {
+	return l
+}
+
+func S() *zap.SugaredLogger {
+	return s
 }
 
 func Sync() {
 	_ = l.Sync()
-	_ = sl.Sync()
+	_ = s.Sync()
 }
 
 func Debug(msg string, fields ...zap.Field) {
