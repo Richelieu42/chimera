@@ -170,6 +170,7 @@ func WithWriteSyncer(writeSyncers ...zapcore.WriteSyncer) LoggerOption {
 	return func(opts *loggerOptions) {
 		switch len(writeSyncers) {
 		case 0:
+			// do nothing
 			return
 		case 1:
 			opts.WriteSyncer = writeSyncers[0]
