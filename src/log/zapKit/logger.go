@@ -28,7 +28,14 @@ func NewLogger(options ...LoggerOption) (logger *zap.Logger) {
 	encoder = NewPrefixEncoder(encoder, opts.MessagePrefix)
 
 	/* core */
+	// 第 1 个输出
 	core := zapcore.NewCore(encoder, opts.WriteSyncer, opts.LevelEnabler)
+	if opts.OtherWriteSyncer != nil && opts.OtherLevelEnabler != nil {
+		// 第 2 个输出
+		core1 := zapcore.NewCore(encoder, opts.OtherWriteSyncer, opts.OtherLevelEnabler)
+		core = zapcore.NewTee(core, core1)
+	}
+	// initial fields
 	if len(opts.InitialFields) > 0 {
 		core = core.With(opts.InitialFields)
 	}
