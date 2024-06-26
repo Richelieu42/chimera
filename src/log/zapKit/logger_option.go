@@ -2,6 +2,7 @@ package zapKit
 
 import (
 	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
+	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"io"
 	"os"
@@ -38,6 +39,8 @@ type (
 		Caller     bool
 		CallerSkip int
 
+		InitialFields []zap.Field
+
 		EncodeLevel zapcore.LevelEncoder
 		EncodeTime  zapcore.TimeEncoder
 	}
@@ -51,14 +54,15 @@ func (opts *loggerOptions) IsOutputTypeConsole() bool {
 
 func loadOptions(options ...LoggerOption) *loggerOptions {
 	opts := &loggerOptions{
-		Development: false,
-		WriteSyncer: nil,
-		OutputType:  OutputTypeConsole,
-		Level:       zapcore.DebugLevel,
-		Caller:      true,
-		CallerSkip:  0,
-		EncodeLevel: nil,
-		EncodeTime:  nil,
+		Development:   false,
+		WriteSyncer:   nil,
+		OutputType:    OutputTypeConsole,
+		Level:         zapcore.DebugLevel,
+		Caller:        true,
+		CallerSkip:    0,
+		InitialFields: nil,
+		EncodeLevel:   nil,
+		EncodeTime:    nil,
 	}
 
 	for _, option := range options {
@@ -177,5 +181,11 @@ func WithWriteSyncer(writeSyncers ...zapcore.WriteSyncer) LoggerOption {
 		default:
 			opts.WriteSyncer = MultiWriteSyncer(writeSyncers...)
 		}
+	}
+}
+
+func WithInitialFields(fields ...zap.Field) LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.InitialFields = fields
 	}
 }

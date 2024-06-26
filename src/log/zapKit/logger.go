@@ -28,6 +28,9 @@ func NewLogger(options ...LoggerOption) (logger *zap.Logger) {
 
 	/* core */
 	core := zapcore.NewCore(encoder, opts.WriteSyncer, opts.Level)
+	if len(opts.InitialFields) > 0 {
+		core = core.With(opts.InitialFields)
+	}
 
 	/* logger */
 	zapOptions := []zap.Option{zap.WithCaller(opts.Caller)}
