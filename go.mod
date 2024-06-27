@@ -34,7 +34,7 @@ require (
 	github.com/go-playground/validator/v10 v10.22.0
 	github.com/go-redsync/redsync/v4 v4.13.0
 	github.com/goccy/go-json v0.10.3
-	github.com/gogf/gf/v2 v2.7.1
+	github.com/gogf/gf/v2 v2.7.2
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/golang-module/carbon/v2 v2.3.12
 	github.com/google/go-cmp v0.6.0
@@ -196,6 +196,7 @@ require (
 	github.com/dsnet/compress v0.0.1 // indirect
 	github.com/dvsekhvalnov/jose2go v1.6.0 // indirect
 	github.com/emersion/go-sasl v0.0.0-20200509203442-7bfe0ed36a21 // indirect
+	github.com/emirpasic/gods v1.18.1 // indirect
 	github.com/fatih/color v1.17.0 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/fredbi/uri v1.0.0 // indirect
