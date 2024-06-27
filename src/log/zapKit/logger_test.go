@@ -28,8 +28,10 @@ func TestNewLogger(t *testing.T) {
 		WithOutputTypeConsole(),
 		WithMessagePrefix("[TEST] "),
 		WithInitialFields(zap.Bool("c", true)),
+
 		WithLevelEnabler(zapcore.DebugLevel),
 		WithWriteSyncer(ws1),
+
 		WithOtherLevelEnabler(zapcore.WarnLevel),
 		WithOtherWriteSyncer(ws2),
 	)
