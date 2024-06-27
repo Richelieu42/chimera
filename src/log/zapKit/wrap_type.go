@@ -20,13 +20,13 @@ type (
 	}
 )
 
-func (wl *WrappedLogger) Close() (err error) {
-	if wl == nil {
+func (l *WrappedLogger) Close() (err error) {
+	if l == nil {
 		return
 	}
 
-	_ = wl.Sync()
-	for _, w := range wl.Writers {
+	_ = l.Sync()
+	for _, w := range l.Writers {
 		tmpErr := ioKit.TryToClose(w)
 		if tmpErr != nil && err == nil {
 			err = tmpErr
@@ -35,13 +35,13 @@ func (wl *WrappedLogger) Close() (err error) {
 	return
 }
 
-func (wsl *WrappedSugaredLogger) Close() (err error) {
-	if wsl == nil {
+func (sl *WrappedSugaredLogger) Close() (err error) {
+	if sl == nil {
 		return
 	}
 
-	_ = wsl.Sync()
-	for _, w := range wsl.Writers {
+	_ = sl.Sync()
+	for _, w := range sl.Writers {
 		tmpErr := ioKit.TryToClose(w)
 		if tmpErr != nil && err == nil {
 			err = tmpErr
