@@ -31,12 +31,14 @@ type (
 		// CoreMaker 自定义Core，适用情况: n个输出（n>2）
 		CoreMaker func(encoder zapcore.Encoder) zapcore.Core
 
-		// LevelEnabler 日志级别，支持的类型: zapcore.Level、zapcore.LevelEnabler
+		// LevelEnabler （第1输出）日志级别，支持的类型: zapcore.Level、zapcore.LevelEnabler
 		LevelEnabler zapcore.LevelEnabler
 		WriteSyncer  zapcore.WriteSyncer
 
+		// OtherLevelEnabler （第2输出）想要生效，OtherLevelEnabler 和 OtherWriteSyncer必须都非nil
 		OtherLevelEnabler zapcore.LevelEnabler
-		OtherWriteSyncer  zapcore.WriteSyncer
+		// OtherWriteSyncer （第2输出）想要生效，OtherLevelEnabler 和 OtherWriteSyncer必须都非nil
+		OtherWriteSyncer zapcore.WriteSyncer
 
 		InitialFields []zap.Field
 
