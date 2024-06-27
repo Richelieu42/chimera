@@ -11,6 +11,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/userKit"
 	"github.com/richelieu-yang/chimera/v3/src/dataSizeKit"
+	"github.com/richelieu-yang/chimera/v3/src/diskKit"
 	"github.com/richelieu-yang/chimera/v3/src/ip/ipKit"
 	"github.com/richelieu-yang/chimera/v3/src/processKit"
 	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
@@ -103,6 +104,7 @@ func PrintBasicDetails(logger CommonLogger) {
 
 	/* disk */
 	//diskKit.PrintBasicDetails(logger)
+	printDiskDetails(logger)
 
 	//if stats, err := diskKit.GetDiskUsageStats(); err != nil {
 	//	logger.WithError(err).Warn("[CHIMERA, DISK] Fail to get disk usage stats.")
@@ -157,6 +159,22 @@ func printOsDetails(logger CommonLogger) {
 		logger.Warnf("[CHIMERA, OS] fail to get vm.max_map_count, error: %s", err.Error())
 	} else {
 		logger.Infof("[CHIMERA, OS] vm.max_map_count: [%d].", i)
+	}
+}
+
+func printDiskDetails(logger CommonLogger) {
+	stats, err := diskKit.GetDiskUsageStats()
+	if err != nil {
+		logger.Warnf("[CHIMERA, DISK] fail to get disk usage stats, error: %s", err.Error())
+	} else {
+		str := fmt.Sprintf("path: %s, free: %s, used: %s, total: %s, used percent: %.2f%%",
+			stats.Path,
+			dataSizeKit.ToReadableIecString(float64(stats.Free)),
+			dataSizeKit.ToReadableIecString(float64(stats.Used)),
+			dataSizeKit.ToReadableIecString(float64(stats.Total)),
+			stats.UsedPercent,
+		)
+		logger.Infof("[CHIMERA, DISK] disk usage stats: [%s].", str)
 	}
 }
 

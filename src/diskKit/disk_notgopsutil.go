@@ -6,7 +6,6 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/core/conditionKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/osKit"
-	"github.com/sirupsen/logrus"
 )
 
 func GetDiskUsageStats() (*DiskUsageStats, error) {
@@ -16,8 +15,4 @@ func GetDiskUsageStats() (*DiskUsageStats, error) {
 
 func GetDiskUsageStatsByPath(path string) (*DiskUsageStats, error) {
 	return nil, errorKit.Newf("Currently not supported")
-}
-
-func PrintBasicDetails(logger *logrus.Logger) {
-
 }

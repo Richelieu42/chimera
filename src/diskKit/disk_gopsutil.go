@@ -3,12 +3,9 @@
 package diskKit
 
 import (
-	"fmt"
 	"github.com/richelieu-yang/chimera/v3/src/core/conditionKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/osKit"
-	"github.com/richelieu-yang/chimera/v3/src/dataSizeKit"
 	"github.com/shirou/gopsutil/v3/disk"
-	"github.com/sirupsen/logrus"
 )
 
 func GetDiskUsageStats() (*DiskUsageStats, error) {
@@ -52,24 +49,4 @@ func GetDiskUsageStatsByPath(path string) (*DiskUsageStats, error) {
 	//	return (*DiskUsageStats)(usageStat), nil
 	//}
 	//return nil, errorKit.Newf("fail to get disk usageStat with parts(length: %d)", len(parts))
-}
-
-func PrintBasicDetails(logger *logrus.Logger) {
-	if logger == nil {
-		logger = logrus.StandardLogger()
-	}
-
-	stats, err := GetDiskUsageStats()
-	if err != nil {
-		logger.WithError(err).Warn("[CHIMERA, DISK] Fail to get disk usage stats.")
-		return
-	}
-	str := fmt.Sprintf("path: %s, free: %s, used: %s, total: %s, used percent: %.2f%%",
-		stats.Path,
-		dataSizeKit.ToReadableIecString(float64(stats.Free)),
-		dataSizeKit.ToReadableIecString(float64(stats.Used)),
-		dataSizeKit.ToReadableIecString(float64(stats.Total)),
-		stats.UsedPercent,
-	)
-	logger.Infof("[CHIMERA, DISK] disk usage stats: [%s].", str)
 }
