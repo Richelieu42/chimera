@@ -21,6 +21,9 @@ type (
 )
 
 // Close 释放资源.
+/*
+!!!: 要注意并发问题，调用本方法后，不要再通过此logger输出了.
+*/
 func (l *WrappedLogger) Close() (err error) {
 	if l == nil {
 		return
@@ -37,6 +40,9 @@ func (l *WrappedLogger) Close() (err error) {
 }
 
 // Close 释放资源.
+/*
+!!!: 要注意并发问题，调用本方法后，不要再通过此logger输出了.
+*/
 func (sl *WrappedSugaredLogger) Close() (err error) {
 	if sl == nil {
 		return
