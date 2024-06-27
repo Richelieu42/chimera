@@ -28,35 +28,35 @@ func PrintBasicDetails(logger CommonLogger) {
 	logger.Info(strings.Repeat("=", 42))
 	logger.Infof("\n%s", consts.Banner)
 
-	logger.Infof("[CHIMERA, PROCESS] pid: [%d].", processKit.PID)
+	logger.Infof("[CHIMERA, PROCESS] pid: [%d]", processKit.PID)
 
 	/* golang */
-	logger.Infof("[CHIMERA, GO] version: [%s].", runtimeKit.GoVersion)
-	logger.Infof("[CHIMERA, GO] GOROOT: [%s].", runtimeKit.GoRoot)
+	logger.Infof("[CHIMERA, GO] version: [%s]", runtimeKit.GoVersion)
+	logger.Infof("[CHIMERA, GO] GOROOT: [%s]", runtimeKit.GoRoot)
 
 	/* os */
 	//printOsInfo()
 
 	/* user */
-	logger.Infof("[CHIMERA, USER] uid: [%s].", userKit.GetUid())
-	logger.Infof("[CHIMERA, USER] gid: [%s].", userKit.GetGid())
-	logger.Infof("[CHIMERA, USER] name: [%s].", userKit.GetName())
-	logger.Infof("[CHIMERA, USER] user name: [%s].", userKit.GetUserName())
-	logger.Infof("[CHIMERA, USER] home dir: [%s].", userKit.GetUserHomeDir())
+	logger.Infof("[CHIMERA, USER] uid: [%s]", userKit.GetUid())
+	logger.Infof("[CHIMERA, USER] gid: [%s]", userKit.GetGid())
+	logger.Infof("[CHIMERA, USER] name: [%s]", userKit.GetName())
+	logger.Infof("[CHIMERA, USER] user name: [%s]", userKit.GetUserName())
+	logger.Infof("[CHIMERA, USER] home dir: [%s]", userKit.GetUserHomeDir())
 
 	/* path */
-	logger.Infof("[CHIMERA, PATH] working directory: [%s].", pathKit.GetWorkingDir())
-	logger.Infof("[CHIMERA, PATH] os temporary directory: [%s].", pathKit.GetOsTempDir())
-	logger.Infof("[CHIMERA, PATH] SelfDir: [%s].", pathKit.SelfDir())
-	logger.Infof("[CHIMERA, PATH] MainPkgPath: [%s].", pathKit.MainPkgPath())
+	logger.Infof("[CHIMERA, PATH] working directory: [%s]", pathKit.GetWorkingDir())
+	logger.Infof("[CHIMERA, PATH] os temporary directory: [%s]", pathKit.GetOsTempDir())
+	logger.Infof("[CHIMERA, PATH] self dir: [%s]", pathKit.SelfDir())
+	logger.Infof("[CHIMERA, PATH] main pkg path: [%s]", pathKit.MainPkgPath())
 
 	/* json */
-	logger.Infof("[CHIMERA, JSON] library: [%s].", jsonKit.GetLibrary())
+	logger.Infof("[CHIMERA, JSON] library: [%s]", jsonKit.GetLibrary())
 
 	/* time */
 	machineTime := timeKit.GetMachineTime()
 	zoneName, zoneOffset := machineTime.Zone()
-	logger.Infof("[CHIMERA, TIME] machine time: [%v], zone: [%s, %d].", machineTime, zoneName, zoneOffset)
+	logger.Infof("[CHIMERA, TIME] machine time: [%v], zone: [%s, %d]", machineTime, zoneName, zoneOffset)
 	// Richelieu: 先注释掉，以防（断网或弱网环境下）导致拖延服务启动3s
 	//if networkTime, source, err := timeKit.GetNetworkTime(); err != nil {
 	//	logger.WithError(err).Warn("[CHIMERA, TIME] fail to get network time")
@@ -65,34 +65,19 @@ func PrintBasicDetails(logger CommonLogger) {
 	//}
 
 	/* ip */
-	logger.Infof("[CHIMERA, IP] internal ip: [%s].", ipKit.GetInternalIp())
+	logger.Infof("[CHIMERA, IP] internal ip: [%s]", ipKit.GetInternalIp())
 	ips := ipKit.GetIps()
-	logger.Infof("[CHIMERA, IP] ips: [%s].", sliceKit.Join(ips, ", "))
+	logger.Infof("[CHIMERA, IP] ips: [%s]", sliceKit.Join(ips, ", "))
 
 	/* host */
 	if hostInfo, err := runtimeKit.GetHostInfo(); err != nil {
-		logger.Warnf("[CHIMERA, HOST] Fail to get host info, error: %s", err.Error())
+		logger.Warnf("[CHIMERA, HOST] fail to get host info, error: %s", err.Error())
 	} else {
-		logger.Infof("[CHIMERA, HOST] host name: [%s].", hostInfo.Hostname)
+		logger.Infof("[CHIMERA, HOST] host name: [%s]", hostInfo.Hostname)
 	}
 
-	/* cpu */
-	//cpuKit.PrintBasicDetails(logger)
-	{
-		logger.Infof("[CHIMERA, CPU] in a virtual machine? [%t].", cpuKit.InVirtualMachine())
-		logger.Infof("[CHIMERA, CPU] vendor id: [%s].", cpuKit.GetVendorID())
-		logger.Infof("[CHIMERA, CPU] vendor string: [%s].", cpuKit.GetVendorString())
-		logger.Infof("[CHIMERA, CPU] brand name: [%s].", cpuKit.GetBrandName())
-		logger.Infof("[CHIMERA, CPU] CPU number: [%d].", cpuKit.GetCpuNumber())
-		logger.Infof("[CHIMERA, CPU] features: [%s].", sliceKit.Join(cpuKit.GetFeatureSet(), ","))
-		logger.Infof("[CHIMERA, CPU] frequency: [%d]hz.", cpuKit.GetFrequency())
-		usage, err := cpuKit.GetUsagePercent()
-		if err != nil {
-			logger.Warnf("[CHIMERA, CPU] fail to get uasge percent, error: %s", err.Error())
-		} else {
-			logger.Infof("[CHIMERA, CPU] uasge percent: [%d]hz.", usage)
-		}
-	}
+	/* CPU */
+	printCpuDetails(logger)
 
 	/* mac */
 	//if macAddresses, err := runtimeKit.GetMacAddresses(); err != nil {
@@ -116,7 +101,7 @@ func PrintBasicDetails(logger CommonLogger) {
 		dataSizeKit.ToReadableIecString(float64(stats.Free)),
 		stats.UsedPercent,
 	)
-	logger.Infof("[CHIMERA, MEMORY] machine memory stats: [%s].", str)
+	logger.Infof("[CHIMERA, MEMORY] machine memory stats: [%s]", str)
 
 	/* disk */
 	//diskKit.PrintBasicDetails(logger)
@@ -138,13 +123,34 @@ func PrintBasicDetails(logger CommonLogger) {
 	/* docker */
 	if dockerIds, err := dockerKit.GetDockerIdList(); err != nil {
 		if errors.Is(err, docker.ErrDockerNotAvailable) {
-			logger.Info("[CHIMERA, DOCKER] Docker isn't available.")
+			logger.Warn("[CHIMERA, DOCKER] Docker isn't available.")
 		} else {
-			logger.Warnf("[CHIMERA, DOCKER] Fail to get docker id list, error: %s")
+			logger.Warnf("[CHIMERA, DOCKER] fail to get docker id list, error: %s")
 		}
 	} else {
 		logger.Infof("[CHIMERA, DOCKER] docker id list: %v.", dockerIds)
 	}
 
 	logger.Info(strings.Repeat("=", 42))
+}
+
+func printOsDetails(logger CommonLogger) {
+
+}
+
+func printCpuDetails(logger CommonLogger) {
+	logger.Infof("[CHIMERA, CPU] in a virtual machine? [%t].", cpuKit.InVirtualMachine())
+	logger.Infof("[CHIMERA, CPU] vendor id: [%s]", cpuKit.GetVendorID())
+	logger.Infof("[CHIMERA, CPU] vendor string: [%s]", cpuKit.GetVendorString())
+	logger.Infof("[CHIMERA, CPU] brand name: [%s]", cpuKit.GetBrandName())
+	logger.Infof("[CHIMERA, CPU] CPU number: [%d]", cpuKit.GetCpuNumber())
+	logger.Infof("[CHIMERA, CPU] features: [%s]", sliceKit.Join(cpuKit.GetFeatureSet(), ","))
+	logger.Infof("[CHIMERA, CPU] frequency: [%d]hz", cpuKit.GetFrequency())
+
+	usage, err := cpuKit.GetUsagePercent()
+	if err != nil {
+		logger.Warnf("[CHIMERA, CPU] fail to get uasge percent, error: %s", err.Error())
+	} else {
+		logger.Infof("[CHIMERA, CPU] uasge percent: [%.2f]%%", usage)
+	}
 }
