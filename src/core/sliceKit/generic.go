@@ -160,7 +160,7 @@ PS: 使用了反射，性能可能有问题，要避免大量调用!!!
 
 @return 可能为nil
 */
-func RemoveZeroValues[T comparable](slice []T) []T {
+func RemoveZeroValues[T any](slice []T) []T {
 	var result []T
 	var zeroValue T
 

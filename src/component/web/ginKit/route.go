@@ -3,7 +3,6 @@ package ginKit
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
-	"github.com/sirupsen/logrus"
 )
 
 // BindHandlersToRoute
@@ -14,15 +13,10 @@ import (
 @param handlers 其中的元素不能为nil!!!
 */
 func BindHandlersToRoute(group gin.IRoutes, route string, methods []string, handlers ...gin.HandlerFunc) {
+	handlers = sliceKit.RemoveZeroValues(handlers)
 	if len(handlers) == 0 {
 		// do nothing
 		return
-	}
-
-	for i, handler := range handlers {
-		if handler == nil {
-			logrus.Panicf("handler(index: %d) == nil", i)
-		}
 	}
 
 	if len(methods) == 0 {

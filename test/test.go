@@ -1,12 +1,15 @@
 package main
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"github.com/sirupsen/logrus"
+	"go.uber.org/zap/zapcore"
 )
 
 func main() {
-	logrus.Info()
+	zapcore.RegisterHooks()
 
-	zapKit.Info()
+	zapcore.SamplerHook()
+
+	logrus.RegisterExitHandler()
+
 }

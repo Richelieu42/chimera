@@ -1,12 +1,11 @@
 package ginKit
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v3/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v3/src/consts"
 	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
-	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
-	"github.com/sirupsen/logrus"
 	"testing"
 )
 
@@ -16,7 +15,7 @@ func TestMustSetUp(t *testing.T) {
 		if err != nil {
 			panic(err)
 		}
-		logrus.Infof("wd: [%s].", wd)
+		fmt.Println("wd:", wd)
 	}
 
 	type config struct {
