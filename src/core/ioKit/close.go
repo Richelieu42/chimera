@@ -44,7 +44,7 @@ func closeSingle(closer io.Closer) error {
 	if closer != nil {
 		switch closer {
 		case os.Stdin, os.Stdout, os.Stderr:
-			// 这3种不关闭
+			// 这几种不关闭
 			return nil
 		default:
 			return closer.Close()
