@@ -3,6 +3,7 @@ package zapKit
 import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+	"io"
 	"os"
 )
 
@@ -190,6 +191,17 @@ func WithWriteSyncer(writeSyncer zapcore.WriteSyncer) LoggerOption {
 		}
 
 		opts.WriteSyncer = writeSyncer
+	}
+}
+
+// WithWriter 第 1 个输出（不能为nil）.
+func WithWriter(w io.Writer) LoggerOption {
+	return func(opts *loggerOptions) {
+		if w == nil {
+			return
+		}
+
+		opts.WriteSyncer = zapcore.AddSync(w)
 	}
 }
 

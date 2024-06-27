@@ -20,6 +20,7 @@ type (
 	}
 )
 
+// Close 释放资源.
 func (l *WrappedLogger) Close() (err error) {
 	if l == nil {
 		return
@@ -35,6 +36,7 @@ func (l *WrappedLogger) Close() (err error) {
 	return
 }
 
+// Close 释放资源.
 func (sl *WrappedSugaredLogger) Close() (err error) {
 	if sl == nil {
 		return
