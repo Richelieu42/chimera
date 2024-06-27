@@ -8,11 +8,10 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/signalKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
-	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"github.com/richelieu-yang/chimera/v3/src/netKit"
 	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 	"github.com/richelieu-yang/chimera/v3/src/validateKit"
-	"github.com/sirupsen/logrus"
 	"net/http"
 	"os"
 	"sync"
@@ -24,8 +23,7 @@ var serviceInfo = ""
 func MustSetUp(config *Config, businessLogic func(engine *gin.Engine) error, options ...GinOption) {
 	err := SetUp(config, businessLogic, options...)
 	if err != nil {
-		logrusKit.DisableQuote(nil)
-		logrus.Fatalf("%+v", err)
+		zapKit.Fatalf("Fail to set up, error: \n%+v", err)
 	}
 }
 
@@ -66,9 +64,7 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 		gin.ForceConsoleColor()
 	}
 
-	// 通过logrus输出Gin的日志.
-	// Richelieu：从目前表现来看，虽然gin和logrus都可以设置颜色，但在此处,只要gin允许了，logrus的logger是否允许就无效了
-	gin.DefaultWriter = logrus.StandardLogger().Out
+	gin.DefaultWriter = os.Stdout
 
 	engine := DefaultEngine()
 
@@ -115,11 +111,11 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 			Addr:    netKit.JoinToHost(config.HostName, httpPort),
 			Handler: engine.Handler(),
 		}
-		logrus.Infof("Listening and serving HTTP on [%s]", httpSrv.Addr)
+		zapKit.Infof("Listening and serving HTTP on [%s]", httpSrv.Addr)
 
 		go func() {
 			if err := httpSrv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-				logrus.Fatalf("Fail to start http server with port(%d).", httpPort)
+				zapKit.Fatalf("Fail to start http server with port(%d).", httpPort)
 			}
 		}()
 	}
@@ -132,11 +128,11 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 			Addr:    netKit.JoinToHost(config.HostName, httpsPort),
 			Handler: engine.Handler(),
 		}
-		logrus.Infof("Listening and serving HTTPS on [%s]", httpsSrv.Addr)
+		zapKit.Infof("Listening and serving HTTPS on [%s]", httpsSrv.Addr)
 
 		go func() {
 			if err := httpsSrv.ListenAndServeTLS(sslConfig.CertFile, sslConfig.KeyFile); err != nil && !errors.Is(err, http.ErrServerClosed) {
-				logrus.Fatalf("Fail to start https server with port(%d).", httpsPort)
+				zapKit.Fatalf("Fail to start https server with port(%d).", httpsPort)
 			}
 		}()
 	}
@@ -161,10 +157,10 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 				defer wg.Done()
 
 				if err := httpSrv.Shutdown(ctx); err != nil {
-					logrus.WithError(err).Error("Fail to shut down http server.")
+					zapKit.Errorf("Fail to shut down http server, error: %+v", err)
 					return
 				}
-				logrus.Info("Manager to shut down http server.")
+				zapKit.Info("Manager to shut down http server.")
 			}()
 		}
 		if httpsSrv != nil {
@@ -173,10 +169,10 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 				defer wg.Done()
 
 				if err := httpsSrv.Shutdown(ctx); err != nil {
-					logrus.WithError(err).Error("Fail to shut down https server.")
+					zapKit.Errorf("Fail to shut down https server, error: %+v", err)
 					return
 				}
-				logrus.Info("Manager to shut down https server.")
+				zapKit.Info("Manager to shut down https server.")
 			}()
 		}
 		wg.Wait()
