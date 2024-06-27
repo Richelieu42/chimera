@@ -12,11 +12,13 @@ import (
 )
 
 func TestSetUp(t *testing.T) {
-	wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
-	if err != nil {
-		panic(err)
+	{
+		wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println("wd:", wd)
 	}
-	logrus.Infof("wd: [%s].", wd)
 
 	type config struct {
 		Redis *Config `json:"redis"`
