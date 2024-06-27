@@ -60,7 +60,7 @@ func PrintBasicDetails(logger CommonLogger) {
 	//if networkTime, source, err := timeKit.GetNetworkTime(); err != nil {
 	//	logger.WithError(err).Warn("[CHIMERA, TIME] fail to get network time")
 	//} else {
-	//	logger.Infof("[CHIMERA, TIME] network time: [%v], source: [%s].", networkTime, source)
+	//	logger.Infof("[CHIMERA, TIME] network time: [%v], source: [%s]", networkTime, source)
 	//}
 
 	/* ip */
@@ -78,15 +78,6 @@ func PrintBasicDetails(logger CommonLogger) {
 	/* CPU */
 	printCpuDetails(logger)
 
-	/* mac */
-	//if macAddresses, err := runtimeKit.GetMacAddresses(); err != nil {
-	//	logger.WithFields(logger.Fields{
-	//		"error": err.Error(),
-	//	}).Fatal("fail to get mac addresses")
-	//} else {
-	//	logger.Infof("[CHIMERA, MAC] mac addresses: [%v].", macAddresses)
-	//}
-
 	/* memory */
 	stats, err := memoryKit.GetMachineMemoryStats()
 	if err != nil {
@@ -103,41 +94,15 @@ func PrintBasicDetails(logger CommonLogger) {
 	logger.Infof("[CHIMERA, MEMORY] machine memory stats: [%s]", str)
 
 	/* disk */
-	//diskKit.PrintBasicDetails(logger)
 	printDiskDetails(logger)
-
-	//if stats, err := diskKit.GetDiskUsageStats(); err != nil {
-	//	logger.WithError(err).Warn("[CHIMERA, DISK] Fail to get disk usage stats.")
-	//} else {
-	//	str := fmt.Sprintf("path: %s, free: %s, used: %s, total: %s, used percent: %.2f%%",
-	//		stats.Path,
-	//		dataSizeKit.ToReadableIecString(float64(stats.Free)),
-	//		dataSizeKit.ToReadableIecString(float64(stats.Used)),
-	//		dataSizeKit.ToReadableIecString(float64(stats.Total)),
-	//		stats.UsedPercent,
-	//	)
-	//	logger.Infof("[CHIMERA, DISK] disk usage stats: [%s].", str)
-	//}
-
-	//// Richelieu: 要有条件地使用 gopsutil
-	///* docker */
-	//if dockerIds, err := dockerKit.GetDockerIdList(); err != nil {
-	//	if errors.Is(err, docker.ErrDockerNotAvailable) {
-	//		logger.Warn("[CHIMERA, DOCKER] Docker isn't available.")
-	//	} else {
-	//		logger.Warnf("[CHIMERA, DOCKER] fail to get docker id list, error: %s")
-	//	}
-	//} else {
-	//	logger.Infof("[CHIMERA, DOCKER] docker id list: %v.", dockerIds)
-	//}
 
 	logger.Info(strings.Repeat("=", 42))
 }
 
 func printOsDetails(logger CommonLogger) {
-	logger.Infof("[CHIMERA, OS] os: [%s].", osKit.OS)
-	logger.Infof("[CHIMERA, OS] arch: [%s].", osKit.ARCH)
-	logger.Infof("[CHIMERA, OS] bits: [%d].", osKit.GetOsBits())
+	logger.Infof("[CHIMERA, OS] os: [%s]", osKit.OS)
+	logger.Infof("[CHIMERA, OS] arch: [%s]", osKit.ARCH)
+	logger.Infof("[CHIMERA, OS] bits: [%d]", osKit.GetOsBits())
 
 	if str, err := osKit.GetUlimitInfo(); err != nil {
 		logger.Warnf("[CHIMERA, OS] fail to get ulimit information, error: %s", err.Error())
@@ -148,17 +113,17 @@ func printOsDetails(logger CommonLogger) {
 	if i, err := osKit.GetThreadsMax(); err != nil {
 		logger.Warnf("[CHIMERA, OS] fail to get kernel.threads-max, error: %s", err.Error())
 	} else {
-		logger.Infof("[CHIMERA, OS] kernel.threads-max: [%d].", i)
+		logger.Infof("[CHIMERA, OS] kernel.threads-max: [%d]", i)
 	}
 	if i, err := osKit.GetPidMax(); err != nil {
 		logger.Warnf("[CHIMERA, OS] fail to get kernel.pid_max, error: %s", err.Error())
 	} else {
-		logger.Infof("[CHIMERA, OS] kernel.pid_max: [%d].", i)
+		logger.Infof("[CHIMERA, OS] kernel.pid_max: [%d]", i)
 	}
 	if i, err := osKit.GetMaxMapCount(); err != nil {
 		logger.Warnf("[CHIMERA, OS] fail to get vm.max_map_count, error: %s", err.Error())
 	} else {
-		logger.Infof("[CHIMERA, OS] vm.max_map_count: [%d].", i)
+		logger.Infof("[CHIMERA, OS] vm.max_map_count: [%d]", i)
 	}
 }
 
@@ -174,12 +139,12 @@ func printDiskDetails(logger CommonLogger) {
 			dataSizeKit.ToReadableIecString(float64(stats.Total)),
 			stats.UsedPercent,
 		)
-		logger.Infof("[CHIMERA, DISK] disk usage stats: [%s].", str)
+		logger.Infof("[CHIMERA, DISK] disk usage stats: [%s]", str)
 	}
 }
 
 func printCpuDetails(logger CommonLogger) {
-	logger.Infof("[CHIMERA, CPU] in a virtual machine? [%t].", cpuKit.InVirtualMachine())
+	logger.Infof("[CHIMERA, CPU] in a virtual machine? [%t]", cpuKit.InVirtualMachine())
 	logger.Infof("[CHIMERA, CPU] vendor id: [%s]", cpuKit.GetVendorID())
 	logger.Infof("[CHIMERA, CPU] vendor string: [%s]", cpuKit.GetVendorString())
 	logger.Infof("[CHIMERA, CPU] brand name: [%s]", cpuKit.GetBrandName())
