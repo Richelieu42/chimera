@@ -1,22 +1,20 @@
 package commonLogKit
 
 import (
-	"errors"
 	"fmt"
 	"github.com/richelieu-yang/chimera/v3/src/consts"
 	"github.com/richelieu-yang/chimera/v3/src/core/cpuKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/memoryKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/osKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/runtimeKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/userKit"
 	"github.com/richelieu-yang/chimera/v3/src/dataSizeKit"
-	"github.com/richelieu-yang/chimera/v3/src/dockerKit"
 	"github.com/richelieu-yang/chimera/v3/src/ip/ipKit"
 	"github.com/richelieu-yang/chimera/v3/src/processKit"
 	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
 	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
-	"github.com/shirou/gopsutil/v3/docker"
 	"strings"
 )
 
@@ -35,7 +33,7 @@ func PrintBasicDetails(logger CommonLogger) {
 	logger.Infof("[CHIMERA, GO] GOROOT: [%s]", runtimeKit.GoRoot)
 
 	/* os */
-	//printOsInfo()
+	printOsDetails(logger)
 
 	/* user */
 	logger.Infof("[CHIMERA, USER] uid: [%s]", userKit.GetUid())
@@ -119,23 +117,47 @@ func PrintBasicDetails(logger CommonLogger) {
 	//	logger.Infof("[CHIMERA, DISK] disk usage stats: [%s].", str)
 	//}
 
-	// Richelieu: 要有条件地使用 gopsutil
-	/* docker */
-	if dockerIds, err := dockerKit.GetDockerIdList(); err != nil {
-		if errors.Is(err, docker.ErrDockerNotAvailable) {
-			logger.Warn("[CHIMERA, DOCKER] Docker isn't available.")
-		} else {
-			logger.Warnf("[CHIMERA, DOCKER] fail to get docker id list, error: %s")
-		}
-	} else {
-		logger.Infof("[CHIMERA, DOCKER] docker id list: %v.", dockerIds)
-	}
+	//// Richelieu: 要有条件地使用 gopsutil
+	///* docker */
+	//if dockerIds, err := dockerKit.GetDockerIdList(); err != nil {
+	//	if errors.Is(err, docker.ErrDockerNotAvailable) {
+	//		logger.Warn("[CHIMERA, DOCKER] Docker isn't available.")
+	//	} else {
+	//		logger.Warnf("[CHIMERA, DOCKER] fail to get docker id list, error: %s")
+	//	}
+	//} else {
+	//	logger.Infof("[CHIMERA, DOCKER] docker id list: %v.", dockerIds)
+	//}
 
 	logger.Info(strings.Repeat("=", 42))
 }
 
 func printOsDetails(logger CommonLogger) {
+	logger.Infof("[CHIMERA, OS] os: [%s].", osKit.OS)
+	logger.Infof("[CHIMERA, OS] arch: [%s].", osKit.ARCH)
+	logger.Infof("[CHIMERA, OS] bits: [%d].", osKit.GetOsBits())
 
+	if str, err := osKit.GetUlimitInfo(); err != nil {
+		logger.Warnf("[CHIMERA, OS] fail to get ulimit information, error: %s", err.Error())
+	} else {
+		logger.Infof("[CHIMERA, OS] ulimit information:\n%s", str)
+	}
+
+	if i, err := osKit.GetThreadsMax(); err != nil {
+		logger.Warnf("[CHIMERA, OS] fail to get kernel.threads-max, error: %s", err.Error())
+	} else {
+		logger.Infof("[CHIMERA, OS] kernel.threads-max: [%d].", i)
+	}
+	if i, err := osKit.GetPidMax(); err != nil {
+		logger.Warnf("[CHIMERA, OS] fail to get kernel.pid_max, error: %s", err.Error())
+	} else {
+		logger.Infof("[CHIMERA, OS] kernel.pid_max: [%d].", i)
+	}
+	if i, err := osKit.GetMaxMapCount(); err != nil {
+		logger.Warnf("[CHIMERA, OS] fail to get vm.max_map_count, error: %s", err.Error())
+	} else {
+		logger.Infof("[CHIMERA, OS] vm.max_map_count: [%d].", i)
+	}
 }
 
 func printCpuDetails(logger CommonLogger) {
