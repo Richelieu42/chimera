@@ -1,8 +1,10 @@
 package zapKit
 
 import (
+	"fmt"
 	"os"
 	"testing"
+	"time"
 )
 
 func TestWrapLogger(t *testing.T) {
@@ -11,6 +13,17 @@ func TestWrapLogger(t *testing.T) {
 		panic(err)
 	}
 
-	logger := NewLogger(WithWriteSyncer())
-	logger1 := WrapLogger()
+	tmp := NewLogger(WithWriter(f))
+	l := WrapLogger(tmp, f)
+
+	l.Debug("debug")
+	l.Info("info")
+	l.Warn("warn")
+	l.Error("error")
+
+	fmt.Println("close", l.Close())
+
+	fmt.Println("=== sleep starts ===")
+	time.Sleep(time.Second * 3)
+	fmt.Println("=== sleep ends ===")
 }
