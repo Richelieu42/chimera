@@ -11,12 +11,10 @@ import (
 				(2) 其中可以有nil
 @return 发生error的话，返回第一个
 */
-func TryToClose(objs ...any) error {
-	var err error
-
+func TryToClose(objs ...any) (err error) {
 	for _, obj := range objs {
 		if closer, ok := obj.(io.Closer); ok {
-			tmpErr := CloseSingle(closer)
+			tmpErr := closeSingle(closer)
 			if tmpErr != nil && err == nil {
 				err = tmpErr
 			}
@@ -32,11 +30,9 @@ PS: 就算循环过程中返回了非nil的error，也要继续向下循环（�
 @param closers (1) 可以为nil（即不传参）；(2) 其中可以有nil
 @return 发生error的话，返回第一个
 */
-func Close(closers ...io.Closer) error {
-	var err error
-
+func Close(closers ...io.Closer) (err error) {
 	for _, closer := range closers {
-		tmpErr := CloseSingle(closer)
+		tmpErr := closeSingle(closer)
 		if tmpErr != nil && err == nil {
 			err = tmpErr
 		}
@@ -44,15 +40,11 @@ func Close(closers ...io.Closer) error {
 	return err
 }
 
-func CloseSingle(closer io.Closer) error {
+func closeSingle(closer io.Closer) error {
 	if closer != nil {
 		switch closer {
-		case os.Stdin:
-			fallthrough
-		case os.Stdout:
-			fallthrough
-		case os.Stderr:
-			// 这三种不关闭
+		case os.Stdin, os.Stdout, os.Stderr:
+			// 这3种不关闭
 			return nil
 		default:
 			return closer.Close()
