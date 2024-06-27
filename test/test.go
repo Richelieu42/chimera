@@ -1,5 +1,7 @@
 package main
 
-func main() {
+import "go.uber.org/zap/zapcore"
 
+func main() {
+	zapcore.NewNopCore()
 }
