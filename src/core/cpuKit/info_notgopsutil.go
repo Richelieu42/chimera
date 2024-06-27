@@ -4,13 +4,8 @@ package cpuKit
 
 import (
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
-	"github.com/sirupsen/logrus"
 	"os"
 )
-
-func printBasicDetails(logger *logrus.Logger) {
-
-}
 
 // GetUsagePercent CPU使用率
 func GetUsagePercent() (float64, error) {

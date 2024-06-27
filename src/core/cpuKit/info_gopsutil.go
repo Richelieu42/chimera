@@ -3,20 +3,11 @@
 package cpuKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/log/commonLogKit"
 	"github.com/shirou/gopsutil/v3/cpu"
 	"github.com/shirou/gopsutil/v3/process"
 	"os"
 	"time"
 )
-
-func printBasicDetails(logger commonLogKit.CommonLogger) {
-	if cpuPercent, err := GetUsagePercent(); err != nil {
-		logger.Warnf("[CHIMERA, CPU] Fail to get cpu usage, error: %s", err.Error())
-	} else {
-		logger.Infof("[CHIMERA, CPU] usage percent: [%.2f]%%.", cpuPercent)
-	}
-}
 
 // GetUsagePercent CPU使用率
 /*

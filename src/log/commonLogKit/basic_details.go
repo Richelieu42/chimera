@@ -77,7 +77,22 @@ func PrintBasicDetails(logger CommonLogger) {
 	}
 
 	/* cpu */
-	cpuKit.PrintBasicDetails(logger)
+	//cpuKit.PrintBasicDetails(logger)
+	{
+		logger.Infof("[CHIMERA, CPU] in a virtual machine? [%t].", cpuKit.InVirtualMachine())
+		logger.Infof("[CHIMERA, CPU] vendor id: [%s].", cpuKit.GetVendorID())
+		logger.Infof("[CHIMERA, CPU] vendor string: [%s].", cpuKit.GetVendorString())
+		logger.Infof("[CHIMERA, CPU] brand name: [%s].", cpuKit.GetBrandName())
+		logger.Infof("[CHIMERA, CPU] CPU number: [%d].", cpuKit.GetCpuNumber())
+		logger.Infof("[CHIMERA, CPU] features: [%s].", sliceKit.Join(cpuKit.GetFeatureSet(), ","))
+		logger.Infof("[CHIMERA, CPU] frequency: [%d]hz.", cpuKit.GetFrequency())
+		usage, err := cpuKit.GetUsagePercent()
+		if err != nil {
+			logger.Warnf("[CHIMERA, CPU] fail to get uasge percent, error: %s", err.Error())
+		} else {
+			logger.Infof("[CHIMERA, CPU] uasge percent: [%d]hz.", usage)
+		}
+	}
 
 	/* mac */
 	//if macAddresses, err := runtimeKit.GetMacAddresses(); err != nil {

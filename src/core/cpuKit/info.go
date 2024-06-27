@@ -2,8 +2,6 @@ package cpuKit
 
 import (
 	"github.com/klauspost/cpuid/v2"
-	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
-	"github.com/richelieu-yang/chimera/v3/src/log/commonLogKit"
 	"runtime"
 )
 
@@ -69,16 +67,4 @@ func GetModel() int {
 
 func GetFrequency() int64 {
 	return cpuid.CPU.Hz
-}
-
-func PrintBasicDetails(logger commonLogKit.CommonLogger) {
-	logger.Infof("[CHIMERA, CPU] in a virtual machine? [%t].", InVirtualMachine())
-	logger.Infof("[CHIMERA, CPU] vendor id: [%s].", GetVendorID())
-	logger.Infof("[CHIMERA, CPU] vendor string: [%s].", GetVendorString())
-	logger.Infof("[CHIMERA, CPU] brand name: [%s].", GetBrandName())
-	logger.Infof("[CHIMERA, CPU] CPU number: [%d].", GetCpuNumber())
-	logger.Infof("[CHIMERA, CPU] features: [%s].", sliceKit.Join(GetFeatureSet(), ","))
-	logger.Infof("[CHIMERA, CPU] frequency: [%d]hz.", GetFrequency())
-
-	printBasicDetails(logger)
 }
