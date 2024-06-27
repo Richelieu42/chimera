@@ -28,7 +28,10 @@ type (
 		// OutputType 输出类型
 		OutputType outputType
 
-		// CoreMaker 自定义Core，适用情况: n个输出（n>2）
+		// CoreMaker 自定义Core，适用情况: n个输出（n > 2）
+		/*
+			PS: 如果配置了此项，第1输出（LevelEnabler、WriteSyncer）和第2输出（OtherLevelEnabler、OtherWriteSyncer）将无效.
+		*/
 		CoreMaker func(encoder zapcore.Encoder) zapcore.Core
 
 		// LevelEnabler （第1输出）日志级别，支持的类型: zapcore.Level、zapcore.LevelEnabler
