@@ -28,6 +28,9 @@ type (
 		// OutputType 输出类型
 		OutputType outputType
 
+		// CoreMaker 自定义Core，适用情况: n个输出（n>2）
+		CoreMaker func(encoder zapcore.Encoder) zapcore.Core
+
 		// LevelEnabler 日志级别，支持的类型: zapcore.Level、zapcore.LevelEnabler
 		LevelEnabler zapcore.LevelEnabler
 		WriteSyncer  zapcore.WriteSyncer
@@ -35,13 +38,13 @@ type (
 		OtherLevelEnabler zapcore.LevelEnabler
 		OtherWriteSyncer  zapcore.WriteSyncer
 
+		InitialFields []zap.Field
+
 		// Caller true: 输出带有caller字段
 		Caller     bool
 		CallerSkip int
 
 		MessagePrefix string
-
-		InitialFields []zap.Field
 
 		EncodeLevel zapcore.LevelEncoder
 		EncodeTime  zapcore.TimeEncoder

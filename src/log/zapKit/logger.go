@@ -28,12 +28,19 @@ func NewLogger(options ...LoggerOption) (logger *zap.Logger) {
 	encoder = NewPrefixEncoder(encoder, opts.MessagePrefix)
 
 	/* core */
-	// 第 1 个输出
-	core := zapcore.NewCore(encoder, opts.WriteSyncer, opts.LevelEnabler)
-	if opts.OtherWriteSyncer != nil && opts.OtherLevelEnabler != nil {
-		// 第 2 个输出
-		core1 := zapcore.NewCore(encoder, opts.OtherWriteSyncer, opts.OtherLevelEnabler)
-		core = zapcore.NewTee(core, core1)
+	var core zapcore.Core
+	if opts.CoreMaker != nil {
+		/* 适用情况: n个输出（n > 2） */
+		core = opts.CoreMaker(encoder)
+	} else {
+		/* 适用情况: 1个或2个输出 */
+		// 第 1 个输出
+		core = zapcore.NewCore(encoder, opts.WriteSyncer, opts.LevelEnabler)
+		if opts.OtherWriteSyncer != nil && opts.OtherLevelEnabler != nil {
+			// 第 2 个输出
+			core1 := zapcore.NewCore(encoder, opts.OtherWriteSyncer, opts.OtherLevelEnabler)
+			core = zapcore.NewTee(core, core1)
+		}
 	}
 	// initial fields
 	if len(opts.InitialFields) > 0 {
