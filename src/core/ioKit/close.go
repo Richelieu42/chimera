@@ -11,7 +11,7 @@ import (
 				(2) 其中可以有nil
 @return 发生error的话，返回第一个
 */
-func TryToClose(objs ...any) (err error) {
+func TryToClose(objs ...interface{}) (err error) {
 	for _, obj := range objs {
 		if closer, ok := obj.(io.Closer); ok {
 			tmpErr := closeSingle(closer)

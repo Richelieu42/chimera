@@ -8,10 +8,10 @@ import (
 func TestDebug(t *testing.T) {
 	defer Sync()
 
-	/* Logger */
+	/* WrappedLogger */
 	Debug("hello world", zap.String("key", "value"), zap.Bool("flag", true))
 
-	/* Sugar Logger */
+	/* Sugar WrappedLogger */
 	Debugf("hello %s", "world")
 	Debugw("hello world", "key", "value", "flag", true)
 	Debugln("hello", "world")
