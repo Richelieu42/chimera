@@ -7,10 +7,9 @@ import (
 
 // NewLogger
 /*
-@param options 	可以为nil，默认: 	(1) 输出到os.Stdout;
-								(2) DEBUG级别;
-								(3) 人类可读的多行输出;
-								(4) 生产环境(development == false)
+@param options 	可以为nil，默认: 	(1) 仅1个输出: 输出到os.Stdout、DEBUG级别;
+								(2) 人类可读的多行输出;
+								(3) 生产环境(development == false)
 */
 func NewLogger(options ...LoggerOption) (logger *zap.Logger) {
 	opts := loadOptions(options...)

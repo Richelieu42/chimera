@@ -10,11 +10,11 @@ var (
 )
 
 func init() {
-	///*
-	//	WithCallerSkip(1): 跳过1层，因为进行了1层封装
-	//*/
-	//l = NewLogger(WithCallerSkip(1))
-	//s = l.Sugar()
+	/*
+		WithCallerSkip(1): 跳过1层，因为进行了1层封装
+	*/
+	l = NewLogger(WithCallerSkip(1))
+	s = l.Sugar()
 }
 
 // ReplaceGlobalLoggers
@@ -30,13 +30,13 @@ func ReplaceGlobalLoggers(logger *zap.Logger) {
 	s = logger.Sugar()
 }
 
-func L() *zap.Logger {
-	return l
-}
-
-func S() *zap.SugaredLogger {
-	return s
-}
+//func L() *zap.Logger {
+//	return l
+//}
+//
+//func S() *zap.SugaredLogger {
+//	return s
+//}
 
 func Sync() {
 	_ = l.Sync()
