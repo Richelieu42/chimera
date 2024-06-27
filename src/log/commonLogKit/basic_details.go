@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/richelieu-yang/chimera/v3/src/consts"
+	"github.com/richelieu-yang/chimera/v3/src/core/cpuKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/memoryKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/runtimeKit"
@@ -16,6 +17,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
 	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 	"github.com/shirou/gopsutil/v3/docker"
+	"strings"
 )
 
 func PrintBasicDetails(logger CommonLogger) {
@@ -23,8 +25,8 @@ func PrintBasicDetails(logger CommonLogger) {
 		return
 	}
 
-	logger.Info("===========================================================")
-	logger.Infof("\n%s\n", consts.Banner)
+	logger.Info(strings.Repeat("=", 42))
+	logger.Infof("\n%s", consts.Banner)
 
 	logger.Infof("[CHIMERA, PROCESS] pid: [%d].", processKit.PID)
 
@@ -75,7 +77,7 @@ func PrintBasicDetails(logger CommonLogger) {
 	}
 
 	/* cpu */
-	//cpuKit.PrintBasicDetails(logger)
+	cpuKit.PrintBasicDetails(logger)
 
 	/* mac */
 	//if macAddresses, err := runtimeKit.GetMacAddresses(); err != nil {
@@ -128,4 +130,6 @@ func PrintBasicDetails(logger CommonLogger) {
 	} else {
 		logger.Infof("[CHIMERA, DOCKER] docker id list: %v.", dockerIds)
 	}
+
+	logger.Info(strings.Repeat("=", 42))
 }

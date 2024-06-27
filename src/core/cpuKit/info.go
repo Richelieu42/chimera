@@ -3,7 +3,7 @@ package cpuKit
 import (
 	"github.com/klauspost/cpuid/v2"
 	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
-	"github.com/sirupsen/logrus"
+	"github.com/richelieu-yang/chimera/v3/src/log/commonLogKit"
 	"runtime"
 )
 
@@ -71,7 +71,7 @@ func GetFrequency() int64 {
 	return cpuid.CPU.Hz
 }
 
-func PrintBasicDetails(logger *logrus.Logger) {
+func PrintBasicDetails(logger commonLogKit.CommonLogger) {
 	logger.Infof("[CHIMERA, CPU] in a virtual machine? [%t].", InVirtualMachine())
 	logger.Infof("[CHIMERA, CPU] vendor id: [%s].", GetVendorID())
 	logger.Infof("[CHIMERA, CPU] vendor string: [%s].", GetVendorString())
