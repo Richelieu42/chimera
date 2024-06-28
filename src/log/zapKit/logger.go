@@ -11,11 +11,14 @@ import (
 @param core		可以为nil
 @param options	可以不传
 
-e.g. core传nil，options不传的情况
-	(1)
-	(2)
-	(3)
-	(4)
+e.g. case: core传nil，options不传
+	(1) [Encoder] 人类可读的多行输出
+	(2) [Encoder] 时间格式: "2024-06-28T09:15:16.176+0800"
+	(3) [Encoder] 日志级别大写且有颜色
+	(4) [Encoder] Message字段无前缀
+	(5) 仅有1个输出: 输出到控制台(os.Stdout)
+	(6) 有 Caller 且 CallerSkip == 0
+	(7) Development == false，即生产模式
 */
 func NewLogger(core zapcore.Core, options ...LoggerOption) (logger *zap.Logger) {
 	if core == nil {
