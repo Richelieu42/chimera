@@ -29,7 +29,6 @@ import (
 							})
 */
 func NewCore(enc zapcore.Encoder, ws zapcore.WriteSyncer, levelEnabler zapcore.LevelEnabler) zapcore.Core {
-
 	return zapcore.NewCore(enc, ws, levelEnabler)
 }
 
