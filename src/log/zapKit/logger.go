@@ -19,6 +19,7 @@ e.g. case: core传nil，options不传
 	(5) 仅有1个输出: 输出到控制台(os.Stdout)
 	(6) 有 Caller 且 CallerSkip == 0
 	(7) Development == false，即生产模式
+	(8) ErrorOutput 使用默认值: zapcore.Lock(os.Stderr)
 */
 func NewLogger(core zapcore.Core, options ...LoggerOption) (logger *zap.Logger) {
 	if core == nil {
@@ -35,6 +36,8 @@ func NewLogger(core zapcore.Core, options ...LoggerOption) (logger *zap.Logger) 
 	if opts.Development {
 		zapOptions = append(zapOptions, zap.Development())
 	}
+	// ErrorOutput
+	zapOptions = append(zapOptions, zap.ErrorOutput(opts.ErrorOutput))
 	// Caller
 	zapOptions = append(zapOptions, zap.WithCaller(opts.Caller))
 	// CallerSkip

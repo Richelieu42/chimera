@@ -1,20 +1,10 @@
 package main
 
 import (
-	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
+	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
+	"os"
 )
 
 func main() {
-	zapcore.RegisterHooks()
-
-	zap.Hooks()
-
-	zap.WithPanicHook()
-
-	zap.WithFatalHook()
-
-	zapcore.WriteThenPanic
-	zapcore.WriteThenFatal
-	zapcore.WriteThenGoexit
+	zapKit.NewWriteSyncerWithLock(os.Stdout)
 }
