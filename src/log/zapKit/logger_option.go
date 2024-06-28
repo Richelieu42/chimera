@@ -23,6 +23,8 @@ type (
 		// Caller true: 输出带有caller字段
 		Caller     bool
 		CallerSkip int
+
+		AddStacktrace zapcore.LevelEnabler
 	}
 
 	LoggerOption func(opts *loggerOptions)

@@ -7,14 +7,15 @@ import (
 )
 
 func PrintBasicDetails(loggers ...*zap.SugaredLogger) {
-	var sl *zap.SugaredLogger
 	loggers = sliceKit.RemoveZeroValues(loggers)
+
+	var sl *zap.SugaredLogger
 	if len(loggers) > 0 {
 		sl = loggers[0]
 	} else {
 		sl = NewLogger(nil).Sugar()
-		defer sl.Sync()
 	}
+	defer sl.Sync()
 
 	commonLogKit.PrintBasicDetails(sl)
 }
