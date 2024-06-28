@@ -1,10 +1,7 @@
 package main
 
-import (
-	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
-	"os"
-)
+import "github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 
 func main() {
-	zapKit.NewWriteSyncerWithLock(os.Stdout)
+	zapKit.NewWriteSyncer()
 }
