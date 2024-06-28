@@ -47,6 +47,10 @@ func NewLogger(core zapcore.Core, options ...LoggerOption) (logger *zap.Logger) 
 	if opts.AddStacktrace != nil {
 		zapOptions = append(zapOptions, zap.AddStacktrace(opts.AddStacktrace))
 	}
+	// Clock
+	if opts.Clock != nil {
+		zapOptions = append(zapOptions, zap.WithClock(opts.Clock))
+	}
 
 	logger = zap.New(core, zapOptions...)
 	return

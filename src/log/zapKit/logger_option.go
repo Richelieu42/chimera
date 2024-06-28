@@ -16,7 +16,7 @@ type (
 
 		// ErrorOutput
 		/*
-			默认:
+			默认: zapcore.Lock(os.Stderr)
 		*/
 		ErrorOutput zapcore.WriteSyncer
 
@@ -25,6 +25,8 @@ type (
 		CallerSkip int
 
 		AddStacktrace zapcore.LevelEnabler
+
+		Clock zapcore.Clock
 	}
 
 	LoggerOption func(opts *loggerOptions)
@@ -37,6 +39,7 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 		Caller:        true,
 		CallerSkip:    0,
 		AddStacktrace: zapcore.ErrorLevel, /* Error及以上的日志输出，会附带堆栈信息 */
+		Clock:         zapcore.DefaultClock,
 	}
 
 	for _, option := range options {
@@ -73,5 +76,11 @@ func WithCallerSkip(skip int) LoggerOption {
 func WithAddStacktrace(levelEnabler zapcore.LevelEnabler) LoggerOption {
 	return func(opts *loggerOptions) {
 		opts.AddStacktrace = levelEnabler
+	}
+}
+
+func WithClock(clock zapcore.Clock) LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.Clock = clock
 	}
 }
