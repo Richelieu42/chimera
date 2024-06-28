@@ -10,18 +10,26 @@ import (
 @param enc 			不能为nil
 @param ws			不能为nil
 @param levelEnabler	(1) 不能为nil
-					(2) 可以是:
-						(a) zapcore.Level 类型
+					(2) 可以是多种:
+						(a) zapcore.Level 类型（级别 >= 此值的才会输出）
 							e.g.
-
-						(b) zap.LevelEnablerFunc 类型
-							e.g. 自定义!!!
+							zapcore.DebugLevel
+							zapcore.InfoLevel
+							zapcore.WarnLevel
+							zapcore.ErrorType
+							zapcore.PanicLevel
+							zapcore.DPanicLevel
+							zapcore.FatalLevel
+							zapcore.InvalidLevel
+						(b) zap.LevelEnablerFunc 类型（更加地自定义）
+							e.g.
 							// 创建错误日志级别的核心
 							errorLevel := zap.LevelEnablerFunc(func(level zapcore.Level) bool {
 								return level >= zapcore.ErrorLevel
 							})
 */
 func NewCore(enc zapcore.Encoder, ws zapcore.WriteSyncer, levelEnabler zapcore.LevelEnabler) zapcore.Core {
+
 	return zapcore.NewCore(enc, ws, levelEnabler)
 }
 
