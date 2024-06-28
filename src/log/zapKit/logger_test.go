@@ -3,15 +3,16 @@ package zapKit
 import (
 	"context"
 	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
 	"testing"
 )
 
 func TestNewLogger(t *testing.T) {
+	l := NewLogger(nil)
 	/*
 		WithAddStacktrace(zapcore.WarnLevel): Warn及以上的日志输出，会附带堆栈信息
 	*/
-	l := NewLogger(nil, WithAddStacktrace(zapcore.WarnLevel))
+	//l := NewLogger(nil, WithAddStacktrace(zapcore.WarnLevel))
+
 	defer l.Sync()
 
 	l.Debug("This is a debug message", zap.String("key", "value"))
