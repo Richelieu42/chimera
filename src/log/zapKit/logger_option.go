@@ -27,6 +27,8 @@ type (
 		AddStacktrace zapcore.LevelEnabler
 
 		Clock zapcore.Clock
+
+		Fields []zapcore.Field
 	}
 
 	LoggerOption func(opts *loggerOptions)
@@ -40,6 +42,7 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 		CallerSkip:    0,
 		AddStacktrace: zapcore.ErrorLevel, /* Error及以上的日志输出，会附带堆栈信息 */
 		Clock:         zapcore.DefaultClock,
+		Fields:        nil,
 	}
 
 	for _, option := range options {
@@ -82,5 +85,11 @@ func WithAddStacktrace(levelEnabler zapcore.LevelEnabler) LoggerOption {
 func WithClock(clock zapcore.Clock) LoggerOption {
 	return func(opts *loggerOptions) {
 		opts.Clock = clock
+	}
+}
+
+func WithFields(fields ...zapcore.Field) LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.Fields = fields
 	}
 }

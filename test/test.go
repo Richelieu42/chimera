@@ -1,24 +1,23 @@
 package main
 
 import (
+	"fmt"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
-// 自定义的钩子函数
-func myHook(entry zapcore.Entry) error {
-	// 在这里实现你的钩子逻辑，比如添加上下文信息
-	if entry.Level == zapcore.ErrorLevel {
-		// 例如：在记录错误级别的日志时添加一些额外的处理
-		// 这里可以执行一些特定的逻辑
-	}
-	return nil
+// 自定义的 Fatal Hook
+type myFatalHook struct{}
+
+func (h *myFatalHook) OnWrite(*zapcore.CheckedEntry, []zap.Field) {
+	// 在这里实现你的钩子逻辑，比如执行清理工作
+	fmt.Println("Fatal hook triggered!")
 }
 
 func main() {
-	// 创建一个带有自定义钩子的logger
+	// 创建一个带有自定义 Fatal Hook 的 logger
 	config := zap.NewProductionConfig()
-	logger, err := config.Build(zap.Hooks(myHook))
+	logger, err := config.Build(zap.WithFatalHook(&myFatalHook{}))
 	if err != nil {
 		panic(err)
 	}
@@ -26,5 +25,7 @@ func main() {
 
 	// 记录一些日志
 	logger.Info("This is an info message")
-	logger.Error("This is an error message")
+
+	// 触发 fatal hook
+	logger.Fatal("This is a fatal message")
 }

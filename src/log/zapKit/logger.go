@@ -8,6 +8,9 @@ import (
 
 // NewLogger
 /*
+PS:
+(1) 自定义字段(Field)，创建 core 和 logger 时都能添加.
+
 @param core		可以为nil
 @param options	可以不传
 
@@ -51,6 +54,12 @@ func NewLogger(core zapcore.Core, options ...LoggerOption) (logger *zap.Logger) 
 	if opts.Clock != nil {
 		zapOptions = append(zapOptions, zap.WithClock(opts.Clock))
 	}
+	// Fields
+	if len(opts.Fields) > 0 {
+		zapOptions = append(zapOptions, zap.Fields(opts.Fields...))
+	}
+
+	zap.Fields()
 
 	logger = zap.New(core, zapOptions...)
 	return

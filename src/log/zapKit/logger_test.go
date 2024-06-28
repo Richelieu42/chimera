@@ -3,6 +3,8 @@ package zapKit
 import (
 	"context"
 	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
+	"os"
 	"testing"
 )
 
@@ -19,6 +21,24 @@ func TestNewLogger(t *testing.T) {
 	l.Info("This is an info message")
 	l.Warn("This is a warning message")
 	l.Error("This is an error message0\nThis is an error message1", zap.String("key", "value"), zap.Error(context.Canceled))
+}
+
+/*
+core 和 logger 都能添加 自定义Fields.
+*/
+func TestNewLogger1(t *testing.T) {
+	encoder := NewEncoder()
+	// 确保多个goroutine在写入日志时不会发生竞态条件
+	ws := zapcore.Lock(os.Stdout)
+	core0 := NewCore(encoder, ws, zapcore.DebugLevel, zap.String("source", "X"))
+	core1 := NewCore(encoder, ws, zapcore.DebugLevel, zap.String("source", "Y"))
+	core := MultiCore(core0, core1)
+	l := NewLogger(core, WithFields(zap.String("source", "O")))
+
+	l.Debug("This is a debug message")
+	l.Info("This is an info message")
+	l.Warn("This is a warning message")
+	l.Error("This is an error message0\nThis is an error message1")
 }
 
 //// TestNewLogger
