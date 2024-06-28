@@ -32,10 +32,11 @@ type (
 
 func loadOptions(options ...LoggerOption) *loggerOptions {
 	opts := &loggerOptions{
-		Development: false,
-		ErrorOutput: zapcore.Lock(os.Stderr),
-		Caller:      true,
-		CallerSkip:  0,
+		Development:   false,
+		ErrorOutput:   zapcore.Lock(os.Stderr),
+		Caller:        true,
+		CallerSkip:    0,
+		AddStacktrace: zapcore.ErrorLevel, /* Error及以上的日志输出，会附带堆栈信息 */
 	}
 
 	for _, option := range options {
