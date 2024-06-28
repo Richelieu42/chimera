@@ -7,17 +7,7 @@ import (
 	"os"
 )
 
-const (
-	// OutputTypeConsole 人类可读的多行输出
-	OutputTypeConsole outputType = iota
-
-	// OutputTypeJson JSON格式输出
-	OutputTypeJson
-)
-
 type (
-	outputType uint8
-
 	loggerOptions struct {
 		// Development 是否是开发环境？会影响 zap.Logger 的DPanic方法
 		/*
@@ -27,7 +17,7 @@ type (
 		Development bool
 
 		// OutputType 输出类型
-		OutputType outputType
+		OutputType outputFormat
 
 		// CoreMaker 自定义Core.
 		/*
@@ -63,13 +53,13 @@ type (
 )
 
 func (opts *loggerOptions) IsOutputTypeConsole() bool {
-	return opts.OutputType == OutputTypeConsole
+	return opts.OutputType == OutputFormatConsole
 }
 
 func loadOptions(options ...LoggerOption) *loggerOptions {
 	opts := &loggerOptions{
 		Development: false,
-		OutputType:  OutputTypeConsole,
+		OutputType:  OutputFormatConsole,
 
 		LevelEnabler: zapcore.DebugLevel,
 		WriteSyncer:  zapcore.AddSync(os.Stdout),
@@ -89,11 +79,11 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 		option(opts)
 	}
 
-	// outputType
+	// outputFormat
 	switch opts.OutputType {
-	case OutputTypeConsole, OutputTypeJson:
+	case OutputFormatConsole, OutputFormatJson:
 	default:
-		opts.OutputType = OutputTypeConsole
+		opts.OutputType = OutputFormatConsole
 	}
 	// EncodeLevel
 	if opts.EncodeLevel == nil {
@@ -123,13 +113,13 @@ func WithDevelopment(flag bool) LoggerOption {
 
 func WithOutputTypeJson() LoggerOption {
 	return func(opts *loggerOptions) {
-		opts.OutputType = OutputTypeJson
+		opts.OutputType = OutputFormatJson
 	}
 }
 
 func WithOutputTypeConsole() LoggerOption {
 	return func(opts *loggerOptions) {
-		opts.OutputType = OutputTypeConsole
+		opts.OutputType = OutputFormatConsole
 	}
 }
 
