@@ -8,6 +8,7 @@ import (
 
 func TestNewLogger(t *testing.T) {
 	l := NewLogger(nil)
+	defer l.Sync()
 
 	l.Debug("This is a debug message", zap.String("key", "value"))
 	l.Info("This is an info message")
