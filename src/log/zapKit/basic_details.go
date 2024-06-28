@@ -12,7 +12,7 @@ func PrintBasicDetails(loggers ...*zap.SugaredLogger) {
 	if len(loggers) > 0 {
 		sl = loggers[0]
 	} else {
-		sl = NewLogger().Sugar()
+		sl = NewLogger(nil).Sugar()
 		defer sl.Sync()
 	}
 

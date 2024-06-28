@@ -10,6 +10,12 @@ import (
 /*
 @param core		可以为nil
 @param options	可以不传
+
+e.g. core传nil，options不传的情况
+	(1)
+	(2)
+	(3)
+	(4)
 */
 func NewLogger(core zapcore.Core, options ...LoggerOption) (logger *zap.Logger) {
 	if core == nil {
