@@ -20,6 +20,7 @@ e.g. case: core传nil，options不传
 	(6) 有 Caller 且 CallerSkip == 0
 	(7) Development == false，即生产模式
 	(8) ErrorOutput 使用默认值: zapcore.Lock(os.Stderr)
+	(9) 输出日志时，不会附带堆栈信息(stack trace)
 */
 func NewLogger(core zapcore.Core, options ...LoggerOption) (logger *zap.Logger) {
 	if core == nil {
@@ -42,6 +43,10 @@ func NewLogger(core zapcore.Core, options ...LoggerOption) (logger *zap.Logger) 
 	zapOptions = append(zapOptions, zap.WithCaller(opts.Caller))
 	// CallerSkip
 	zapOptions = append(zapOptions, zap.AddCallerSkip(opts.CallerSkip))
+	// AddStacktrace
+	if opts.AddStacktrace != nil {
+		zapOptions = append(zapOptions, zap.AddStacktrace(opts.AddStacktrace))
+	}
 
 	logger = zap.New(core, zapOptions...)
 	return

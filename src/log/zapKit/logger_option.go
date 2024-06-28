@@ -68,3 +68,9 @@ func WithCallerSkip(skip int) LoggerOption {
 		opts.CallerSkip = skip
 	}
 }
+
+func WithAddStacktrace(levelEnabler zapcore.LevelEnabler) LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.AddStacktrace = levelEnabler
+	}
+}
