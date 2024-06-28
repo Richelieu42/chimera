@@ -7,12 +7,16 @@ import (
 
 // NewCore
 /*
-@param levelEnabler (1) zapcore.Level 类型实现了 zapcore.LevelEnabler 接口
-					(2) e.g. 自定义
-						// 创建错误日志级别的核心
-						errorLevel := zap.LevelEnablerFunc(func(level zapcore.Level) bool {
-							return level >= zapcore.ErrorLevel
-						})
+@param enc 			不能为nil
+@param ws			不能为nil
+@param levelEnabler	(1) 不能为nil
+					(2) 可以是:
+						(a) zapcore.Level 类型实现了 zapcore.LevelEnabler 接口
+						(b) e.g. 自定义!!!
+							// 创建错误日志级别的核心
+							errorLevel := zap.LevelEnablerFunc(func(level zapcore.Level) bool {
+								return level >= zapcore.ErrorLevel
+							})
 */
 func NewCore(enc zapcore.Encoder, ws zapcore.WriteSyncer, levelEnabler zapcore.LevelEnabler) zapcore.Core {
 	return zapcore.NewCore(enc, ws, levelEnabler)
