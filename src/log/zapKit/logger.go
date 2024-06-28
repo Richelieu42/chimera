@@ -23,7 +23,8 @@ e.g. case: core传nil，options不传
 func NewLogger(core zapcore.Core, options ...LoggerOption) (logger *zap.Logger) {
 	if core == nil {
 		encoder := NewEncoder()
-		ws := zapcore.AddSync(os.Stdout)
+		// 确保多个goroutine在写入日志时不会发生竞态条件
+		ws := zapcore.Lock(os.Stdout)
 		core = NewCore(encoder, ws, zapcore.DebugLevel)
 	}
 
