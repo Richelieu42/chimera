@@ -7,8 +7,8 @@ import (
 
 // NewCore
 /*
-@param enc 			不能为nil
-@param ws			不能为nil
+@param enc	不能为nil
+@param ws	不能为nil
 @param levelEnabler	(1) 不能为nil
 					(2) 可以是多种:
 						(a) zapcore.Level 类型（级别 >= 此值的才会输出）
@@ -27,9 +27,14 @@ import (
 							errorLevel := zap.LevelEnablerFunc(func(level zapcore.Level) bool {
 								return level >= zapcore.ErrorLevel
 							})
+@param initialFields 可以不传
 */
-func NewCore(enc zapcore.Encoder, ws zapcore.WriteSyncer, levelEnabler zapcore.LevelEnabler) zapcore.Core {
-	return zapcore.NewCore(enc, ws, levelEnabler)
+func NewCore(enc zapcore.Encoder, ws zapcore.WriteSyncer, levelEnabler zapcore.LevelEnabler, initialFields ...zapcore.Field) zapcore.Core {
+	core := zapcore.NewCore(enc, ws, levelEnabler)
+	if len(initialFields) > 0 {
+		core = core.With(initialFields)
+	}
+	return core
 }
 
 func NewLazyWith(core zapcore.Core, fields []zapcore.Field) zapcore.Core {

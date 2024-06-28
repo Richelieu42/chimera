@@ -3,61 +3,38 @@ package zapKit
 import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+	"os"
 )
 
 // NewLogger
 /*
-@param options 	可以为nil，默认: 	(1) 仅1个输出: 输出到os.Stdout、DEBUG级别;
-								(2) 人类可读的多行输出;
-								(3) 生产环境(development == false)
+@param core		可以为nil
+@param options	可以不传
 */
-func NewLogger(options ...LoggerOption) (logger *zap.Logger) {
+func NewLogger(core zapcore.Core, options ...LoggerOption) (logger *zap.Logger) {
+	if core == nil {
+		encoder := NewEncoder()
+		ws := zapcore.AddSync(os.Stdout)
+		core = NewCore(encoder, ws, zapcore.DebugLevel)
+	}
+
 	opts := loadOptions(options...)
 
-	/* encoder */
-	encoderConfig := zap.NewProductionEncoderConfig()
-	encoderConfig.EncodeTime = opts.EncodeTime
-	encoderConfig.EncodeLevel = opts.EncodeLevel
-	var encoder zapcore.Encoder
-	if opts.IsOutputTypeConsole() {
-		encoder = zapcore.NewConsoleEncoder(encoderConfig)
-	} else {
-		encoder = zapcore.NewJSONEncoder(encoderConfig)
-	}
-	encoder = NewPrefixEncoder(encoder, opts.MessagePrefix)
-
-	/* core */
-	var core zapcore.Core
-	if opts.CoreMaker != nil {
-		/* 适用情况: n个输出（n > 2） */
-		core = opts.CoreMaker(encoder)
-	} else {
-		/* 适用情况: 1个或2个输出 */
-		// 第 1 个输出
-		core = zapcore.NewCore(encoder, opts.WriteSyncer, opts.LevelEnabler)
-		if opts.OtherWriteSyncer != nil && opts.OtherLevelEnabler != nil {
-			// 第 2 个输出
-			core1 := zapcore.NewCore(encoder, opts.OtherWriteSyncer, opts.OtherLevelEnabler)
-			core = zapcore.NewTee(core, core1)
-		}
-	}
-	// initial fields
-	if len(opts.InitialFields) > 0 {
-		core = core.With(opts.InitialFields)
-	}
-
-	/* logger */
-	zapOptions := []zap.Option{zap.WithCaller(opts.Caller)}
+	var zapOptions []zap.Option
+	// Development
 	if opts.Development {
 		zapOptions = append(zapOptions, zap.Development())
 	}
+	// Caller
+	zapOptions = append(zapOptions, zap.WithCaller(opts.Caller))
+	// CallerSkip
 	zapOptions = append(zapOptions, zap.AddCallerSkip(opts.CallerSkip))
 
 	logger = zap.New(core, zapOptions...)
 	return
 }
 
-func NewSugarLogger(options ...LoggerOption) *zap.SugaredLogger {
-	logger := NewLogger(options...)
+func NewSugarLogger(core zapcore.Core, options ...LoggerOption) *zap.SugaredLogger {
+	logger := NewLogger(core, options...)
 	return logger.Sugar()
 }
