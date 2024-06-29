@@ -1,7 +1,8 @@
 package signalKit
 
 import (
-	"github.com/sirupsen/logrus"
+	"github.com/richelieu-yang/chimera/v3/src/core/osKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"os"
 	"os/signal"
 )
@@ -49,29 +50,25 @@ PS:
 (3) 按实际需求，可能要和 logrus.RegisterExitHandler() 搭配使用;
 (4) 执行顺序: 先执行 callbacks，再执行 logrus.RegisterExitHandler() 注册的handlers（有的话）.
 */
-func MonitorExitSignalsSynchronously(callbacks ...func(sig os.Signal)) {
+func MonitorExitSignalsSynchronously() {
 	ch := make(chan os.Signal, 1)
 	signal.Notify(ch, ExitSignals...)
 
 	sig := <-ch
-	logrus.Warnf("Receive an exit signal(%s).", sig.String())
+	zapKit.Warnf("Receive an exit signal(%s).", sig.String())
 
-	for _, callback := range callbacks {
-		if callback == nil {
-			continue
-		}
-		runCallback(sig, callback)
-	}
-	logrus.Fatalf("Process exits with signal(%s).", sig.String())
+	osKit.RunExitHandlers()
+
+	zapKit.Fatalf("Process exits with signal(%s).", sig.String())
 }
 
-// runCallback 防止执行callback时发生 panic（参考了logrus中的runHandler）.
-func runCallback(sig os.Signal, callback func(sig os.Signal)) {
-	defer func() {
-		if err := recover(); err != nil {
-			logrus.WithField("err", err).Error("Recover from execute callback.")
-		}
-	}()
-
-	callback(sig)
-}
+//// runCallback 防止执行callback时发生 panic（参考了logrus中的runHandler）.
+//func runCallback(sig os.Signal, callback func(sig os.Signal)) {
+//	defer func() {
+//		if err := recover(); err != nil {
+//			logrus.WithField("err", err).Error("Recover from execute callback.")
+//		}
+//	}()
+//
+//	callback(sig)
+//}
