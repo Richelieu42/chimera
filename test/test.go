@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+	"os"
+	"runtime"
 )
 
 // 自定义的 Fatal Hook
@@ -15,17 +17,22 @@ func (h *myFatalHook) OnWrite(*zapcore.CheckedEntry, []zap.Field) {
 }
 
 func main() {
-	// 创建一个带有自定义 Fatal Hook 的 logger
-	config := zap.NewProductionConfig()
-	logger, err := config.Build(zap.WithFatalHook(&myFatalHook{}))
-	if err != nil {
-		panic(err)
+	zap.WithFatalHook()
+
+	runtime.Goexit()
+	os.Exit()
+
+	os.Exit = func(code int) {
+
 	}
-	defer logger.Sync()
 
-	// 记录一些日志
-	logger.Info("This is an info message")
+	a()
+}
 
-	// 触发 fatal hook
-	logger.Fatal("This is a fatal message")
+func a() {
+	defer func() {
+		fmt.Println(666)
+	}()
+
+	panic("000")
 }
