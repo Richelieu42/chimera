@@ -9,13 +9,13 @@ import (
 )
 
 var (
-	handlers []func()
-
-	parallelHandlers []func()
-
 	mutex = new(mutexKit.Mutex)
 
 	timeout = time.Second * 30
+
+	handlers []func()
+
+	parallelHandlers []func()
 )
 
 func RegisterExitHandler(handler func()) {
