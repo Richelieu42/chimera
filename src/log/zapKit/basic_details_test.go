@@ -5,5 +5,5 @@ import (
 )
 
 func TestPrintBasicDetails(t *testing.T) {
-	defer PrintBasicDetails()
+	PrintBasicDetails()
 }
