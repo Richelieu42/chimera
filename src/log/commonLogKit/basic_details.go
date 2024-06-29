@@ -79,19 +79,7 @@ func PrintBasicDetails(logger CommonLogger) {
 	printCpuDetails(logger)
 
 	/* memory */
-	stats, err := memoryKit.GetMachineMemoryStats()
-	if err != nil {
-		logger.Errorf("[CHIMERA, MEMORY] Fail to get machine memory stats, error: %s", err.Error())
-		return
-	}
-	str := fmt.Sprintf("total: %s, available: %s, used: %s, free: %s, used percent: %.2f%%",
-		dataSizeKit.ToReadableIecString(float64(stats.Total)),
-		dataSizeKit.ToReadableIecString(float64(stats.Available)),
-		dataSizeKit.ToReadableIecString(float64(stats.Used)),
-		dataSizeKit.ToReadableIecString(float64(stats.Free)),
-		stats.UsedPercent,
-	)
-	logger.Infof("[CHIMERA, MEMORY] machine memory stats: [%s]", str)
+	printMemoryDetails(logger)
 
 	/* disk */
 	printDiskDetails(logger)
@@ -125,6 +113,22 @@ func printOsDetails(logger CommonLogger) {
 	} else {
 		logger.Infof("[CHIMERA, OS] vm.max_map_count: [%d]", i)
 	}
+}
+
+func printMemoryDetails(logger CommonLogger) {
+	stats, err := memoryKit.GetMachineMemoryStats()
+	if err != nil {
+		logger.Errorf("[CHIMERA, MEMORY] fail to get machine memory stats, error: %s", err.Error())
+		return
+	}
+	str := fmt.Sprintf("total: %s, available: %s, used: %s, free: %s, used percent: %.2f%%",
+		dataSizeKit.ToReadableIecString(float64(stats.Total)),
+		dataSizeKit.ToReadableIecString(float64(stats.Available)),
+		dataSizeKit.ToReadableIecString(float64(stats.Used)),
+		dataSizeKit.ToReadableIecString(float64(stats.Free)),
+		stats.UsedPercent,
+	)
+	logger.Infof("[CHIMERA, MEMORY] machine memory stats: [%s]", str)
 }
 
 func printDiskDetails(logger CommonLogger) {
