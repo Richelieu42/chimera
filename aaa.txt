@@ -1,0 +1,32 @@
+=== RUN   TestNewLogger3
+2024-06-30T16:48:44.055+0800	PANIC	zapKit/logger_test.go:94	111	{"key": "value"}
+github.com/richelieu-yang/chimera/v3/src/log/zapKit.TestNewLogger3
+	/Users/richelieu/GolandProjects/chimera/src/log/zapKit/logger_test.go:94
+testing.tRunner
+	/opt/homebrew/opt/go/libexec/src/testing/testing.go:1689
+--- FAIL: TestNewLogger3 (0.00s)
+panic: 111 [recovered]
+	panic: 111
+
+goroutine 4 [running]:
+testing.tRunner.func1.2({0x102c2e220, 0x14000031f20})
+	/opt/homebrew/opt/go/libexec/src/testing/testing.go:1631 +0x1c4
+testing.tRunner.func1()
+	/opt/homebrew/opt/go/libexec/src/testing/testing.go:1634 +0x33c
+panic({0x102c2e220?, 0x14000031f20?})
+	/opt/homebrew/opt/go/libexec/src/runtime/panic.go:770 +0x124
+go.uber.org/zap/zapcore.CheckWriteAction.OnWrite(0x80?, 0x1?, {0x1?, 0x0?, 0x0?})
+	/Users/richelieu/go/pkg/mod/go.uber.org/zap@v1.27.0/zapcore/entry.go:196 +0x78
+go.uber.org/zap/zapcore.(*CheckedEntry).Write(0x140002f91e0, {0x1400007fc80, 0x1, 0x1})
+	/Users/richelieu/go/pkg/mod/go.uber.org/zap@v1.27.0/zapcore/entry.go:262 +0x1c4
+go.uber.org/zap.(*Logger).Panic(0x0?, {0x102b40713?, 0x0?}, {0x1400007fc80, 0x1, 0x1})
+	/Users/richelieu/go/pkg/mod/go.uber.org/zap@v1.27.0/logger.go:285 +0x54
+github.com/richelieu-yang/chimera/v3/src/log/zapKit.TestNewLogger3(0x1400033e9c0?)
+	/Users/richelieu/GolandProjects/chimera/src/log/zapKit/logger_test.go:94 +0xec
+testing.tRunner(0x1400033e9c0, 0x102ce0dd8)
+	/opt/homebrew/opt/go/libexec/src/testing/testing.go:1689 +0xec
+created by testing.(*T).Run in goroutine 1
+	/opt/homebrew/opt/go/libexec/src/testing/testing.go:1742 +0x318
+
+
+Process finished with the exit code 1

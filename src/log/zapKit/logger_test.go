@@ -74,5 +74,22 @@ func TestNewLogger2(t *testing.T) {
 	logger.Info("This is an info message")
 	logger.Warn("This is a warning message")
 	logger.Error("This is an error message0\nThis is an error message1", zap.String("key", "value"), zap.Error(context.Canceled))
+}
 
+type defPanicHook struct {
+}
+
+func (h *defPanicHook) OnWrite(entry *zapcore.CheckedEntry, fields []zapcore.Field) {
+	//fmt.Println(entry.Message)
+	//fmt.Println(entry.Level)
+
+	entry.Write(fields...)
+	panic(entry.Message)
+}
+
+func TestNewLogger3(t *testing.T) {
+	//l := NewLogger(nil, WithPanicHook(&defPanicHook{}))
+	l := NewLogger(nil)
+
+	l.Panic("111", zap.String("key", "value"))
 }
