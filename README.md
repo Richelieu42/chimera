@@ -1,9 +1,9 @@
 ## richelieu-yang/chimera
 
-Golang的工具类
+Golang的工具类  
 Tools of Golang
 
-- [github]https://github.com/richelieu-yang/chimera
+- [github](https://github.com/richelieu-yang/chimera)
 
 ## 业务项目
 
@@ -24,7 +24,7 @@ Tools of Golang
 
 #### 监听退出信号
 
-建议使用
+建议使用 signalKit.MonitorExitSignals，其内部会调用 osKit.Exit.
 
 ## 参考
 
