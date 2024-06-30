@@ -29,6 +29,9 @@ type (
 		Clock zapcore.Clock
 
 		Fields []zapcore.Field
+
+		PanicHook zapcore.CheckWriteHook
+		FatalHook zapcore.CheckWriteHook
 	}
 
 	LoggerOption func(opts *loggerOptions)
@@ -43,6 +46,8 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 		AddStacktrace: zapcore.ErrorLevel, /* Error及以上的日志输出，会附带堆栈信息 */
 		Clock:         zapcore.DefaultClock,
 		Fields:        nil,
+		PanicHook:     nil,
+		FatalHook:     nil,
 	}
 
 	for _, option := range options {
@@ -91,5 +96,17 @@ func WithClock(clock zapcore.Clock) LoggerOption {
 func WithFields(fields ...zapcore.Field) LoggerOption {
 	return func(opts *loggerOptions) {
 		opts.Fields = fields
+	}
+}
+
+func WithPanicHook(hook zapcore.CheckWriteHook) LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.PanicHook = hook
+	}
+}
+
+func WithFatalHook(hook zapcore.CheckWriteHook) LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.FatalHook = hook
 	}
 }

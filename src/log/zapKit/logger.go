@@ -58,8 +58,14 @@ func NewLogger(core zapcore.Core, options ...LoggerOption) (logger *zap.Logger) 
 	if len(opts.Fields) > 0 {
 		zapOptions = append(zapOptions, zap.Fields(opts.Fields...))
 	}
-
-	zap.Fields()
+	// PanicHook
+	if opts.PanicHook != nil {
+		zapOptions = append(zapOptions, zap.WithPanicHook(opts.PanicHook))
+	}
+	// FatalHook
+	if opts.FatalHook != nil {
+		zapOptions = append(zapOptions, zap.WithFatalHook(opts.FatalHook))
+	}
 
 	logger = zap.New(core, zapOptions...)
 	return
