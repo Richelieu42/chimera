@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/richelieu-yang/chimera/v3/src/core/osKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/signalKit"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
@@ -15,7 +17,9 @@ func (h *myFatalHook) OnWrite(*zapcore.CheckedEntry, []zap.Field) {
 }
 
 func main() {
+	osKit.Exit()
 
+	signalKit.MonitorExitSignals()
 }
 
 func a() {
