@@ -4,7 +4,7 @@ import (
 	"os"
 )
 
-// Exit 退出程序
+// Exit 退出程序（应用）.
 /*
 PS: 无论是在main程还是子程中，只要调用os.Exit()，程序就会终止.
 
