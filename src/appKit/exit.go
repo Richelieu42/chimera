@@ -1,6 +1,7 @@
 package appKit
 
 import (
+	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"os"
 )
 
@@ -22,7 +23,11 @@ func Exit(codes ...int) {
 		code = 1
 	}
 
+	// (1) 运行退出处理函数（毁尸灭迹）
 	RunExitHandlers()
+
+	// (2) 刷新所有日志缓冲
+	zapKit.Sync()
 
 	os.Exit(code)
 }
