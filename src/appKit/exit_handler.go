@@ -3,7 +3,6 @@ package appKit
 import (
 	"context"
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
-	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"sync"
 	"time"
@@ -20,28 +19,24 @@ var (
 )
 
 func RegisterExitHandler(handlers ...func()) {
-	handlers = sliceKit.RemoveZeroValues(handlers)
-	if len(handlers) == 0 {
-		return
-	}
-
 	/* 加锁 && 解锁 */
 	mutex.LockFunc(func() {
 		for _, handler := range handlers {
+			if handlers == nil {
+				continue
+			}
 			syncHandlers = append(syncHandlers, handler)
 		}
 	})
 }
 
 func RegisterParallelExitHandler(handlers ...func()) {
-	handlers = sliceKit.RemoveZeroValues(handlers)
-	if len(handlers) == 0 {
-		return
-	}
-
 	/* 加锁 && 解锁 */
 	mutex.LockFunc(func() {
 		for _, handler := range handlers {
+			if handlers == nil {
+				continue
+			}
 			asyncHandlers = append(asyncHandlers, handler)
 		}
 	})
@@ -68,6 +63,7 @@ func RunExitHandlers() {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
+
 		for _, handler := range syncHandlers {
 			runExitHandler(handler)
 		}
