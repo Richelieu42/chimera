@@ -1,7 +1,6 @@
 package appKit
 
 import (
-	"context"
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"sync"
@@ -52,12 +51,11 @@ func SetExitTimeout(d time.Duration) {
 
 func RunExitHandlers() {
 	if len(syncHandlers) == 0 && len(asyncHandlers) == 0 {
+		zapKit.Info("No exit handler.")
 		return
 	}
 
 	var wg sync.WaitGroup
-	ctx, cancel := context.WithTimeout(context.TODO(), timeout)
-	defer cancel()
 
 	/* 串行 */
 	wg.Add(1)
@@ -92,10 +90,10 @@ func RunExitHandlers() {
 	}()
 
 	select {
-	case <-ctx.Done():
-		zapKit.Errorf("Fail to run all exit syncHandlers within timeout(%s).", timeout)
+	case <-time.After(timeout):
+		zapKit.Errorf("Fail to run all exit handlers within timeout(%s).", timeout)
 	case <-endCh:
-		zapKit.Infof("Manager to run all exit syncHandlers within timeout(%s).", timeout)
+		zapKit.Infof("Manager to run all exit handlers within timeout(%s).", timeout)
 	}
 }
 
