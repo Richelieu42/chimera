@@ -57,10 +57,7 @@ func MonitorExitSignalsSynchronously() {
 	sig := <-ch
 	zapKit.Warnf("Receive an exit signal(%s).", sig.String())
 
-	osKit.Exit()
-
-	//osKit.RunExitHandlers()
-	//zapKit.Fatalf("Process exits with signal(%s).", sig.String())
+	osKit.Exit(1)
 }
 
 //// runCallback 防止执行callback时发生 panic（参考了logrus中的runHandler）.
