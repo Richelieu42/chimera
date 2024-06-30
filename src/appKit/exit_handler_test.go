@@ -32,5 +32,5 @@ func TestRegisterExitHandler(t *testing.T) {
 	time.Sleep(time.Second * 1)
 	zapKit.Info("===")
 
-	Exit()
+	Exit(1)
 }
