@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"os"
-	"runtime"
 )
 
 // 自定义的 Fatal Hook
@@ -17,16 +15,7 @@ func (h *myFatalHook) OnWrite(*zapcore.CheckedEntry, []zap.Field) {
 }
 
 func main() {
-	zap.WithFatalHook()
 
-	runtime.Goexit()
-	os.Exit()
-
-	os.Exit = func(code int) {
-
-	}
-
-	a()
 }
 
 func a() {
