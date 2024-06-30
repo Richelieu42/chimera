@@ -20,11 +20,11 @@ Tools of Golang
 
 #### 主动退出
 
-不要使用 os.Exit，建议使用 osKit.Exit.
+不要使用 os.Exit，建议使用 appKit.Exit.
 
 #### 监听退出信号
 
-建议使用 signalKit.MonitorExitSignals，其内部会调用 osKit.Exit.
+建议使用 signalKit.MonitorExitSignals，其内部会调用 appKit.Exit.
 
 ## 参考
 
