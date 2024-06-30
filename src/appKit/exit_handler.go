@@ -1,4 +1,4 @@
-package osKit
+package appKit
 
 import (
 	"context"
@@ -89,9 +89,9 @@ func RunExitHandlers() {
 
 	select {
 	case <-ctx.Done():
-		zapKit.Errorf("Fail to run all exit handlers within timeout(%s)", timeout)
+		zapKit.Errorf("Fail to run all exit handlers within timeout(%s).", timeout)
 	case <-endCh:
-		zapKit.Infof("Manager to run all exit handlers within timeout(%s)", timeout)
+		zapKit.Infof("Manager to run all exit handlers within timeout(%s).", timeout)
 	}
 }
 
@@ -99,7 +99,7 @@ func RunExitHandlers() {
 func runExitHandler(handler func()) {
 	defer func() {
 		if err := recover(); err != nil {
-			zapKit.Errorf("recover from panic: %v", err)
+			zapKit.Errorf("Recover from panic: %v", err)
 		}
 	}()
 

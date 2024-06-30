@@ -1,4 +1,4 @@
-package osKit
+package appKit
 
 import (
 	"os"

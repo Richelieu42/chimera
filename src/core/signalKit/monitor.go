@@ -1,7 +1,7 @@
 package signalKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/core/osKit"
+	"github.com/richelieu-yang/chimera/v3/src/appKit"
 	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"os"
 	"os/signal"
@@ -55,7 +55,7 @@ func MonitorExitSignals() {
 	sig := <-ch
 	zapKit.Warnf("Receive an exit signal(%s).", sig.String())
 
-	osKit.Exit(1)
+	appKit.Exit(1)
 }
 
 //// runCallback 防止执行callback时发生 panic（参考了logrus中的runHandler）.
