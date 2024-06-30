@@ -3,6 +3,7 @@ package appKit
 import (
 	"context"
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"sync"
 	"time"
@@ -13,28 +14,36 @@ var (
 
 	timeout = time.Second * 30
 
-	handlers []func()
+	syncHandlers []func()
 
-	parallelHandlers []func()
+	asyncHandlers []func()
 )
 
-func RegisterExitHandler(handler func()) {
-	if handler == nil {
+func RegisterExitHandler(handlers ...func()) {
+	handlers = sliceKit.RemoveZeroValues(handlers)
+	if len(handlers) == 0 {
 		return
 	}
 
+	/* 加锁 && 解锁 */
 	mutex.LockFunc(func() {
-		handlers = append(handlers, handler)
+		for _, handler := range handlers {
+			syncHandlers = append(syncHandlers, handler)
+		}
 	})
 }
 
-func RegisterParallelExitHandler(handler func()) {
-	if handler == nil {
+func RegisterParallelExitHandler(handlers ...func()) {
+	handlers = sliceKit.RemoveZeroValues(handlers)
+	if len(handlers) == 0 {
 		return
 	}
 
+	/* 加锁 && 解锁 */
 	mutex.LockFunc(func() {
-		parallelHandlers = append(parallelHandlers, handler)
+		for _, handler := range handlers {
+			asyncHandlers = append(asyncHandlers, handler)
+		}
 	})
 }
 
@@ -47,7 +56,7 @@ func SetExitTimeout(d time.Duration) {
 }
 
 func RunExitHandlers() {
-	if len(handlers) == 0 && len(parallelHandlers) == 0 {
+	if len(syncHandlers) == 0 && len(asyncHandlers) == 0 {
 		return
 	}
 
@@ -59,8 +68,7 @@ func RunExitHandlers() {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-
-		for _, handler := range handlers {
+		for _, handler := range syncHandlers {
 			runExitHandler(handler)
 		}
 	}()
@@ -71,7 +79,7 @@ func RunExitHandlers() {
 		defer wg.Done()
 
 		var wg1 sync.WaitGroup
-		for _, handler := range parallelHandlers {
+		for _, handler := range asyncHandlers {
 			wg1.Add(1)
 			go func() {
 				defer wg1.Done()
@@ -89,9 +97,9 @@ func RunExitHandlers() {
 
 	select {
 	case <-ctx.Done():
-		zapKit.Errorf("Fail to run all exit handlers within timeout(%s).", timeout)
+		zapKit.Errorf("Fail to run all exit syncHandlers within timeout(%s).", timeout)
 	case <-endCh:
-		zapKit.Infof("Manager to run all exit handlers within timeout(%s).", timeout)
+		zapKit.Infof("Manager to run all exit syncHandlers within timeout(%s).", timeout)
 	}
 }
 
