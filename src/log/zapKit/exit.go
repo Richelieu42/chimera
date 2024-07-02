@@ -17,11 +17,9 @@ func Exit(codes ...int) {
 		(1) == 0: 正常退出
 		(2) != 0（一般用1）: 非正常退出
 	*/
-	var code int
+	code := 1
 	if len(codes) > 0 {
 		code = codes[0]
-	} else {
-		code = 1
 	}
 
 	// (1) 运行退出处理函数（毁尸灭迹）
