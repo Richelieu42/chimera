@@ -5,18 +5,6 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
 )
 
-var (
-	defClient = NewClient()
-)
-
-func SetDefaultClient(client *req.Client) {
-	if client == nil {
-		return
-	}
-
-	defClient = client
-}
-
 // NewClient
 /*
 @param options 不传参的情况下，	(1) 生产模式
