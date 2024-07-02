@@ -20,7 +20,6 @@ func TestWrapLogger(t *testing.T) {
 	ws := zapcore.Lock(f)
 	core := NewCore(encoder, ws, zapcore.DebugLevel)
 	l := zap.New(core)
-
 	wl := WrapLogger(l, f)
 
 	wl.Debug("debug")
