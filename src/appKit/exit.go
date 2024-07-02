@@ -6,6 +6,7 @@ import (
 )
 
 var (
+	// Exit 退出程序（应用）.
 	Exit func(codes ...int) = zapKit.Exit
 
 	RegisterExitHandler func(handlers ...func()) = zapKit.RegisterExitHandler
