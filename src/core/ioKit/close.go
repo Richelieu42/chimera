@@ -20,7 +20,7 @@ func TryToClose(objs ...interface{}) (err error) {
 			}
 		}
 	}
-	return err
+	return
 }
 
 // Close
@@ -37,7 +37,7 @@ func Close(closers ...io.Closer) (err error) {
 			err = tmpErr
 		}
 	}
-	return err
+	return
 }
 
 func closeSingle(closer io.Closer) error {
