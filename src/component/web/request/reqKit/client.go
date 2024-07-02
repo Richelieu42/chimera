@@ -13,6 +13,7 @@ func SetDefaultClient(client *req.Client) {
 	if client == nil {
 		return
 	}
+
 	defClient = client
 }
 
