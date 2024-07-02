@@ -9,7 +9,7 @@ import (
 /*
 PS:
 (1) 适用场景: 使用完后，需要释放对应资源（关闭输出）.
-(2) 不要调用返回值的 Sugar() 方法!!!
+(2) 不要调用返回值的 Sugar()!!!
 */
 func WrapLogger(logger *zap.Logger, writers ...io.Writer) *WrappedLogger {
 	return &WrappedLogger{
@@ -20,7 +20,9 @@ func WrapLogger(logger *zap.Logger, writers ...io.Writer) *WrappedLogger {
 
 // WrapSugarLogger
 /*
-适用场景: 使用完后，需要释放对应资源（关闭输出）.
+PS:
+(1) 适用场景: 使用完后，需要释放对应资源（关闭输出）.
+(2) 不要调用返回值的 Desugar()!!!
 */
 func WrapSugarLogger(sugaredLogger *zap.SugaredLogger, writers ...io.Writer) *WrappedSugaredLogger {
 	return &WrappedSugaredLogger{
