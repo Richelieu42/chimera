@@ -1,8 +1,7 @@
-package appKit
+package zapKit
 
 import (
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
-	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"sync"
 	"time"
 )
@@ -51,7 +50,7 @@ func SetExitTimeout(d time.Duration) {
 
 func RunExitHandlers() {
 	if len(syncHandlers) == 0 && len(asyncHandlers) == 0 {
-		zapKit.Info("No exit handler.")
+		Info("No exit handler.")
 		return
 	}
 
@@ -91,9 +90,9 @@ func RunExitHandlers() {
 
 	select {
 	case <-time.After(timeout):
-		zapKit.Errorf("Fail to run all exit handlers within timeout(%s).", timeout)
+		Errorf("Fail to run all exit handlers within timeout(%s).", timeout)
 	case <-endCh:
-		zapKit.Infof("Manager to run all exit handlers within timeout(%s).", timeout)
+		Infof("Manager to run all exit handlers within timeout(%s).", timeout)
 	}
 }
 
@@ -101,7 +100,7 @@ func RunExitHandlers() {
 func runExitHandler(handler func()) {
 	defer func() {
 		if err := recover(); err != nil {
-			zapKit.Errorf("Recover from panic: %v", err)
+			Errorf("Recover from panic: %v", err)
 		}
 	}()
 
