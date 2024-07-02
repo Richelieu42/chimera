@@ -47,7 +47,7 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 		Clock:         zapcore.DefaultClock,
 		Fields:        nil,
 		PanicHook:     nil,
-		FatalHook:     nil,
+		FatalHook:     &defaultFatalHook{},
 	}
 
 	for _, option := range options {
@@ -105,6 +105,10 @@ func WithPanicHook(hook zapcore.CheckWriteHook) LoggerOption {
 	}
 }
 
+// WithFatalHook
+/*
+Deprecated: 不推荐替换默认的fatal hook.一定要替换的换，建议使用 appKit.Exit 而非 os.Exit 退出应用.
+*/
 func WithFatalHook(hook zapcore.CheckWriteHook) LoggerOption {
 	return func(opts *loggerOptions) {
 		opts.FatalHook = hook
