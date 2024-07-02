@@ -10,11 +10,11 @@ import (
 @param options 不传参的情况下，	(1) 生产模式
 								(2) 超时时间: 30s
 								(3) 跳过https证书验证
-								(4) 日志输出到 os.Stdout
+								(4) 日志输出: os.Stdout
 */
 func NewClient(options ...ClientOption) (client *req.Client) {
-	client = req.C()
 	opts := loadClientOptions(options...)
+	client = req.C()
 
 	/* 开发者模式（甩锅） */
 	if opts.Dev {
