@@ -11,6 +11,7 @@ import (
 								(2) 超时时间: 30s
 								(3) 跳过https证书验证
 								(4) 日志输出: os.Stdout
+								(5) 不重试
 */
 func NewClient(options ...ClientOption) (client *req.Client) {
 	opts := loadClientOptions(options...)
@@ -69,6 +70,24 @@ func NewClient(options ...ClientOption) (client *req.Client) {
 		（imroc/req默认: 输出到 os.Stdout）
 	*/
 	client.SetLogger(opts.Logger)
+
+	/* 自动重试(retry) */
+	if opts.RetryCount > 0 {
+		client.SetCommonRetryCount(opts.RetryCount)
+		client.SetCommonRetryInterval(opts.GetRetryInterval)
+		for _, hook := range opts.RetryHooks {
+			if hook == nil {
+				continue
+			}
+			client.AddCommonRetryHook(hook)
+		}
+		for _, cond := range opts.RetryConditions {
+			if cond == nil {
+				continue
+			}
+			client.AddCommonRetryCondition(cond)
+		}
+	}
 
 	return
 }

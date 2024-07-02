@@ -33,6 +33,11 @@ type (
 			nil: 不输出
 		*/
 		Logger req.Logger
+
+		RetryCount       int
+		GetRetryInterval req.GetRetryIntervalFunc
+		RetryConditions  []req.RetryConditionFunc
+		RetryHooks       []req.RetryHookFunc
 	}
 
 	ClientOption func(*clientOptions)
@@ -47,6 +52,13 @@ func loadClientOptions(options ...ClientOption) *clientOptions {
 		InsecureSkipVerify: true,
 		// imroc/req默认: 输出到 os.Stdout
 		Logger: logger,
+
+		RetryCount: 0,
+		GetRetryInterval: func(resp *req.Response, attempt int) time.Duration {
+			return time.Millisecond * 100
+		},
+		RetryConditions: nil,
+		RetryHooks:      nil,
 	}
 
 	for _, option := range options {
@@ -86,5 +98,32 @@ func WithInsecureSkipVerify(insecureSkipVerify bool) ClientOption {
 func WithLogger(logger req.Logger) ClientOption {
 	return func(options *clientOptions) {
 		options.Logger = logger
+	}
+}
+
+func WithRetryCount(retryCount int) ClientOption {
+	return func(options *clientOptions) {
+		if retryCount < 0 {
+			retryCount = 0
+		}
+		options.RetryCount = retryCount
+	}
+}
+
+func WithRetryInterval(getRetryInterval req.GetRetryIntervalFunc) ClientOption {
+	return func(options *clientOptions) {
+		options.GetRetryInterval = getRetryInterval
+	}
+}
+
+func WithRetryConditions(conditions ...req.RetryConditionFunc) ClientOption {
+	return func(options *clientOptions) {
+		options.RetryConditions = conditions
+	}
+}
+
+func WithRetryHooks(hooks ...req.RetryHookFunc) ClientOption {
+	return func(options *clientOptions) {
+		options.RetryHooks = hooks
 	}
 }
