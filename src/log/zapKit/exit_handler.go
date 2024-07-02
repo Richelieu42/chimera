@@ -40,6 +40,7 @@ func RegisterParallelExitHandler(handlers ...func()) {
 	})
 }
 
+// SetExitTimeout 执行所有exit handler的超时时间.
 func SetExitTimeout(d time.Duration) {
 	if d <= 0 {
 		return
