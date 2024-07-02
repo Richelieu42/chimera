@@ -16,6 +16,9 @@ func (h *defaultFatalHook) OnWrite(entry *zapcore.CheckedEntry, fields []zapcore
 }
 
 func main() {
+	zap.IncreaseLevel()
+	zapcore.NewIncreaseLevelCore()
+
 	zap.S()
 
 	go func() {

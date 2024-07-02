@@ -9,7 +9,7 @@ import (
 PS: 无论是在main程还是子程中，只要调用os.Exit()，程序就会终止.
 
 @param codes	(1) 可以不传（默认code: 1）
-				(2) For portability, the status code should be in the range [0, 125].（可移植性）
+				(2) For portability, the status code should be in the range [0, 125].（为了可移植性）
 */
 func Exit(codes ...int) {
 	/*
