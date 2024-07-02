@@ -1,7 +1,9 @@
 package main
 
 import (
+	"github.com/richelieu-yang/chimera/v3/src/component/web/request/reqKit"
 	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
+	"github.com/sirupsen/logrus"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"runtime"
@@ -16,6 +18,10 @@ func (h *defaultFatalHook) OnWrite(entry *zapcore.CheckedEntry, fields []zapcore
 }
 
 func main() {
+
+	reqKit.WithLogger(logrus.StandardLogger())
+	reqKit.WithLogger(zapKit.NewSugarLogger(nil))
+
 	zap.IncreaseLevel()
 	zapcore.NewIncreaseLevelCore()
 

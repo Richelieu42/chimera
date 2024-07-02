@@ -3,6 +3,7 @@ package reqKit
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"github.com/richelieu-yang/chimera/v3/src/netKit"
 	"testing"
 	"time"
@@ -24,11 +25,11 @@ func TestNewClient(t *testing.T) {
 	// 等一会，让web服务先启动
 	time.Sleep(time.Millisecond * 100)
 
-	//client := NewClient()
-	client := NewClient(WithDev())
+	client := NewClient()
+	//client := NewClient(WithDev())
 	data, err := client.Post("http://127.0.0.1:8001/test").Do().ToBytes()
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("response:", string(data))
+	zapKit.Infof("response contenty: %s", string(data))
 }

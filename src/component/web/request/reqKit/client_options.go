@@ -2,16 +2,11 @@ package reqKit
 
 import (
 	"github.com/imroc/req/v3"
-	"github.com/richelieu-yang/chimera/v3/src/core/mathKit"
-	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
-	"os"
+	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"time"
 )
 
 const (
-	// MinTimeout 最小超时时间
-	MinTimeout = time.Second * 3
-
 	// DefaultTimeout 默认超时时间
 	DefaultTimeout = time.Second * 30
 )
@@ -44,7 +39,7 @@ type (
 )
 
 func loadClientOptions(options ...ClientOption) *clientOptions {
-	logger := logrusKit.NewLogger(logrusKit.WithOutput(os.Stdout), logrusKit.WithMsgPrefix("[imroc/req] "))
+	logger := zapKit.NewLogger(nil).Sugar()
 
 	opts := &clientOptions{
 		Dev:                false,
@@ -58,7 +53,9 @@ func loadClientOptions(options ...ClientOption) *clientOptions {
 		option(opts)
 	}
 
-	opts.Timeout = mathKit.Max(opts.Timeout, MinTimeout)
+	if opts.Timeout <= 0 {
+		opts.Timeout = DefaultTimeout
+	}
 
 	return opts
 }
@@ -81,6 +78,11 @@ func WithInsecureSkipVerify(insecureSkipVerify bool) ClientOption {
 	}
 }
 
+// WithLogger
+/*
+@param logger	(1) 可以是 *logrus.Logger 实例 || *zap.SugaredLogger 实例
+				(2) 可以为nil（disable log, 禁用输出）
+*/
 func WithLogger(logger req.Logger) ClientOption {
 	return func(options *clientOptions) {
 		options.Logger = logger
