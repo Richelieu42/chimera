@@ -91,7 +91,13 @@ func loadOptions(options ...ClientOption) *clientOptions {
 			if !resp.IsSuccessState() {
 				// Neither a success response nor a error response, record details to help troubleshooting
 				//resp.Err = fmt.Errorf("bad status: %s\nraw content:\n%s", resp.Status, resp.Dump())
-				resp.Err = errorKit.Simplef("bad status: %s\nraw content:\n%s", resp.Status, resp.Dump())
+
+				bodyStr, err := resp.ToString()
+				if err != nil {
+					resp.Err = errorKit.Newf("bad status: %s, fail to get body string: %s", resp.Status, err.Error())
+				} else {
+					resp.Err = errorKit.Newf("bad status: %s, body string: %s", resp.Status, bodyStr)
+				}
 			}
 			return nil
 		}

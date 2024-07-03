@@ -38,7 +38,9 @@ func TestNewClient(t *testing.T) {
 
 // TestNewClient1 测试retry count
 func TestNewClient1(t *testing.T) {
-	client := NewClient(WithDev(), WithTimeout(time.Second*10), WithRetryCount(0), WithRetryInterval(func(resp *req.Response, attempt int) time.Duration {
+	retryCount := 0
+
+	client := NewClient(WithDev(), WithTimeout(time.Second*10), WithRetryCount(retryCount), WithRetryInterval(func(resp *req.Response, attempt int) time.Duration {
 		zapKit.Debugf("attempt: %d", attempt)
 		return time.Second
 	}))
@@ -53,4 +55,26 @@ func TestNewClient1(t *testing.T) {
 		panic(err)
 	}
 	zapKit.Infof("response contenty: %s", string(data))
+}
+
+func TestNewClient2(t *testing.T) {
+	go func() {
+		port := 8001
+
+		engine := gin.Default()
+		engine.Any("/test", func(ctx *gin.Context) {
+			ctx.String(500, fmt.Sprintf("This is [%d].", port))
+		})
+		if err := engine.Run(netKit.JoinToHost("", port)); err != nil {
+			panic(err)
+		}
+	}()
+
+	time.Sleep(time.Second * 3)
+
+	client := NewClient(WithDev())
+	resp := client.Get("http://127.0.0.1:8001/test").Do()
+	if resp.Err != nil {
+		panic(resp.Err)
+	}
 }
