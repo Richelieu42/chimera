@@ -3,7 +3,7 @@ package ipRegionKit
 import (
 	"github.com/richelieu-yang/chimera/v3/src/consts"
 	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
-	"github.com/sirupsen/logrus"
+	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"testing"
 )
 
@@ -12,7 +12,7 @@ func TestGetRegion(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	logrus.Infof("wd: [%s].", wd)
+	zapKit.Infof("wd: [%s].", wd)
 
 	/*
 		https://github.com/lionsoul2014/ip2region/blob/master/data/ip2region.xdb
@@ -22,6 +22,10 @@ func TestGetRegion(t *testing.T) {
 	MustSetUp(xdbPath)
 
 	//ip := "10.0.9.141"
-	ip := "218.90.174.146"
-	logrus.Info(GetRegion(ip))
+	ip := "180.98.201.169"
+	str, err := GetRegion(ip)
+	if err != nil {
+		panic(err)
+	}
+	zapKit.Info(str)
 }

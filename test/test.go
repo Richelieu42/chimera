@@ -1,15 +1,10 @@
 package main
 
 import (
-	"context"
-	"time"
+	"fmt"
+	"github.com/richelieu-yang/chimera/v3/src/ip/ipRegionKit"
 )
 
 func main() {
-	ctx, cancel := context.WithTimeout(context.TODO(), time.Second)
-	cancel()
-
-	GetNetworkTime(ctx)
-
-	select {}
+	fmt.Println(ipRegionKit.GetRegion("180.98.201.169"))
 }

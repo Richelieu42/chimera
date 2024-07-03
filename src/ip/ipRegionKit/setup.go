@@ -4,8 +4,7 @@ import (
 	"github.com/lionsoul2014/ip2region/binding/golang/xdb"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
-	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
-	"github.com/sirupsen/logrus"
+	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 )
 
 var NotSetupError = errorKit.Newf("haven’t been set up correctly")
@@ -16,8 +15,7 @@ var searcher *xdb.Searcher
 func MustSetUp(xdbPath string) {
 	err := SetUp(xdbPath)
 	if err != nil {
-		logrusKit.DisableQuote(nil)
-		logrus.Fatalf("%+v", err)
+		zapKit.Fatalf("fail to set up, error: %s", err.Error())
 	}
 }
 
