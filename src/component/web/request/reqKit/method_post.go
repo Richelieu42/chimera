@@ -11,19 +11,16 @@ PS: 要注意 req.Response 结构体的 Err 字段.
 
 @param body Set the request Body, accepts string、[]byte、io.Reader、map and struct.
 */
-func Post(ctx context.Context, url string, queryParams map[string][]string, body interface{}) *req.Response {
+func Post(ctx context.Context, url string, body interface{}) *req.Response {
 	r := GetGlobalClient().Post(url)
 
-	for key, s := range queryParams {
-		r.AddQueryParams(key, s...)
-	}
 	r.SetContentType(ContentTypeForm)
 	r.SetBody(body)
 	return r.Do(ctx)
 }
 
-func PostAndInto(ctx context.Context, url string, queryParams map[string][]string, body interface{}, v interface{}) error {
-	resp := Post(ctx, url, queryParams, body)
+func PostAndInto(ctx context.Context, url string, body interface{}, v interface{}) error {
+	resp := Post(ctx, url, body)
 	if resp.Err != nil {
 		return resp.Err
 	}
