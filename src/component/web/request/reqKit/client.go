@@ -73,14 +73,18 @@ func NewClient(options ...ClientOption) (client *req.Client) {
 
 	/* 自动重试(retry) */
 	if opts.RetryCount > 0 {
+		// 重试次数（不包括第一次请求）
 		client.SetCommonRetryCount(opts.RetryCount)
+		// 重试周期
 		client.SetCommonRetryInterval(opts.GetRetryInterval)
+		// 重试钩子
 		for _, hook := range opts.RetryHooks {
 			if hook == nil {
 				continue
 			}
 			client.AddCommonRetryHook(hook)
 		}
+		// 重试条件
 		for _, cond := range opts.RetryConditions {
 			if cond == nil {
 				continue
