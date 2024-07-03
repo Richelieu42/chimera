@@ -88,10 +88,10 @@ func loadOptions(options ...ClientOption) *clientOptions {
 			//	resp.Err = errMsg // Convert api error into go error
 			//	return nil
 			//}
+			/* 处理不成功的http状态码 */
 			if !resp.IsSuccessState() {
 				// Neither a success response nor a error response, record details to help troubleshooting
 				//resp.Err = fmt.Errorf("bad status: %s\nraw content:\n%s", resp.Status, resp.Dump())
-
 				bodyStr, err := resp.ToString()
 				if err != nil {
 					resp.Err = errorKit.Newf("bad status: %s, fail to get body string: %s", resp.Status, err.Error())
