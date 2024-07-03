@@ -2,6 +2,7 @@ package reqKit
 
 import (
 	"github.com/imroc/req/v3"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"time"
 )
@@ -38,37 +39,63 @@ type (
 		GetRetryInterval req.GetRetryIntervalFunc
 		RetryConditions  []req.RetryConditionFunc
 		RetryHooks       []req.RetryHookFunc
+
+		/* 下面两者一般搭配起来用，参考: https://req.cool/zh/docs/prologue/quickstart/#%E6%9B%B4%E9%AB%98%E7%BA%A7%E7%9A%84-get-%E8%AF%B7%E6%B1%82 */
+		CommonErrorResult interface{}
+		OnAfterResponse   req.ResponseMiddleware
 	}
 
 	ClientOption func(*clientOptions)
 )
 
-func loadClientOptions(options ...ClientOption) *clientOptions {
+func loadOptions(options ...ClientOption) *clientOptions {
 	logger := zapKit.NewLogger(nil).Sugar()
 
 	opts := &clientOptions{
 		Dev:                false,
-		Timeout:            DefaultTimeout,
+		Timeout:            0, // 默认值在下面
 		InsecureSkipVerify: true,
 		// imroc/req默认: 输出到 os.Stdout
-		Logger: logger,
-
-		RetryCount: 0,
-		GetRetryInterval: func(resp *req.Response, attempt int) time.Duration {
-			return time.Millisecond * 100
-		},
-		RetryConditions: nil,
-		RetryHooks:      nil,
+		Logger:            logger,
+		RetryCount:        0,
+		GetRetryInterval:  nil, // 默认值在下面
+		RetryConditions:   nil,
+		RetryHooks:        nil,
+		CommonErrorResult: nil,
+		OnAfterResponse:   nil, // 默认值在下面
 	}
 
 	for _, option := range options {
 		option(opts)
 	}
 
+	/* 默认值s */
 	if opts.Timeout <= 0 {
 		opts.Timeout = DefaultTimeout
 	}
-
+	if opts.GetRetryInterval == nil {
+		opts.GetRetryInterval = func(resp *req.Response, attempt int) time.Duration {
+			// 100ms
+			return time.Millisecond * 100
+		}
+	}
+	if opts.OnAfterResponse == nil {
+		opts.OnAfterResponse = func(client *req.Client, resp *req.Response) error {
+			if resp.Err != nil { // There is an underlying error, e.g. network error or unmarshal error.
+				return nil
+			}
+			//if errMsg, ok := resp.ErrorResult().(*ErrorMessage); ok {
+			//	resp.Err = errMsg // Convert api error into go error
+			//	return nil
+			//}
+			if !resp.IsSuccessState() {
+				// Neither a success response nor a error response, record details to help troubleshooting
+				//resp.Err = fmt.Errorf("bad status: %s\nraw content:\n%s", resp.Status, resp.Dump())
+				resp.Err = errorKit.Simplef("bad status: %s\nraw content:\n%s", resp.Status, resp.Dump())
+			}
+			return nil
+		}
+	}
 	return opts
 }
 
@@ -125,5 +152,17 @@ func WithRetryConditions(conditions ...req.RetryConditionFunc) ClientOption {
 func WithRetryHooks(hooks ...req.RetryHookFunc) ClientOption {
 	return func(options *clientOptions) {
 		options.RetryHooks = hooks
+	}
+}
+
+func WithCommonErrorResult(result interface{}) ClientOption {
+	return func(options *clientOptions) {
+		options.CommonErrorResult = result
+	}
+}
+
+func WithOnAfterResponse(middleware req.ResponseMiddleware) ClientOption {
+	return func(options *clientOptions) {
+		options.OnAfterResponse = middleware
 	}
 }

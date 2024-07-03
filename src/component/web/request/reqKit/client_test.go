@@ -38,12 +38,12 @@ func TestNewClient(t *testing.T) {
 
 // TestNewClient1 测试retry count
 func TestNewClient1(t *testing.T) {
-	client := NewClient(WithDev(), WithTimeout(time.Second*3), WithRetryCount(3), WithRetryInterval(func(resp *req.Response, attempt int) time.Duration {
+	client := NewClient(WithDev(), WithTimeout(time.Second*10), WithRetryCount(0), WithRetryInterval(func(resp *req.Response, attempt int) time.Duration {
 		zapKit.Debugf("attempt: %d", attempt)
 		return time.Second
 	}))
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
 	defer cancel()
 
 	zapKit.Info("-")

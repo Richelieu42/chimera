@@ -14,7 +14,7 @@ import (
 								(5) 不重试
 */
 func NewClient(options ...ClientOption) (client *req.Client) {
-	opts := loadClientOptions(options...)
+	opts := loadOptions(options...)
 	client = req.C()
 
 	/* 开发者模式（甩锅） */
@@ -71,8 +71,18 @@ func NewClient(options ...ClientOption) (client *req.Client) {
 	*/
 	client.SetLogger(opts.Logger)
 
+	/*
+		参考: https://req.cool/zh/docs/prologue/quickstart/#%E6%9B%B4%E9%AB%98%E7%BA%A7%E7%9A%84-get-%E8%AF%B7%E6%B1%82
+	*/
+	if opts.CommonErrorResult != nil {
+		client.SetCommonErrorResult(opts.CommonErrorResult)
+	}
+	if opts.OnAfterResponse != nil {
+		client.OnAfterResponse(opts.OnAfterResponse)
+	}
+
 	/* 自动重试(retry) */
-	if opts.RetryCount > 0 {
+	{
 		// 重试次数（不包括第一次请求）
 		client.SetCommonRetryCount(opts.RetryCount)
 		// 重试周期
