@@ -1,59 +1,83 @@
 package main
 
 import (
-	"fmt"
-	"github.com/imroc/req/v3"
-	"strconv"
+	"context"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/request/reqKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 	"time"
 )
 
 func main() {
-	client := req.C()
+	ctx, cancel := context.WithTimeout(context.TODO(), time.Second)
+	cancel()
 
-	client.
-		SetCommonRetryCount(2).
-		SetCommonRetryBackoffInterval(1*time.Second, 5*time.Second).
-		SetCommonRetryFixedInterval(2 * time.Second).
-		SetCommonRetryInterval(intervalFunc).
-		AddCommonRetryHook(hookFunc2).
-		SetCommonRetryHook(hookFunc1).
-		AddCommonRetryCondition(conditionFunc2).
-		SetCommonRetryCondition(conditionFunc1)
+	GetNetworkTime(ctx)
 
-	client.R().
-		// Enable retry and set the maximum retry count.
-		SetRetryCount(2).
-		// Set the retry sleep interval with a commonly used algorithm: capped exponential backoff with jitter (https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/).
-		SetRetryBackoffInterval(1*time.Second, 5*time.Second).
-		// Set the retry to sleep fixed interval of 2 seconds.
-		SetRetryFixedInterval(2 * time.Second).
-		// Set the retry to use a custom retry interval algorithm.
-		SetRetryInterval(func(resp *req.Response, attempt int) time.Duration {
-			// Sleep seconds from "Retry-After" response header if it is present and correct.
-			// https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html
-			if resp.Response != nil {
-				if ra := resp.Header.Get("Retry-After"); ra != "" {
-					after, err := strconv.Atoi(ra)
-					if err == nil {
-						return time.Duration(after) * time.Second
-					}
-				}
+	select {}
+}
+
+var sources = []string{
+	"https://www.google.com/",
+	"https://www.tencent.com/",
+	"https://github.com/",
+	"https://www.bilibili.com/",
+	"https://www.baidu.com/",
+	"https://cn.bing.com/",
+	"http://www.ntsc.ac.cn/",
+	"https://www.taobao.com/",
+	"https://www.360.cn/",
+	"https://www.kingsoft.com/",
+	"https://www.yozosoft.com/",
+}
+
+func GetNetworkTime(ctx context.Context) (t time.Time, source string, err error) {
+	type bean struct {
+		source string
+		time   time.Time
+	}
+
+	ch := make(chan *bean, len(sources))
+	for _, source := range sources {
+		go func(url string) {
+			t, err = GetNetworkTimeByUrl(ctx, url)
+			if err != nil {
+				return
 			}
-			return 2 * time.Second // Otherwise, sleep 2 seconds
-		}).
-		// Add a retry hook that will be called if a retry occurs
-		AddRetryHook(func(resp *req.Response, err error) {
-			req := resp.Request.RawRequest
-			fmt.Println("Retry request:", req.Method, req.URL)
-			// Modify request settings in the retry hook.
-			resp.Request.SetBearerAuthToken(token)
-		}).
-		// Unlike add, set will remove all other retry hooks which is added before at both request and client level.
-		SetRetryHook(hookFunc).
-		// Add a retry condition which determines whether the request should retry.
-		AddRetryCondition(func(resp *req.Response, err error) bool {
-			return err != nil || resp.StatusCode >= 500
-		}).
-		// Unlike add, set will remove all other retry conditions which is added before at both request and client level.
-		SetRetryCondition(conditionFunc1)
+
+			ch <- &bean{
+				source: url,
+				time:   t,
+			}
+		}(source)
+	}
+
+	select {
+	case b := <-ch:
+		return b.time, b.source, nil
+	case <-ctx.Done():
+		err = ctx.Err()
+		return
+	}
+}
+
+func GetNetworkTimeByUrl(ctx context.Context, url string) (t time.Time, err error) {
+	resp := reqKit.SimpleGet(ctx, url)
+	if resp.Err != nil {
+		err = resp.Err
+		return
+	}
+
+	str := resp.GetHeader(httpKit.HeaderDate)
+	if str == "" {
+		err = errorKit.Newf("empty header: %s", httpKit.HeaderDate)
+		return
+	}
+	t, err = timeKit.Parse(timeKit.FormatRFC1123, str)
+	if err != nil {
+		err = errorKit.Wrapf(err, "fail to prase with timeKit.FormatRFC1123")
+		return
+	}
+	return
 }

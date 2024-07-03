@@ -13,8 +13,6 @@ const (
 	FormatEntire         TimeFormat = "2006-01-02T15:04:05.000Z07:00 MST"
 	FormatEntireWithoutT TimeFormat = "2006-01-02 15:04:05.000Z07:00 MST"
 
-	// FormatNetwork 网络的格式
-	FormatNetwork  TimeFormat = FormatRFC1123 // "Mon, 02 Jan 2006 15:04:05 MST"
 	FormatRFC1123  TimeFormat = time.RFC1123  // "Mon, 02 Jan 2006 15:04:05 MST"
 	FormatRFC1123Z TimeFormat = time.RFC1123Z // "Mon, 02 Jan 2006 15:04:05 -0700"
 

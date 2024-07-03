@@ -25,6 +25,8 @@ const (
 
 	HeaderConnection = "Connection"
 
+	HeaderDate = "Date"
+
 	HeaderHost = "Host"
 
 	HeaderOrigin = "Origin"

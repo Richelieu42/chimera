@@ -5,6 +5,10 @@ import (
 	"github.com/imroc/req/v3"
 )
 
+func SimpleGet(ctx context.Context, url string) *req.Response {
+	return Get(ctx, url, nil)
+}
+
 // Get
 /*
 @param queryParams 可以为nil
