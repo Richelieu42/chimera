@@ -3,7 +3,6 @@ package redisKit
 import (
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
-	"github.com/sirupsen/logrus"
 )
 
 var (
@@ -27,18 +26,6 @@ func MustSetUp(config *Config) {
 func SetUp(config *Config) (err error) {
 	client, err = NewClient(config)
 	return
-}
-
-// GetClientInsecurely
-/*
-PS: 可能会panic.
-*/
-func GetClientInsecurely() *Client {
-	client, err := GetClient()
-	if err != nil {
-		logrus.Panic(err)
-	}
-	return client
 }
 
 // GetClient
