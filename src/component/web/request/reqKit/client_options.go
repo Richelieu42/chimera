@@ -84,10 +84,12 @@ func loadOptions(options ...ClientOption) *clientOptions {
 			if resp.Err != nil { // There is an underlying error, e.g. network error or unmarshal error.
 				return nil
 			}
+
 			//if errMsg, ok := resp.ErrorResult().(*ErrorMessage); ok {
 			//	resp.Err = errMsg // Convert api error into go error
 			//	return nil
 			//}
+
 			/* 处理不成功的http状态码 */
 			if !resp.IsSuccessState() {
 				// Neither a success response nor a error response, record details to help troubleshooting
