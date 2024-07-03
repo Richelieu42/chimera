@@ -71,9 +71,7 @@ func NewClient(options ...ClientOption) (client *req.Client) {
 	*/
 	client.SetLogger(opts.Logger)
 
-	/*
-		参考: https://req.cool/zh/docs/prologue/quickstart/#%E6%9B%B4%E9%AB%98%E7%BA%A7%E7%9A%84-get-%E8%AF%B7%E6%B1%82
-	*/
+	/* 事件 */
 	if opts.CommonErrorResult != nil {
 		client.SetCommonErrorResult(opts.CommonErrorResult)
 	}
