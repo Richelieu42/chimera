@@ -1,6 +1,7 @@
 package commonLogKit
 
 import (
+	"context"
 	"fmt"
 	"github.com/richelieu-yang/chimera/v3/src/consts"
 	"github.com/richelieu-yang/chimera/v3/src/core/cpuKit"
@@ -17,6 +18,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
 	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 	"strings"
+	"time"
 )
 
 func PrintBasicDetails(logger CommonLogger) {
@@ -26,6 +28,11 @@ func PrintBasicDetails(logger CommonLogger) {
 
 	logger.Info(strings.Repeat("=", 42))
 	logger.Infof("\n%s", consts.Banner)
+
+	/* time */
+	go func() {
+		printTimeDetails(logger)
+	}()
 
 	logger.Infof("[CHIMERA, PROCESS] pid: [%d]", processKit.PID)
 
@@ -51,17 +58,6 @@ func PrintBasicDetails(logger CommonLogger) {
 
 	/* json */
 	logger.Infof("[CHIMERA, JSON] library: [%s]", jsonKit.GetLibrary())
-
-	/* time */
-	machineTime := timeKit.GetMachineTime()
-	zoneName, zoneOffset := machineTime.Zone()
-	logger.Infof("[CHIMERA, TIME] machine time: [%v], zone: [%s, %d]", machineTime, zoneName, zoneOffset)
-	// Richelieu: 先注释掉，以防（断网或弱网环境下）导致拖延服务启动3s
-	//if networkTime, source, err := timeKit.GetNetworkTime(); err != nil {
-	//	logger.WithError(err).Warn("[CHIMERA, TIME] fail to get network time")
-	//} else {
-	//	logger.Infof("[CHIMERA, TIME] network time: [%v], source: [%s]", networkTime, source)
-	//}
 
 	/* ip */
 	logger.Infof("[CHIMERA, IP] internal ip: [%s]", ipKit.GetInternalIp())
@@ -113,6 +109,20 @@ func printOsDetails(logger CommonLogger) {
 	} else {
 		logger.Infof("[CHIMERA, OS] vm.max_map_count: [%d]", i)
 	}
+}
+
+func printTimeDetails(logger CommonLogger) {
+	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*3)
+	defer cancel()
+	if networkTime, source, err := timeKit.GetNetworkTime(ctx); err != nil {
+		logger.Warnf("[CHIMERA, TIME] fail to get network time, error: %s", err.Error())
+	} else {
+		logger.Infof("[CHIMERA, TIME] network time: [%v], source: [%s]", networkTime, source)
+	}
+
+	machineTime := timeKit.GetMachineTime()
+	zoneName, zoneOffset := machineTime.Zone()
+	logger.Infof("[CHIMERA, TIME] machine time: [%v], zone: [%s, %d]", machineTime, zoneName, zoneOffset)
 }
 
 func printMemoryDetails(logger CommonLogger) {

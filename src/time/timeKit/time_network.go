@@ -8,14 +8,15 @@ import (
 	"time"
 )
 
+/*
+PS: 腾讯的时间不准.
+*/
 var sources = []string{
 	"https://www.google.com/",
-	"https://www.tencent.com/",
+	//"https://www.tencent.com/",
 	"https://github.com/",
 	"https://www.bilibili.com/",
 	"https://www.baidu.com/",
-	"https://cn.bing.com/",
-	"http://www.ntsc.ac.cn/",
 	"https://www.taobao.com/",
 	"https://www.360.cn/",
 	"https://www.kingsoft.com/",
