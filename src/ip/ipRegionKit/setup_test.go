@@ -8,11 +8,13 @@ import (
 )
 
 func TestGetRegion(t *testing.T) {
-	wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
-	if err != nil {
-		panic(err)
+	{
+		wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
+		if err != nil {
+			panic(err)
+		}
+		zapKit.Infof("working dir: [%s].", wd)
 	}
-	zapKit.Infof("wd: [%s].", wd)
 
 	/*
 		https://github.com/lionsoul2014/ip2region/blob/master/data/ip2region.xdb
