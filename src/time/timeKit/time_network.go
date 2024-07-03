@@ -2,8 +2,8 @@ package timeKit
 
 import (
 	"context"
+	"github.com/imroc/req/v3"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
-	"github.com/richelieu-yang/chimera/v3/src/component/web/request/reqKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"time"
 )
@@ -20,6 +20,14 @@ var sources = []string{
 	"https://www.360.cn/",
 	"https://www.kingsoft.com/",
 	"https://www.yozosoft.com/",
+}
+
+var client *req.Client
+
+func init() {
+	client = req.C().ImpersonateChrome().
+		SetTimeout(time.Second * 30).
+		EnableInsecureSkipVerify()
 }
 
 // GetNetworkTime
@@ -58,7 +66,7 @@ func GetNetworkTime(ctx context.Context) (t time.Time, source string, err error)
 }
 
 func GetNetworkTimeByUrl(ctx context.Context, url string) (t time.Time, err error) {
-	resp := reqKit.SimpleGet(ctx, url)
+	resp := client.Get(url).Do(ctx)
 	if resp.Err != nil {
 		err = resp.Err
 		return

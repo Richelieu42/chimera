@@ -37,7 +37,7 @@ func SetMachineTime(ctx context.Context, t time.Time, rootPassword string) error
 
 // CorrectMachineTime （根据网络时间）纠正系统时间
 func CorrectMachineTime(ctx context.Context, rootPassword string) (t time.Time, err error) {
-	t, _, err = GetNetworkTime()
+	t, _, err = GetNetworkTime(ctx)
 	if err != nil {
 		return
 	}

@@ -7,7 +7,5 @@ import (
 )
 
 func TestGetNetworkTime(t *testing.T) {
-	for i := 0; i < 3; i++ {
-		fmt.Println(GetNetworkTime(context.TODO()))
-	}
+	fmt.Println(GetNetworkTime(context.TODO()))
 }
