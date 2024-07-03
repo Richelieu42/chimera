@@ -34,6 +34,8 @@ func init() {
 
 // GetNetworkTime
 /*
+!!!: 方法体内不要直接使用 reqKit，以防import cycle.
+
 @param ctx 	(1) 不能为nil
 			(2) 建议附带timeout
 */
@@ -69,6 +71,10 @@ func GetNetworkTime(ctx context.Context) (t time.Time, source string, err error)
 	}
 }
 
+// GetNetworkTimeByUrl
+/*
+!!!: 方法体内不要直接使用 reqKit，以防import cycle.
+*/
 func GetNetworkTimeByUrl(ctx context.Context, url string) (t time.Time, err error) {
 	resp := reqClient.Get(url).Do(ctx)
 	if resp.Err != nil {
