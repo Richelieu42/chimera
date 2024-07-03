@@ -12,15 +12,15 @@ import (
 PS: 腾讯的时间不准.
 */
 var sources = []string{
-	"https://www.google.com/",
-	//"https://www.tencent.com/",
-	"https://github.com/",
-	"https://www.bilibili.com/",
-	"https://www.baidu.com/",
-	"https://www.taobao.com/",
-	"https://www.360.cn/",
-	"https://www.kingsoft.com/",
-	"https://www.yozosoft.com/",
+	"https://www.google.com",
+	//"https://www.tencent.com",
+	"https://github.com",
+	"https://www.bilibili.com",
+	"https://www.baidu.com",
+	"https://www.taobao.com",
+	"https://www.360.cn",
+	"https://www.kingsoft.com",
+	"https://www.yozosoft.com",
 }
 
 var reqClient *req.Client
