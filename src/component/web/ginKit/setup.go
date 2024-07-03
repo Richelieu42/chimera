@@ -23,7 +23,7 @@ var serviceInfo = ""
 func MustSetUp(config *Config, businessLogic func(engine *gin.Engine) error, options ...GinOption) {
 	err := SetUp(config, businessLogic, options...)
 	if err != nil {
-		zapKit.Fatalf("Fail to set up, error: \n%+v", err)
+		zapKit.Fatalf("failed to setup, error: %s", err)
 	}
 }
 

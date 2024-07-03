@@ -2,7 +2,7 @@ package redisKit
 
 import (
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"github.com/sirupsen/logrus"
 )
 
@@ -20,8 +20,7 @@ PS:
 */
 func MustSetUp(config *Config) {
 	if err := SetUp(config); err != nil {
-		logrusKit.DisableQuote(nil)
-		logrus.Fatalf("%+v", err)
+		zapKit.Fatalf("failed to setup, error: %s", err)
 	}
 }
 
