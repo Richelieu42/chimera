@@ -47,9 +47,11 @@ func GetNetworkTime(ctx context.Context) (t time.Time, source string, err error)
 		go func(url string) {
 			t, err = GetNetworkTimeByUrl(ctx, url)
 			if err != nil {
+				//fmt.Printf("fail to get network time from url(%s), error: %s\n", url, err)
 				return
 			}
 
+			//fmt.Printf("get network time, source: %s, time: %s\n", url, t)
 			ch <- &bean{
 				source: url,
 				time:   t,

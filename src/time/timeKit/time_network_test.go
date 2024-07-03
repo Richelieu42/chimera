@@ -4,8 +4,13 @@ import (
 	"context"
 	"fmt"
 	"testing"
+	"time"
 )
 
 func TestGetNetworkTime(t *testing.T) {
-	fmt.Println(GetNetworkTime(context.TODO()))
+	ctx, cancel := context.WithTimeout(context.TODO(), time.Second)
+	defer cancel()
+	fmt.Println(GetNetworkTime(ctx))
+
+	//select {}
 }
