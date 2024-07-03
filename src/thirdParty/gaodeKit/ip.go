@@ -1,7 +1,8 @@
 package gaodeKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/component/web/request/req111Kit"
+	"context"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/request/reqKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/ip/ipKit"
 	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonFieldKit"
@@ -22,10 +23,14 @@ func (client *Client) GetIpInfo(ip string) (*IpInfo, error) {
 		return nil, err
 	}
 
-	_, jsonData, err := req111Kit.Get(ipUrl, map[string][]string{
+	resp := reqKit.Get(context.TODO(), ipUrl, map[string][]string{
 		"key": {client.key},
 		"ip":  {ip},
 	})
+	if resp.Err != nil {
+		return nil, resp.Err
+	}
+	jsonData, err := resp.ToBytes()
 	if err != nil {
 		return nil, err
 	}
@@ -59,12 +64,12 @@ func (client *Client) GetIpInfo(ip string) (*IpInfo, error) {
 	}
 
 	/* 国内ip */
-	resp := &IpResponse{}
-	if err := jsonKit.Unmarshal(jsonData, resp); err != nil {
+	ipResp := &IpResponse{}
+	if err := jsonKit.Unmarshal(jsonData, ipResp); err != nil {
 		return nil, errorKit.Wrapf(err, "Fail to unmarshal")
 	}
-	if err := resp.IsSuccess(); err != nil {
+	if err := ipResp.IsSuccess(); err != nil {
 		return nil, err
 	}
-	return &resp.IpInfo, nil
+	return &ipResp.IpInfo, nil
 }
