@@ -22,10 +22,11 @@ var sources = []string{
 	"https://www.yozosoft.com/",
 }
 
-var client *req.Client
+var reqClient *req.Client
 
 func init() {
-	client = req.C().ImpersonateChrome().
+	reqClient = req.C().
+		ImpersonateChrome().
 		SetTimeout(time.Second * 30).
 		EnableInsecureSkipVerify()
 }
@@ -66,7 +67,7 @@ func GetNetworkTime(ctx context.Context) (t time.Time, source string, err error)
 }
 
 func GetNetworkTimeByUrl(ctx context.Context, url string) (t time.Time, err error) {
-	resp := client.Get(url).Do(ctx)
+	resp := reqClient.Get(url).Do(ctx)
 	if resp.Err != nil {
 		err = resp.Err
 		return
