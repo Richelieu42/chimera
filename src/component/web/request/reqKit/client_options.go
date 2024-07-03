@@ -56,11 +56,13 @@ func loadOptions(options ...ClientOption) *clientOptions {
 		Timeout:            0, // 默认值在下面
 		InsecureSkipVerify: true,
 		// imroc/req默认: 输出到 os.Stdout
-		Logger:            logger,
-		RetryCount:        0,
-		GetRetryInterval:  nil, // 默认值在下面
-		RetryConditions:   nil,
-		RetryHooks:        nil,
+		Logger: logger,
+
+		RetryCount:       0,
+		GetRetryInterval: nil, // 默认值在下面
+		RetryConditions:  nil,
+		RetryHooks:       nil,
+
 		CommonErrorResult: nil,
 		OnAfterResponse:   nil, // 默认值在下面
 	}
