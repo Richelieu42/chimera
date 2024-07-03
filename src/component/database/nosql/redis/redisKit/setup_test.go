@@ -7,7 +7,6 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/consts"
 	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
-	"github.com/sirupsen/logrus"
 	"testing"
 )
 
@@ -33,7 +32,7 @@ func TestSetUp(t *testing.T) {
 	MustSetUp(c.Redis)
 	client, err := GetClient()
 	if err != nil {
-		logrus.Fatal(err)
+		panic(err)
 	}
 	client = client
 
