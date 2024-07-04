@@ -5,12 +5,8 @@
 
 ## Content-Type
 
-- header.PlainTextContentType
-- header.JsonContentType
-- header.XmlContentType
-- header.FormContentType
+imcro/req 发送的POST请求，默认的 "Content-Type" 是 "application/json; charset=utf-8" .
 
-	 = "text/plain; charset=utf-8"
-	      = "application/json; charset=utf-8"
-	       = "text/xml; charset=utf-8"
-	      = "application/x-www-form-urlencoded"
+
+
+
