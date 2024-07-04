@@ -8,4 +8,5 @@ const (
 	ContentTypeXml = "text/xml; charset=utf-8"
 
 	ContentTypeForm = "application/x-www-form-urlencoded; charset=utf-8"
+	//ContentTypeForm = "application/x-www-form-urlencoded"
 )
