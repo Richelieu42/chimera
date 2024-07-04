@@ -38,10 +38,22 @@ func TestNewClient(t *testing.T) {
 
 // TestNewClient1 测试retry count
 func TestNewClient1(t *testing.T) {
-	retryCount := 0
+	go func() {
+		port := 8001
 
-	client := NewClient(WithDev(), WithTimeout(time.Second*10))
+		engine := gin.Default()
+		engine.Any("/test", func(ctx *gin.Context) {
+			time.Sleep(time.Second * 5)
+			ctx.String(200, fmt.Sprintf("This is [%d].", port))
+		})
+		if err := engine.Run(netKit.JoinToHost("", port)); err != nil {
+			panic(err)
+		}
+	}()
 
+	retryCount := 3
+
+	client := NewClient(WithDev(), WithTimeout(time.Second*3))
 	client.SetCommonRetryCount(retryCount)
 	//client.SetCommonRetryFixedInterval(time.Millisecond * 100)
 	client.SetCommonRetryInterval(func(resp *req.Response, attempt int) time.Duration {
@@ -52,12 +64,9 @@ func TestNewClient1(t *testing.T) {
 		return err != nil
 	})
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
-
-	console.Info("-")
 	data, err := client.Post("http://127.0.0.1:8001/test").SetContext(ctx).Do().ToBytes()
-	console.Info("=")
 	if err != nil {
 		panic(err)
 	}
