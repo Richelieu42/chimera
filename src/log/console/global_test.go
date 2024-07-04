@@ -1,4 +1,4 @@
-package zapKit
+package console
 
 import (
 	"go.uber.org/zap"

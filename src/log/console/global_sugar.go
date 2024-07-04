@@ -1,4 +1,4 @@
-package zapKit
+package console
 
 // Debugf 格式化输出的信息日志，类似于fmt.Printf，可以使用格式化字符串.
 func Debugf(template string, args ...interface{}) {
