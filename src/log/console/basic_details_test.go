@@ -1,4 +1,4 @@
-package zapKit
+package console
 
 import (
 	"testing"

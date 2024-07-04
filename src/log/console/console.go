@@ -2,8 +2,6 @@ package console
 
 import (
 	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
-	"os"
 )
 
 var (
@@ -12,17 +10,7 @@ var (
 )
 
 func init() {
-	/*
-		Richelieu: 此处不直接调用 zapKit ，以防import cycle.
-	*/
-	encConfig := zap.NewProductionEncoderConfig()
-	encConfig.EncodeTime = zapcore.ISO8601TimeEncoder
-	encConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
-	enc := zapcore.NewConsoleEncoder(encConfig)
-	ws := zapcore.Lock(os.Stdout)
-	core := zapcore.NewCore(enc, ws, zapcore.DebugLevel)
-
-	l = zap.New(core, zap.WithCaller(true), zap.AddCallerSkip(1))
+	l = newLogger(1)
 	s = l.Sugar()
 }
 
