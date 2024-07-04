@@ -2,7 +2,7 @@ package redisKit
 
 import (
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/console"
 )
 
 var (
@@ -19,7 +19,7 @@ PS:
 */
 func MustSetUp(config *Config) {
 	if err := SetUp(config); err != nil {
-		zapKit.Fatalf("failed to setup, error: %s", err)
+		console.Fatalf("failed to setup, error: %s", err)
 	}
 }
 

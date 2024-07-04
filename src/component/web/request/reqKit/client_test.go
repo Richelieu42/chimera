@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/imroc/req/v3"
-	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/console"
 	"github.com/richelieu-yang/chimera/v3/src/netKit"
 	"testing"
 	"time"
@@ -33,28 +33,35 @@ func TestNewClient(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	zapKit.Infof("response contenty: %s", string(data))
+	console.Infof("response contenty: %s", string(data))
 }
 
 // TestNewClient1 测试retry count
 func TestNewClient1(t *testing.T) {
 	retryCount := 0
 
-	client := NewClient(WithDev(), WithTimeout(time.Second*10), WithRetryCount(retryCount), WithRetryInterval(func(resp *req.Response, attempt int) time.Duration {
-		zapKit.Debugf("attempt: %d", attempt)
-		return time.Second
-	}))
+	client := NewClient(WithDev(), WithTimeout(time.Second*10))
+
+	client.SetCommonRetryCount(retryCount)
+	//client.SetCommonRetryFixedInterval(time.Millisecond * 100)
+	client.SetCommonRetryInterval(func(resp *req.Response, attempt int) time.Duration {
+		console.Debugf("attempt: %d", attempt)
+		return time.Millisecond * 100
+	})
+	client.AddCommonRetryCondition(func(resp *req.Response, err error) bool {
+		return err != nil
+	})
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
 	defer cancel()
 
-	zapKit.Info("-")
+	console.Info("-")
 	data, err := client.Post("http://127.0.0.1:8001/test").SetContext(ctx).Do().ToBytes()
-	zapKit.Info("=")
+	console.Info("=")
 	if err != nil {
 		panic(err)
 	}
-	zapKit.Infof("response contenty: %s", string(data))
+	console.Infof("response contenty: %s", string(data))
 }
 
 func TestNewClient2(t *testing.T) {

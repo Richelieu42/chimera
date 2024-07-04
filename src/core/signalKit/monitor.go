@@ -1,6 +1,7 @@
 package signalKit
 
 import (
+	"github.com/richelieu-yang/chimera/v3/src/log/console"
 	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"os"
 	"os/signal"
@@ -52,7 +53,7 @@ func MonitorExitSignals() {
 	signal.Notify(ch, ExitSignals...)
 
 	sig := <-ch
-	zapKit.Warnf("Receive an exit signal(%s).", sig.String())
+	console.Warnf("Receive an exit signal(%s).", sig.String())
 
 	zapKit.Exit(1)
 }

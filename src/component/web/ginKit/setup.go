@@ -8,6 +8,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/signalKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/console"
 	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"github.com/richelieu-yang/chimera/v3/src/netKit"
 	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
@@ -23,7 +24,7 @@ var serviceInfo = ""
 func MustSetUp(config *Config, businessLogic func(engine *gin.Engine) error, options ...GinOption) {
 	err := SetUp(config, businessLogic, options...)
 	if err != nil {
-		zapKit.Fatalf("failed to setup, error: %s", err)
+		console.Fatalf("failed to setup, error: %s", err)
 	}
 }
 
@@ -111,11 +112,11 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 			Addr:    netKit.JoinToHost(config.HostName, httpPort),
 			Handler: engine.Handler(),
 		}
-		zapKit.Infof("Listening and serving HTTP on [%s]", httpSrv.Addr)
+		console.Infof("Listening and serving HTTP on [%s]", httpSrv.Addr)
 
 		go func() {
 			if err := httpSrv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-				zapKit.Fatalf("Fail to start http server with port(%d).", httpPort)
+				console.Fatalf("Fail to start http server with port(%d).", httpPort)
 			}
 		}()
 	}
@@ -128,11 +129,11 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 			Addr:    netKit.JoinToHost(config.HostName, httpsPort),
 			Handler: engine.Handler(),
 		}
-		zapKit.Infof("Listening and serving HTTPS on [%s]", httpsSrv.Addr)
+		console.Infof("Listening and serving HTTPS on [%s]", httpsSrv.Addr)
 
 		go func() {
 			if err := httpsSrv.ListenAndServeTLS(sslConfig.CertFile, sslConfig.KeyFile); err != nil && !errors.Is(err, http.ErrServerClosed) {
-				zapKit.Fatalf("Fail to start https server with port(%d).", httpsPort)
+				console.Fatalf("Fail to start https server with port(%d).", httpsPort)
 			}
 		}()
 	}
@@ -157,10 +158,10 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 				defer wg.Done()
 
 				if err := httpSrv.Shutdown(ctx); err != nil {
-					zapKit.Errorf("Fail to shut down http server, error: %+v", err)
+					console.Errorf("Fail to shut down http server, error: %+v", err)
 					return
 				}
-				zapKit.Info("Manager to shut down http server.")
+				console.Info("Manager to shut down http server.")
 			}()
 		}
 		if httpsSrv != nil {
@@ -169,10 +170,10 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 				defer wg.Done()
 
 				if err := httpsSrv.Shutdown(ctx); err != nil {
-					zapKit.Errorf("Fail to shut down https server, error: %+v", err)
+					console.Errorf("Fail to shut down https server, error: %+v", err)
 					return
 				}
-				zapKit.Info("Manager to shut down https server.")
+				console.Info("Manager to shut down https server.")
 			}()
 		}
 		wg.Wait()

@@ -3,7 +3,7 @@ package ipRegionKit
 import (
 	"github.com/richelieu-yang/chimera/v3/src/consts"
 	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
-	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/console"
 	"testing"
 )
 
@@ -13,7 +13,7 @@ func TestGetRegion(t *testing.T) {
 		if err != nil {
 			panic(err)
 		}
-		zapKit.Infof("working dir: [%s].", wd)
+		console.Infof("working dir: [%s].", wd)
 	}
 
 	/*
@@ -29,5 +29,5 @@ func TestGetRegion(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	zapKit.Info(str)
+	console.Info(str)
 }
