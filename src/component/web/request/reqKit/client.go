@@ -9,7 +9,7 @@ import (
 /*
 !!!:
 (1) 不要每次发请求都创建 Client，造成不必要的开销，通常可以复用同一 Client 发所有请求;
-(2) 自动重试(retry)可以在返回值上自行添加.
+(2) 自动重试(retry): 可以在返回值上自行添加.
 
 @param options 不传参的情况下，	(1) 生产模式
 								(2) 超时时间: 30s
@@ -50,6 +50,11 @@ func NewClient(options ...ClientOption) (client *req.Client) {
 
 	/* 伪装成Chrome浏览器发起请求，主要针对: 反爬虫检测 */
 	client.ImpersonateChrome()
+
+	/* BaseURL */
+	if opts.BaseURL != "" {
+		client.SetBaseURL(opts.BaseURL)
+	}
 
 	/*
 		超时时间（发送请求的整个周期，includes connection time, any redirects, and reading the response body）

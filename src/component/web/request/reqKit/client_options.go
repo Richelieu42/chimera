@@ -14,14 +14,10 @@ const (
 
 type (
 	clientOptions struct {
-		Dev bool
-
-		// Timeout
-		/*
-			超时时间（发送请求的整个周期，includes connection time, any redirects, and reading the response body）
-		*/
+		Dev     bool
+		BaseURL string
+		// Timeout 超时时间（发送请求的整个周期，includes connection time, any redirects, and reading the response body）
 		Timeout time.Duration
-
 		// InsecureSkipVerify
 		/*
 			true:  跳过证书验证
@@ -48,6 +44,7 @@ func loadOptions(options ...ClientOption) *clientOptions {
 
 	opts := &clientOptions{
 		Dev:                false,
+		BaseURL:            "",
 		Timeout:            0, // 默认值在下面
 		InsecureSkipVerify: true,
 		// imroc/req默认: 输出到 os.Stdout
