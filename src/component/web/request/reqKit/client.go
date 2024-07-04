@@ -7,6 +7,10 @@ import (
 
 // NewClient
 /*
+!!!:
+(1) 不要每次发请求都创建 Client，造成不必要的开销，通常可以复用同一 Client 发所有请求;
+(2) 自动重试(retry)可以在返回值上自行添加.
+
 @param options 不传参的情况下，	(1) 生产模式
 								(2) 超时时间: 30s
 								(3) 跳过https证书验证
@@ -77,28 +81,6 @@ func NewClient(options ...ClientOption) (client *req.Client) {
 	}
 	if opts.OnAfterResponse != nil {
 		client.OnAfterResponse(opts.OnAfterResponse)
-	}
-
-	/* 自动重试(retry) */
-	{
-		// 重试次数（不包括第一次请求）
-		client.SetCommonRetryCount(opts.RetryCount)
-		// 重试周期
-		client.SetCommonRetryInterval(opts.GetRetryInterval)
-		// 重试钩子
-		for _, hook := range opts.RetryHooks {
-			if hook == nil {
-				continue
-			}
-			client.AddCommonRetryHook(hook)
-		}
-		// 重试条件
-		for _, cond := range opts.RetryConditions {
-			if cond == nil {
-				continue
-			}
-			client.AddCommonRetryCondition(cond)
-		}
 	}
 
 	return

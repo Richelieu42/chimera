@@ -2,57 +2,63 @@ package main
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/imroc/req/v3"
-	"github.com/richelieu-yang/chimera/v3/src/netKit"
+	"log"
+	"sync"
 	"time"
+
+	"github.com/imroc/req/v3"
 )
 
-type person struct {
-	Name string `json:"name"`
-	Age  int    `json:"age"`
+// RoundRobinBalancer 简单的轮询负载均衡器
+type RoundRobinBalancer struct {
+	servers []string
+	index   int
+	mu      sync.Mutex
+}
+
+// NewRoundRobinBalancer 创建一个新的轮询负载均衡器
+func NewRoundRobinBalancer(servers []string) *RoundRobinBalancer {
+	return &RoundRobinBalancer{
+		servers: servers,
+	}
+}
+
+// Next 获取下一个服务器
+func (r *RoundRobinBalancer) Next() string {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	server := r.servers[r.index]
+	r.index = (r.index + 1) % len(r.servers)
+	return server
 }
 
 func main() {
-	go func() {
-		port := 8001
+	servers := []string{
+		"https://server1.example.com/api",
+		"https://server2.example.com/api",
+		"https://server3.example.com/api",
+	}
 
-		engine := gin.Default()
-		engine.POST("/test", func(ctx *gin.Context) {
-			p := &person{}
-			if err := ctx.Bind(p); err != nil {
-				ctx.String(500, err.Error())
-				return
-			}
-			ctx.String(200, fmt.Sprintf("Hello %s(%d)", p.Name, p.Age))
-		})
-		if err := engine.Run(netKit.JoinToHost("", port)); err != nil {
-			panic(err)
-		}
-	}()
-
-	time.Sleep(time.Second)
-
-	// 创建请求客户端
+	balancer := NewRoundRobinBalancer(servers)
 	client := req.C()
 
-	// 设置请求数据
-	p := &person{
-		Name: "李四",
-		Age:  40,
+	for i := 0; i < 10; i++ { // 模拟10个请求
+		go func() {
+			server := balancer.Next()
+			resp, err := client.R().
+				SetHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8").
+				SetBody("key=value").
+				Post(server)
+
+			if err != nil {
+				log.Printf("Error: %v", err)
+				return
+			}
+
+			fmt.Printf("Response from %s: %s\n", server, resp.Status)
+		}()
 	}
 
-	// 发送POST请求
-	resp, err := client.R().
-		//SetContentType("application/json; charset=utf-8").
-		SetBody(p).
-		Post("http://127.0.0.1:8001/test")
-
-	if err != nil {
-		panic(err)
-	}
-
-	// 处理响应
-	fmt.Println("Response Status:", resp.Status)
-	fmt.Println("Response Body:", resp.String())
+	// 保持程序运行以等待所有 goroutine 完成
+	time.Sleep(5 * time.Second)
 }

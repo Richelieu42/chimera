@@ -35,11 +35,6 @@ type (
 		*/
 		Logger req.Logger
 
-		RetryCount       int
-		GetRetryInterval req.GetRetryIntervalFunc
-		RetryConditions  []req.RetryConditionFunc
-		RetryHooks       []req.RetryHookFunc
-
 		/* 下面两者一般搭配起来用，参考: https://req.cool/zh/docs/prologue/quickstart/#%E6%9B%B4%E9%AB%98%E7%BA%A7%E7%9A%84-get-%E8%AF%B7%E6%B1%82 */
 		CommonErrorResult interface{}
 		OnAfterResponse   req.ResponseMiddleware
@@ -58,11 +53,6 @@ func loadOptions(options ...ClientOption) *clientOptions {
 		// imroc/req默认: 输出到 os.Stdout
 		Logger: logger,
 
-		RetryCount:       0,
-		GetRetryInterval: nil, // 默认值在下面
-		RetryConditions:  nil,
-		RetryHooks:       nil,
-
 		CommonErrorResult: nil,
 		OnAfterResponse:   nil, // 默认值在下面
 	}
@@ -74,12 +64,6 @@ func loadOptions(options ...ClientOption) *clientOptions {
 	/* 默认值s */
 	if opts.Timeout <= 0 {
 		opts.Timeout = DefaultTimeout
-	}
-	if opts.GetRetryInterval == nil {
-		opts.GetRetryInterval = func(resp *req.Response, attempt int) time.Duration {
-			// 100ms
-			return time.Millisecond * 100
-		}
 	}
 	if opts.OnAfterResponse == nil {
 		opts.OnAfterResponse = func(client *req.Client, resp *req.Response) error {
@@ -135,33 +119,6 @@ func WithInsecureSkipVerify(insecureSkipVerify bool) ClientOption {
 func WithLogger(logger req.Logger) ClientOption {
 	return func(options *clientOptions) {
 		options.Logger = logger
-	}
-}
-
-func WithRetryCount(retryCount int) ClientOption {
-	return func(options *clientOptions) {
-		if retryCount < 0 {
-			retryCount = 0
-		}
-		options.RetryCount = retryCount
-	}
-}
-
-func WithRetryInterval(getRetryInterval req.GetRetryIntervalFunc) ClientOption {
-	return func(options *clientOptions) {
-		options.GetRetryInterval = getRetryInterval
-	}
-}
-
-func WithRetryConditions(conditions ...req.RetryConditionFunc) ClientOption {
-	return func(options *clientOptions) {
-		options.RetryConditions = conditions
-	}
-}
-
-func WithRetryHooks(hooks ...req.RetryHookFunc) ClientOption {
-	return func(options *clientOptions) {
-		options.RetryHooks = hooks
 	}
 }
 
