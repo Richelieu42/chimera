@@ -1,11 +1,11 @@
-package zapKit
+package console
 
 import (
 	"go.uber.org/zap"
 	"testing"
 )
 
-func TestDebug(t *testing.T) {
+func TestPrint(t *testing.T) {
 	defer Sync()
 
 	/* WrappedLogger */
