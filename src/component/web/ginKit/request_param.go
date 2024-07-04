@@ -31,7 +31,6 @@ PS:
 						(b) 不支持: application/json
 */
 func ObtainPostParam(ctx *gin.Context, key string) string {
-
 	return ctx.PostForm(key)
 }
 
@@ -40,21 +39,22 @@ func ObtainPostParam(ctx *gin.Context, key string) string {
 !!!: 不支持Content-Type为 "application/json; charset=utf-8" 的POST请求，
 	此种情况下，应该使用 ctx.Bind()、ctx.ShouldBind()、ctx.BindJSON()、ctx.ShouldBindJSON() ...
 
-@return 不需要额外手动解码
+@return (1) 不需要额外手动解码
+		(2) 可能为""
 */
-func ObtainParam(ctx *gin.Context, key string) (value string) {
+func ObtainParam(ctx *gin.Context, key string) string {
+	/* (1) GET请求 */
 	if ctx.Request.Method == http.MethodGet {
-		value = ctx.Query(key)
-		return
+		return ctx.Query(key)
 	}
 
+	/* (2) 非GET请求 */
 	// 优先 POST 形式
-	value = ctx.PostForm(key)
-	if value == "" {
-		// 其次 GET 形式
-		value = ctx.Query(key)
+	if value, ok := ctx.GetPostForm(key); ok {
+		return value
 	}
-	return
+	// 其次 GET 形式
+	return ctx.Query(key)
 }
 
 func ObtainBoolParam(ctx *gin.Context, key string) (bool, error) {
