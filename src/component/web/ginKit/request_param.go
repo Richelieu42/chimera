@@ -5,8 +5,8 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/core/boolKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/floatKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/intKit"
-	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"io"
+	"net/http"
 )
 
 // ObtainGetParam 获取 GET 请求的参数（从url获取）.
@@ -21,6 +21,9 @@ func ObtainGetParam(ctx *gin.Context, key string) string {
 
 // ObtainPostParam 获取 POST 请求的参数.
 /*
+!!!: 不支持Content-Type为 "application/json; charset=utf-8" 的POST请求，
+	此种情况下，应该使用 ctx.Bind()、ctx.ShouldBind()、ctx.BindJSON()、ctx.ShouldBindJSON() ...
+
 PS:
 (1) 原生方法的用法更加丰富!
 (2) 不需要额外手动解码;
@@ -28,24 +31,30 @@ PS:
 						(b) 不支持: application/json
 */
 func ObtainPostParam(ctx *gin.Context, key string) string {
+
 	return ctx.PostForm(key)
 }
 
 // ObtainParam 获取请求参数.
 /*
-PS:
-(1) 优先级（从左到右）: GET、POST;
-(2) 不需要额外手动解码.
+!!!: 不支持Content-Type为 "application/json; charset=utf-8" 的POST请求，
+	此种情况下，应该使用 ctx.Bind()、ctx.ShouldBind()、ctx.BindJSON()、ctx.ShouldBindJSON() ...
+
+@return 不需要额外手动解码
 */
-func ObtainParam(ctx *gin.Context, key string) string {
-	// (1) GET
-	value := ctx.Query(key)
-	if strKit.IsNotEmpty(value) {
-		return value
+func ObtainParam(ctx *gin.Context, key string) (value string) {
+	if ctx.Request.Method == http.MethodGet {
+		value = ctx.Query(key)
+		return
 	}
 
-	// (2) POST
-	return ctx.PostForm(key)
+	// 优先 POST 形式
+	value = ctx.PostForm(key)
+	if value == "" {
+		// 其次 GET 形式
+		value = ctx.Query(key)
+	}
+	return
 }
 
 func ObtainBoolParam(ctx *gin.Context, key string) (bool, error) {
