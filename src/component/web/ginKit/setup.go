@@ -66,6 +66,7 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 	}
 
 	gin.DefaultWriter = os.Stdout
+	gin.DefaultErrorWriter = os.Stderr
 
 	engine := DefaultEngine()
 
