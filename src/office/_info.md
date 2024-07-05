@@ -1,4 +1,4 @@
-## xuri/excelize（开源免费; 读写Excel文档）
+## xuri/excelize（开源免费; 仅支持Excel文档）
 
 - [github](https://github.com/qax-os/excelize)
 - 支持的Excel文档格式: XLAM、XLSM、XLSX、XLTM、XLTX
