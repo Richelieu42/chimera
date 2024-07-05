@@ -19,7 +19,7 @@ PS:
 */
 func MustSetUp(config *Config) {
 	if err := SetUp(config); err != nil {
-		console.Fatalf("failed to setup, error: %s", err)
+		console.Fatalf("Fail to setup, error: %s", err)
 	}
 }
 

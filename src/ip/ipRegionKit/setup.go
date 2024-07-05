@@ -15,7 +15,7 @@ var searcher *xdb.Searcher
 func MustSetUp(xdbPath string) {
 	err := SetUp(xdbPath)
 	if err != nil {
-		console.Fatalf("fail to set up, error: %s", err.Error())
+		console.Fatalf("Fail to set up, error: %s", err.Error())
 	}
 }
 
