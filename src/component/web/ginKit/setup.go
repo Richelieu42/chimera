@@ -144,7 +144,7 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 	}
 
 	if httpPort == 0 && httpsPort == 0 {
-		return errorKit.Newf("both httpPort and httpsPort are invalid")
+		return errorKit.Newf("both httpPort and httpsPort are zero")
 	}
 
 	/*
