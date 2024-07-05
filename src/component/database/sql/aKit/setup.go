@@ -3,8 +3,7 @@ package aKit
 import (
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
-	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
-	"github.com/sirupsen/logrus"
+	"github.com/richelieu-yang/chimera/v3/src/log/console"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -13,8 +12,7 @@ var db *gorm.DB
 
 func MustSetUp(config *Config, logConfig *LogConfig) {
 	if err := SetUp(config, logConfig); err != nil {
-		logrusKit.DisableQuote(nil)
-		logrus.Fatalf("%+v", err)
+		console.Fatalf("Fail to set up, error: %s", err.Error())
 	}
 }
 

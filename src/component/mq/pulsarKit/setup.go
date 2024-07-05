@@ -4,9 +4,8 @@ import (
 	"context"
 	"github.com/apache/pulsar-client-go/pulsar"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/console"
 	"github.com/richelieu-yang/chimera/v3/src/validateKit"
-	"github.com/sirupsen/logrus"
 )
 
 var config *Config
@@ -19,8 +18,7 @@ PS: Pulsar服务中途挂掉的话，恢复后，Consumer实例、Producer实例
 */
 func MustSetUp(pulsarConfig *Config, verifyConfig *VerifyConfig) {
 	if err := SetUp(pulsarConfig, verifyConfig); err != nil {
-		logrusKit.DisableQuote(nil)
-		logrus.Fatalf("%+v", err)
+		console.Fatalf("Fail to set up, error: %s", err.Error())
 	}
 }
 

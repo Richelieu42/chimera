@@ -7,8 +7,7 @@ package jsonRespKit
 
 import (
 	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
-	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
-	"github.com/sirupsen/logrus"
+	"github.com/richelieu-yang/chimera/v3/src/log/console"
 )
 
 // MustSetUp 必须初始化.
@@ -17,8 +16,7 @@ Deprecated: Use i18nRespKit instead.
 */
 func MustSetUp(respProvider RespProvider, options ...Option) {
 	if err := SetUp(respProvider, options...); err != nil {
-		logrusKit.DisableQuote(nil)
-		logrus.Fatalf("%+v", err)
+		console.Fatalf("Fail to set up, error: %s", err.Error())
 	}
 }
 

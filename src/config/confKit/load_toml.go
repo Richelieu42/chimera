@@ -1,8 +1,7 @@
 package confKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
-	"github.com/sirupsen/logrus"
+	"github.com/richelieu-yang/chimera/v3/src/log/console"
 	"github.com/zeromicro/go-zero/core/conf"
 )
 
@@ -15,14 +14,12 @@ func LoadFromTomlText(text string, v any) error {
 
 func MustLoadFromTomlBytes(content []byte, v any) {
 	if err := LoadFromTomlBytes(content, v); err != nil {
-		logrusKit.DisableQuote(nil)
-		logrus.Fatalf("%+v", err)
+		console.Fatalf("Fail to load, error: %s", err.Error())
 	}
 }
 
 func MustLoadFromTomlText(text string, v any) {
 	if err := LoadFromTomlText(text, v); err != nil {
-		logrusKit.DisableQuote(nil)
-		logrus.Fatalf("%+v", err)
+		console.Fatalf("Fail to load, error: %s", err.Error())
 	}
 }

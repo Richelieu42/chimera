@@ -3,7 +3,7 @@ package etcdKit
 import (
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
-	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/console"
 	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"github.com/sirupsen/logrus"
 	clientv3 "go.etcd.io/etcd/client/v3"
@@ -19,8 +19,7 @@ var setupOnce sync.Once
 
 func MustSetUp(config *Config, logPath string) {
 	if err := setUp(config, logPath); err != nil {
-		logrusKit.DisableQuote(nil)
-		logrus.Fatalf("%+v", err)
+		console.Fatalf("Fail to set up, error: %s", err.Error())
 	}
 }
 

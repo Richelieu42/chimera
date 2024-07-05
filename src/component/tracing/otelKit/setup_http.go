@@ -2,7 +2,7 @@ package otelKit
 
 import (
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
-	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/console"
 	"github.com/sirupsen/logrus"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
@@ -13,8 +13,7 @@ import (
 func MustSetUpWithHttp(httpEndpoint, serviceName string, attributeMap map[string]string, opts ...otlptracehttp.Option) {
 	err := SetUpWithHttp(httpEndpoint, serviceName, attributeMap, opts...)
 	if err != nil {
-		logrusKit.DisableQuote(nil)
-		logrus.Fatalf("%+v", err)
+		console.Fatalf("Fail to set up, error: %s", err.Error())
 	}
 }
 

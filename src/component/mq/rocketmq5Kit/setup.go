@@ -3,9 +3,8 @@ package rocketmq5Kit
 import (
 	"github.com/apache/rocketmq-clients/golang/v5/credentials"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/console"
 	"github.com/richelieu-yang/chimera/v3/src/validateKit"
-	"github.com/sirupsen/logrus"
 )
 
 var (
@@ -16,8 +15,7 @@ var config *Config
 
 func MustSetUp(c *Config, clientLogPath string, verifyConfig *VerifyConfig) {
 	if err := SetUp(c, clientLogPath, verifyConfig); err != nil {
-		logrusKit.DisableQuote(nil)
-		logrus.Fatalf("%+v", err)
+		console.Fatalf("Fail to set up, error: %s", err.Error())
 	}
 }
 

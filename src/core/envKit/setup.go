@@ -1,15 +1,13 @@
 package envKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
-	"github.com/sirupsen/logrus"
+	"github.com/richelieu-yang/chimera/v3/src/log/console"
 )
 
 func MustSetUp(envFilePaths ...string) {
 	err := SetUp(envFilePaths...)
 	if err != nil {
-		logrusKit.DisableQuote(nil)
-		logrus.Fatalf("%+v", err)
+		console.Fatalf("Fail to set up, error: %s", err.Error())
 	}
 }
 

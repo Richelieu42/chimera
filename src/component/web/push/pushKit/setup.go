@@ -5,7 +5,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/atomic/atomicKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
-	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/console"
 	"github.com/richelieu-yang/chimera/v3/src/validateKit"
 	"github.com/sirupsen/logrus"
 )
@@ -19,8 +19,7 @@ var (
 
 func MustSetUp(antPool *ants.Pool, logger *logrus.Logger) {
 	if err := Setup(antPool, logger); err != nil {
-		logrusKit.DisableQuote(nil)
-		logrus.Fatalf("%+v", err)
+		console.Fatalf("Fail to set up, error: %s", err.Error())
 	}
 }
 

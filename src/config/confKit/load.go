@@ -2,8 +2,7 @@ package confKit
 
 import (
 	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
-	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
-	"github.com/sirupsen/logrus"
+	"github.com/richelieu-yang/chimera/v3/src/log/console"
 	"github.com/zeromicro/go-zero/core/conf"
 )
 
@@ -51,8 +50,7 @@ e.g.1	组合多个tag
 */
 func MustLoad(path string, ptr any, options ...conf.Option) {
 	if err := Load(path, ptr, options...); err != nil {
-		logrusKit.DisableQuote(nil)
-		logrus.Fatalf("%+v", err)
+		console.Fatalf("Fail to load, error: %s", err.Error())
 	}
 }
 

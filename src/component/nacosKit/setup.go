@@ -7,11 +7,10 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/core/intKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
-	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/console"
 	"github.com/richelieu-yang/chimera/v3/src/netKit"
 	"github.com/richelieu-yang/chimera/v3/src/urlKit"
 	"github.com/richelieu-yang/chimera/v3/src/validateKit"
-	"github.com/sirupsen/logrus"
 	"net/url"
 )
 
@@ -23,8 +22,7 @@ var (
 func MustSetUp(config *Config, options ...constant.ClientOption) {
 	err := SetUp(config, options...)
 	if err != nil {
-		logrusKit.DisableQuote(nil)
-		logrus.Fatalf("%+v", err)
+		console.Fatalf("Fail to set up, error: %s", err.Error())
 	}
 }
 

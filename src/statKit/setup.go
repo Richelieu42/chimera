@@ -4,6 +4,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v3/src/cronKit"
 	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/console"
 	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 )
@@ -12,8 +13,7 @@ var logger *logrus.Logger
 
 func MustSetup(logPath string) {
 	if err := Setup(logPath); err != nil {
-		logrusKit.DisableQuote(nil)
-		logrus.Fatalf("%+v", err)
+		console.Fatalf("Fail to set up, error: %s", err.Error())
 	}
 }
 
