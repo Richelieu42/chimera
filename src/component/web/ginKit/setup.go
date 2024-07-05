@@ -6,6 +6,7 @@ import (
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/ioKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/signalKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v3/src/log/console"
@@ -14,7 +15,6 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 	"github.com/richelieu-yang/chimera/v3/src/validateKit"
 	"net/http"
-	"os"
 	"sync"
 )
 
@@ -65,8 +65,10 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 		gin.ForceConsoleColor()
 	}
 
-	gin.DefaultWriter = os.Stdout
-	gin.DefaultErrorWriter = os.Stderr
+	// 默认: os.Stdout
+	gin.DefaultWriter = ioKit.LockedWriteSyncerStdout
+	// 默认: os.Stderr
+	gin.DefaultErrorWriter = ioKit.LockedWriteSyncerStderr
 
 	engine := DefaultEngine()
 
