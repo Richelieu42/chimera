@@ -15,7 +15,7 @@ type (
 
 		// ErrorOutput
 		/*
-			默认: zapcore.Lock(os.Stderr)
+			默认: LockedWriteSyncerStderr
 		*/
 		ErrorOutput zapcore.WriteSyncer
 
