@@ -12,26 +12,23 @@ var (
 	LockedWriteSyncerStderr = ioKit.LockedWriteSyncerStderr
 )
 
-// NewWriteSyncer io.Writer => zapcore.WriteSyncer
-/*
-PS: os.File 结构体实现了 zapcore.WriteSyncer 接口.
-*/
-func NewWriteSyncer(w io.Writer) zapcore.WriteSyncer {
-	return zapcore.AddSync(w)
-}
+var (
+	// NewWriteSyncer io.Writer => （并发不安全的）zapcore.WriteSyncer
+	/*
+	   PS:
+	   (1) os.File 结构体实现了 zapcore.WriteSyncer 接口;
+	   (2) zapcore.WriteSyncer 接口是 io.Writer 接口的子类.
+	*/
+	NewWriteSyncer func(w io.Writer) zapcore.WriteSyncer = ioKit.NewWriteSyncer
 
-// NewLockedWriteSyncer io.Writer => （线程安全的）zapcore.WriteSyncer
-/*
-PS: os.File 结构体实现了 zapcore.WriteSyncer 接口.
-*/
-func NewLockedWriteSyncer(w io.Writer) zapcore.WriteSyncer {
-	return ioKit.NewLockedWriteSyncer(w)
+	// NewLockedWriteSyncer io.Writer => （并发安全的）zapcore.WriteSyncer
+	/*
+	   PS:
+	   (1) os.File 结构体实现了 zapcore.WriteSyncer 接口;
+	   (2) zapcore.WriteSyncer 接口是 io.Writer 接口的子类.
+	*/
+	NewLockedWriteSyncer func(w io.Writer) zapcore.WriteSyncer = ioKit.NewLockedWriteSyncer
 
-	//ws := zapcore.AddSync(w)
-	//return zapcore.Lock(ws)
-}
-
-// MultiWriteSyncer 类似于 io.MultiWriter.
-func MultiWriteSyncer(ws ...zapcore.WriteSyncer) zapcore.WriteSyncer {
-	return zapcore.NewMultiWriteSyncer(ws...)
-}
+	// MultiWriteSyncer 类似于 io.MultiWriter.
+	MultiWriteSyncer func(ws ...zapcore.WriteSyncer) zapcore.WriteSyncer = ioKit.MultiWriteSyncer
+)
