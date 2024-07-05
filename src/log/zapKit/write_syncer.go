@@ -19,7 +19,7 @@ func NewWriteSyncer(w io.Writer) zapcore.WriteSyncer {
 PS: os.File 结构体实现了 zapcore.WriteSyncer 接口.
 */
 func NewLockedWriteSyncer(w io.Writer) zapcore.WriteSyncer {
-	return ioKit.NewLockedWriter(w)
+	return ioKit.NewLockedWriteSyncer(w)
 
 	//ws := zapcore.AddSync(w)
 	//return zapcore.Lock(ws)

@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-// NewLockedWriter
+// NewLockedWriteSyncer
 /*
 PS:
 (1) zapcore.WriteSyncer 接口继承了 io.Writer 接口.
@@ -15,7 +15,7 @@ PS:
 
 @return 支持并发 Write
 */
-func NewLockedWriter(w io.Writer) zapcore.WriteSyncer {
+func NewLockedWriteSyncer(w io.Writer) zapcore.WriteSyncer {
 	if w == nil {
 		return nil
 	}
