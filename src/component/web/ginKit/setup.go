@@ -118,8 +118,9 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 		console.Infof("Listening and serving HTTP on [%s]", httpSrv.Addr)
 
 		go func() {
-			if err := httpSrv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-				console.Fatalf("Fail to start http server with port(%d).", httpPort)
+			err := httpSrv.ListenAndServe()
+			if err != nil && !errors.Is(err, http.ErrServerClosed) {
+				console.Fatalf("Fail to start http server with port(%d), error: %s", httpPort, err.Error())
 			}
 		}()
 	}
@@ -135,8 +136,9 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 		console.Infof("Listening and serving HTTPS on [%s]", httpsSrv.Addr)
 
 		go func() {
-			if err := httpsSrv.ListenAndServeTLS(sslConfig.CertFile, sslConfig.KeyFile); err != nil && !errors.Is(err, http.ErrServerClosed) {
-				console.Fatalf("Fail to start https server with port(%d).", httpsPort)
+			err := httpsSrv.ListenAndServeTLS(sslConfig.CertFile, sslConfig.KeyFile)
+			if err != nil && !errors.Is(err, http.ErrServerClosed) {
+				console.Fatalf("Fail to start https server with port(%d), error: %s", httpsPort, err.Error())
 			}
 		}()
 	}
