@@ -1,8 +1,10 @@
 package ioKit
 
 import (
+	"github.com/richelieu-yang/chimera/v3/src/log/console"
 	"go.uber.org/zap/zapcore"
 	"io"
+	"os"
 )
 
 // NewLockedWriter
@@ -14,5 +16,16 @@ PS:
 @return 支持并发 Write
 */
 func NewLockedWriter(w io.Writer) zapcore.WriteSyncer {
-	return zapcore.Lock(zapcore.AddSync(w))
+	if w == nil {
+		return nil
+	}
+
+	switch w {
+	case os.Stdout:
+		return console.LockedWriteSyncerStdout
+	case os.Stderr:
+		return console.LockedWriteSyncerStderr
+	default:
+		return zapcore.Lock(zapcore.AddSync(w))
+	}
 }

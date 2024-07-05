@@ -6,9 +6,9 @@ import (
 )
 
 var (
-	// LockedWriteSyncerStdout 标准输出.
+	// LockedWriteSyncerStdout （加锁的）标准输出.
 	LockedWriteSyncerStdout = zapcore.Lock(os.Stdout)
 
-	// LockedWriteSyncerStderr 标准错误输出.
+	// LockedWriteSyncerStderr （加锁的）标准错误输出.
 	LockedWriteSyncerStderr = zapcore.Lock(os.Stderr)
 )
