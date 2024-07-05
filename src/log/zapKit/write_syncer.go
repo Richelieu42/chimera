@@ -6,6 +6,12 @@ import (
 	"io"
 )
 
+var (
+	LockedWriteSyncerStdout = ioKit.LockedWriteSyncerStdout
+
+	LockedWriteSyncerStderr = ioKit.LockedWriteSyncerStderr
+)
+
 // NewWriteSyncer io.Writer => zapcore.WriteSyncer
 /*
 PS: os.File 结构体实现了 zapcore.WriteSyncer 接口.
