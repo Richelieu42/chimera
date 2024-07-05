@@ -1,6 +1,7 @@
 package zapKit
 
 import (
+	"github.com/richelieu-yang/chimera/v3/src/core/ioKit"
 	"go.uber.org/zap/zapcore"
 	"io"
 )
@@ -18,8 +19,10 @@ func NewWriteSyncer(w io.Writer) zapcore.WriteSyncer {
 PS: os.File 结构体实现了 zapcore.WriteSyncer 接口.
 */
 func NewLockedWriteSyncer(w io.Writer) zapcore.WriteSyncer {
-	ws := zapcore.AddSync(w)
-	return zapcore.Lock(ws)
+	return ioKit.NewLockedWriter(w)
+
+	//ws := zapcore.AddSync(w)
+	//return zapcore.Lock(ws)
 }
 
 // MultiWriteSyncer 类似于 io.MultiWriter.
