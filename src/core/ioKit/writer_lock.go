@@ -1,10 +1,17 @@
 package ioKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/log/console"
 	"go.uber.org/zap/zapcore"
 	"io"
 	"os"
+)
+
+var (
+	// LockedWriteSyncerStdout （加锁的）标准输出.
+	LockedWriteSyncerStdout = zapcore.Lock(os.Stdout)
+
+	// LockedWriteSyncerStderr （加锁的）标准错误输出.
+	LockedWriteSyncerStderr = zapcore.Lock(os.Stderr)
 )
 
 // NewLockedWriteSyncer
@@ -22,9 +29,9 @@ func NewLockedWriteSyncer(w io.Writer) zapcore.WriteSyncer {
 
 	switch w {
 	case os.Stdout:
-		return console.LockedWriteSyncerStdout
+		return LockedWriteSyncerStdout
 	case os.Stderr:
-		return console.LockedWriteSyncerStderr
+		return LockedWriteSyncerStderr
 	default:
 		return zapcore.Lock(zapcore.AddSync(w))
 	}

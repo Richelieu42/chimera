@@ -1,9 +1,9 @@
 package zapKit
 
 import (
+	"github.com/richelieu-yang/chimera/v3/src/core/ioKit"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"os"
 )
 
 // NewLogger
@@ -29,7 +29,7 @@ func NewLogger(core zapcore.Core, options ...LoggerOption) (logger *zap.Logger) 
 	if core == nil {
 		encoder := NewEncoder()
 		// 确保多个goroutine在写入日志时不会发生竞态条件
-		ws := zapcore.Lock(os.Stdout)
+		ws := ioKit.LockedWriteSyncerStdout
 		core = NewCore(encoder, ws, zapcore.DebugLevel)
 	}
 
