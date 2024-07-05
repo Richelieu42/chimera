@@ -13,11 +13,11 @@ func NewWriteSyncer(w io.Writer) zapcore.WriteSyncer {
 	return zapcore.AddSync(w)
 }
 
-// NewWriteSyncerWithLock io.Writer => （线程安全的）zapcore.WriteSyncer
+// NewLockedWriteSyncer io.Writer => （线程安全的）zapcore.WriteSyncer
 /*
 PS: os.File 结构体实现了 zapcore.WriteSyncer 接口.
 */
-func NewWriteSyncerWithLock(w io.Writer) zapcore.WriteSyncer {
+func NewLockedWriteSyncer(w io.Writer) zapcore.WriteSyncer {
 	ws := zapcore.AddSync(w)
 	return zapcore.Lock(ws)
 }
