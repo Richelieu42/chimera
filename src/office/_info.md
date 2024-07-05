@@ -6,7 +6,7 @@
 ## unidoc/unioffice（要收费!）
 
 - [github](https://github.com/unidoc/unioffice)
-- 支持的Office文档格式:
+- 支持的Office文档格式: .docx、.xlsx、.pptx
 
 ## unidoc/unipdf（要收费!）
 
