@@ -17,7 +17,7 @@ func TestWrapLogger(t *testing.T) {
 
 	encoder := NewEncoder()
 	// 确保多个goroutine在写入日志时不会发生竞态条件
-	ws := zapcore.Lock(f)
+	ws := NewLockedWriteSyncer(f)
 	core := NewCore(encoder, ws, zapcore.DebugLevel)
 	l := zap.New(core)
 	wl := WrapLogger(l, f)

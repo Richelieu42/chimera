@@ -28,10 +28,8 @@ core 和 logger 都能添加 自定义Fields.
 */
 func TestNewLogger1(t *testing.T) {
 	encoder := NewEncoder()
-	// 确保多个goroutine在写入日志时不会发生竞态条件
-	ws := zapcore.Lock(os.Stdout)
-	core0 := NewCore(encoder, ws, zapcore.DebugLevel, zap.String("source", "X"))
-	core1 := NewCore(encoder, ws, zapcore.DebugLevel, zap.String("source", "Y"))
+	core0 := NewCore(encoder, nil, zapcore.DebugLevel, zap.String("source", "X"))
+	core1 := NewCore(encoder, nil, zapcore.DebugLevel, zap.String("source", "Y"))
 	core := MultiCore(core0, core1)
 	l := NewLogger(core, WithFields(zap.String("source", "O")))
 
@@ -57,7 +55,7 @@ func TestNewLogger2(t *testing.T) {
 			panic(err)
 		}
 		defer f.Close()
-		ws := zapcore.Lock(f)
+		ws := NewLockedWriteSyncer(f)
 
 		core1 = NewCore(enc, ws, zapcore.DebugLevel, zap.String("source", "0"))
 	}
@@ -65,7 +63,7 @@ func TestNewLogger2(t *testing.T) {
 	{
 
 		enc := NewEncoder(WithEncoderOutputFormatConsole())
-		ws := zapcore.Lock(os.Stdout)
+		var ws = LockedWriteSyncerStdout
 		core2 = NewCore(enc, ws, zapcore.WarnLevel, zap.String("source", "1"))
 	}
 
