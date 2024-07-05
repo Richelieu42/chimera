@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	port := 8001
+	port := 80
 
 	engine := gin.Default()
 	engine.POST("/test", func(ctx *gin.Context) {

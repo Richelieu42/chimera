@@ -16,5 +16,7 @@ func newLogger(skip int) *zap.Logger {
 	enc := zapcore.NewConsoleEncoder(encConfig)
 	core := zapcore.NewCore(enc, ioKit.LockedWriteSyncerStdout, zapcore.DebugLevel)
 
-	return zap.New(core, zap.WithCaller(true), zap.AddCallerSkip(skip), zap.ErrorOutput(ioKit.LockedWriteSyncerStderr))
+	return zap.New(core,
+		zap.WithCaller(true), zap.AddCallerSkip(skip), zap.ErrorOutput(ioKit.LockedWriteSyncerStderr), zap.AddStacktrace(zapcore.ErrorLevel),
+	)
 }
