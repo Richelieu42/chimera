@@ -1,6 +1,7 @@
 package console
 
 import (
+	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"go.uber.org/zap"
 )
 
@@ -13,10 +14,10 @@ var (
 )
 
 func init() {
-	innerL = newLogger(1)
+	innerL = zapKit.NewLogger(nil, zapKit.WithCallerSkip(1))
 	innerS = innerL.Sugar()
 
-	l = newLogger(0)
+	l = zapKit.NewLogger(nil, zapKit.WithCallerSkip(0))
 	s = l.Sugar()
 }
 
