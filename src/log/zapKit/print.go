@@ -3,11 +3,25 @@ package zapKit
 import "go.uber.org/zap"
 
 var (
+	l = NewLogger(nil, WithCallerSkip(0))
+	s = l.Sugar()
+
 	innerL = NewLogger(nil, WithCallerSkip(1))
 	innerS = innerL.Sugar()
 )
 
+func L() *zap.Logger {
+	return l
+}
+
+func S() *zap.SugaredLogger {
+	return s
+}
+
 func Sync() {
+	_ = l.Sync()
+	_ = s.Sync()
+
 	_ = innerL.Sync()
 	_ = innerS.Sync()
 }
