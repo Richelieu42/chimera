@@ -5,13 +5,27 @@ import (
 )
 
 var (
+	innerL *zap.Logger
+	innerS *zap.SugaredLogger
+
 	l *zap.Logger
 	s *zap.SugaredLogger
 )
 
 func init() {
-	l = newLogger(1)
+	innerL = newLogger(1)
+	innerS = innerL.Sugar()
+
+	l = newLogger(0)
 	s = l.Sugar()
+}
+
+func L() *zap.Logger {
+	return l
+}
+
+func S() *zap.SugaredLogger {
+	return s
 }
 
 //// ReplaceGlobalLoggers
@@ -23,39 +37,42 @@ func init() {
 //		return
 //	}
 //
-//	l = logger
-//	s = logger.Sugar()
+//	innerL = logger
+//	innerS = logger.Sugar()
 //}
 
 func Sync() {
+	_ = innerL.Sync()
+	_ = innerS.Sync()
+
 	_ = l.Sync()
 	_ = s.Sync()
 }
 
 func Debug(msg string, fields ...zap.Field) {
-	l.Debug(msg, fields...)
+	innerL.Debug(msg, fields...)
 }
 
 func Info(msg string, fields ...zap.Field) {
-	l.Info(msg, fields...)
+	innerL.Info(msg, fields...)
 }
 
 func Warn(msg string, fields ...zap.Field) {
-	l.Warn(msg, fields...)
+	innerL.Warn(msg, fields...)
 }
 
 func Error(msg string, fields ...zap.Field) {
-	l.Error(msg, fields...)
+	innerL.Error(msg, fields...)
 }
 
 func Panic(msg string, fields ...zap.Field) {
-	l.Panic(msg, fields...)
+	innerL.Panic(msg, fields...)
 }
 
 func DPanic(msg string, fields ...zap.Field) {
-	l.DPanic(msg, fields...)
+	innerL.DPanic(msg, fields...)
 }
 
 func Fatal(msg string, fields ...zap.Field) {
-	l.Fatal(msg, fields...)
+	innerL.Fatal(msg, fields...)
 }

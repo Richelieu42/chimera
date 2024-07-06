@@ -5,8 +5,7 @@ import (
 )
 
 func PrintBasicDetails() {
-	l := newLogger(0).Sugar()
-	defer l.Sync()
+	defer s.Sync()
 
-	commonLogKit.PrintBasicDetails(l)
+	commonLogKit.PrintBasicDetails(s)
 }
