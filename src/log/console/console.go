@@ -28,19 +28,6 @@ func S() *zap.SugaredLogger {
 	return s
 }
 
-//// ReplaceGlobalLoggers
-///*
-//PS: 有需要的话，应该在应用初始化时调用此方法，即在最前面设置全局logger.
-//*/
-//func ReplaceGlobalLoggers(logger *zap.Logger) {
-//	if logger == nil {
-//		return
-//	}
-//
-//	innerL = logger
-//	innerS = logger.Sugar()
-//}
-
 func Sync() {
 	_ = innerL.Sync()
 	_ = innerS.Sync()
