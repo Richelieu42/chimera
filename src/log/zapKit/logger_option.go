@@ -46,7 +46,7 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 		Clock:         zapcore.DefaultClock,
 		Fields:        nil,
 		PanicHook:     nil,
-		FatalHook:     &DefaultFatalHook{},
+		FatalHook:     &defaultFatalHook{},
 	}
 
 	for _, option := range options {

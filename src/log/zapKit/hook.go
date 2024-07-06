@@ -5,10 +5,10 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-// DefaultFatalHook 默认的 fatal hook
-type DefaultFatalHook struct {
+// defaultFatalHook 默认的 fatal hook
+type defaultFatalHook struct {
 }
 
-func (h *DefaultFatalHook) OnWrite(entry *zapcore.CheckedEntry, fields []zapcore.Field) {
+func (h *defaultFatalHook) OnWrite(entry *zapcore.CheckedEntry, fields []zapcore.Field) {
 	appKit.Exit(1)
 }
