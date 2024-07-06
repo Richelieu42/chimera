@@ -16,5 +16,8 @@ func TestDebug(t *testing.T) {
 	Debugw("hello world", "key", "value", "flag", true)
 	Debugln("hello", "world")
 
-	Error("hello world")
+	Info("Info")
+	Warn("Warn")
+	Error("Error")
+	Fatal("Fatal")
 }
