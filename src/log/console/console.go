@@ -6,61 +6,43 @@ import (
 )
 
 var (
-	innerL *zap.Logger
-	innerS *zap.SugaredLogger
+	L func() *zap.Logger        = zapKit.L
+	S func() *zap.SugaredLogger = zapKit.S
 
-	l *zap.Logger
-	s *zap.SugaredLogger
+	Sync func() = zapKit.Sync
+
+	Debug   func(msg string, fields ...zap.Field)          = zapKit.Debug
+	Debugf  func(template string, args ...interface{})     = zapKit.Debugf
+	Debugw  func(msg string, keysAndValues ...interface{}) = zapKit.Debugw
+	Debugln func(args ...interface{})                      = zapKit.Debugln
+
+	Info   func(msg string, fields ...zap.Field)          = zapKit.Info
+	Infof  func(template string, args ...interface{})     = zapKit.Infof
+	Infow  func(msg string, keysAndValues ...interface{}) = zapKit.Infow
+	Infoln func(args ...interface{})                      = zapKit.Infoln
+
+	Warn   func(msg string, fields ...zap.Field)          = zapKit.Warn
+	Warnf  func(template string, args ...interface{})     = zapKit.Warnf
+	Warnw  func(msg string, keysAndValues ...interface{}) = zapKit.Warnw
+	Warnln func(args ...interface{})                      = zapKit.Warnln
+
+	Error   func(msg string, fields ...zap.Field)          = zapKit.Error
+	Errorf  func(template string, args ...interface{})     = zapKit.Errorf
+	Errorw  func(msg string, keysAndValues ...interface{}) = zapKit.Errorw
+	Errorln func(args ...interface{})                      = zapKit.Errorln
+
+	Panic   func(msg string, fields ...zap.Field)          = zapKit.Panic
+	Panicf  func(template string, args ...interface{})     = zapKit.Panicf
+	Panicw  func(msg string, keysAndValues ...interface{}) = zapKit.Panicw
+	Panicln func(args ...interface{})                      = zapKit.Panicln
+
+	DPanic   func(msg string, fields ...zap.Field)          = zapKit.DPanic
+	DPanicf  func(template string, args ...interface{})     = zapKit.DPanicf
+	DPanicw  func(msg string, keysAndValues ...interface{}) = zapKit.DPanicw
+	DPanicln func(args ...interface{})                      = zapKit.DPanicln
+
+	Fatal   func(msg string, fields ...zap.Field)          = zapKit.Fatal
+	Fatalf  func(template string, args ...interface{})     = zapKit.Fatalf
+	Fatalw  func(msg string, keysAndValues ...interface{}) = zapKit.Fatalw
+	Fatalln func(args ...interface{})                      = zapKit.Fatalln
 )
-
-func init() {
-	innerL = zapKit.NewLogger(nil, zapKit.WithCallerSkip(1))
-	innerS = innerL.Sugar()
-
-	l = zapKit.NewLogger(nil, zapKit.WithCallerSkip(0))
-	s = l.Sugar()
-}
-
-func L() *zap.Logger {
-	return l
-}
-
-func S() *zap.SugaredLogger {
-	return s
-}
-
-func Sync() {
-	_ = innerL.Sync()
-	_ = innerS.Sync()
-
-	_ = l.Sync()
-	_ = s.Sync()
-}
-
-func Debug(msg string, fields ...zap.Field) {
-	innerL.Debug(msg, fields...)
-}
-
-func Info(msg string, fields ...zap.Field) {
-	innerL.Info(msg, fields...)
-}
-
-func Warn(msg string, fields ...zap.Field) {
-	innerL.Warn(msg, fields...)
-}
-
-func Error(msg string, fields ...zap.Field) {
-	innerL.Error(msg, fields...)
-}
-
-func Panic(msg string, fields ...zap.Field) {
-	innerL.Panic(msg, fields...)
-}
-
-func DPanic(msg string, fields ...zap.Field) {
-	innerL.DPanic(msg, fields...)
-}
-
-func Fatal(msg string, fields ...zap.Field) {
-	innerL.Fatal(msg, fields...)
-}

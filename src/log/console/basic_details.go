@@ -5,7 +5,8 @@ import (
 )
 
 func PrintBasicDetails() {
-	defer s.Sync()
+	logger := S()
+	defer logger.Sync()
 
-	commonLogKit.PrintBasicDetails(s)
+	commonLogKit.PrintBasicDetails(logger)
 }
