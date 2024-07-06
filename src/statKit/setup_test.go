@@ -13,7 +13,10 @@ func TestMustSetup(t *testing.T) {
 	//	panic(engine)
 	//}
 
-	/* 1 此时进程的CPU使用率很高，维持在99%左右 */
+	/* 1 此时进程的CPU使用率很低 */
+	//select {}
+
+	/* 2 此时进程的CPU使用率很高，维持在99%左右 */
 	for {
 	}
 }

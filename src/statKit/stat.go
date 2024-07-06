@@ -200,5 +200,5 @@ func PrintStats(logger *zap.SugaredLogger) {
 		logger.Errorf("Fail to marshal, error: %s", err.Error())
 		return
 	}
-	logger.Infof("stats:\n%s", json)
+	logger.Infof("[CHIMERA] stats:\n%s", json)
 }

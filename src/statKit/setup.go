@@ -24,18 +24,13 @@ func Setup(logPath string) error {
 	} else {
 		// (2) 输出到: 文件日志
 		enc := zapKit.NewEncoder()
-
 		f, err := fileKit.CreateInAppendMode(logPath)
 		if err != nil {
 			return err
 		}
 		ws := zapKit.NewLockedWriteSyncer(f)
-
 		core := zapKit.NewCore(enc, ws, zap.DebugLevel)
-
-		zapKit.NewLogger(core)
-
-		//logger = logrusKit.NewLogger(logrusKit.WithOutput(f))
+		logger = zapKit.NewLogger(core).Sugar()
 	}
 
 	c, _, err := cronKit.NewCronWithTask("@every 30s", func() {
