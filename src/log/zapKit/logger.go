@@ -22,7 +22,7 @@ e.g. case: core传nil，options不传
 	(6) 有 Caller 且 CallerSkip == 0
 	(7) Development == false，即生产模式
 	(8) ErrorOutput 使用默认值: 并发安全地输出到os.Stderr
-	(9) 输出日志时，不会附带堆栈信息(stack trace)
+	(9) ERROR及以上级别 的日志输出，会附带堆栈信息(stack trace)
 */
 func NewLogger(core zapcore.Core, options ...LoggerOption) (logger *zap.Logger) {
 	if core == nil {
@@ -70,6 +70,5 @@ func NewLogger(core zapcore.Core, options ...LoggerOption) (logger *zap.Logger) 
 }
 
 func NewSugarLogger(core zapcore.Core, options ...LoggerOption) *zap.SugaredLogger {
-	logger := NewLogger(core, options...)
-	return logger.Sugar()
+	return NewLogger(core, options...).Sugar()
 }

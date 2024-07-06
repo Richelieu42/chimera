@@ -7,10 +7,9 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/core/osKit"
 	"github.com/richelieu-yang/chimera/v3/src/dataSizeKit"
 	"github.com/richelieu-yang/chimera/v3/src/diskKit"
-	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v3/src/processKit"
 	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
-	"github.com/sirupsen/logrus"
+	"go.uber.org/zap"
 	"os"
 	"runtime"
 	"sync"
@@ -194,17 +193,12 @@ func GetStats() *Stats {
 	return rst
 }
 
-func PrintStats(logger *logrus.Logger) {
-	if logger == nil {
-		logger = logrus.StandardLogger()
-	}
-
+func PrintStats(logger *zap.SugaredLogger) {
 	stats := GetStats()
 	json, err := jsonKit.MarshalIndentToString(stats, "", "    ")
 	if err != nil {
-		logger.WithError(err).Error("fail to print")
+		logger.Errorf("Fail to marshal, error: %s", err.Error())
+		return
 	}
-	logrusKit.DisableQuoteTemporarily(logger, func(logger *logrus.Logger) {
-		logger.Infof("[CHIMERA] stats:\n%s", json)
-	})
+	logger.Infof("stats:\n%s", json)
 }

@@ -5,11 +5,11 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/cronKit"
 	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
 	"github.com/richelieu-yang/chimera/v3/src/log/console"
-	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
-	"github.com/sirupsen/logrus"
+	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
+	"go.uber.org/zap"
 )
 
-var logger *logrus.Logger
+var logger *zap.SugaredLogger
 
 func MustSetup(logPath string) {
 	if err := Setup(logPath); err != nil {
@@ -20,16 +20,22 @@ func MustSetup(logPath string) {
 func Setup(logPath string) error {
 	if strKit.IsBlank(logPath) {
 		// (1) 输出到: 控制台
+		logger = console.S()
 	} else {
 		// (2) 输出到: 文件日志
-		if err := fileKit.AssertNotExistOrIsFile(logPath); err != nil {
-			return err
-		}
+		enc := zapKit.NewEncoder()
+
 		f, err := fileKit.CreateInAppendMode(logPath)
 		if err != nil {
 			return err
 		}
-		logger = logrusKit.NewLogger(logrusKit.WithOutput(f))
+		ws := zapKit.NewLockedWriteSyncer(f)
+
+		core := zapKit.NewCore(enc, ws, zap.DebugLevel)
+
+		zapKit.NewLogger(core)
+
+		//logger = logrusKit.NewLogger(logrusKit.WithOutput(f))
 	}
 
 	c, _, err := cronKit.NewCronWithTask("@every 30s", func() {
