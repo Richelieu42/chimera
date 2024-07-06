@@ -2,6 +2,7 @@ package console
 
 import (
 	"github.com/richelieu-yang/chimera/v3/src/core/ioKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
@@ -21,5 +22,6 @@ func newLogger(skip int) *zap.Logger {
 		zap.AddCallerSkip(skip),
 		zap.ErrorOutput(ioKit.LockedWriteSyncerStderr),
 		zap.AddStacktrace(zapcore.ErrorLevel),
+		zap.WithFatalHook(&zapKit.DefaultFatalHook{}),
 	)
 }

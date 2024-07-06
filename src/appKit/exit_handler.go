@@ -1,4 +1,4 @@
-package zapKit
+package appKit
 
 import (
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
