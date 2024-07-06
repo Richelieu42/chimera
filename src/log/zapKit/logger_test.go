@@ -13,7 +13,7 @@ func TestNewLogger(t *testing.T) {
 	/*
 		WithAddStacktrace(zapcore.WarnLevel): Warn及以上的日志输出，会附带堆栈信息
 	*/
-	//l := NewLogger(nil, WithAddStacktrace(zapcore.WarnLevel))
+	//innerL := NewLogger(nil, WithAddStacktrace(zapcore.WarnLevel))
 
 	defer l.Sync()
 

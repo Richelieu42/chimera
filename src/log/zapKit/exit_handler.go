@@ -91,9 +91,9 @@ func RunExitHandlers() {
 
 	select {
 	case <-time.After(timeout):
-		Errorf("Fail to run all exit handlers within timeout(%s).", timeout)
+		Errorf("Fail to run all exit handlers within timeout(%innerS).", timeout)
 	case <-endCh:
-		Infof("Manager to run all exit handlers within timeout(%s).", timeout)
+		Infof("Manager to run all exit handlers within timeout(%innerS).", timeout)
 	}
 }
 

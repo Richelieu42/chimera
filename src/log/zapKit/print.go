@@ -3,39 +3,39 @@ package zapKit
 import "go.uber.org/zap"
 
 var (
-	l = NewLogger(nil, WithCallerSkip(1))
-	s = l.Sugar()
+	innerL = NewLogger(nil, WithCallerSkip(1))
+	innerS = innerL.Sugar()
 )
 
 func Sync() {
-	_ = l.Sync()
-	_ = s.Sync()
+	_ = innerL.Sync()
+	_ = innerS.Sync()
 }
 
 func Debug(msg string, fields ...zap.Field) {
-	l.Debug(msg, fields...)
+	innerL.Debug(msg, fields...)
 }
 
 func Info(msg string, fields ...zap.Field) {
-	l.Info(msg, fields...)
+	innerL.Info(msg, fields...)
 }
 
 func Warn(msg string, fields ...zap.Field) {
-	l.Warn(msg, fields...)
+	innerL.Warn(msg, fields...)
 }
 
 func Error(msg string, fields ...zap.Field) {
-	l.Error(msg, fields...)
+	innerL.Error(msg, fields...)
 }
 
 func Panic(msg string, fields ...zap.Field) {
-	l.Panic(msg, fields...)
+	innerL.Panic(msg, fields...)
 }
 
 func DPanic(msg string, fields ...zap.Field) {
-	l.DPanic(msg, fields...)
+	innerL.DPanic(msg, fields...)
 }
 
 func Fatal(msg string, fields ...zap.Field) {
-	l.Fatal(msg, fields...)
+	innerL.Fatal(msg, fields...)
 }
