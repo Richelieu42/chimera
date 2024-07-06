@@ -7,8 +7,8 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/consts"
 	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v3/src/idKit"
-	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
-	"github.com/sirupsen/logrus"
+	"github.com/richelieu-yang/chimera/v3/src/log/console"
+	"go.uber.org/zap"
 	"strconv"
 	"sync"
 	"testing"
@@ -17,13 +17,13 @@ import (
 
 // 测试: Redis客户端通用订阅与发布.
 func TestClient_Publish(t *testing.T) {
-	logrusKit.MustSetUp(nil)
-
-	wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
-	if err != nil {
-		logrus.Infof("wd: %s", wd)
+	{
+		wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
+		if err != nil {
+			panic(err)
+		}
+		console.Infof("working dir: %s", wd)
 	}
-	logrus.Infof("wd: %s", wd)
 
 	type config struct {
 		Redis Config `json:"redis"`
@@ -50,28 +50,25 @@ func TestClient_Publish(t *testing.T) {
 
 			ch := pubSub.Channel()
 			for msg := range ch {
-				logrus.WithFields(logrus.Fields{
-					"channel": msg.Channel,
-					"payLoad": msg.Payload,
-				}).Info("Receive a message.")
+				console.Info("Receive a message.", zap.String("channel", msg.Channel), zap.String("payLoad", msg.Payload))
 			}
-			logrus.Info("Receive ends.......................")
+			console.Info("Receive ends.......................")
 		}()
 		// 3s后取消订阅
 		go func() {
 			time.Sleep(time.Second * 3)
 
-			logrus.Info("Unsubscribe starts.")
+			console.Info("Unsubscribe starts.")
 			if err := pubSub.Unsubscribe(context.TODO(), channel); err != nil {
 				panic(err)
 			}
-			logrus.Info("Unsubscribe ends.")
+			console.Info("Unsubscribe ends.")
 
-			logrus.Info("Close starts.")
+			console.Info("Close starts.")
 			if err := pubSub.Close(); err != nil {
 				panic(err)
 			}
-			logrus.Info("Close ends.")
+			console.Info("Close ends.")
 		}()
 
 		wg.Add(1)
@@ -88,7 +85,7 @@ func TestClient_Publish(t *testing.T) {
 		}()
 
 		wg.Wait()
-		logrus.Info("===")
+		console.Info("===")
 	}
 }
 
@@ -96,12 +93,14 @@ func TestClient_Publish(t *testing.T) {
 /*
 !!!: 需要先配置Redis.
 */
-func TestClient_Publish1(t *testing.T) {
-	wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
-	if err != nil {
-		logrus.Infof("wd: %s", wd)
+func TestSubscribeExpired(t *testing.T) {
+	{
+		wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
+		if err != nil {
+			panic(err)
+		}
+		console.Infof("working dir: %s", wd)
 	}
-	logrus.Infof("wd: %s", wd)
 
 	type config struct {
 		Redis Config `json:"redis"`
@@ -130,12 +129,12 @@ func TestClient_Publish1(t *testing.T) {
 		//		if err != nil {
 		//			panic(err)
 		//		}
-		//		logrus.WithFields(logrus.Fields{
-		//			"channel": msg.Channel,
-		//			"payLoad": msg.Payload, // 过期的键（key）
-		//		}).Info("Receive a message.")
+		//
+		//		// msg.Payload: 过期的键（key）
+		//		console.Info("Receive a message.", zap.String("channel", msg.Channel), zap.String("payLoad", msg.Payload))
 		//	}
 		//}()
+
 		/* pubSub使用方法2 */
 		go func() {
 			pubSub := client.Subscribe(context.TODO(), "__keyevent@0__:expired")
@@ -143,10 +142,8 @@ func TestClient_Publish1(t *testing.T) {
 
 			ch := pubSub.Channel()
 			for msg := range ch {
-				logrus.WithFields(logrus.Fields{
-					"channel": msg.Channel,
-					"payLoad": msg.Payload, // 过期的键（key）
-				}).Info("Receive a message.")
+				// msg.Payload: 过期的键（key）
+				console.Info("Receive a message.", zap.String("channel", msg.Channel), zap.String("payLoad", msg.Payload))
 				if msg.Payload == id {
 					flag.CompareAndSwap(false, true)
 				}
