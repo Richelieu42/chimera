@@ -32,7 +32,7 @@ func Debug(msg string, fields ...zap.Field) {
 
 // Info
 /*
-@param fields 输出循序与传参顺序一致（并不会按字母排序）
+@param fields 输出循序与 传参fields 顺序一致（并不会按字母排序）
 */
 func Info(msg string, fields ...zap.Field) {
 	innerL.Info(msg, fields...)
