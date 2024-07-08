@@ -5,12 +5,12 @@ import (
 	"errors"
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v3/src/appKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/ioKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/signalKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v3/src/log/console"
-	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"github.com/richelieu-yang/chimera/v3/src/netKit"
 	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 	"github.com/richelieu-yang/chimera/v3/src/validateKit"
@@ -152,7 +152,7 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 			https://gin-gonic.com/zh-cn/docs/examples/graceful-restart-or-stop/
 			https://github.com/gin-gonic/examples/blob/master/graceful-shutdown/graceful-shutdown/notify-without-context/server.go
 	*/
-	zapKit.RegisterExitHandler(func() {
+	appKit.RegisterExitHandler(func() {
 		var wg sync.WaitGroup
 
 		ctx, cancel := context.WithTimeout(context.TODO(), timeKit.Second*5)
