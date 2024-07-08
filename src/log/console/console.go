@@ -16,6 +16,10 @@ var (
 	Debugw  func(msg string, keysAndValues ...interface{}) = zapKit.Debugw
 	Debugln func(args ...interface{})                      = zapKit.Debugln
 
+	// Info
+	/*
+	   @param fields 输出循序与传参顺序一致（并不会按字母排序）
+	*/
 	Info   func(msg string, fields ...zap.Field)          = zapKit.Info
 	Infof  func(template string, args ...interface{})     = zapKit.Infof
 	Infow  func(msg string, keysAndValues ...interface{}) = zapKit.Infow
