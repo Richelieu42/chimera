@@ -2,6 +2,7 @@ package zapKit
 
 import (
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
+	"go.uber.org/zap"
 	"sync"
 	"time"
 )
@@ -91,9 +92,9 @@ func RunExitHandlers() {
 
 	select {
 	case <-time.After(timeout):
-		Errorf("Fail to run all exit handlers within timeout(%s).", timeout)
+		Error("Fail to run all exit handlers within timeout.", zap.String("timeout", timeout.String()))
 	case <-endCh:
-		Infof("Manager to run all exit handlers within timeout(%s).", timeout)
+		Info("Manager to run all exit handlers within timeout.", zap.String("timeout", timeout.String()))
 	}
 }
 
