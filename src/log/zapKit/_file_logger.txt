@@ -1,0 +1,8 @@
+2024-07-10T13:36:17.454+0800	[35mDEBUG[0m	zapKit/file_logger_test.go:15	Debug
+2024-07-10T13:36:17.454+0800	[34mINFO[0m	zapKit/file_logger_test.go:16	Info
+2024-07-10T13:36:17.454+0800	[33mWARN[0m	zapKit/file_logger_test.go:17	Warn
+2024-07-10T13:36:17.454+0800	[31mERROR[0m	zapKit/file_logger_test.go:18	Error
+github.com/richelieu-yang/chimera/v3/src/log/zapKit.TestNewFileLogger
+	/Users/richelieu/GolandProjects/chimera/src/log/zapKit/file_logger_test.go:18
+testing.tRunner
+	/opt/homebrew/opt/go/libexec/src/testing/testing.go:1689
