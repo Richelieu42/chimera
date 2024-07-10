@@ -1,6 +1,7 @@
 package zapKit
 
 import (
+	"log"
 	"testing"
 )
 
@@ -14,4 +15,13 @@ func TestNewStdLogger(t *testing.T) {
 	logger := NewStdLogger(l)
 	logger.Print("hello world")
 	logger.Println("hello world")
+}
+
+func TestRedirectStdLog(t *testing.T) {
+	log.Println("123")
+
+	l := NewLogger(nil)
+	f := RedirectStdLog(l)
+	f()
+	log.Println("456")
 }
