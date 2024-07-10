@@ -7,6 +7,8 @@ import (
 
 // NewFileLogger
 /*
+PS: 仅输出到文件.
+
 @param filePath 日志文件路径
 */
 func NewFileLogger(filePath string, prefix string, level zapcore.Level, loggerOptions ...LoggerOption) (*WrappedLogger, error) {
