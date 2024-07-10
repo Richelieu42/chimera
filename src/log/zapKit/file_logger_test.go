@@ -6,7 +6,7 @@ import (
 )
 
 func TestNewFileLogger(t *testing.T) {
-	path := "_file_logger.txt"
+	path := "_test_file_logger.txt"
 
 	l, err := NewFileLogger(path, "", zapcore.DebugLevel)
 	if err != nil {
