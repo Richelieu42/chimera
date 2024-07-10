@@ -1701,10 +1701,10 @@ github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475/go.mod h1:bCqn
 github.com/redis/go-redis/v9 v9.0.3/go.mod h1:WqMKv5vnQbRuZstUwxQI195wHy+t4PuXDOjzMvcuQHk=
 github.com/redis/go-redis/v9 v9.5.3 h1:fOAp1/uJG+ZtcITgZOfYFmTKPE7n4Vclj1wZFgRciUU=
 github.com/redis/go-redis/v9 v9.5.3/go.mod h1:hdY0cQFCN4fnSYT6TkisLufl/4W5UIXyv0b/CLO2V2M=
-github.com/redis/rueidis v1.0.40 h1:zoC+GUTdNHhP7ZHrnMiIDcP16DUEVcxsPThQsvD7yDg=
-github.com/redis/rueidis v1.0.40/go.mod h1:bnbkk4+CkXZgDPEbUtSos/o55i4RhFYYesJ4DS2zmq0=
-github.com/redis/rueidis/rueidiscompat v1.0.40 h1:N734YFg60iflPZCv3dBiMtXzBxNX8NfRG+DB/ZFzr4M=
-github.com/redis/rueidis/rueidiscompat v1.0.40/go.mod h1:944WKtARDCqYQrcWdZVQbL121hC1VQJm7YVNurodVbg=
+github.com/redis/rueidis v1.0.41 h1:Ls5Dto11Tknh8CFbaMTSBD0fgMlTqJWq8/Df4LPaeQ0=
+github.com/redis/rueidis v1.0.41/go.mod h1:bnbkk4+CkXZgDPEbUtSos/o55i4RhFYYesJ4DS2zmq0=
+github.com/redis/rueidis/rueidiscompat v1.0.41 h1:jfI53rVDH9trklTQY5R/jbGJpAcoabh+J5q6x+IZ0Uo=
+github.com/redis/rueidis/rueidiscompat v1.0.41/go.mod h1:x7By3oT8E/l+4SVKGXPA0r4el+4f9Ig7Ahet5y4QXbA=
 github.com/refraction-networking/utls v1.6.3 h1:MFOfRN35sSx6K5AZNIoESsBuBxS2LCgRilRIdHb6fDc=
 github.com/refraction-networking/utls v1.6.3/go.mod h1:yil9+7qSl+gBwJqztoQseO6Pr3h62pQoY1lXiNR/FPs=
 github.com/remyoudompheng/bigfft v0.0.0-20200410134404-eec4a21b6bb0/go.mod h1:qqbHyh8v60DhA7CoWK5oRCqLrMHRGoxYCSS9EjAz6Eo=
