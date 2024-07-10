@@ -16,6 +16,7 @@ func NewStdLoggerWithLevel(l *zap.Logger, level zapcore.Level) (*log.Logger, err
 	return zap.NewStdLogAt(l, level)
 }
 
+// RedirectStdLog 重定向 log标准库 的输出
 func RedirectStdLog(l *zap.Logger) func() {
 	return zap.RedirectStdLog(l)
 }
