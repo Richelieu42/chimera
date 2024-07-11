@@ -48,9 +48,14 @@ func NewRaftNodeAndBootstrapCluster(addr string, nodeAddrs []string, dir string,
 	if err := validateKit.Var(nodeAddrs, "unique,gte=3,dive,hostname_port"); err != nil {
 		return nil, errorKit.Wrapf(err, "param nodeAddrs(%s) is invalid", nodeAddrs)
 	}
+
 	if err := fileKit.AssertNotExistOrIsDir(dir); err != nil {
 		return nil, err
 	}
+	if err := fileKit.MkDirs(dir); err != nil {
+		return nil, err
+	}
+
 	if err := interfaceKit.AssertNotNil(fsm, "fsm"); err != nil {
 		return nil, err
 	}

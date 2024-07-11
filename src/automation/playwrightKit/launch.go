@@ -30,7 +30,10 @@ func LaunchBrowser(browserName string, driverDir string, installFlag bool,
 		}
 	}()
 
-	if err = fileKit.AssertNotExistOrIsDir(driverDir, true); err != nil {
+	if err = fileKit.AssertNotExistOrIsDir(driverDir); err != nil {
+		return
+	}
+	if err = fileKit.MkDirs(driverDir); err != nil {
 		return
 	}
 

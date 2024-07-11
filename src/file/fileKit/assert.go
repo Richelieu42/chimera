@@ -58,24 +58,13 @@ func AssertNotExistOrIsFile(path string, mkdirArgs ...bool) error {
 @param mkdirArgs	(1) true: path不存在的话，为其创建目录（可多级）
 					(2) 默认: true
 */
-func AssertNotExistOrIsDir(path string, mkdirArgs ...bool) error {
+func AssertNotExistOrIsDir(path string) error {
 	if strKit.IsBlank(path) {
 		return errorKit.NewfWithSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
 	}
 	if Exists(path) && IsFile(path) {
 		return errorKit.NewfWithSkip(1, "[%s] path(%s) exists but it is a file", funcKit.GetFuncName(1), path)
 	}
-
-	var flag bool = true
-	if mkdirArgs != nil {
-		flag = mkdirArgs[0]
-	}
-	if flag {
-		if err := MkDirs(path); err != nil {
-			return err
-		}
-	}
-
 	return nil
 }
 

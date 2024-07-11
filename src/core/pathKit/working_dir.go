@@ -13,6 +13,7 @@ import (
 // GetWorkingDir 获取 当前工作目录的绝对路径
 func GetWorkingDir() string {
 	//return gfile.Pwd()
+
 	path, err := os.Getwd()
 	if err != nil {
 		logrus.WithError(err).Fatal("fail to get working directory")
@@ -23,6 +24,9 @@ func GetWorkingDir() string {
 // ChangeWorkingDir 使用给定的路径，更改当前的工作路径.
 func ChangeWorkingDir(dir string) error {
 	if err := fileKit.AssertNotExistOrIsDir(dir); err != nil {
+		return err
+	}
+	if err := fileKit.MkDirs(dir); err != nil {
 		return err
 	}
 

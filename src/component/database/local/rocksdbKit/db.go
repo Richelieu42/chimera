@@ -13,6 +13,10 @@ func OpenDB(dirPath string, opts *grocksdb.Options) (*grocksdb.DB, error) {
 	if err := fileKit.AssertNotExistOrIsDir(dirPath); err != nil {
 		return nil, err
 	}
+	if err := fileKit.MkDirs(dirPath); err != nil {
+		return nil, err
+	}
+
 	if opts == nil {
 		opts = NewDefaultDBOptions()
 	}

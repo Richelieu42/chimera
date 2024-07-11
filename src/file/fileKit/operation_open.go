@@ -69,6 +69,10 @@ func NewTemporaryFile(dirPath, pattern string) (*os.File, error) {
 	if err := AssertNotExistOrIsDir(dirPath); err != nil {
 		return nil, err
 	}
+	if err := MkDirs(dirPath); err != nil {
+		return nil, err
+	}
+
 	if err := strKit.AssertNotBlank(pattern, "pattern"); err != nil {
 		return nil, err
 	}

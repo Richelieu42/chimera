@@ -30,7 +30,10 @@ func GetTempDir() string {
 }
 
 func SetTempDir(dirPath string) error {
-	if err := fileKit.AssertNotExistOrIsDir(dirPath, true); err != nil {
+	if err := fileKit.AssertNotExistOrIsDir(dirPath); err != nil {
+		return err
+	}
+	if err := fileKit.MkDirs(dirPath); err != nil {
 		return err
 	}
 
