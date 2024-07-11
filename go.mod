@@ -45,7 +45,7 @@ require (
 	github.com/gorilla/sessions v1.3.0
 	github.com/gorilla/websocket v1.5.3
 	github.com/h2non/bimg v1.1.9
-	github.com/hashicorp/consul/api v1.29.1
+	github.com/hashicorp/consul/api v1.29.2
 	github.com/hashicorp/go-hclog v1.6.3
 	github.com/hashicorp/go-version v1.7.0
 	github.com/hashicorp/golang-lru/v2 v2.0.7
@@ -82,7 +82,7 @@ require (
 	github.com/pelletier/go-toml/v2 v2.2.2
 	github.com/pierrec/lz4/v4 v4.1.21
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
-	github.com/playwright-community/playwright-go v0.4401.1
+	github.com/playwright-community/playwright-go v0.4501.0
 	github.com/redis/go-redis/v9 v9.5.3
 	github.com/redis/rueidis v1.0.41
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
