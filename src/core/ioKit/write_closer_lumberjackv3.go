@@ -74,7 +74,10 @@ WithMaxAge()		[默认: 保留所有旧日志] 旧日志保存的最长时间
 WithLocalTime()		[默认: true] true: 使用本地时间; false: 使用UTC时间
 */
 func NewLumberJackWriteCloser(filePath string, maxSize int64, options ...LumberJackOption) (*lumberjack.Roller, error) {
-	if err := fileKit.AssertNotExistOrIsFile(filePath, true); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
+		return nil, err
+	}
+	if err := fileKit.MkParentDirs(filePath); err != nil {
 		return nil, err
 	}
 

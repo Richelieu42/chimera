@@ -8,7 +8,10 @@ import (
 
 // ToBmp 将图片格式转换为".bmp".
 func ToBmp(src, dest string) error {
-	if err := fileKit.AssertNotExistOrIsFile(dest, true); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
+		return err
+	}
+	if err := fileKit.MkParentDirs(dest); err != nil {
 		return err
 	}
 

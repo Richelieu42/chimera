@@ -46,7 +46,11 @@ func CompressFile(src, dest string) error {
 	if err := fileKit.AssertExistAndIsFile(src); err != nil {
 		return err
 	}
-	if err := fileKit.AssertNotExistOrIsFile(dest, true); err != nil {
+
+	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
+		return err
+	}
+	if err := fileKit.MkParentDirs(dest); err != nil {
 		return err
 	}
 

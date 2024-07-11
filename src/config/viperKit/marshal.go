@@ -17,7 +17,11 @@ func MarshalToFile(obj interface{}, target string) error {
 	if err := interfaceKit.AssertNotNil(obj, "obj"); err != nil {
 		return err
 	}
-	if err := fileKit.AssertNotExistOrIsFile(target, true); err != nil {
+
+	if err := fileKit.AssertNotExistOrIsFile(target); err != nil {
+		return err
+	}
+	if err := fileKit.MkParentDirs(target); err != nil {
 		return err
 	}
 

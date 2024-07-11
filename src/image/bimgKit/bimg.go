@@ -62,7 +62,10 @@ func Convert(src, dest string) error {
 	}
 
 	// dest
-	if err := fileKit.AssertNotExistOrIsFile(dest, true); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
+		return err
+	}
+	if err := fileKit.MkParentDirs(dest); err != nil {
 		return err
 	}
 

@@ -42,7 +42,7 @@ func NewGormDB(dsn string, poolConfig *gormKit.PoolConfig, opts ...gorm.Option) 
 		path = dsn
 	}
 
-	if err := fileKit.AssertNotExistOrIsFile(path, true); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(path); err != nil {
 		return nil, err
 	}
 	if err := fileKit.MkParentDirs(path); err != nil {
