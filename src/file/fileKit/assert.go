@@ -12,6 +12,9 @@ import (
 */
 func AssertExist(path string) error {
 	if strKit.IsBlank(path) {
+		if path == "" {
+			return errorKit.NewfWithSkip(1, "[%s] path is empty", funcKit.GetFuncName(1))
+		}
 		return errorKit.NewfWithSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
 	}
 
@@ -31,8 +34,12 @@ func AssertExist(path string) error {
 */
 func AssertNotExistOrIsFile(path string) error {
 	if strKit.IsBlank(path) {
+		if path == "" {
+			return errorKit.NewfWithSkip(1, "[%s] path is empty", funcKit.GetFuncName(1))
+		}
 		return errorKit.NewfWithSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
 	}
+
 	if Exists(path) && IsDir(path) {
 		return errorKit.NewfWithSkip(1, "[%s] path(%s) exists but it is a directory", funcKit.GetFuncName(1), path)
 	}
@@ -49,8 +56,12 @@ func AssertNotExistOrIsFile(path string) error {
 */
 func AssertNotExistOrIsDir(path string) error {
 	if strKit.IsBlank(path) {
+		if path == "" {
+			return errorKit.NewfWithSkip(1, "[%s] path is empty", funcKit.GetFuncName(1))
+		}
 		return errorKit.NewfWithSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
 	}
+
 	if Exists(path) && IsFile(path) {
 		return errorKit.NewfWithSkip(1, "[%s] path(%s) exists but it is a file", funcKit.GetFuncName(1), path)
 	}
@@ -63,6 +74,9 @@ func AssertNotExistOrIsDir(path string) error {
 */
 func AssertExistAndIsFile(path string) error {
 	if strKit.IsBlank(path) {
+		if path == "" {
+			return errorKit.NewfWithSkip(1, "[%s] path is empty", funcKit.GetFuncName(1))
+		}
 		return errorKit.NewfWithSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
 	}
 
@@ -81,6 +95,9 @@ func AssertExistAndIsFile(path string) error {
 */
 func AssertExistAndIsDir(path string) error {
 	if strKit.IsBlank(path) {
+		if path == "" {
+			return errorKit.NewfWithSkip(1, "[%s] path is empty", funcKit.GetFuncName(1))
+		}
 		return errorKit.NewfWithSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
 	}
 
@@ -99,6 +116,9 @@ func AssertExistAndIsDir(path string) error {
 */
 func AssertReadableAndWritable(path string) error {
 	if strKit.IsBlank(path) {
+		if path == "" {
+			return errorKit.NewfWithSkip(1, "[%s] path is empty", funcKit.GetFuncName(1))
+		}
 		return errorKit.NewfWithSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
 	}
 
@@ -116,6 +136,9 @@ func AssertReadableAndWritable(path string) error {
 
 func AssertReadable(path string) error {
 	if strKit.IsBlank(path) {
+		if path == "" {
+			return errorKit.NewfWithSkip(1, "[%s] path is empty", funcKit.GetFuncName(1))
+		}
 		return errorKit.NewfWithSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
 	}
 
@@ -130,6 +153,9 @@ func AssertReadable(path string) error {
 
 func AssertWritable(path string) error {
 	if strKit.IsBlank(path) {
+		if path == "" {
+			return errorKit.NewfWithSkip(1, "[%s] path is empty", funcKit.GetFuncName(1))
+		}
 		return errorKit.NewfWithSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
 	}
 
