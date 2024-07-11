@@ -110,10 +110,6 @@ func AssertExistAndIsDir(path string) error {
 	return nil
 }
 
-// AssertReadableAndWritable
-/*
-前提: path 非blank && 存在.
-*/
 func AssertReadableAndWritable(path string) error {
 	if strKit.IsBlank(path) {
 		if path == "" {
