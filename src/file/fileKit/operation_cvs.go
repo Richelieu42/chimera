@@ -13,7 +13,7 @@ func ReadCsvFile(filePath string) ([][]string, error) {
 
 // WriteCsvFile 向csv文件写入内容.
 func WriteCsvFile(filePath string, records [][]string, append bool) error {
-	if err := AssertNotExistOrIsFile(filePath); err != nil {
+	if err := AssertNotExistOrIsFile(filePath, true); err != nil {
 		return err
 	}
 

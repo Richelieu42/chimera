@@ -14,7 +14,7 @@ import (
 @param qualityArgs （默认: 100; 取值范围: [1, 100]）生成jpeg图片的质量
 */
 func ToJpeg(src, dest string, qualityArgs ...int8) error {
-	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(dest, true); err != nil {
 		return err
 	}
 

@@ -31,7 +31,7 @@ func NewStdoutLogger(prefix string) *log.Logger {
 @param perm 	e.g. 0666 || 0644
 */
 func NewFileLogger(filePath, prefix string, perm os.FileMode) (*log.Logger, error) {
-	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(filePath, true); err != nil {
 		return nil, err
 	}
 

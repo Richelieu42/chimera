@@ -41,7 +41,8 @@ func NewGormDB(dsn string, poolConfig *gormKit.PoolConfig, opts ...gorm.Option) 
 		// (4) 本地SQLite数据库文件
 		path = dsn
 	}
-	if err := fileKit.AssertNotExistOrIsFile(path); err != nil {
+
+	if err := fileKit.AssertNotExistOrIsFile(path, true); err != nil {
 		return nil, err
 	}
 	if err := fileKit.MkParentDirs(path); err != nil {

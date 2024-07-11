@@ -17,7 +17,7 @@ func setClientLog(path string) error {
 		}
 	} else {
 		// (2) 输出到日志文件
-		if err := fileKit.AssertNotExistOrIsFile(path); err != nil {
+		if err := fileKit.AssertNotExistOrIsFile(path, true); err != nil {
 			return err
 		}
 		dir := pathKit.ParentDir(path)

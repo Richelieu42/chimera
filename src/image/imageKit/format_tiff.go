@@ -8,7 +8,7 @@ import (
 
 // ToTiff 将图片格式转换为".tiff".
 func ToTiff(src, dest string, opts *tiff.Options) error {
-	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(dest, true); err != nil {
 		return err
 	}
 

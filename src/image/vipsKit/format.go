@@ -9,7 +9,7 @@ import (
 var perm os.FileMode = 0644
 
 func ToJpeg(src, dest string, exportParams *vips.JpegExportParams) error {
-	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(dest, true); err != nil {
 		return err
 	}
 
@@ -31,7 +31,7 @@ func ToJpeg(src, dest string, exportParams *vips.JpegExportParams) error {
 }
 
 func ToPng(src, dest string, exportParams *vips.PngExportParams) error {
-	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(dest, true); err != nil {
 		return err
 	}
 
@@ -68,7 +68,7 @@ func ToWebpData(src string, exportParams *vips.WebpExportParams) ([]byte, error)
 }
 
 func ToWebp(src, dest string, exportParams *vips.WebpExportParams) error {
-	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(dest, true); err != nil {
 		return err
 	}
 
@@ -80,7 +80,7 @@ func ToWebp(src, dest string, exportParams *vips.WebpExportParams) error {
 }
 
 func ToTiff(src, dest string, exportParams *vips.TiffExportParams) error {
-	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(dest, true); err != nil {
 		return err
 	}
 
@@ -102,7 +102,7 @@ func ToTiff(src, dest string, exportParams *vips.TiffExportParams) error {
 }
 
 func ToGif(src, dest string, exportParams *vips.GifExportParams) error {
-	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(dest, true); err != nil {
 		return err
 	}
 
@@ -124,7 +124,7 @@ func ToGif(src, dest string, exportParams *vips.GifExportParams) error {
 }
 
 func ToAvif(src, dest string, exportParams *vips.AvifExportParams) error {
-	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(dest, true); err != nil {
 		return err
 	}
 
@@ -153,7 +153,7 @@ PS:
 (2) 常见的HEIF封装类型文件有 .heic 和 .avif。
 */
 func ToHeif(src, dest string, exportParams *vips.HeifExportParams) error {
-	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(dest, true); err != nil {
 		return err
 	}
 

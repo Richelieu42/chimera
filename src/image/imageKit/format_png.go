@@ -8,7 +8,7 @@ import (
 
 // ToPng 将图片格式转换为".png".
 func ToPng(src, dest string) error {
-	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(dest, true); err != nil {
 		return err
 	}
 

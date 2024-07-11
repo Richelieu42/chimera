@@ -19,12 +19,13 @@ func Open(path string) (*buntdb.DB, error) {
 		return OpenInMemory()
 	}
 
-	if err := fileKit.AssertNotExistOrIsFile(path); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(path, true); err != nil {
 		return nil, err
 	}
 	if err := fileKit.MkParentDirs(path); err != nil {
 		return nil, err
 	}
+
 	return buntdb.Open(path)
 }
 

@@ -24,7 +24,7 @@ var (
 	@param filePath string 存储路径（建议以".bolt"为文件后缀）
 */
 func NewBoltStore(filePath string) (*raftboltdb.BoltStore, error) {
-	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(filePath, true); err != nil {
 		return nil, err
 	}
 

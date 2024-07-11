@@ -23,7 +23,7 @@ PS:
 @param path 文件的路径（如果文件已经存在，会覆盖它）
 */
 func NewFileWithPath(filePath string, opts ...excelize.Options) (*excelize.File, error) {
-	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(filePath, true); err != nil {
 		return nil, err
 	}
 

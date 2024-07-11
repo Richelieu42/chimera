@@ -12,7 +12,7 @@ import (
 				(2) 存在且是个文件的话，会 "覆盖" 掉旧的（并不会加到该文件的最后面）.
 */
 func WriteToFile(filePath string, data []byte, perm os.FileMode) error {
-	if err := AssertNotExistOrIsFile(filePath); err != nil {
+	if err := AssertNotExistOrIsFile(filePath, true); err != nil {
 		return err
 	}
 
@@ -25,7 +25,7 @@ func WriteToFile(filePath string, data []byte, perm os.FileMode) error {
 							 	(2) 存在且是个文件的话，由 传参append 决定.
 */
 func WriteStringToFile(filePath string, content string, append bool) error {
-	if err := AssertNotExistOrIsFile(filePath); err != nil {
+	if err := AssertNotExistOrIsFile(filePath, true); err != nil {
 		return err
 	}
 

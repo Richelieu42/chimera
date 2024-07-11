@@ -60,10 +60,12 @@ func Convert(src, dest string) error {
 	if err := fileKit.AssertExistAndIsFile(src); err != nil {
 		return err
 	}
+
 	// dest
-	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(dest, true); err != nil {
 		return err
 	}
+
 	imageType, err := GetImageType(dest)
 	if err != nil {
 		return err
