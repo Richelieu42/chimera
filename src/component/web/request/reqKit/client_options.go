@@ -110,7 +110,7 @@ func WithInsecureSkipVerify(insecureSkipVerify bool) ClientOption {
 
 // WithLogger
 /*
-@param logger	(1) 可以是 *logrus.Logger 实例 || *zap.SugaredLogger 实例
+@param logger	(1) 可以是 *zap.SugaredLogger 实例 || *logrus.Logger 实例
 				(2) 可以为nil（disable log, 禁用输出）
 */
 func WithLogger(logger req.Logger) ClientOption {
