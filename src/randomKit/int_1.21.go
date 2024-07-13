@@ -1,8 +1,8 @@
+//go:build !go1.22
+
 package randomKit
 
-import (
-	"github.com/duke-git/lancet/v2/random"
-)
+import "github.com/duke-git/lancet/v2/random"
 
 var (
 	// Int 生成随机int
