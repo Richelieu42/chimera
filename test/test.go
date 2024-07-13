@@ -1,10 +1,18 @@
 package main
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/log/console"
-	"go.uber.org/zap"
+	"fmt"
+	"github.com/richelieu-yang/chimera/v3/src/randomKit"
 )
 
 func main() {
-	console.Info("hello world", zap.String("c", ""), zap.String("a", ""), zap.String("b", ""))
+	for i := range 100000 {
+		i = i
+
+		tmp := randomKit.Int(0, 10)
+		if tmp < 0 || tmp >= 10 {
+			panic(tmp)
+		}
+		fmt.Println(tmp)
+	}
 }

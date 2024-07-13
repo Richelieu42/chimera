@@ -6,6 +6,8 @@ import "math/rand/v2"
 
 // Int 生成随机int
 /*
+	TODO: 看后续 duke-git/lancet(目前v2.3.1) 会不会加条件编译.
+
 	PS:
 	(0) 参考: github.com/duke-git/lancet/v2/random RandInt
 	(1) 如果min == max，将返回 min;
