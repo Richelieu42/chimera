@@ -30,7 +30,7 @@ require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-kratos/kratos/v2 v2.7.3
 	github.com/go-oauth2/oauth2/v4 v4.5.2
-	github.com/go-pay/gopay v1.5.102
+	github.com/go-pay/gopay v1.5.103
 	github.com/go-playground/validator/v10 v10.22.0
 	github.com/go-redsync/redsync/v4 v4.13.0
 	github.com/goccy/go-json v0.10.3
@@ -83,7 +83,7 @@ require (
 	github.com/pierrec/lz4/v4 v4.1.21
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
 	github.com/playwright-community/playwright-go v0.4501.0
-	github.com/redis/go-redis/v9 v9.5.3
+	github.com/redis/go-redis/v9 v9.5.4
 	github.com/redis/rueidis v1.0.41
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/robfig/cron/v3 v3.0.1
@@ -141,7 +141,7 @@ require (
 	gorm.io/driver/postgres v1.5.9
 	gorm.io/driver/sqlite v1.5.6
 	gorm.io/driver/sqlserver v1.5.3
-	gorm.io/gorm v1.25.10
+	gorm.io/gorm v1.25.11
 	sigs.k8s.io/yaml v1.4.0
 )
 
