@@ -6,10 +6,12 @@ import (
 	"golang.org/x/exp/constraints"
 )
 
-// Round 四舍五入，保留n位小数
+// Round 四舍五入，保留n位小数.
 /*
-   e.g.
-   	fmt.Println(Round(3.14, 1))  // 3.1
+	@return 小数位可能小于传参n e.g. Round(3.1029, 2) => 3.1
+
+   	e.g.
+	fmt.Println(Round(3.14, 1))  // 3.1
    	fmt.Println(Round(3.15, 1))  // 3.2
    	fmt.Println(Round(-3.14, 1)) // -3.1
    	fmt.Println(Round(-3.15, 1)) // -3.2
@@ -23,7 +25,7 @@ func RoundToString[T constraints.Float | constraints.Integer](x T, n int) string
 	return mathutil.RoundToString(x, n)
 }
 
-// TruncRound 截断n位小数（不进行四舍五入）
+// TruncRound 截断n位小数（不进行四舍五入）.
 /*
    @param n 保留的小数位（可以 < 0，但有点奇怪!!!）
 

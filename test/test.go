@@ -2,12 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v3/src/randomKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/mathKit"
 )
 
 func main() {
-	for i := range 100 {
-		i = i
-		fmt.Println(randomKit.RandFloat(1, 2, 3))
-	}
+	fmt.Println(mathKit.Round(3.1029, 1)) // 3.1
+	fmt.Println(mathKit.Round(3.1029, 2)) // 3.1
+	fmt.Println(mathKit.Round(3.1029, 3)) // 3.103
 }
