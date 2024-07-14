@@ -9,7 +9,7 @@ import (
 
 // NewLbClient http客户端的负载均衡.
 /*
-原理: retry时，修改请求url.
+原理: 请求失败retry时，修改请求的url.
 
 @param baseClient 	(1) 可以为nil，将采用默认值
 					(2) !!!: 本函数会修改此传参
