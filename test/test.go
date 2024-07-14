@@ -11,14 +11,14 @@ import (
 	"time"
 )
 
-// LbClient http客户端的负载均衡
-type LbClient struct {
+// LoadBalancerClient http客户端的负载均衡
+type LoadBalancerClient struct {
 	client *req.Client
 
 	urls []string
 }
 
-func (lbc *LbClient) Get() (*req.Response, error) {
+func (lbc *LoadBalancerClient) Get() (*req.Response, error) {
 	/* Richelieu: 不能每次都从0开始，否则第一个url压力太大 */
 	index := randomKit.Int(0, len(lbc.urls))
 	startUrl := lbc.urls[index]
@@ -30,6 +30,7 @@ func (lbc *LbClient) Get() (*req.Response, error) {
 		index = index % len(lbc.urls)
 		retryUrl := lbc.urls[index]
 		console.Infof("retry url: %s", retryUrl)
+
 		r.SetURL(retryUrl)
 	})
 
@@ -43,7 +44,7 @@ func (lbc *LbClient) Get() (*req.Response, error) {
 @param commonRetryInterval 	重试周期
 @param commonRetryCondition	重试条件
 */
-func NewLbClient(baseClient *req.Client, urls []string, commonRetryInterval time.Duration, commonRetryCondition req.RetryConditionFunc) (*LbClient, error) {
+func NewLbClient(baseClient *req.Client, urls []string, commonRetryInterval time.Duration, commonRetryCondition req.RetryConditionFunc) (*LoadBalancerClient, error) {
 	if err := sliceKit.AssertNotEmpty(urls, "urls"); err != nil {
 		return nil, err
 	}
@@ -64,7 +65,7 @@ func NewLbClient(baseClient *req.Client, urls []string, commonRetryInterval time
 		SetCommonRetryFixedInterval(commonRetryInterval).
 		SetCommonRetryCondition(commonRetryCondition)
 
-	return &LbClient{
+	return &LoadBalancerClient{
 		client: baseClient,
 		urls:   urls,
 	}, nil
