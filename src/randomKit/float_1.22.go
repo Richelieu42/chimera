@@ -9,6 +9,8 @@ import (
 
 // RandFloat 生成随机float64数字，可以指定范围和精度.（参考: random.RandFloat）
 /*
+	TODO: 看后续 duke-git/lancet(目前v2.3.1) 会不会加条件编译.
+
 	@param precision 精度（小数点后保留几位）
 	@return [min, max)
 */
@@ -28,6 +30,8 @@ func RandFloat(min, max float64, precision int) float64 {
 
 // RandFloatSlice 生成随机float64数字切片，指定长度，范围和精度.（参考: random.RandFloats）
 /*
+	TODO: 看后续 duke-git/lancet(目前v2.3.1) 会不会加条件编译.
+
 	@param precision 精度（小数点后保留几位）
 	@return (1) 切片内的元素范围: [min, max)
 			(2) 切片内的元素不会重复
