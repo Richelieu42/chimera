@@ -1,16 +1,17 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v3/src/netKit"
 )
 
 func main() {
-	port := 80
+	port := 8002
 
 	engine := gin.Default()
-	engine.POST("/test", func(ctx *gin.Context) {
-		ctx.String(200, "Hello world!")
+	engine.Any("/test", func(ctx *gin.Context) {
+		ctx.String(200, fmt.Sprintf("[%d] Hello world!", port))
 	})
 	if err := engine.Run(netKit.JoinToHost("", port)); err != nil {
 		panic(err)
