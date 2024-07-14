@@ -2,7 +2,6 @@ package reqKit
 
 import (
 	"github.com/imroc/req/v3"
-	"github.com/richelieu-yang/chimera/v3/src/log/console"
 	"github.com/richelieu-yang/chimera/v3/src/randomKit"
 )
 
@@ -13,21 +12,50 @@ type LoadBalancerClient struct {
 	urls []string
 }
 
-func (lbc *LoadBalancerClient) Get() (*req.Response, error) {
-	/* Richelieu: 不能每次都从0开始，否则第一个url压力太大 */
+func (lbc *LoadBalancerClient) Get(queryParams map[string][]string) (*req.Response, error) {
+	/* 不能每次都从0开始，否则第一个url压力太大 */
 	index := randomKit.Int(0, len(lbc.urls))
 	startUrl := lbc.urls[index]
-	console.Infof("start url: %s", startUrl)
+	//console.Infof("start url: %s", startUrl)
 
 	r := lbc.client.Get(startUrl)
 	r.SetRetryHook(func(resp *req.Response, err error) {
 		index++
 		index = index % len(lbc.urls)
 		retryUrl := lbc.urls[index]
-		console.Infof("retry url: %s", retryUrl)
+		//console.Infof("retry url: %s", retryUrl)
 
+		/* 修改请求的url */
 		r.SetURL(retryUrl)
 	})
+
+	for key, s := range queryParams {
+		r.AddQueryParams(key, s...)
+	}
+
+	resp := r.Do()
+	return resp, resp.Err
+}
+
+func (lbc *LoadBalancerClient) Post(ContentType string, body interface{}) (*req.Response, error) {
+	/* 不能每次都从0开始，否则第一个url压力太大 */
+	index := randomKit.Int(0, len(lbc.urls))
+	startUrl := lbc.urls[index]
+	//console.Infof("start url: %s", startUrl)
+
+	r := lbc.client.Get(startUrl)
+	r.SetRetryHook(func(resp *req.Response, err error) {
+		index++
+		index = index % len(lbc.urls)
+		retryUrl := lbc.urls[index]
+		//console.Infof("retry url: %s", retryUrl)
+
+		/* 修改请求的url */
+		r.SetURL(retryUrl)
+	})
+
+	r.SetContentType(ContentTypeForm)
+	r.SetBody(body)
 
 	resp := r.Do()
 	return resp, resp.Err

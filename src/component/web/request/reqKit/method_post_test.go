@@ -34,7 +34,7 @@ func TestPost(t *testing.T) {
 	data.Set("name", "张三")
 	data.Set("age", "30")
 
-	resp := Post(context.TODO(), "http://127.0.0.1:8001/test", data.Encode())
+	resp := Post(context.TODO(), "http://127.0.0.1:8001/test", ContentTypeForm, data.Encode())
 	if resp.Err != nil {
 		panic(resp.Err)
 	}
