@@ -17,6 +17,7 @@ type LbClient struct {
 }
 
 func (c *LbClient) Get() (*req.Response, error) {
+	// Richelieu: 不能每次都从0开始，否则第一个url压力太大
 	index := randomKit.Int(0, len(c.urls))
 
 	r := c.client.Get(c.urls[index])

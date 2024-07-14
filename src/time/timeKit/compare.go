@@ -1,6 +1,25 @@
 package timeKit
 
-import "time"
+import (
+	"github.com/samber/lo"
+	"time"
+)
+
+var (
+	// Earliest 返回最小值
+	Earliest func(times ...time.Time) time.Time = lo.Earliest
+
+	// Latest 返回最大值
+	Latest func(times ...time.Time) time.Time = lo.Latest
+)
+
+func EarliestBy[T any](collection []T, iteratee func(item T) time.Time) T {
+	return lo.EarliestBy(collection, iteratee)
+}
+
+func LatestBy[T any](collection []T, iteratee func(item T) time.Time) T {
+	return lo.LatestBy(collection, iteratee)
+}
 
 // Between 检查给定的时间是否处于某一时间区间内（左右都不包含！！！）
 /*
