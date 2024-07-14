@@ -18,19 +18,19 @@ type LbClient struct {
 	urls []string
 }
 
-func (c *LbClient) Get() (*req.Response, error) {
-	// Richelieu: 不能每次都从0开始，否则第一个url压力太大
-	index := randomKit.Int(0, len(c.urls))
-	startUrl := c.urls[index]
+func (lbc *LbClient) Get() (*req.Response, error) {
+	/* Richelieu: 不能每次都从0开始，否则第一个url压力太大 */
+	index := randomKit.Int(0, len(lbc.urls))
+	startUrl := lbc.urls[index]
 	console.Infof("start url: %s", startUrl)
 
-	r := c.client.Get(startUrl)
+	r := lbc.client.Get(startUrl)
 	r.SetRetryHook(func(resp *req.Response, err error) {
 		index++
-		index = index % len(c.urls)
-		newUrl := c.urls[index]
-		console.Infof("new url: %s", newUrl)
-		r.SetURL(newUrl)
+		index = index % len(lbc.urls)
+		retryUrl := lbc.urls[index]
+		console.Infof("retry url: %s", retryUrl)
+		r.SetURL(retryUrl)
 	})
 
 	resp := r.Do()
@@ -75,6 +75,7 @@ func main() {
 		"http://127.0.0.1:8000/test",
 		"http://127.0.0.1:8001/test",
 		"http://127.0.0.1:8002/test",
+		"http://127.0.0.1:8003/test",
 	}
 
 	c := reqKit.NewClient(reqKit.WithDev())
