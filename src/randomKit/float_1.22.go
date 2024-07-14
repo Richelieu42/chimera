@@ -11,8 +11,15 @@ import (
 /*
 	TODO: 看后续 duke-git/lancet(目前v2.3.1) 会不会加条件编译.
 
-	@param precision 精度（小数点后保留几位）
+	@param precision 	(1) 精度（小数点后保留几位）
+						(2) 真正返回值的小数位，可能会 小于 传参precision
 	@return [min, max)
+
+	e.g. 返回值的小数位，可能会 小于 传参precision
+		randomKit.RandFloat(1, 2, 3) => 1.938
+		randomKit.RandFloat(1, 2, 3) => 1.36
+		randomKit.RandFloat(1, 2, 3) => 1.41
+		randomKit.RandFloat(1, 2, 3) => 1.184
 */
 func RandFloat(min, max float64, precision int) float64 {
 	if min == max {

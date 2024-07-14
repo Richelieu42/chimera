@@ -5,10 +5,17 @@ package randomKit
 import "github.com/duke-git/lancet/v2/random"
 
 var (
-	// RandFloat 生成随机float64数字，可以指定范围和精度.
+	// RandFloat 生成随机float64数字，可以指定范围和精度.（参考: random.RandFloat）
 	/*
-		@param precision 精度（小数点后保留几位）
+		@param precision 	(1) 精度（小数点后保留几位）
+							(2) 真正返回值的小数位，可能会 小于 传参precision
 		@return [min, max)
+
+		e.g. 返回值的小数位，可能会 小于 传参precision
+			randomKit.RandFloat(1, 2, 3) => 1.938
+			randomKit.RandFloat(1, 2, 3) => 1.36
+			randomKit.RandFloat(1, 2, 3) => 1.41
+			randomKit.RandFloat(1, 2, 3) => 1.184
 	*/
 	RandFloat func(min, max float64, precision int) float64 = random.RandFloat
 

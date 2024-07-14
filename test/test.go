@@ -1,11 +1,13 @@
 package main
 
-import "github.com/samber/lo"
+import (
+	"fmt"
+	"github.com/richelieu-yang/chimera/v3/src/randomKit"
+)
 
 func main() {
-	lo.Earliest()
-	lo.EarliestBy()
-
-	lo.Latest()
-	lo.LatestBy()
+	for i := range 100 {
+		i = i
+		fmt.Println(randomKit.RandFloat(1, 2, 3))
+	}
 }
