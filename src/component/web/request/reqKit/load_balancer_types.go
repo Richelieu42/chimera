@@ -37,7 +37,7 @@ func (lbc *LoadBalancerClient) Get(queryParams map[string][]string) (*req.Respon
 	return resp, resp.Err
 }
 
-func (lbc *LoadBalancerClient) Post(ContentType string, body interface{}) (*req.Response, error) {
+func (lbc *LoadBalancerClient) Post(contentType string, body interface{}) (*req.Response, error) {
 	/* 不能每次都从0开始，否则第一个url压力太大 */
 	index := randomKit.Int(0, len(lbc.urls))
 	startUrl := lbc.urls[index]
@@ -54,7 +54,10 @@ func (lbc *LoadBalancerClient) Post(ContentType string, body interface{}) (*req.
 		r.SetURL(retryUrl)
 	})
 
-	r.SetContentType(ContentTypeForm)
+	if contentType == "" {
+		contentType = ContentTypeJson
+	}
+	r.SetContentType(contentType)
 	r.SetBody(body)
 
 	resp := r.Do()
