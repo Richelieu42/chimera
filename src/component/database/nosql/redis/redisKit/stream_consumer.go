@@ -17,6 +17,11 @@ func (client *Client) XReadStreams(ctx context.Context, streams ...string) ([]re
 
 // XReadGroup [消费者] 读取消费者组中的消息.("xreadgroup", "group")
 /*
+PS:
+(1) 传参stream 不存在，
+(2) 传参stream 存在但类型不是 stream，
+(3) 传参group 不存在.
+
 XReadGroupArgs结构体:
 	Group 		消费组名
 	Consumer	消费者名

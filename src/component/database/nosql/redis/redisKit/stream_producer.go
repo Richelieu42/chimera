@@ -7,6 +7,10 @@ import (
 
 // XAdd [生产者] 添加消息到末尾（如果指定的队列不存在，则创建一个队列）.
 /*
+PS:
+(1) 传参stream 不存在，
+(2) 传参stream 存在但类型不是 stream，
+
 语法: XADD key ID field value [field value ...]
 key:			队列名称，如果不存在就创建
 ID:				消息 id，我们使用 * 表示由 redis 生成，可以自定义，但是要自己保证递增性。
