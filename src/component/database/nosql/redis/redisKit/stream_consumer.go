@@ -23,6 +23,16 @@ XReadGroupArgs结构体:
 	Count		读取数量
 	Block		阻塞时间
 	Streams		要读取的所有Stream（!!!: (1) 数量应当>=2; (2) 最后一个元素应该是 ">"）
+
+e.g.
+	entries, err := impl.client.XReadGroup(context.Background(), &redis.XReadGroupArgs{
+		Consumer: consumer,
+		Group:    group,
+		Streams:  []string{stream, ">"},
+		Count:    10,
+		//Block:    0,
+		//NoAck:    false,
+	})
 */
 func (client *Client) XReadGroup(ctx context.Context, a *redis.XReadGroupArgs) ([]redis.XStream, error) {
 	cmd := client.universalClient.XReadGroup(ctx, a)

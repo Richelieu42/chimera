@@ -16,6 +16,15 @@ field value:	记录
 			(2) Stream字段对应: Redis中的key（stream类型）
 			(3) 可选的ID字段，为 ""（默认） 则由Redis生成
 @return 	id: 消息的id
+
+e.g.
+	_, err := impl.client.XAdd(context.Background(), &redis.XAddArgs{
+		Stream: topic,
+		Values: map[string]interface{}{
+			"tag":  tag,
+			"data": data,
+		},
+	})
 */
 func (client *Client) XAdd(ctx context.Context, a *redis.XAddArgs) (id string, err error) {
 	cmd := client.universalClient.XAdd(ctx, a)
