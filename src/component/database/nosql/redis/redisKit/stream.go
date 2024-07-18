@@ -45,13 +45,3 @@ func (client *Client) XDel(ctx context.Context, stream string, ids ...string) (i
 	cmd := client.universalClient.XDel(ctx, stream, ids...)
 	return cmd.Result()
 }
-
-func (client *Client) XRead(ctx context.Context, a *redis.XReadArgs) ([]redis.XStream, error) {
-	cmd := client.universalClient.XRead(ctx, a)
-	return cmd.Result()
-}
-
-func (client *Client) XReadStreams(ctx context.Context, streams ...string) ([]redis.XStream, error) {
-	cmd := client.universalClient.XReadStreams(ctx, streams...)
-	return cmd.Result()
-}

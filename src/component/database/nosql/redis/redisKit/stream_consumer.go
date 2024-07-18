@@ -5,6 +5,16 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
+func (client *Client) XRead(ctx context.Context, a *redis.XReadArgs) ([]redis.XStream, error) {
+	cmd := client.universalClient.XRead(ctx, a)
+	return cmd.Result()
+}
+
+func (client *Client) XReadStreams(ctx context.Context, streams ...string) ([]redis.XStream, error) {
+	cmd := client.universalClient.XReadStreams(ctx, streams...)
+	return cmd.Result()
+}
+
 // XReadGroup [消费者] 读取消费者组中的消息.("xreadgroup", "group")
 /*
 XReadGroupArgs结构体:
