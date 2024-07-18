@@ -3,6 +3,7 @@ package redisKit
 import (
 	"context"
 	"fmt"
+	"github.com/redis/go-redis/v9"
 	"github.com/richelieu-yang/chimera/v3/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v3/src/consts"
 	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
@@ -40,16 +41,24 @@ func TestSetUp(t *testing.T) {
 	{
 		err := client.XGroupCreateMkStream(context.TODO(), "stream:test", "gg1", "$")
 		if err != nil {
-			console.Errorf("%T %s", err, err.Error())
+			if IsConsumerGroupNameAlreadyExistError(err) {
+				console.Warnf("consumer group already exists")
+			} else {
+				console.Fatalf("error: %T %s", err, err.Error())
+			}
 		} else {
 			console.Info("OK")
 		}
 
-		err = client.XGroupCreateMkStream(context.TODO(), "stream:test", "gg2", "$")
+		id, err := client.XAdd(context.Background(), &redis.XAddArgs{
+			Stream: "ccccccc",
+			Values: map[string]interface{}{
+				"a": 1,
+			},
+		})
 		if err != nil {
-			console.Errorf("%T %s", err, err.Error())
-		} else {
-			console.Info("OK")
+			console.Fatal(err.Error())
 		}
+		console.Infof("id: %s", id)
 	}
 }
