@@ -82,14 +82,14 @@ require (
 	github.com/pelletier/go-toml/v2 v2.2.2
 	github.com/pierrec/lz4/v4 v4.1.21
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
-	github.com/playwright-community/playwright-go v0.4501.0
+	github.com/playwright-community/playwright-go v0.4501.1
 	github.com/redis/go-redis/v9 v9.5.4
 	github.com/redis/rueidis v1.0.41
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/rs/xid v1.5.0
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d
-	github.com/samber/lo v1.45.0
+	github.com/samber/lo v1.46.0
 	github.com/shirou/gopsutil/v3 v3.24.5
 	github.com/shopspring/decimal v1.4.0
 	github.com/sirupsen/logrus v1.9.3
@@ -120,9 +120,9 @@ require (
 	go.uber.org/zap v1.27.0
 	golang.org/x/arch v0.8.0
 	golang.org/x/crypto v0.25.0
-	golang.org/x/exp v0.0.0-20240707233637-46b078467d37
+	golang.org/x/exp v0.0.0-20240716175740-e3f259677ff7
 	golang.org/x/image v0.18.0
-	golang.org/x/mobile v0.0.0-20240707233753-b765e5d5218f
+	golang.org/x/mobile v0.0.0-20240716161057-1ad2df20a8b6
 	golang.org/x/mod v0.19.0
 	golang.org/x/net v0.27.0
 	golang.org/x/oauth2 v0.21.0
