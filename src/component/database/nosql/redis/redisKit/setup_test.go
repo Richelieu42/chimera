@@ -38,16 +38,16 @@ func TestSetUp(t *testing.T) {
 	client = client
 
 	{
-		err := client.XGroupCreate(context.TODO(), "stream:test", "gg", "$")
+		err := client.XGroupCreateMkStream(context.TODO(), "stream:test", "gg1", "$")
 		if err != nil {
-			console.Error(err.Error())
+			console.Errorf("%T %s", err, err.Error())
 		} else {
 			console.Info("OK")
 		}
 
-		err = client.XGroupCreate(context.TODO(), "stream:test", "gg", "$")
+		err = client.XGroupCreateMkStream(context.TODO(), "stream:test", "gg2", "$")
 		if err != nil {
-			console.Error(err.Error())
+			console.Errorf("%T %s", err, err.Error())
 		} else {
 			console.Info("OK")
 		}
