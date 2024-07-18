@@ -21,6 +21,7 @@ func (client *Client) IsStreamSupported(ctx context.Context) error {
 	stream := fmt.Sprintf("%s:%s:%s:%s", consts.ProjectName, "test", "redis-stream", id)
 
 	defer func() {
+		// 删除生成的测试用 stream
 		_, _ = client.Del(ctx, stream)
 	}()
 
