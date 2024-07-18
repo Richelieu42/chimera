@@ -5,7 +5,7 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-// XAdd [生产者] 添加消息到末尾（如果指定的队列不存在，则创建一个队列）.
+// XAdd [生产者] 添加消息到末尾.
 /*
 PS:
 (1) 传参stream 不存在，会自动创建;
