@@ -14,7 +14,7 @@ require (
 	github.com/coocood/freecache v1.2.4
 	github.com/davidbyttow/govips/v2 v2.15.0
 	github.com/deckarep/golang-set/v2 v2.6.0
-	github.com/duke-git/lancet/v2 v2.3.1
+	github.com/duke-git/lancet/v2 v2.3.2
 	github.com/emersion/go-imap v1.2.1
 	github.com/emersion/go-imap-id v0.0.0-20190926060100-f94a56b9ecde
 	github.com/emersion/go-message v0.18.1
