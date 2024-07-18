@@ -12,7 +12,7 @@ key:			队列名称，如果不存在就创建
 ID:				消息 id，我们使用 * 表示由 redis 生成，可以自定义，但是要自己保证递增性。
 field value:	记录
 
-@param a 	(1) 必需字段: Stream、Values
+@param a 	(1) !!!: 必需的字段: Stream、Values
 			(2) Stream字段对应: Redis中的key（stream类型）
 			(3) 可选的ID字段，为 ""（默认） 则由Redis生成
 @return 	id: 消息的id
