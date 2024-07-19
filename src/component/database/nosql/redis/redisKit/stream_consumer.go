@@ -18,9 +18,12 @@ func (client *Client) XReadStreams(ctx context.Context, streams ...string) ([]re
 // XReadGroup [消费者] 读取消费者组中的消息.("xreadgroup", "group")
 /*
 PS:
-(1) 传参stream 不存在，
-(2) 传参stream 存在但类型不是 stream，
-(3) 传参group 不存在.
+(1) 传参stream 不存在（包括情况: 读到一半stream被人手动删了），返回error:
+		No such key '???' or consumer group '???' in XREADGROUP with GROUP option
+(2) 传参group 不存在，返回error:
+		No such key '???' or consumer group '???' in XREADGROUP with GROUP option
+(3) 如果没有新消息，会"阻塞".
+(4) 推荐使用场景: 写个死循环（e.g.for{}），不停调用 XReadGroup，且中途无需sleep一会.
 
 XReadGroupArgs结构体:
 	Group 		消费组名

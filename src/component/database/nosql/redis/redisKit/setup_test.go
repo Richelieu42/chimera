@@ -38,27 +38,26 @@ func TestSetUp(t *testing.T) {
 	}
 	client = client
 
+	console.Info("---")
 	{
-		err := client.XGroupCreateMkStream(context.TODO(), "stream:test", "gg1", "$")
-		if err != nil {
-			if IsConsumerGroupNameAlreadyExistError(err) {
-				console.Warnf("consumer group already exists")
-			} else {
-				console.Fatalf("error: %T %s", err, err.Error())
+		if err := client.XGroupCreateMkStream(context.Background(), "stream:test", "group", "$"); err != nil {
+			if !IsConsumerGroupNameAlreadyExistError(err) {
+				console.Fatal(err.Error())
 			}
-		} else {
-			console.Info("OK")
 		}
 
-		id, err := client.XAdd(context.Background(), &redis.XAddArgs{
-			Stream: "ccccccc",
-			Values: map[string]interface{}{
-				"a": 1,
-			},
+		entries, err := client.XReadGroup(context.Background(), &redis.XReadGroupArgs{
+			Streams:  []string{"stream:test", ">"},
+			Group:    "group",
+			Consumer: "consumer",
+			Count:    10,
+			//Block:    0,
+			//NoAck:    false,
 		})
 		if err != nil {
-			console.Fatal(err.Error())
+			console.Error(err.Error())
+		} else {
+			console.Infof("length: %d", len(entries))
 		}
-		console.Infof("id: %s", id)
 	}
 }
