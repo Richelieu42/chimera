@@ -17,7 +17,7 @@ ID:				消息 id，我们使用 * 表示由 redis 生成，可以自定义，但
 field value:	记录
 
 @param a 	(1) 必需的字段: Stream、Values
-				推荐的字段: MaxLen、Approx
+				推荐的字段: MaxLen（防止消息堆积）、Approx（可选）
 			(2) Stream字段对应: Redis中的key（stream类型）
 			(3) 可选的ID字段，为 ""（默认） 则由Redis生成
 @return 	id: 消息的id
