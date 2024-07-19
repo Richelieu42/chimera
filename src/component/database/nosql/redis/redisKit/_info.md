@@ -55,6 +55,10 @@ https://github.com/redis/go-redis/issues/607
 
 ### 删除消息（否则Redis占用的内存会越来越大）
 
+- Xadd 时传参 MaxLen、Approx（可选）
+
+- Xtrim 命令
+
 ![_stream.png](_stream.png)
 
 ## !!!: TongRDS的bug
