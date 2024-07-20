@@ -7,6 +7,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v3/src/consts"
 	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
+	"github.com/richelieu-yang/chimera/v3/src/idKit"
 	"github.com/richelieu-yang/chimera/v3/src/log/console"
 	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
 	"testing"
@@ -48,7 +49,7 @@ func TestSetUp(t *testing.T) {
 
 		//for i := range 1000 {
 		//	id, err := client.XAdd(context.Background(), &redis.XAddArgs{
-		//		MaxLen: 100,
+		//		//MaxLen: 100,
 		//		Approx: true,
 		//
 		//		Stream: "stream:test",
@@ -63,18 +64,33 @@ func TestSetUp(t *testing.T) {
 		//	}
 		//}
 
-		entries, err := client.XReadGroup(context.Background(), &redis.XReadGroupArgs{
-			Streams:  []string{"stream:test", ">"},
-			Group:    "group111",
-			Consumer: "consumer",
-			Count:    10,
-			//Block:    0,
-			//NoAck:    false,
+		id, err := client.XAdd(context.Background(), &redis.XAddArgs{
+			MaxLen: 100,
+			Approx: true,
+
+			Stream: "stream:test",
+			Values: map[string]interface{}{
+				"id": idKit.NewXid(),
+			},
 		})
 		if err != nil {
-			console.Errorf("%T %s", err, err.Error())
+			console.Errorf("i: %d id: %s", 0, err.Error())
 		} else {
-			console.Infof("length: %d", len(entries))
+			console.Infof("i: %d id: %s", 0, id)
 		}
+
+		//entries, err := client.XReadGroup(context.Background(), &redis.XReadGroupArgs{
+		//	Streams:  []string{"stream:test", ">"},
+		//	Group:    "group111",
+		//	Consumer: "consumer",
+		//	Count:    10,
+		//	//Block:    0,
+		//	//NoAck:    false,
+		//})
+		//if err != nil {
+		//	console.Errorf("%T %s", err, err.Error())
+		//} else {
+		//	console.Infof("length: %d", len(entries))
+		//}
 	}
 }

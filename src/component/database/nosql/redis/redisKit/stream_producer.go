@@ -10,6 +10,8 @@ import (
 PS:
 (1) 传参stream 不存在，会自动创建;
 (2) 传参stream 存在但类型不是 stream，会返回error: WRONGTYPE Operation against a key holding the wrong kind of value
+(3) e.g. 指定stream中已经有1w条消息
+	此时继续调用 XAdd 且 MaxLen == 100，成功执行后，该stream中只有100条消息（如果 Approx 为true，stream的实际长度可能略高于你设置的值）.
 
 语法: XADD key ID field value [field value ...]
 key:			队列名称，如果不存在就创建
@@ -17,7 +19,7 @@ ID:				消息 id，我们使用 * 表示由 redis 生成，可以自定义，但
 field value:	记录
 
 @param a 	(1) 必需的字段: Stream、Values
-				推荐的字段: MaxLen（防止消息堆积）、Approx（可选）
+				推荐的字段: MaxLen（防止消息堆积）、Approx（可选; true: stream的实际长度可能略高于你设置的值）
 			(2) Stream字段对应: Redis中的key（stream类型）
 			(3) 可选的ID字段，为 ""（默认） 则由Redis生成
 @return 	id: 消息的id
