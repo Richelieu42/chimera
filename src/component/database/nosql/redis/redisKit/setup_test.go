@@ -41,7 +41,9 @@ func TestSetUp(t *testing.T) {
 	console.Info("---")
 	{
 		if err := client.XGroupCreateMkStream(context.Background(), "stream:test", "group", "$"); err != nil {
-			if !IsConsumerGroupNameAlreadyExistError(err) {
+			if IsConsumerGroupNameAlreadyExistError(err) {
+				console.Info("Group already exists!")
+			} else {
 				console.Fatal(err.Error())
 			}
 		}
@@ -87,9 +89,14 @@ func TestSetUp(t *testing.T) {
 			//NoAck:    false,
 		})
 		if err != nil {
-			console.Errorf("%T %s", err, err.Error())
+			if IsNoStreamOrNoGroupError(err) {
+				console.Error("no stream or no group")
+			} else {
+				console.Errorf("%T %s", err, err.Error())
+			}
 		} else {
 			console.Infof("length: %d", len(entries))
 		}
+
 	}
 }
