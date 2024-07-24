@@ -1,6 +1,6 @@
 ## 注意点
 
-- 如果涉及 http.Request.WithContext ，不要使用 gorilla/context库!  
+- 如果涉及 http.Request.WithContext ，不要使用 gorilla/context库 !!!  
   does not play well with the shallow copying of the request that http.Request.WithContext (added to net/http Go 1.7
   onwards) performs
 
