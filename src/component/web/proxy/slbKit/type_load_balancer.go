@@ -1,4 +1,4 @@
-package lbKit
+package slbKit
 
 type LoadBalancer struct {
 }

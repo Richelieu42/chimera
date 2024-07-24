@@ -1,4 +1,4 @@
-package lbKit
+package slbKit
 
 func NewLoadBalancer() *LoadBalancer {
 	// TODO:
