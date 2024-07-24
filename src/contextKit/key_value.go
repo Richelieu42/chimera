@@ -4,6 +4,10 @@ import "context"
 
 // WithKeyValue 在现有的上下文 (context) 中存储 1个 键值对，并返回一个新的上下文.
 /*
+PS:
+(1) 同一个Context实例，多次调用此方法 且 key相同，则覆盖之前的值.
+(2) 对于同一个Context实例，不推荐调用太多次此方法，因为: 每调用一次就是嵌套一层，会嵌套太多层.
+
 @param ctx 不能为nil
 */
 func WithKeyValue[K comparable, V any](ctx context.Context, k K, v V) context.Context {
