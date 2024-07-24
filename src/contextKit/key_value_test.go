@@ -45,7 +45,7 @@ func TestAttachKeyValue1(t *testing.T) {
 	engine := gin.Default()
 	engine.Any("/test", func(ctx *gin.Context) {
 		tmpCtx := AttachKeyValue(ctx.Request.Context(), "key", "a")
-		ctx.Request = ctx.Request.WithContext(tmpCtx) // 此处必须覆盖 request!!!
+		ctx.Request = ctx.Request.WithContext(tmpCtx) // Richelieu: 此处必须覆盖 request!!!
 		/* 能拿到 */
 		console.Info("[8001]", zap.Any("value", ctx.Request.Context().Value("key")))
 
