@@ -49,7 +49,7 @@ func TestAttachKeyValue1(t *testing.T) {
 		/* 能拿到 */
 		console.Info("[8001]", zap.Any("value", ctx.Request.Context().Value("key")))
 
-		if err := forwardKit.ForwardToHostComplexly(ctx.Writer, ctx.Request, "127.0.0.1:8002", nil, nil, nil); err != nil {
+		if err := forwardKit.ForwardToHost(ctx.Writer, ctx.Request, "127.0.0.1:8002", nil); err != nil {
 			console.Error("Fail to forward.", zap.String("error", err.Error()))
 			ctx.String(502, err.Error())
 			return
