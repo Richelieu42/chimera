@@ -10,20 +10,21 @@ import (
 	"net/url"
 )
 
-// WrapToReverseProxy 封装: *httputil.ReverseProxy => *forwardKit.ReverseProxy
+// WrapReverseProxy 封装: *httputil.ReverseProxy => *forwardKit.ReverseProxy
 /*
-PS: 后续外部不应该修改 ReverseProxy 实例的字段，只允许调用 Forward 方法.
+PS: 封装结束后，后续不应该修改 ReverseProxy 实例的字段，只允许调用 Forward 方法.
 
 @param reverseProxy 不能为nil
 */
-func WrapToReverseProxy(reverseProxy *httputil.ReverseProxy) (*ReverseProxy, error) {
-	if err := interfaceKit.AssertNotNil(reverseProxy, "reverseProxy"); err != nil {
-		return nil, err
+func WrapReverseProxy(reverseProxy *httputil.ReverseProxy) (wrapper *ReverseProxy, err error) {
+	if err = interfaceKit.AssertNotNil(reverseProxy, "reverseProxy"); err != nil {
+		return
 	}
 
-	return &ReverseProxy{
+	wrapper = &ReverseProxy{
 		ReverseProxy: *reverseProxy,
-	}, nil
+	}
+	return
 }
 
 // NewSingleHostReverseProxyWithUrl
@@ -60,7 +61,7 @@ func NewSingleHostReverseProxy(u *url.URL, errLog *log.Logger) (*ReverseProxy, e
 	tmp := httputil.NewSingleHostReverseProxy(u)
 	tmp.ErrorLog = errLog
 
-	return WrapToReverseProxy(tmp)
+	return WrapReverseProxy(tmp)
 }
 
 // NewReverseProxy
@@ -87,5 +88,5 @@ func NewReverseProxy(director func(*http.Request), transport http.RoundTripper, 
 		ErrorLog:     errLog,
 		ErrorHandler: errHandler,
 	}
-	return WrapToReverseProxy(tmp)
+	return WrapReverseProxy(tmp)
 }
