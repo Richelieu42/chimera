@@ -4,65 +4,16 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
 	"net/http"
 	"net/url"
-	"strings"
 )
 
-// NewSingleHostDirector
-/*
-TODO: 参考了 httputil.NewSingleHostReverseProxy，后续要实时更新（Golang版本升级）.
-*/
-func NewSingleHostDirector(target *url.URL) (director func(req *http.Request), err error) {
-	if err = interfaceKit.AssertNotNil(target, "target"); err != nil {
-		return
+func NewSingleHostDirector(u *url.URL) (func(r *http.Request), error) {
+	if err := interfaceKit.AssertNotNil(u, "u"); err != nil {
+		return nil, err
 	}
 
-	director = func(req *http.Request) {
-		rewriteRequestURL(req, target)
+	rp, err := NewSingleHostReverseProxy(u)
+	if err != nil {
+		return nil, err
 	}
-	return
-}
-
-func rewriteRequestURL(req *http.Request, target *url.URL) {
-	targetQuery := target.RawQuery
-	req.URL.Scheme = target.Scheme
-	req.URL.Host = target.Host
-	req.URL.Path, req.URL.RawPath = joinURLPath(target, req.URL)
-	if targetQuery == "" || req.URL.RawQuery == "" {
-		req.URL.RawQuery = targetQuery + req.URL.RawQuery
-	} else {
-		req.URL.RawQuery = targetQuery + "&" + req.URL.RawQuery
-	}
-}
-
-func joinURLPath(a, b *url.URL) (path, rawpath string) {
-	if a.RawPath == "" && b.RawPath == "" {
-		return singleJoiningSlash(a.Path, b.Path), ""
-	}
-	// Same as singleJoiningSlash, but uses EscapedPath to determine
-	// whether a slash should be added
-	apath := a.EscapedPath()
-	bpath := b.EscapedPath()
-
-	aslash := strings.HasSuffix(apath, "/")
-	bslash := strings.HasPrefix(bpath, "/")
-
-	switch {
-	case aslash && bslash:
-		return a.Path + b.Path[1:], apath + bpath[1:]
-	case !aslash && !bslash:
-		return a.Path + "/" + b.Path, apath + "/" + bpath
-	}
-	return a.Path + b.Path, apath + bpath
-}
-
-func singleJoiningSlash(a, b string) string {
-	aslash := strings.HasSuffix(a, "/")
-	bslash := strings.HasPrefix(b, "/")
-	switch {
-	case aslash && bslash:
-		return a + b[1:]
-	case !aslash && !bslash:
-		return a + "/" + b
-	}
-	return a + b
+	return rp.Director, nil
 }
