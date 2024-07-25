@@ -3,6 +3,7 @@ package slbKit
 import (
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"net/http/httputil"
+	"net/url"
 )
 
 type Backend struct {
@@ -10,6 +11,7 @@ type Backend struct {
 
 	// Alive 节点是否可用？
 	Alive        bool
+	URL          *url.URL
 	ReverseProxy *httputil.ReverseProxy
 }
 
