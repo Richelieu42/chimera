@@ -10,7 +10,12 @@ import (
 	"net/url"
 )
 
-// WrapToReverseProxy *httputil.ReverseProxy => *forwardKit.ReverseProxy
+// WrapToReverseProxy 封装: *httputil.ReverseProxy => *forwardKit.ReverseProxy
+/*
+PS: 后续外部不应该修改 ReverseProxy 实例的字段，只允许调用 Forward 方法.
+
+@param reverseProxy 不能为nil
+*/
 func WrapToReverseProxy(reverseProxy *httputil.ReverseProxy) (*ReverseProxy, error) {
 	if err := interfaceKit.AssertNotNil(reverseProxy, "reverseProxy"); err != nil {
 		return nil, err
