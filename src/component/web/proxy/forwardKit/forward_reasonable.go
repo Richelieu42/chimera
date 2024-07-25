@@ -7,7 +7,7 @@ import (
 	"net/http/httputil"
 )
 
-// ForwardByReverseProxy !!!: 不要直接使用 httputil.ReverseProxy 的 ServeHTTP 方法.
+// ForwardByReverseProxy !!!: 不要直接使用 httputil.ReverseProxy 的 ServeHTTP 方法，因为代理失败时，要从 ErrorHandler字段 中获取.
 /*
 @param reverseProxy 不能为nil
 */
