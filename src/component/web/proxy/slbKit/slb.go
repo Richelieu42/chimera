@@ -12,6 +12,6 @@ func NewLoadBalancer() *LoadBalancer {
 
 		backends: nil,
 
-		current: atomicKit.NewUint64(-1),
+		current: atomicKit.NewInt64(-1),
 	}
 }
