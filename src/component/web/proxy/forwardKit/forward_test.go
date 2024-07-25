@@ -4,14 +4,18 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/console"
 	"github.com/richelieu-yang/chimera/v3/src/log/logKit"
 	"github.com/richelieu-yang/chimera/v3/src/netKit"
 	"github.com/sirupsen/logrus"
+	"go.uber.org/zap"
 	"net/http"
 	"testing"
 )
 
 /*
+证明: 代理失败（目标服务不存在）会返回error.
+
 访问url: http://127.0.0.1/test
 效果: 	将 http://127.0.0.1/test 转发给 http://127.0.0.1:8000/test
 */
@@ -23,11 +27,11 @@ func TestForwardToUrl(t *testing.T) {
 		errLog := logKit.NewStdoutLogger("")
 		err := ForwardToSingleHost(ctx.Writer, ctx.Request, url, errLog)
 		if err != nil {
-			logrus.WithError(err).Info("Fail to forward.")
-			ctx.String(500, err.Error())
+			console.Error("Fail to forward.", zap.String("error", err.Error()))
+			ctx.String(http.StatusBadGateway /*502*/, err.Error())
 			return
 		}
-		logrus.Info("Manager to forward.")
+		console.Info("Manager to forward.")
 		return
 	})
 	if err := engine.Run(":80"); err != nil {

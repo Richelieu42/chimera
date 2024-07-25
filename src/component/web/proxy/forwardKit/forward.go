@@ -51,7 +51,7 @@ func ForwardToHostComplexly(w http.ResponseWriter, r *http.Request, host string,
 		return err
 	}
 
-	rp, err := NewReverseProxy(director, transport, modifyResponse, errLog, nil)
+	rp, err := NewCustomReverseProxy(director, transport, modifyResponse, errLog, nil)
 	if err != nil {
 		return err
 	}

@@ -44,7 +44,7 @@ func NewSingleHostReverseProxy(u *url.URL) (rp *httputil.ReverseProxy, err error
 	return
 }
 
-// NewReverseProxy
+// NewCustomReverseProxy 新建自定义的 *httputil.ReverseProxy 实例.
 /*
 PS: 对于 httputil.ReverseProxy 结构体，Rewrite 和 Director 只能有一个非nil.
 
@@ -54,13 +54,14 @@ PS: 对于 httputil.ReverseProxy 结构体，Rewrite 和 Director 只能有一�
 @param errLog			可以为nil（即无输出，但不推荐这么干）
 @param errHandler		可以为nil
 */
-func NewReverseProxy(director func(*http.Request), transport http.RoundTripper, modifyResponse func(*http.Response) error, errLog *log.Logger, errHandler func(http.ResponseWriter, *http.Request, error)) (*httputil.ReverseProxy, error) {
+func NewCustomReverseProxy(director func(*http.Request), transport http.RoundTripper, modifyResponse func(*http.Response) error, errLog *log.Logger, errHandler func(http.ResponseWriter, *http.Request, error)) (*httputil.ReverseProxy, error) {
 	if err := interfaceKit.AssertNotNil(director, "director"); err != nil {
 		return nil, err
 	}
 
 	rp := &httputil.ReverseProxy{
-		Director:       director,
+		Director: director,
+
 		Transport:      transport,
 		ModifyResponse: modifyResponse,
 		//BufferPool:     nil,
