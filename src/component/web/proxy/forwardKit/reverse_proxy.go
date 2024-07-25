@@ -10,18 +10,18 @@ import (
 	"net/url"
 )
 
-// WrapReverseProxy 封装: *httputil.ReverseProxy => *forwardKit.ReverseProxy
+// WrapReverseProxy 封装: *httputil.ReverseProxy => *forwardKit.ReverseProxyWrapper
 /*
-PS: 封装结束后，后续不应该修改 ReverseProxy 实例的字段，只允许调用 Forward 方法.
+PS: 封装结束后，后续不应该修改 ReverseProxyWrapper 实例的字段，只允许调用 Forward 方法.
 
 @param reverseProxy 不能为nil
 */
-func WrapReverseProxy(reverseProxy *httputil.ReverseProxy) (wrapper *ReverseProxy, err error) {
+func WrapReverseProxy(reverseProxy *httputil.ReverseProxy) (wrapper *ReverseProxyWrapper, err error) {
 	if err = interfaceKit.AssertNotNil(reverseProxy, "reverseProxy"); err != nil {
 		return
 	}
 
-	wrapper = &ReverseProxy{
+	wrapper = &ReverseProxyWrapper{
 		ReverseProxy: *reverseProxy,
 	}
 	return
@@ -35,7 +35,7 @@ func WrapReverseProxy(reverseProxy *httputil.ReverseProxy) (wrapper *ReverseProx
 @param 	errLog 		可以为nil（即无输出，但不推荐这么干）
 @return !!!: Transport、ModifyResponse、ErrorHandler 等字段为nil
 */
-func NewSingleHostReverseProxyWithUrl(urlStr string, errLog *log.Logger) (*ReverseProxy, error) {
+func NewSingleHostReverseProxyWithUrl(urlStr string, errLog *log.Logger) (*ReverseProxyWrapper, error) {
 	if err := strKit.AssertNotEmpty(urlStr, "urlStr"); err != nil {
 		return nil, err
 	}
@@ -53,7 +53,7 @@ func NewSingleHostReverseProxyWithUrl(urlStr string, errLog *log.Logger) (*Rever
 @param errLog 可以为nil（即无输出，但不推荐这么干）
 @return !!!: Transport、ModifyResponse、ErrorHandler 等字段为nil
 */
-func NewSingleHostReverseProxy(u *url.URL, errLog *log.Logger) (*ReverseProxy, error) {
+func NewSingleHostReverseProxy(u *url.URL, errLog *log.Logger) (*ReverseProxyWrapper, error) {
 	if err := interfaceKit.AssertNotNil(u, "u"); err != nil {
 		return nil, err
 	}
@@ -74,7 +74,7 @@ PS: 对于 httputil.ReverseProxy 结构体，Rewrite 和 Director 只能有一�
 @param errLog			可以为nil（即无输出，但不推荐这么干）
 @param errHandler		可以为nil
 */
-func NewReverseProxy(director func(*http.Request), transport http.RoundTripper, modifyResponse func(*http.Response) error, errLog *log.Logger, errHandler func(http.ResponseWriter, *http.Request, error)) (*ReverseProxy, error) {
+func NewReverseProxy(director func(*http.Request), transport http.RoundTripper, modifyResponse func(*http.Response) error, errLog *log.Logger, errHandler func(http.ResponseWriter, *http.Request, error)) (*ReverseProxyWrapper, error) {
 	if err := interfaceKit.AssertNotNil(director, "director"); err != nil {
 		return nil, err
 	}
