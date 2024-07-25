@@ -32,16 +32,16 @@ func TestNewSingleHostReverseProxyWithUrl(t *testing.T) {
 	port := 80
 	engine := gin.Default()
 	engine.Any("/test", func(ctx *gin.Context) {
-		errLog := logKit.NewStdoutLogger("")
-		rp, err := NewSingleHostReverseProxyWithUrl("http://127.0.0.1:8000", errLog)
+		rp, err := NewSingleHostReverseProxyWithUrl("http://127.0.0.1:8000")
 		if err != nil {
 			ctx.String(500, err.Error())
 			return
 		}
+		rp.ErrorLog = logKit.NewStdoutLogger("")
 		// (1) Richelieu: 此处应该为 true
 		fmt.Printf("rp.ErrorHandler == nil? [%t]\n", rp.ErrorHandler == nil)
 
-		if err := rp.Forward(ctx.Writer, ctx.Request); err != nil {
+		if err := ForwardByReverseProxy(ctx.Writer, ctx.Request, rp); err != nil {
 			// (2.1) Richelieu: 此处应该为 true
 			fmt.Printf("rp.ErrorHandler == nil? [%t]\n", rp.ErrorHandler == nil)
 			ctx.String(500, err.Error())

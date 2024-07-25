@@ -15,12 +15,13 @@ PS: 代理请求失败时，建议返回状态码502(http.StatusBadGateway, 网�
 					e.g.1 	"http://127.0.0.1:8000/a": 将请求转发给"http://127.0.0.1:8000"，请求路由的最前面加上"/a"
 */
 func ForwardToSingleHost(w http.ResponseWriter, r *http.Request, url string, errLog *log.Logger) (err error) {
-	rp, err := NewSingleHostReverseProxyWithUrl(url, errLog)
+	rp, err := NewSingleHostReverseProxyWithUrl(url)
 	if err != nil {
 		return
 	}
+	rp.ErrorLog = errLog
 
-	return rp.Forward(w, r)
+	return ForwardByReverseProxy(w, r, rp)
 }
 
 // ForwardToHost 代理请求.
@@ -55,5 +56,5 @@ func ForwardToHostComplexly(w http.ResponseWriter, r *http.Request, host string,
 		return err
 	}
 
-	return rp.Forward(w, r)
+	return ForwardByReverseProxy(w, r, rp)
 }

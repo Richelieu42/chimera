@@ -8,10 +8,14 @@ import (
 )
 
 // ForwardByReverseProxy !!!: 不要直接使用 httputil.ReverseProxy 的 ServeHTTP 方法.
-func ForwardByReverseProxy(reverseProxy *httputil.ReverseProxy, w http.ResponseWriter, r *http.Request) (err error) {
+/*
+@param reverseProxy 不能为nil
+*/
+func ForwardByReverseProxy(w http.ResponseWriter, r *http.Request, reverseProxy *httputil.ReverseProxy) (err error) {
 	if err = interfaceKit.AssertNotNil(reverseProxy, "reverseProxy"); err != nil {
 		return
 	}
+	// !!!: 下面会修改 httputil.ReverseProxy 的字段，但又不希望影响 传参reverseProxy
 	rp := *reverseProxy
 
 	/*
