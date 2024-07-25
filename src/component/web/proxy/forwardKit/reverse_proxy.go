@@ -13,8 +13,8 @@ import (
 // NewSingleHostReverseProxyWithUrl
 /*
 @param urlStr 		目标url
-					e.g. 	"http://127.0.0.1:8000": 将请求转发给"http://127.0.0.1:8000"，请求路由不变
-					e.g.1 	"http://127.0.0.1:8000/a": 将请求转发给"http://127.0.0.1:8000"，请求路由的最前面加上"/a"
+					e.g. 	"http://127.0.0.1:8000": 将请求转发给"http://127.0.0.1:8000"，路由不变
+					e.g.1 	"http://127.0.0.1:8000/a": 将请求转发给"http://127.0.0.1:8000"，路由的最前面加上"/a"
 @return (1) Director字段: != nil;
 		(2) Transport、ModifyResponse、ErrorLog、ErrorHandler等字段: == nil.
 */
