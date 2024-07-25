@@ -15,7 +15,7 @@ func ForwardByReverseProxy(w http.ResponseWriter, r *http.Request, reverseProxy 
 	if err = interfaceKit.AssertNotNil(reverseProxy, "reverseProxy"); err != nil {
 		return
 	}
-	// !!!: 下面会修改 httputil.ReverseProxy 的字段，但又不希望影响 传参reverseProxy
+	// !!!: 下面会修改 httputil.ReverseProxy 的字段，但又不希望影响 传参reverseProxy，因此在此处对指针取值(*)
 	rp := *reverseProxy
 
 	/*
