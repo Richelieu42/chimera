@@ -9,6 +9,8 @@ import (
 
 // ForwardByReverseProxy !!!: 不要直接使用 httputil.ReverseProxy 的 ServeHTTP 方法，因为代理失败时，要从 ErrorHandler字段 中获取.
 /*
+PS: 代理请求失败时，建议返回状态码502(http.StatusBadGateway, 网关错误).
+
 @param reverseProxy 不能为nil
 */
 func ForwardByReverseProxy(w http.ResponseWriter, r *http.Request, reverseProxy *httputil.ReverseProxy) (err error) {
