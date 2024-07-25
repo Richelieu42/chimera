@@ -8,6 +8,7 @@ import (
 	"net/http/httputil"
 )
 
+// ReverseProxy 不同于 httputil.ReverseProxy，此结构体的 Forward 方法如果代理失败会返回error.
 type ReverseProxy struct {
 	// !!!: 此处不能是 *httputil.ReverseProxy，因为会在 Forward 方法体内修改receiver的字段，但不希望修改方法体外的.
 	httputil.ReverseProxy
