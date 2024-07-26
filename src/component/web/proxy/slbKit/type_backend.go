@@ -2,8 +2,10 @@ package slbKit
 
 import (
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
+	"net"
 	"net/http/httputil"
 	"net/url"
+	"time"
 )
 
 type Backend struct {
@@ -16,14 +18,32 @@ type Backend struct {
 }
 
 func (be *Backend) SetAlive(alive bool) {
+	/* 锁 */
 	be.LockFunc(func() {
 		be.Alive = alive
 	})
 }
 
 func (be *Backend) IsAlive() (alive bool) {
+	/* 锁 */
 	be.LockFunc(func() {
 		alive = be.Alive
 	})
 	return
+}
+
+// HealthCheck 健康检查.
+/*
+@return 后端服务是否可用？
+*/
+func (be *Backend) HealthCheck() {
+	timeout := 3 * time.Second
+
+	conn, err := net.DialTimeout("tcp", be.URL.Host, timeout)
+	if err != nil {
+		be.SetAlive(false)
+		return
+	}
+	_ = conn.Close()
+	be.SetAlive(true)
 }
