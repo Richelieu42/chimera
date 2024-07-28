@@ -8,7 +8,6 @@ import (
 
 func main() {
 	port := 8002
-
 	engine := gin.Default()
 	engine.Any("/test", func(ctx *gin.Context) {
 		ctx.String(200, fmt.Sprintf("[%d] Hello world!", port))

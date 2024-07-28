@@ -1,6 +1,7 @@
 package netKit
 
 import (
+	"context"
 	"net"
 	"time"
 )
@@ -36,15 +37,14 @@ var (
 	DialTCP func(network string, laddr, raddr *net.TCPAddr) (*net.TCPConn, error) = net.DialTCP
 )
 
-// CanDial
-/*
-@return 返回值如果为nil，说明能dial成功
-*/
-func CanDial(addr string, timeout time.Duration) error {
-	conn, err := DialTimeout("tcp", addr, timeout)
-	if err != nil {
-		return err
-	}
-	defer conn.Close()
-	return nil
+func DialContext(ctx context.Context, network, address string) (net.Conn, error) {
+	d := &net.Dialer{}
+	return d.DialContext(ctx, network, address)
 }
+
+//func DialContextWithTimeout(ctx context.Context, network, address string, timeout time.Duration) (net.Conn, error) {
+//	d := &net.Dialer{
+//		Timeout: timeout,
+//	}
+//	return d.DialContext(ctx, network, address)
+//}

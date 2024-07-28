@@ -3,6 +3,7 @@ package slbKit
 import (
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"go.uber.org/atomic"
+	"time"
 )
 
 type LoadBalancer struct {
@@ -12,6 +13,14 @@ type LoadBalancer struct {
 
 	// current 当前的下标
 	current *atomic.Int32
+
+	// retry
+	retry int16
+	// retryInterval
+	retryInterval time.Duration
+
+	// attempt
+	attempt int16
 }
 
 // NextIndex 返回下一个下标.
