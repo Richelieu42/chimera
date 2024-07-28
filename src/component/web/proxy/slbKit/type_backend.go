@@ -2,7 +2,7 @@ package slbKit
 
 import (
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
-	"net"
+	"github.com/richelieu-yang/chimera/v3/src/netKit"
 	"net/http/httputil"
 	"net/url"
 	"time"
@@ -32,14 +32,14 @@ func (be *Backend) IsAlive() (alive bool) {
 	return
 }
 
-// HealthCheck 健康检查.
+// HealthCheck 健康检查（此方法会修改 Alive 字段）.
 /*
 @return 后端服务是否可用？
 */
 func (be *Backend) HealthCheck() {
 	timeout := 3 * time.Second
 
-	conn, err := net.DialTimeout("tcp", be.URL.Host, timeout)
+	conn, err := netKit.DialTimeout("tcp", be.URL.Host, timeout)
 	if err != nil {
 		be.SetAlive(false)
 		return

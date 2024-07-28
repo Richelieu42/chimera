@@ -3,6 +3,7 @@ package slbKit
 import (
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"go.uber.org/atomic"
+	"sync"
 	"time"
 )
 
@@ -92,8 +93,14 @@ func (lb *LoadBalancer) GetNextPeer() (backend *Backend) {
 func (lb *LoadBalancer) HealthCheck() {
 	/* 读锁 */
 	lb.RLockFunc(func() {
-		//for _, backend := range lb.backends {
-		//
-		//}
+		var wg sync.WaitGroup
+		for _, backend := range lb.backends {
+			wg.Add(1)
+			go func() {
+				defer wg.Done()
+				backend.HealthCheck()
+			}()
+		}
+		wg.Wait()
 	})
 }
