@@ -7,4 +7,8 @@
 
 ![_img.png](_img.png)
 
+## TODOs
+
+- 创建 Backend 实例时，加上一个用于验证服务是否健康的url（可选，默认通过 net.DialTimeout 验证）.
+
 
