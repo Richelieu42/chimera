@@ -3,6 +3,7 @@ package slbKit
 import (
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"go.uber.org/atomic"
+	"net/http"
 	"sync"
 	"time"
 )
@@ -103,4 +104,10 @@ func (lb *LoadBalancer) HealthCheck() {
 		}
 		wg.Wait()
 	})
+}
+
+func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) error {
+	// TODO:
+
+	return nil
 }
