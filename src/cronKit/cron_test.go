@@ -2,6 +2,7 @@ package cronKit
 
 import (
 	"github.com/sirupsen/logrus"
+	"log"
 	"testing"
 	"time"
 )
@@ -33,4 +34,42 @@ func TestNewCronWithTask(t *testing.T) {
 	logrus.Info("sleep starts")
 	time.Sleep(time.Second * 4)
 	logrus.Info("sleep ends")
+}
+
+// 通过 Cron.Stop 停止任务.
+func TestStopCron(t *testing.T) {
+	c, _, err := NewCronWithTask("@every 3s", func() {
+		log.Println("do")
+	})
+	if err != nil {
+		panic(err)
+	}
+	c.Start()
+
+	time.Sleep(time.Second * 10)
+	StopCron(c)
+	log.Println("---")
+
+	// 再等会，看任务到底停了没
+	time.Sleep(time.Second * 10)
+	log.Println("===")
+}
+
+// 通过 Cron.Remove 停止任务.
+func TestRemoveCron(t *testing.T) {
+	c, entryId, err := NewCronWithTask("@every 3s", func() {
+		log.Println("do")
+	})
+	if err != nil {
+		panic(err)
+	}
+	c.Start()
+
+	time.Sleep(time.Second * 10)
+	c.Remove(entryId)
+	log.Println("---")
+
+	// 再等会，看任务到底停了没
+	time.Sleep(time.Second * 10)
+	log.Println("===")
 }

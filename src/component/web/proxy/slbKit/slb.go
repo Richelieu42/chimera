@@ -5,13 +5,14 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 )
 
-func NewLoadBalancer() *LoadBalancer {
+func NewLoadBalancer() (lb *LoadBalancer) {
 	// TODO:
-	return &LoadBalancer{
+	lb = &LoadBalancer{
 		RWMutex: mutexKit.RWMutex{},
 
 		backends: nil,
 
 		current: atomicKit.NewInt32(-1),
 	}
+	return
 }

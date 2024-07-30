@@ -2,6 +2,7 @@ package slbKit
 
 import (
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
+	"github.com/richelieu-yang/chimera/v3/src/cronKit"
 	"go.uber.org/atomic"
 	"net/http"
 	"sync"
@@ -110,4 +111,18 @@ func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) er
 	// TODO:
 
 	return nil
+}
+
+func (lb *LoadBalancer) Start() error {
+	c, entrtyId, err := cronKit.NewCronWithTask("@every 10s", func() {
+
+	})
+	if err != nil {
+
+	}
+	return err
+}
+
+func (lb *LoadBalancer) Dispose() {
+
 }

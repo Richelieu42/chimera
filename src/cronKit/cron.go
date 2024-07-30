@@ -10,9 +10,10 @@ import (
 /*
 !!!:
 (1) 想要通过修改机器时间来验证的话，需要先改时间，再启动cron.
-(2) 返回的 *cron.Cron实例 要调用 Run() || Start() 以启动
+(2) 返回的 *cron.Cron实例 要调用 Run() || Start() 以"启动"
 	(a) Run()	会阻塞 调用此方法的goroutine，
 	(b) Start()	不会阻塞 调用此方法的goroutine
+(3) 希望停止任务，可以调用 cron.Cron 的 Stop() || Remove(id EntryID).
 
 !!!: 在线Cron表达式生成器
 	https://cron.qqe2.com/
@@ -49,36 +50,52 @@ func NewCron() *cron.Cron {
 /*
 @param spec "@every 10s" || "@every 1m"，更多可参考"Golang - 1.docx"
 */
-func NewCronWithTask(spec string, task func()) (*cron.Cron, cron.EntryID, error) {
-	if err := strKit.AssertNotBlank(spec, "spec"); err != nil {
-		return nil, 0, err
+func NewCronWithTask(spec string, task func()) (c *cron.Cron, entryId cron.EntryID, err error) {
+	defer func() {
+		if err != nil {
+			StopCron(c)
+			c = nil
+			entryId = 0
+		}
+	}()
+
+	if err = strKit.AssertNotBlank(spec, "spec"); err != nil {
+		return
 	}
-	if err := interfaceKit.AssertNotNil(task, "task"); err != nil {
-		return nil, 0, err
+	if err = interfaceKit.AssertNotNil(task, "task"); err != nil {
+		return
 	}
 
-	c := NewCron()
-	entryId, err := c.AddFunc(spec, task)
+	c = NewCron()
+	entryId, err = c.AddFunc(spec, task)
 	if err != nil {
-		return nil, 0, err
+		return
 	}
-	return c, entryId, nil
+	return
 }
 
-func NewCronWithJob(spec string, job cron.Job) (*cron.Cron, cron.EntryID, error) {
-	if err := strKit.AssertNotBlank(spec, "spec"); err != nil {
-		return nil, 0, err
+func NewCronWithJob(spec string, job cron.Job) (c *cron.Cron, entryId cron.EntryID, err error) {
+	defer func() {
+		if err != nil {
+			StopCron(c)
+			c = nil
+			entryId = 0
+		}
+	}()
+
+	if err = strKit.AssertNotBlank(spec, "spec"); err != nil {
+		return
 	}
-	if err := interfaceKit.AssertNotNil(job, "job"); err != nil {
-		return nil, 0, err
+	if err = interfaceKit.AssertNotNil(job, "job"); err != nil {
+		return
 	}
 
-	c := NewCron()
-	entryId, err := c.AddJob(spec, job)
+	c = NewCron()
+	entryId, err = c.AddJob(spec, job)
 	if err != nil {
-		return nil, 0, err
+		return
 	}
-	return c, entryId, nil
+	return
 }
 
 // StopCron
@@ -88,8 +105,8 @@ func NewCronWithJob(spec string, job cron.Job) (*cron.Cron, cron.EntryID, error)
 			(3) 可以是 已经停止(Stop) 的*cron.Cron实例.
 
 !!!:
-(1) 调用此函数可能会 阻塞 调用的goroutine.
-(2) 可以多次调用 Cron.Stop()，虽然只有第一次有意义，但至少不会panic
+(1) 调用此函数可能会 阻塞 调用的goroutine;
+(2) 可以多次调用 Cron.Stop()，虽然只有第一次有意义，但至少不会panic.
 */
 func StopCron(c *cron.Cron) {
 	if c == nil {
