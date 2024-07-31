@@ -2,15 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v3/src/atomic/atomicKit"
-	"github.com/richelieu-yang/chimera/v3/src/netKit"
+	"github.com/klauspost/cpuid/v2"
+	"github.com/richelieu-yang/chimera/v3/src/core/cpuKit"
 )
 
 func main() {
-	netKit.Dial
-
-	i := atomicKit.NewInt64(0)
-	fmt.Println(i.Inc() - 1)
-	fmt.Println(i.Inc() - 1)
-	fmt.Println(i.Inc() - 1)
+	fmt.Println(cpuKit.HasFeature(cpuid.AVX))
 }

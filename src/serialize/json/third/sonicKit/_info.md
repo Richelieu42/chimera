@@ -1,10 +1,7 @@
 ## 限制!!!
-(1) sonic only supports Go1.16~1.20 && CPU amd64
-(2) 并非所有 CPU amd64 都支持（e.g.yozo某台内网机）
-(3) 开启 Sonic 需要满足以下条件 https://www.cloudwego.io/zh/docs/hertz/tutorials/basic-feature/json/
-    (a) Go 1.16 以上
-    (b) Linux / darwin OS / Windows
-    (c) Amd64 CPU with AVX instruction set
+![_requirement.png](_requirement.png)
+
+Amd64 CPU with AVX instruction set
 
 ## Sonic简介
 一个速度奇快的 JSON 序列化/反序列化库，由 JIT （即时编译）和 SIMD （单指令流多数据流）加速。
