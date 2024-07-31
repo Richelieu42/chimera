@@ -21,16 +21,24 @@ e.g.
 	fmt.Println(ok)   // true
 */
 func RemoveByIndex[T any](s []T, index int) (rst []T, item T, ok bool) {
-	if len(s) == 0 {
+	if len(s) == 0 || index < 0 || index >= len(s) {
+		// case: 切片为空 或 索引无效
 		rst = s
 		return
 	}
 
 	item = s[index]
 
-	// !!!: 下面一行代码执行后，会修改外部的slice
+	/*
+		优点: 通过直接操作切片底层的数组，避免了额外的内存分配和复制，从而可能带来性能上的提升
+		缺点: 会修改传参s
+	*/
 	//rst = append(s[:index], s[index+1:]...)
 
+	/*
+		优点: 不会修改传参s
+		缺点: 性能降低
+	*/
 	rst = append(rst, s[:index]...)
 	rst = append(rst, s[index+1:]...)
 
