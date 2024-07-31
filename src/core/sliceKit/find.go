@@ -4,11 +4,11 @@ import "github.com/samber/lo"
 
 // IndexOf
 /*
-@param s 	可以为nil（此时返回-1）
-@return 	如果不存在于切片实例中的话，返回-1
+@param s 可以为nil（此时返回-1）
+@return -1: 传参ele不存在于传参s 中
 */
-func IndexOf[T comparable](s []T, element T) int {
-	return lo.IndexOf(s, element)
+func IndexOf[T comparable](s []T, ele T) int {
+	return lo.IndexOf(s, ele)
 }
 
 // Find
