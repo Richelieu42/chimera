@@ -12,27 +12,27 @@ PS:
 @param index 	下标（索引），取值范围: [0, length)
 
 e.g.
-	s := []int{0, 1, 2, 3}
-	s1, item, ok := sliceKit.RemoveByIndex(s, 2)
+	s := []int{0, 1, 2}
+	s1, item, ok := RemoveByIndex(s, 2)
 
-	fmt.Println(s)    // [0 1 2 3]
-	fmt.Println(s1)   // [0 1 3]
+	fmt.Println(s)    // [0 1 2]
+	fmt.Println(s1)   // [0 1]
 	fmt.Println(item) // 2
 	fmt.Println(ok)   // true
 */
-func RemoveByIndex[T any](s []T, index int) (s1 []T, item T, ok bool) {
+func RemoveByIndex[T any](s []T, index int) (rst []T, item T, ok bool) {
 	if len(s) == 0 {
-		s1 = s
+		rst = s
 		return
 	}
 
 	item = s[index]
 
 	// !!!: 下面一行代码执行后，会修改外部的slice
-	//s1 = append(s[:index], s[index+1:]...)
+	//rst = append(s[:index], s[index+1:]...)
 
-	s1 = append(s1, s[:index]...)
-	s1 = append(s1, s[index+1:]...)
+	rst = append(rst, s[:index]...)
+	rst = append(rst, s[index+1:]...)
 
 	ok = true
 	return
