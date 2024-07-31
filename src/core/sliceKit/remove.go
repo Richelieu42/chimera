@@ -94,9 +94,10 @@ func RemoveLast[T any](s []T) (s1 []T, item T, ok bool) {
 // Remove 移除元素.
 /*
 PS:
-(1) 切片实例s中，存在多个item的话，仅会移除第一个.
+(1) 传参s中存在多个元素与 传参item 一致的话，仅会移除第一个与 传参item 一致元素.
+(2) 此函数 不会修改 传参s.
 
-@param s (1)可以为nil (2)不会修改传参s
+@param s 可以为nil
 
 e.g.	反例
 	texts := []string{"0", "1", "2"}
