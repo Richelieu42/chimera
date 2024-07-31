@@ -1,7 +1,8 @@
 package centrifugoKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/component/web/httpClient/httpClientKit"
+	"github.com/centrifugal/gocent/v3"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/http_client/httpClientKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v3/src/randomKit"

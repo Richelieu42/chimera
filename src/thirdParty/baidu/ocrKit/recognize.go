@@ -2,7 +2,7 @@ package ocrKit
 
 import (
 	"fmt"
-	httpClientKit2 "github.com/richelieu-yang/chimera/v3/src/component/web/httpClient/httpClientKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/http_client/httpClientKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/crypto/base64Kit"
 	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
@@ -39,7 +39,7 @@ func RecognizeUniversalWords(imagePath string) (*Words, error) {
 	}
 
 	// 发请求
-	_, respData, err := httpClientKit2.Post(url, httpClientKit2.WithPostParams(params))
+	_, respData, err := httpClientKit.Post(url, httpClientKit.WithPostParams(params))
 	if err != nil {
 		return nil, err
 	}

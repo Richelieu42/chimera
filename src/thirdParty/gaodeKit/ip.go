@@ -2,7 +2,7 @@ package gaodeKit
 
 import (
 	"context"
-	"github.com/richelieu-yang/chimera/v3/src/component/web/httpClient/reqKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/http_client/reqKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/ip/ipKit"
 	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonFieldKit"

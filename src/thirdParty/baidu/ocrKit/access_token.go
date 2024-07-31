@@ -2,7 +2,7 @@ package ocrKit
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v3/src/component/web/httpClient/httpClientKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/http_client/httpClientKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
