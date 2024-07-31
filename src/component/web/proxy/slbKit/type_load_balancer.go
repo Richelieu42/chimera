@@ -11,7 +11,7 @@ import (
 )
 
 type LoadBalancer struct {
-	mutexKit.RWMutex
+	*mutexKit.RWMutex
 
 	backends []*Backend
 
@@ -119,33 +119,34 @@ func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) er
 	return nil
 }
 
-func (lb *LoadBalancer) Start() (err error) {
+// Start 手动启动.
+func (lb *LoadBalancer) Start() error {
 	/* 写锁 */
-	lb.LockFunc(func() {
-		/* 以10s为周期，对所有后端服务进行健康检查 */
-		var c *cron.Cron
-		c, _, err = cronKit.NewCronWithTask("@every 10s", func() {
-			lb.HealthCheck()
-		})
-		if err != nil {
-			return
-		}
-		c.Start() // 不阻塞
-		lb.c = c
-		return
+	lb.Lock()
+	defer lb.Unlock()
+
+	/* 以10s为周期，对所有后端服务进行健康检查 */
+	c, _, err := cronKit.NewCronWithTask("@every 10s", func() {
+		lb.HealthCheck()
 	})
-	return
+	if err != nil {
+		return err
+	}
+	c.Start() // 不阻塞
+	lb.c = c
+	return nil
 }
 
+// Dispose 手动中止.
 func (lb *LoadBalancer) Dispose() {
 	/* 写锁 */
-	lb.LockFunc(func() {
-		defer func() {
-			lb.backends = nil
-			lb.c = nil
-			lb.disposed = true
-		}()
+	lb.Lock()
+	defer lb.Unlock()
 
-		cronKit.StopCron(lb.c)
-	})
+	defer func() {
+		lb.backends = nil
+		lb.c = nil
+		lb.disposed = true
+	}()
+	cronKit.StopCron(lb.c)
 }
