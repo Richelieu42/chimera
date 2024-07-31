@@ -1,4 +1,4 @@
-//go:build (linux || windows || darwin) && go1.17 && amd64 && avx
+//go:build go1.17 && amd64 && avx
 
 package jsonKit
 

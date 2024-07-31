@@ -1,8 +1,16 @@
 package jsonKit
 
-import "testing"
+import (
+	"github.com/richelieu-yang/chimera/v3/src/core/osKit"
+	"log"
+	"testing"
+)
 
 func TestMarshalToFile(t *testing.T) {
+	log.Printf("os: %s", osKit.OS)
+	log.Printf("arch: %s", osKit.ARCH)
+	log.Printf("json library: %s", library)
+
 	m := map[string]interface{}{
 		"a": 1,
 		"b": []string{"0", "1", "2"},

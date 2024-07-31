@@ -1,4 +1,4 @@
-//go:build (linux || windows || darwin) && go1.20 && arm64
+//go:build go1.20 && arm64
 
 package jsonKit
 
