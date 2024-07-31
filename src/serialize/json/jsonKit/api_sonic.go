@@ -1,4 +1,4 @@
-//go:build (linux || windows || darwin) && sonic && avx && go1.21 && (amd64 || arm64)
+//go:build (linux || windows || darwin) && sonic && avx && go1.20 && (amd64 || arm64)
 
 package jsonKit
 
