@@ -8,7 +8,7 @@ require (
 	github.com/andybalholm/brotli v1.1.0
 	github.com/apache/pulsar-client-go v0.13.0
 	github.com/apache/rocketmq-clients/golang/v5 v5.1.1-rc1
-	github.com/bytedance/sonic v1.11.9
+	github.com/bytedance/sonic v1.12.0
 	github.com/centrifugal/centrifuge v0.33.0
 	github.com/centrifugal/gocent/v3 v3.3.0
 	github.com/coocood/freecache v1.2.4
@@ -100,7 +100,7 @@ require (
 	github.com/spf13/viper v1.19.0
 	github.com/stretchr/testify v1.9.0
 	github.com/tidwall/buntdb v1.3.1
-	github.com/tidwall/gjson v1.17.2
+	github.com/tidwall/gjson v1.17.3
 	github.com/unidoc/unioffice v1.35.0
 	github.com/vulcand/oxy/v2 v2.0.0
 	github.com/xuri/excelize/v2 v2.8.1
@@ -180,7 +180,7 @@ require (
 	github.com/bodgit/windows v1.0.0 // indirect
 	github.com/boltdb/bolt v1.3.1 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
-	github.com/bytedance/sonic/loader v0.1.1 // indirect
+	github.com/bytedance/sonic/loader v0.2.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
 	github.com/centrifugal/protocol v0.13.4-0.20240702174651-e8db704aa2d2 // indirect

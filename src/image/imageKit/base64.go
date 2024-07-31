@@ -2,7 +2,7 @@ package imageKit
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v3/src/component/web/request/httpClientKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/httpClient/httpClientKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/crypto/base64Kit"
 	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"

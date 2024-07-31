@@ -3,6 +3,7 @@ package slbKit
 import (
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"github.com/richelieu-yang/chimera/v3/src/cronKit"
+	"github.com/robfig/cron/v3"
 	"go.uber.org/atomic"
 	"net/http"
 	"sync"
@@ -24,6 +25,11 @@ type LoadBalancer struct {
 
 	// attempt
 	attempt int16
+
+	// c 用于定期健康检查
+	c *cron.Cron
+
+	disposed bool
 }
 
 // NextIndex 返回下一个下标.
@@ -91,7 +97,7 @@ func (lb *LoadBalancer) GetNextPeer() (backend *Backend) {
 	return
 }
 
-// HealthCheck 健康检查.
+// HealthCheck 对目前所有的后端服务，进行1次健康检查.
 func (lb *LoadBalancer) HealthCheck() {
 	/* 读锁 */
 	lb.RLockFunc(func() {
@@ -113,16 +119,33 @@ func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) er
 	return nil
 }
 
-func (lb *LoadBalancer) Start() error {
-	c, entrtyId, err := cronKit.NewCronWithTask("@every 10s", func() {
-
+func (lb *LoadBalancer) Start() (err error) {
+	/* 写锁 */
+	lb.LockFunc(func() {
+		/* 以10s为周期，对所有后端服务进行健康检查 */
+		var c *cron.Cron
+		c, _, err = cronKit.NewCronWithTask("@every 10s", func() {
+			lb.HealthCheck()
+		})
+		if err != nil {
+			return
+		}
+		c.Start() // 不阻塞
+		lb.c = c
+		return
 	})
-	if err != nil {
-
-	}
-	return err
+	return
 }
 
 func (lb *LoadBalancer) Dispose() {
+	/* 写锁 */
+	lb.LockFunc(func() {
+		defer func() {
+			lb.backends = nil
+			lb.c = nil
+			lb.disposed = true
+		}()
 
+		cronKit.StopCron(lb.c)
+	})
 }
