@@ -33,6 +33,26 @@ type LoadBalancer struct {
 	status Status
 }
 
+func (lb *LoadBalancer) AddBackend(backend *Backend) (err error) {
+	if backend == nil {
+		return
+	}
+
+	/* 写锁 */
+	lb.LockFunc(func() {
+		switch lb.status {
+		case StatusInitialized, StatusStarted:
+			// 允许添加后端服务
+			lb.backends = append(lb.backends, backend)
+		case StatusDisposed:
+			err = AlreadyDisposedError
+		default:
+			err = errorKit.Newf("invalid status: %s", lb.status)
+		}
+	})
+	return
+}
+
 // NextIndex 返回下一个下标.
 /*
 PS:
@@ -52,17 +72,6 @@ func (lb *LoadBalancer) UpdateIndex(i int32) {
 		i = 0
 	}
 	lb.current.Store(i)
-}
-
-func (lb *LoadBalancer) AddBackend(backend *Backend) {
-	if backend == nil {
-		return
-	}
-
-	/* 写锁 */
-	lb.LockFunc(func() {
-		lb.backends = append(lb.backends, backend)
-	})
 }
 
 // GetNextPeer
