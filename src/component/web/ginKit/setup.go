@@ -115,7 +115,7 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 			Addr:    netKit.JoinToHost(config.HostName, httpPort),
 			Handler: engine.Handler(),
 		}
-		console.Infof("Listening and serving HTTP on [%s]", httpSrv.Addr)
+		console.Infof("Listening and serving HTTP on address(%s)", httpSrv.Addr)
 
 		go func() {
 			err := httpSrv.ListenAndServe()

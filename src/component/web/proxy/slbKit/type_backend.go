@@ -1,8 +1,10 @@
 package slbKit
 
 import (
+	"github.com/richelieu-yang/chimera/v3/src/component/web/proxy/forwardKit"
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"github.com/richelieu-yang/chimera/v3/src/netKit"
+	"net/http"
 	"net/http/httputil"
 	"net/url"
 	"time"
@@ -46,4 +48,8 @@ func (be *Backend) HealthCheck() {
 	}
 	_ = conn.Close()
 	be.SetAlive(true)
+}
+
+func (be *Backend) HandleRequest(w http.ResponseWriter, r *http.Request) error {
+	return forwardKit.ForwardByReverseProxy(w, r, be.ReverseProxy)
 }

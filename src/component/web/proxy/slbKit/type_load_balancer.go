@@ -1,6 +1,8 @@
 package slbKit
 
 import (
+	"context"
+	"errors"
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/cronKit"
@@ -133,6 +135,11 @@ func (lb *LoadBalancer) Dispose() {
 }
 
 func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) error {
+	if err := r.Context().Err(); err != nil {
+		// 请求已经被取消
+		return err
+	}
+
 	// getAccessBackend 从start下标开始获取可用服务（向后寻找）.
 	/*
 		PS: 调用此函数前，需要先获取读锁.
@@ -163,9 +170,16 @@ func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) er
 		if be == nil {
 			return NoAccessBackendError
 		}
-		i = idx
-		// TODO: be.HandleRequest
 
+		i = idx
+		err := be.HandleRequest(w, r)
+		if err != nil {
+			if errors.Is(err, context.Canceled) {
+				// 请求已经被取消
+				return err
+			}
+		}
+		return nil
 	}
 
 	//length := int32(len(lb.backends))

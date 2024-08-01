@@ -22,9 +22,15 @@ var (
 
 // JoinToHost
 /*
+@param hostname (1) 支持: ipv4、ipv6
+				(2) ipv6的话，最前和最后不要带上中括号
+
 e.g.
 	fmt.Println(netKit.JoinToHost("127.0.0.1", 80)) // 127.0.0.1:80
 	fmt.Println(netKit.JoinToHost("", 8888))        // :8888
+
+e.g.1 ipv6
+	("::1", 8888) => "[::1]:8888"
 */
 func JoinToHost(hostname string, port int) string {
 	//return fmt.Sprintf("%s:%d", hostname, port)
