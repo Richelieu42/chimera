@@ -5,9 +5,9 @@ type (
 )
 
 const (
-	Initialized Status = "initialized"
+	StatusInitialized Status = "initialized"
 
-	Active Status = "active"
+	StatusStarted Status = "started"
 
-	Disposed Status = "disposed"
+	StatusDisposed Status = "disposed"
 )

@@ -5,18 +5,16 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 )
 
-// NewLoadBalancer
+// NewLoadBalancer TODO:
 /*
 @return 需要手动调用 Start 以启动.
 */
 func NewLoadBalancer() (lb *LoadBalancer) {
-	// TODO:
 	lb = &LoadBalancer{
-		RWMutex: &mutexKit.RWMutex{},
-
+		RWMutex:  &mutexKit.RWMutex{},
 		backends: nil,
-
-		current: atomicKit.NewInt32(-1),
+		current:  atomicKit.NewInt32(-1),
+		status:   StatusInitialized,
 	}
 	return
 }
