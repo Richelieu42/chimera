@@ -10,7 +10,7 @@ gin:
   # 一般情况下，用""就够了
   hostName: "::1"
   # http server使用的端口（默认0: 不使用http server）
-  port: 8888
+  port: 80
   # 禁用日志带颜色输出?（默认: false）
   disableColor: false
   # 是否开启pprof路由？（默认: false）
