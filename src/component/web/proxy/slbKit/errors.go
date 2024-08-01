@@ -8,4 +8,6 @@ var (
 	AlreadyStartedError = errorKit.Newf("already started")
 
 	AlreadyDisposedError = errorKit.Newf("already disposed")
+
+	NoAccessBackendError = errorKit.Newf("no access backend")
 )

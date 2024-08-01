@@ -17,15 +17,15 @@ type LoadBalancer struct {
 	backends []*Backend
 
 	// current 当前的下标
-	current *atomic.Int32
+	current *atomic.Int64
 
 	// retry
 	retry int16
 	// retryInterval
 	retryInterval time.Duration
 
-	// attempt
-	attempt int16
+	//// attempt
+	//attempt int16
 
 	// c 用于定期健康检查
 	c *cron.Cron
@@ -59,52 +59,8 @@ PS:
 (1) 此方法无需加锁;
 (2) 需要自行对返回值先进行 其余操作(%) 才能继续使用.
 */
-func (lb *LoadBalancer) NextIndex() int32 {
+func (lb *LoadBalancer) NextIndex() int64 {
 	return lb.current.Inc()
-}
-
-// UpdateIndex 更新下标.
-/*
-PS: 此方法无需加锁.
-*/
-func (lb *LoadBalancer) UpdateIndex(i int32) {
-	if i < 0 {
-		i = 0
-	}
-	lb.current.Store(i)
-}
-
-// GetNextPeer
-/*
-@return 可能为nil（即此时无可用后端服务）
-*/
-func (lb *LoadBalancer) GetNextPeer() (backend *Backend) {
-	/*
-		读锁
-		Richelieu: 此处使用读锁而非写锁，以提高并发效率.
-	*/
-	lb.RLockFunc(func() {
-		length := int32(len(lb.backends))
-		if length == 0 {
-			// 直接没服务
-			return
-		}
-
-		next := lb.NextIndex() % int32(len(lb.backends))
-		limit := next + length
-		for i := next; i < limit; i++ {
-			idx := i % length
-			tmp := lb.backends[idx]
-			if !tmp.IsAlive() {
-				continue
-			}
-			// 成功获取到可用服务
-			backend = tmp
-			lb.UpdateIndex(idx)
-			return
-		}
-	})
-	return
 }
 
 // HealthCheck 对目前所有的后端服务，进行1次健康检查.
@@ -133,12 +89,6 @@ func (lb *LoadBalancer) HealthCheck() {
 		}
 		wg.Wait()
 	})
-}
-
-func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) error {
-	// TODO:
-
-	return nil
 }
 
 // Start 手动启动.
@@ -180,4 +130,50 @@ func (lb *LoadBalancer) Dispose() {
 		lb.c = nil
 		lb.status = StatusDisposed
 	})
+}
+
+func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) error {
+	// getAccessBackend 从start下标开始获取可用服务（向后寻找）.
+	/*
+		PS: 调用此函数前，需要先获取读锁.
+	*/
+	getAccessBackend := func(start, limit, length int64) (*Backend, int64) {
+		for i := start; i < limit; i++ {
+			idx := i % length
+			be := lb.backends[idx]
+			if !be.IsAlive() {
+				continue
+			}
+			// (1) 找到可用服务
+			return be, i
+		}
+		// (2) 找不到可用服务
+		return nil, 0
+	}
+
+	lb.RLock()
+	defer lb.RUnlock()
+
+	length := int64(len(lb.backends))
+	start := lb.NextIndex() % length
+	limit := start + length
+
+	for i := start; i < limit; i++ {
+		be, idx := getAccessBackend(i, limit, length)
+		if be == nil {
+			return NoAccessBackendError
+		}
+		i = idx
+		// TODO: be.HandleRequest
+
+	}
+
+	//length := int32(len(lb.backends))
+	//startIndex := lb.NextIndex() % length
+	//limit := startIndex + length
+	//for i := startIndex; i < limit; i++ {
+	//
+	//}
+
+	return nil
 }
