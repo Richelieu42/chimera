@@ -9,7 +9,7 @@ require (
 	github.com/apache/pulsar-client-go v0.13.0
 	github.com/apache/rocketmq-clients/golang/v5 v5.1.1-rc1
 	github.com/bytedance/sonic v1.12.0
-	github.com/centrifugal/centrifuge v0.33.0
+	github.com/centrifugal/centrifuge v0.33.1
 	github.com/centrifugal/gocent/v3 v3.3.0
 	github.com/coocood/freecache v1.2.4
 	github.com/davidbyttow/govips/v2 v2.15.0
