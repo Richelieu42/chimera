@@ -18,6 +18,14 @@ func S() *zap.SugaredLogger {
 	return s
 }
 
+// GetInnerSugaredLogger
+/*
+Deprecated: 此函数仅供包 console 调用.
+*/
+func GetInnerSugaredLogger() *zap.SugaredLogger {
+	return innerS
+}
+
 func Sync() {
 	_ = l.Sync()
 	_ = s.Sync()
