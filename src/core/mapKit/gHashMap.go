@@ -2,58 +2,51 @@ package mapKit
 
 import "github.com/gogf/gf/v2/container/gmap"
 
-func NewAnyAnyMap(safe ...bool) *gmap.AnyAnyMap {
-	return gmap.NewAnyAnyMap(safe...)
-}
+/* map[interface{}]interface{} */
+var (
+	NewAnyAnyMap func(safe ...bool) *gmap.AnyAnyMap = gmap.NewAnyAnyMap
 
-func NewAnyAnyMapFrom(data map[interface{}]interface{}, safe ...bool) *gmap.AnyAnyMap {
-	return gmap.NewAnyAnyMapFrom(data, safe...)
-}
+	NewAnyAnyMapFrom func(data map[interface{}]interface{}, safe ...bool) *gmap.AnyAnyMap = gmap.NewAnyAnyMapFrom
+)
 
-func NewIntAnyMap(safe ...bool) *gmap.IntAnyMap {
-	return gmap.NewIntAnyMap(safe...)
-}
+/* map[int]interface{} */
+var (
+	NewIntAnyMap func(safe ...bool) *gmap.IntAnyMap = gmap.NewIntAnyMap
 
-func NewIntAnyMapFrom(data map[int]interface{}, safe ...bool) *gmap.IntAnyMap {
-	return gmap.NewIntAnyMapFrom(data, safe...)
-}
+	NewIntAnyMapFrom func(data map[int]interface{}, safe ...bool) *gmap.IntAnyMap = gmap.NewIntAnyMapFrom
+)
 
-func NewStrAnyMap(safe ...bool) *gmap.StrAnyMap {
-	return gmap.NewStrAnyMap(safe...)
-}
+/* map[string]interface{} */
+var (
+	NewStrAnyMap func(safe ...bool) *gmap.StrAnyMap = gmap.NewStrAnyMap
 
-func NewStrAnyMapFrom(data map[string]interface{}, safe ...bool) *gmap.StrAnyMap {
-	return gmap.NewStrAnyMapFrom(data, safe...)
-}
+	NewStrAnyMapFrom func(data map[string]interface{}, safe ...bool) *gmap.StrAnyMap = gmap.NewStrAnyMapFrom
+)
 
-func NewIntIntMap(safe ...bool) *gmap.IntIntMap {
-	return gmap.NewIntIntMap(safe...)
-}
+/* map[int]int */
+var (
+	NewIntIntMap func(safe ...bool) *gmap.IntIntMap = gmap.NewIntIntMap
 
-func NewIntIntMapFrom(data map[int]int, safe ...bool) *gmap.IntIntMap {
-	return gmap.NewIntIntMapFrom(data, safe...)
-}
+	NewIntIntMapFrom func(data map[int]int, safe ...bool) *gmap.IntIntMap = gmap.NewIntIntMapFrom
+)
 
-func NewStrStrMap(safe ...bool) *gmap.StrStrMap {
-	return gmap.NewStrStrMap(safe...)
-}
+/* map[string]string */
+var (
+	NewStrStrMap func(safe ...bool) *gmap.StrStrMap = gmap.NewStrStrMap
 
-func NewStrStrMapFrom(data map[string]string, safe ...bool) *gmap.StrStrMap {
-	return gmap.NewStrStrMapFrom(data, safe...)
-}
+	NewStrStrMapFrom func(data map[string]string, safe ...bool) *gmap.StrStrMap = gmap.NewStrStrMapFrom
+)
 
-func NewIntStrMap(safe ...bool) *gmap.IntStrMap {
-	return gmap.NewIntStrMap(safe...)
-}
+/* map[int]string */
+var (
+	NewIntStrMap func(safe ...bool) *gmap.IntStrMap = gmap.NewIntStrMap
 
-func NewIntStrMapFrom(data map[int]string, safe ...bool) *gmap.IntStrMap {
-	return gmap.NewIntStrMapFrom(data, safe...)
-}
+	NewIntStrMapFrom func(data map[int]string, safe ...bool) *gmap.IntStrMap = gmap.NewIntStrMapFrom
+)
 
-func NewStrIntMap(safe ...bool) *gmap.StrIntMap {
-	return gmap.NewStrIntMap(safe...)
-}
+/* map[string]int */
+var (
+	NewStrIntMap func(safe ...bool) *gmap.StrIntMap = gmap.NewStrIntMap
 
-func NewStrIntMapFrom(data map[string]int, safe ...bool) *gmap.StrIntMap {
-	return gmap.NewStrIntMapFrom(data, safe...)
-}
+	NewStrIntMapFrom func(data map[string]int, safe ...bool) *gmap.StrIntMap = gmap.NewStrIntMapFrom
+)
