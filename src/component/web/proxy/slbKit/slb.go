@@ -13,7 +13,7 @@ func NewLoadBalancer() (lb *LoadBalancer) {
 	lb = &LoadBalancer{
 		RWMutex:  &mutexKit.RWMutex{},
 		backends: nil,
-		current:  atomicKit.NewInt32(-1),
+		current:  atomicKit.NewInt64(-1),
 		status:   StatusInitialized,
 	}
 	return

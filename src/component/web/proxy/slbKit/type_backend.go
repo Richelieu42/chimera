@@ -19,10 +19,17 @@ type Backend struct {
 	ReverseProxy *httputil.ReverseProxy
 }
 
-func (be *Backend) SetAlive(alive bool) {
+func (be *Backend) Enable() {
 	/* 锁 */
 	be.LockFunc(func() {
-		be.Alive = alive
+		be.Alive = true
+	})
+}
+
+func (be *Backend) Disable() {
+	/* 锁 */
+	be.LockFunc(func() {
+		be.Alive = false
 	})
 }
 
@@ -43,11 +50,11 @@ func (be *Backend) HealthCheck() {
 
 	conn, err := netKit.DialTimeout("tcp", be.URL.Host, timeout)
 	if err != nil {
-		be.SetAlive(false)
+		be.Disable()
 		return
 	}
 	_ = conn.Close()
-	be.SetAlive(true)
+	be.Enable()
 }
 
 func (be *Backend) HandleRequest(w http.ResponseWriter, r *http.Request) error {

@@ -1,8 +1,7 @@
 package slbKit
 
 import (
-	"context"
-	"errors"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/proxy/forwardKit"
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/cronKit"
@@ -140,54 +139,37 @@ func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) er
 		return err
 	}
 
-	// getAccessBackend 从start下标开始获取可用服务（向后寻找）.
-	/*
-		PS: 调用此函数前，需要先获取读锁.
-	*/
-	getAccessBackend := func(start, limit, length int64) (*Backend, int64) {
-		for i := start; i < limit; i++ {
-			idx := i % length
-			be := lb.backends[idx]
-			if !be.IsAlive() {
-				continue
-			}
-			// (1) 找到可用服务
-			return be, i
-		}
-		// (2) 找不到可用服务
-		return nil, 0
-	}
+	start := lb.NextIndex()
 
+	/* 读锁 */
 	lb.RLock()
 	defer lb.RUnlock()
 
 	length := int64(len(lb.backends))
-	start := lb.NextIndex() % length
+	start %= length
 	limit := start + length
 
 	for i := start; i < limit; i++ {
-		be, idx := getAccessBackend(i, limit, length)
-		if be == nil {
-			return NoAccessBackendError
+		idx := i % length
+		be := lb.backends[idx]
+		if !be.IsAlive() {
+			/* (1) 找到的服务不可用，继续1找 */
+			continue
 		}
-
-		i = idx
 		err := be.HandleRequest(w, r)
 		if err != nil {
-			if errors.Is(err, context.Canceled) {
-				// 请求已经被取消
+			if forwardKit.IsInterruptedError(err) {
+				/* (2) 请求被中断了 */
 				return err
 			}
+			/* (3) 当前找到的后端服务有问题，继续找 */
+			// TODO: 加上日志输出
+			be.Disable()
+			continue
 		}
+		/* (4) 代理请求成功 */
 		return nil
 	}
-
-	//length := int32(len(lb.backends))
-	//startIndex := lb.NextIndex() % length
-	//limit := startIndex + length
-	//for i := startIndex; i < limit; i++ {
-	//
-	//}
-
-	return nil
+	/* (5) 无可用后端服务 */
+	return NoAccessBackendError
 }
