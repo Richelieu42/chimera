@@ -10,8 +10,8 @@
 
 ## zapcore.WriteSyncer接口的实例
 
-- zapcore.AddSync的返回值
-- zapcore.Lock的返回值
+- zapcore.AddSync 的返回值
+- zapcore.Lock 的返回值
 
 ## TODOs
 
