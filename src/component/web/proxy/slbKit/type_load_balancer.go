@@ -7,23 +7,24 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/cronKit"
 	"github.com/robfig/cron/v3"
 	"go.uber.org/atomic"
+	"go.uber.org/zap"
 	"net/http"
 	"sync"
-	"time"
 )
 
 type LoadBalancer struct {
 	*mutexKit.RWMutex
 
+	logger   *zap.Logger
 	backends []*Backend
 
 	// current 当前的下标
 	current *atomic.Int64
 
-	// retry
-	retry int16
-	// retryInterval
-	retryInterval time.Duration
+	//// retry
+	//retry int16
+	//// retryInterval
+	//retryInterval time.Duration
 
 	//// attempt
 	//attempt int16
