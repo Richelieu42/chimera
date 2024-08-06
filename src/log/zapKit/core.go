@@ -29,12 +29,12 @@ import (
 							})
 @param initialFields 可以不传
 */
-func NewCore(enc zapcore.Encoder, ws zapcore.WriteSyncer, levelEnabler zapcore.LevelEnabler, initialFields ...zapcore.Field) zapcore.Core {
-	if ws == nil {
-		ws = LockedWriteSyncerStdout
+func NewCore(enc zapcore.Encoder, writeSyncer zapcore.WriteSyncer, levelEnabler zapcore.LevelEnabler, initialFields ...zapcore.Field) zapcore.Core {
+	if writeSyncer == nil {
+		writeSyncer = LockedWriteSyncerStdout
 	}
 
-	core := zapcore.NewCore(enc, ws, levelEnabler)
+	core := zapcore.NewCore(enc, writeSyncer, levelEnabler)
 	if len(initialFields) > 0 {
 		core = core.With(initialFields)
 	}
