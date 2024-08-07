@@ -10,6 +10,8 @@ import (
 // NewLoadBalancer
 /*
 PS: 返回的*LoadBalancer实例，需要手动调用 Start 以启动.
+
+@param logger 可以为nil，默认输出到控制台
 */
 func NewLoadBalancer(logger *zap.Logger) (lb *LoadBalancer) {
 	if logger == nil {
