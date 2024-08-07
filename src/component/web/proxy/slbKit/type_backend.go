@@ -47,6 +47,7 @@ func (be *Backend) IsAlive() (alive bool) {
 @return 后端服务是否可用？
 */
 func (be *Backend) HealthCheck() {
+	// 最多检查3s
 	timeout := 3 * time.Second
 
 	conn, err := netKit.DialTimeout("tcp", be.u.Host, timeout)
