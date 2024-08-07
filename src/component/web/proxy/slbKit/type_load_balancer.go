@@ -55,14 +55,22 @@ func (lb *LoadBalancer) AddBackend(backend *Backend) (err error) {
 	return
 }
 
-// NextIndex 返回下一个下标.
+// nextIndex 返回下一个下标.
 /*
 PS:
 (1) 此方法无需加锁;
 (2) 需要自行对返回值先进行 其余操作(%) 才能继续使用.
 */
-func (lb *LoadBalancer) NextIndex() int64 {
+func (lb *LoadBalancer) nextIndex() int64 {
 	return lb.current.Inc()
+}
+
+// compareAndSwapIndex
+/*
+PS: 此方法无需加锁.
+*/
+func (lb *LoadBalancer) compareAndSwapIndex(old, new int64) {
+	_ = lb.current.CompareAndSwap(old, new)
 }
 
 // HealthCheck 对目前所有的后端服务，进行1次健康检查.
@@ -140,14 +148,14 @@ func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) er
 		return err
 	}
 
-	start := lb.NextIndex()
+	start := lb.nextIndex()
 
 	/* 读锁 */
 	lb.RLock()
 	defer lb.RUnlock()
 
 	length := int64(len(lb.backends))
-	start %= length
+	//start %= length
 	limit := start + length
 
 	for i := start; i < limit; i++ {
@@ -169,6 +177,9 @@ func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) er
 			continue
 		}
 		/* (4) 代理请求成功 */
+		if i != start {
+			lb.compareAndSwapIndex(start, i)
+		}
 		return nil
 	}
 	/* (5) 无可用后端服务 */
