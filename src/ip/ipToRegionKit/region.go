@@ -1,4 +1,4 @@
-package ipRegionKit
+package ipToRegionKit
 
 // GetRegion
 /*

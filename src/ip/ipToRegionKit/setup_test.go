@@ -1,4 +1,4 @@
-package ipRegionKit
+package ipToRegionKit
 
 import (
 	"github.com/richelieu-yang/chimera/v3/src/consts"
@@ -24,7 +24,7 @@ func TestGetRegion(t *testing.T) {
 	MustSetUp(xdbPath)
 
 	//ip := "10.0.9.141"
-	ip := "49.93.231.78"
+	ip := "118.112.68.157"
 	str, err := GetRegion(ip)
 	if err != nil {
 		panic(err)
