@@ -155,7 +155,6 @@ func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) er
 	defer lb.RUnlock()
 
 	length := int64(len(lb.backends))
-	//start %= length
 	limit := start + length
 
 	for i := start; i < limit; i++ {
