@@ -10,45 +10,46 @@ import (
 	"time"
 )
 
+// Backend 后端节点.
 type Backend struct {
 	mutexKit.Mutex
 
-	// Alive 节点是否可用？
-	Alive        bool
-	URL          *url.URL
-	ReverseProxy *httputil.ReverseProxy
+	// alive 当前节点是否可用？
+	alive        bool
+	u            *url.URL
+	reverseProxy *httputil.ReverseProxy
 }
 
 func (be *Backend) Enable() {
 	/* 锁 */
 	be.LockFunc(func() {
-		be.Alive = true
+		be.alive = true
 	})
 }
 
 func (be *Backend) Disable() {
 	/* 锁 */
 	be.LockFunc(func() {
-		be.Alive = false
+		be.alive = false
 	})
 }
 
 func (be *Backend) IsAlive() (alive bool) {
 	/* 锁 */
 	be.LockFunc(func() {
-		alive = be.Alive
+		alive = be.alive
 	})
 	return
 }
 
-// HealthCheck 健康检查（此方法会修改 Alive 字段）.
+// HealthCheck 健康检查（此方法会修改 alive 字段）.
 /*
 @return 后端服务是否可用？
 */
 func (be *Backend) HealthCheck() {
 	timeout := 3 * time.Second
 
-	conn, err := netKit.DialTimeout("tcp", be.URL.Host, timeout)
+	conn, err := netKit.DialTimeout("tcp", be.u.Host, timeout)
 	if err != nil {
 		be.Disable()
 		return
@@ -58,5 +59,5 @@ func (be *Backend) HealthCheck() {
 }
 
 func (be *Backend) HandleRequest(w http.ResponseWriter, r *http.Request) error {
-	return forwardKit.ForwardByReverseProxy(w, r, be.ReverseProxy)
+	return forwardKit.ForwardByReverseProxy(w, r, be.reverseProxy)
 }
