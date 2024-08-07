@@ -3,6 +3,7 @@ package slbKit
 import (
 	"github.com/richelieu-yang/chimera/v3/src/component/web/proxy/forwardKit"
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/netKit"
 	"net/http"
 	"net/http/httputil"
@@ -18,6 +19,23 @@ type Backend struct {
 	alive        bool
 	u            *url.URL
 	reverseProxy *httputil.ReverseProxy
+}
+
+func NewBackend(urlStr string) (*Backend, error) {
+	u, err := url.Parse(urlStr)
+	if err != nil {
+		return nil, errorKit.Wrapf(err, "invalid url: %s", urlStr)
+	}
+	rp, err := forwardKit.NewSingleHostReverseProxy(u)
+	if err != nil {
+		return nil, err
+	}
+
+	return &Backend{
+		alive:        true,
+		u:            u,
+		reverseProxy: rp,
+	}, nil
 }
 
 func (be *Backend) Enable() {
