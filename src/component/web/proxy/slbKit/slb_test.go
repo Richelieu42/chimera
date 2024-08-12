@@ -21,16 +21,16 @@ func TestNewLoadBalancer(t *testing.T) {
 			panic(err)
 		}
 	}()
-	//go func() {
-	//	port := 8001
-	//	engine := gin.Default()
-	//	engine.Any("/test", func(ctx *gin.Context) {
-	//		ctx.String(200, fmt.Sprintf("[%d] Hello world!", port))
-	//	})
-	//	if err := engine.Run(netKit.JoinToHost("", port)); err != nil {
-	//		panic(err)
-	//	}
-	//}()
+	go func() {
+		port := 8001
+		engine := gin.Default()
+		engine.Any("/test", func(ctx *gin.Context) {
+			ctx.String(200, fmt.Sprintf("[%d] Hello world!", port))
+		})
+		if err := engine.Run(netKit.JoinToHost("", port)); err != nil {
+			panic(err)
+		}
+	}()
 	go func() {
 		port := 8002
 		engine := gin.Default()

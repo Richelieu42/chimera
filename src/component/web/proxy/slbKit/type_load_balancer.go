@@ -19,6 +19,9 @@ type LoadBalancer struct {
 	backends []*Backend
 
 	// current 当前的下标
+	/*
+		PS: 虽然值会不停地变大，但以一般理性而论，达不到最大值的（int64的最大值约92233720368亿）.
+	*/
 	current *atomic.Int64
 
 	//// retry
@@ -148,15 +151,13 @@ func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) er
 		return err
 	}
 
-	start := lb.nextIndex()
-
 	/* 读锁 */
 	lb.RLock()
 	defer lb.RUnlock()
 
+	start := lb.nextIndex()
 	length := int64(len(lb.backends))
 	limit := start + length
-
 	for i := start; i < limit; i++ {
 		idx := i % length
 		be := lb.backends[idx]
@@ -176,6 +177,10 @@ func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) er
 			continue
 		}
 		/* (4) 代理请求成功 */
+		/*
+			下面三行代码是为了解决bug: 有三个后端节点（8000、8001、8002），依次Add.假如8001挂了，会导致8002压力增加（相对于8000来说）.
+			当满足条件时（即某次代理，最前面的后端服务不可用的情况下），尝试手动更新index.
+		*/
 		if i != start {
 			lb.compareAndSwapIndex(start, i)
 		}
