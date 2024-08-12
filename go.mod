@@ -6,10 +6,10 @@ require (
 	fyne.io/fyne/v2 v2.5.0
 	github.com/alwindoss/morse v1.0.1
 	github.com/andybalholm/brotli v1.1.0
-	github.com/apache/pulsar-client-go v0.13.0
+	github.com/apache/pulsar-client-go v0.13.1
 	github.com/apache/rocketmq-clients/golang/v5 v5.1.1-rc1
 	github.com/bytedance/sonic v1.12.1
-	github.com/centrifugal/centrifuge v0.33.1
+	github.com/centrifugal/centrifuge v0.33.2
 	github.com/centrifugal/gocent/v3 v3.3.0
 	github.com/coocood/freecache v1.2.4
 	github.com/davidbyttow/govips/v2 v2.15.0
@@ -84,7 +84,7 @@ require (
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
 	github.com/playwright-community/playwright-go v0.4501.1
 	github.com/redis/go-redis/v9 v9.6.1
-	github.com/redis/rueidis v1.0.43
+	github.com/redis/rueidis v1.0.44
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/rs/xid v1.5.0
@@ -107,7 +107,7 @@ require (
 	github.com/zeromicro/go-zero v1.7.0
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231030135404-af9ae855016f
 	go.etcd.io/etcd/client/v3 v3.5.15
-	go.mongodb.org/mongo-driver v1.16.0
+	go.mongodb.org/mongo-driver v1.16.1
 	go.opentelemetry.io/otel v1.28.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.28.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.28.0
@@ -120,14 +120,14 @@ require (
 	go.uber.org/zap v1.27.0
 	golang.org/x/arch v0.9.0
 	golang.org/x/crypto v0.26.0
-	golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56
+	golang.org/x/exp v0.0.0-20240808152545-0cdaa3abc0fa
 	golang.org/x/image v0.19.0
 	golang.org/x/mobile v0.0.0-20240806205939-81131f6468ab
 	golang.org/x/mod v0.20.0
 	golang.org/x/net v0.28.0
 	golang.org/x/oauth2 v0.22.0
 	golang.org/x/sync v0.8.0
-	golang.org/x/sys v0.23.0
+	golang.org/x/sys v0.24.0
 	golang.org/x/term v0.23.0
 	golang.org/x/text v0.17.0
 	golang.org/x/time v0.6.0
@@ -162,7 +162,6 @@ require (
 	github.com/DataDog/zstd v1.5.2 // indirect
 	github.com/FZambia/eagle v0.1.0 // indirect
 	github.com/HdrHistogram/hdrhistogram-go v1.1.2 // indirect
-	github.com/Yiling-J/theine-go v0.3.2 // indirect
 	github.com/adamzy/cedar-go v0.0.0-20170805034717-80a9c64b256d // indirect
 	github.com/alibabacloud-go/debug v0.0.0-20190504072949-9472017b5c68 // indirect
 	github.com/alibabacloud-go/tea v1.1.17 // indirect
@@ -183,7 +182,7 @@ require (
 	github.com/bytedance/sonic/loader v0.2.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
-	github.com/centrifugal/protocol v0.13.4-0.20240702174651-e8db704aa2d2 // indirect
+	github.com/centrifugal/protocol v0.13.4 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/cloudflare/circl v1.3.7 // indirect
 	github.com/cloudwego/base64x v0.1.4 // indirect
@@ -195,6 +194,7 @@ require (
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/dchest/siphash v1.2.3 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
+	github.com/dolthub/maphash v0.1.0 // indirect
 	github.com/dsnet/compress v0.0.1 // indirect
 	github.com/dvsekhvalnov/jose2go v1.6.0 // indirect
 	github.com/emersion/go-sasl v0.0.0-20200509203442-7bfe0ed36a21 // indirect
@@ -277,6 +277,7 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
 	github.com/mattn/go-sqlite3 v1.14.22 // indirect
+	github.com/maypok86/otter v1.2.1 // indirect
 	github.com/microsoft/go-mssqldb v1.6.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826 // indirect
@@ -297,7 +298,7 @@ require (
 	github.com/prometheus/procfs v0.12.0 // indirect
 	github.com/quic-go/qpack v0.4.0 // indirect
 	github.com/quic-go/quic-go v0.41.0 // indirect
-	github.com/redis/rueidis/rueidiscompat v1.0.43 // indirect
+	github.com/redis/rueidis/rueidiscompat v1.0.44 // indirect
 	github.com/refraction-networking/utls v1.6.3 // indirect
 	github.com/richardlehane/mscfb v1.0.4 // indirect
 	github.com/richardlehane/msoleps v1.0.3 // indirect
