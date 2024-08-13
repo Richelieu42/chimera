@@ -4,6 +4,7 @@ import (
 	"testing"
 )
 
+// 输出到: 控制台
 func TestNewStdoutLogger(t *testing.T) {
 	logger0 := NewStdoutLogger("")
 	logger0.Println(0)
@@ -21,9 +22,10 @@ func TestNewStdoutLogger(t *testing.T) {
 	*/
 }
 
+// 输出到: 文件
 func TestNewFileLogger(t *testing.T) {
-	//logger, err := NewFileLogger("_test.log", "[TEST] ", 0644)
-	logger, err := NewFileLogger("_test.log", "", 0644)
+	logger, err := NewFileLogger("_test.log", "[TEST] ", 0644)
+	//logger, err := NewFileLogger("_test.log", "", 0644)
 	if err != nil {
 		panic(err)
 	}
