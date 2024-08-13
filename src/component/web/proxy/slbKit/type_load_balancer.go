@@ -5,10 +5,13 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/cronKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"github.com/robfig/cron/v3"
 	"go.uber.org/atomic"
 	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 	"net/http"
+	"strings"
 	"sync"
 )
 
@@ -161,8 +164,13 @@ func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) (e
 	defer func() {
 		if err != nil {
 			lb.logger.Error("Fail to handle request.", zap.Error(err))
+		} else {
+
 		}
 	}()
+
+	sb := &strings.Builder{}
+	debugFlag := zapKit.CanLoggerPrintSpecifiedLevel(lb.logger, zapcore.DebugLevel)
 
 	switch lb.status {
 	case StatusInitialized:

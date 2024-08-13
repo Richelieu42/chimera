@@ -1,8 +1,24 @@
 package logKit
 
 import (
+	"log"
+	"os"
 	"testing"
 )
+
+// 输出不带日期
+func TestNewLogger(t *testing.T) {
+	//flag := log.Ldate | log.Ltime | log.Lmicroseconds | log.Lshortfile
+	flag := log.Ltime | log.Lmicroseconds | log.Lshortfile
+	logger := NewLogger(os.Stdout, "", flag)
+	logger.Println("hello")
+	logger.Println("world")
+
+	/*
+		13:58:00.063515 logger_test.go:13: hello
+		13:58:00.063693 logger_test.go:14: world
+	*/
+}
 
 // 输出到: 控制台
 func TestNewStdoutLogger(t *testing.T) {

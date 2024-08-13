@@ -10,9 +10,11 @@ import (
 
 // NewLogger
 /*
-@param flag e.g. os.O_CREATE|os.O_WRONLY|os.O_APPEND
+   @param flag e.g. os.O_CREATE|os.O_WRONLY|os.O_APPEND
 */
-var NewLogger func(out io.Writer, prefix string, flag int) *log.Logger = log.New
+func NewLogger(out io.Writer, prefix string, flag int) *log.Logger {
+	return log.New(out, prefix, flag)
+}
 
 // NewStdoutLogger 输出到控制台（os.Stdout）.
 func NewStdoutLogger(prefix string) *log.Logger {
