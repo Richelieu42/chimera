@@ -10,4 +10,6 @@ var (
 	AlreadyDisposedError = errorKit.Newf("already disposed")
 
 	NoAccessBackendError = errorKit.Newf("no access backend")
+
+	NoBackendAddedError = errorKit.Newf("no backend added")
 )

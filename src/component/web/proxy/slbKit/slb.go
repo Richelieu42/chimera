@@ -5,6 +5,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
 
 // NewLoadBalancer
@@ -15,7 +16,10 @@ PS: 返回的*LoadBalancer实例，需要手动调用 Start 以启动.
 */
 func NewLoadBalancer(logger *zap.Logger) (lb *LoadBalancer) {
 	if logger == nil {
-		logger = zapKit.NewLogger(nil)
+		encoder := zapKit.NewEncoder(zapKit.WithEncoderMessagePrefix("[SLB] "))
+		ws := zapKit.LockedWriteSyncerStdout
+		core := zapKit.NewCore(encoder, ws, zapcore.DebugLevel)
+		logger = zapKit.NewLogger(core)
 	}
 
 	lb = &LoadBalancer{

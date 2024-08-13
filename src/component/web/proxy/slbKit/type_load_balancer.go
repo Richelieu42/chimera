@@ -12,6 +12,10 @@ import (
 	"sync"
 )
 
+// LoadBalancer 负载均衡器.
+/*
+!!!: 创建实例后，需要先调用 Start.
+*/
 type LoadBalancer struct {
 	*mutexKit.RWMutex
 
@@ -68,11 +72,11 @@ func (lb *LoadBalancer) nextIndex() int64 {
 	return lb.current.Inc()
 }
 
-// compareAndSwapIndex
+// casIndex
 /*
 PS: 此方法无需加锁.
 */
-func (lb *LoadBalancer) compareAndSwapIndex(old, new int64) {
+func (lb *LoadBalancer) casIndex(old, new int64) {
 	_ = lb.current.CompareAndSwap(old, new)
 }
 
@@ -130,22 +134,47 @@ func (lb *LoadBalancer) Start() error {
 	}
 	c.Start() // 不阻塞
 	lb.c = c
+
+	lb.logger.Info("Started.")
+
 	return nil
 }
 
 // Dispose 手动中止.
 func (lb *LoadBalancer) Dispose() {
 	/* 写锁 */
-	lb.LockFunc(func() {
+	lb.Lock()
+	defer lb.Unlock()
+
+	if lb.status != StatusDisposed {
 		cronKit.StopCron(lb.c)
 
 		lb.backends = nil
 		lb.c = nil
 		lb.status = StatusDisposed
-	})
+
+		lb.logger.Warn("Disposed.")
+	}
 }
 
-func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) error {
+func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) (err error) {
+	defer func() {
+		if err != nil {
+			lb.logger.Error("Fail to handle request.", zap.Error(err))
+		}
+	}()
+
+	switch lb.status {
+	case StatusInitialized:
+		return HaveNotBeenStartedError
+	case StatusStarted:
+		// do nothing
+	case StatusDisposed:
+		return AlreadyDisposedError
+	default:
+		return errorKit.Newf("invalid status: %s", lb.status)
+	}
+
 	if err := r.Context().Err(); err != nil {
 		// 请求已经被取消
 		return err
@@ -155,8 +184,11 @@ func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) er
 	lb.RLock()
 	defer lb.RUnlock()
 
-	start := lb.nextIndex()
 	length := int64(len(lb.backends))
+	if length == 0 {
+		return NoBackendAddedError
+	}
+	start := lb.nextIndex()
 	limit := start + length
 	for i := start; i < limit; i++ {
 		idx := i % length
@@ -182,7 +214,7 @@ func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) er
 			当满足条件时（即某次代理，最前面的后端服务不可用的情况下），尝试手动更新index.
 		*/
 		if i != start {
-			lb.compareAndSwapIndex(start, i)
+			lb.casIndex(start, i)
 		}
 		return nil
 	}
