@@ -20,8 +20,8 @@ func StringToLevel(str string) (zapcore.Level, error) {
 	return zapcore.ParseLevel(str)
 }
 
-// CanPrintSpecifiedLevel logger是否会打印 指定级别lv 的日志？
-func CanPrintSpecifiedLevel(logger *zap.Logger, lv zapcore.Level) bool {
+// CanLoggerPrintSpecifiedLevel logger能否打印 指定级别lv 的日志？
+func CanLoggerPrintSpecifiedLevel(logger *zap.Logger, lv zapcore.Level) bool {
 	if logger == nil {
 		return false
 	}
