@@ -26,6 +26,6 @@ func CanLoggerPrintSpecifiedLevel(logger *zap.Logger, lv zapcore.Level) bool {
 		return false
 	}
 
-	// 指定级别lv 只要大于等于 logger的级别，日志就会输出
+	// 指定级别lv 大于等于 logger的级别，对应日志就会输出
 	return lv >= logger.Level()
 }
