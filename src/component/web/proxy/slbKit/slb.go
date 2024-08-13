@@ -18,6 +18,8 @@ func NewLoadBalancer(logger *zap.Logger) (lb *LoadBalancer) {
 		logger = zapKit.NewLogger(nil)
 	}
 
+	logger.Level()
+
 	lb = &LoadBalancer{
 		RWMutex: &mutexKit.RWMutex{},
 
