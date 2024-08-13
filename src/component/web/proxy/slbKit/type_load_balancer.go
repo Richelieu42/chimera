@@ -1,17 +1,17 @@
 package slbKit
 
 import (
+	"bytes"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/proxy/forwardKit"
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/cronKit"
-	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/logKit"
 	"github.com/robfig/cron/v3"
 	"go.uber.org/atomic"
 	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
+	"log"
 	"net/http"
-	"strings"
 	"sync"
 )
 
@@ -169,8 +169,9 @@ func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) (e
 		}
 	}()
 
-	sb := &strings.Builder{}
-	debugFlag := zapKit.CanLoggerPrintSpecifiedLevel(lb.logger, zapcore.DebugLevel)
+	buf := &bytes.Buffer{}
+	log := logKit.NewLogger(buf, "", log.Ltime|log.Lmicroseconds|log.Lshortfile)
+	//debugFlag := zapKit.CanLoggerPrintSpecifiedLevel(lb.logger, zapcore.DebugLevel)
 
 	switch lb.status {
 	case StatusInitialized:

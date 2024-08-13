@@ -1,12 +1,14 @@
 package logKit
 
 import (
+	"bytes"
+	"fmt"
 	"log"
 	"os"
 	"testing"
 )
 
-// 输出不带日期
+// 输出的日志不带日期
 func TestNewLogger(t *testing.T) {
 	//flag := log.Ldate | log.Ltime | log.Lmicroseconds | log.Lshortfile
 	flag := log.Ltime | log.Lmicroseconds | log.Lshortfile
@@ -18,6 +20,17 @@ func TestNewLogger(t *testing.T) {
 		13:58:00.063515 logger_test.go:13: hello
 		13:58:00.063693 logger_test.go:14: world
 	*/
+}
+
+// 输出到: 指定io.Writer实例
+func TestNewLogger1(t *testing.T) {
+	buf := &bytes.Buffer{}
+	logger := NewLogger(buf, "", log.Ltime|log.Lmicroseconds|log.Lshortfile)
+
+	logger.Println("hello")
+	logger.Println("world")
+	fmt.Println("---")
+	fmt.Println(buf.String())
 }
 
 // 输出到: 控制台
