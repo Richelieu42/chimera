@@ -22,7 +22,9 @@ import (
 type LoadBalancer struct {
 	*mutexKit.RWMutex
 
-	logger   *zap.Logger
+	logger        *zap.Logger
+	sugaredLogger *zap.SugaredLogger
+
 	backends []*Backend
 
 	// current 当前的下标
@@ -45,17 +47,19 @@ type LoadBalancer struct {
 	status Status
 }
 
-func (lb *LoadBalancer) AddBackend(backend *Backend) (err error) {
-	if backend == nil {
+func (lb *LoadBalancer) AddBackend(be *Backend) (err error) {
+	if be == nil {
 		return
 	}
+	be.logger = lb.logger
+	be.sugaredLogger = lb.sugaredLogger
 
 	/* 写锁 */
 	lb.LockFunc(func() {
 		switch lb.status {
 		case StatusInitialized, StatusStarted:
 			// 允许添加后端服务
-			lb.backends = append(lb.backends, backend)
+			lb.backends = append(lb.backends, be)
 		case StatusDisposed:
 			err = AlreadyDisposedError
 		default:
@@ -161,17 +165,17 @@ func (lb *LoadBalancer) Dispose() {
 }
 
 func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) (err error) {
+	details := &bytes.Buffer{}
+	detailLogger := logKit.NewLogger(details, "", log.Ltime|log.Lmicroseconds|log.Lshortfile)
+	//debugFlag := zapKit.CanLoggerPrintSpecifiedLevel(lb.logger, zapcore.DebugLevel)
+
 	defer func() {
 		if err != nil {
-			lb.logger.Error("Fail to handle request.", zap.Error(err))
+			lb.sugaredLogger.Errorf("Fail to handle request, error: %s\ndetails:\n%s", err.Error(), details.String())
 		} else {
-
+			lb.sugaredLogger.Infof("Succeed to handle request, details:\n%s", details.String())
 		}
 	}()
-
-	buf := &bytes.Buffer{}
-	log := logKit.NewLogger(buf, "", log.Ltime|log.Lmicroseconds|log.Lshortfile)
-	//debugFlag := zapKit.CanLoggerPrintSpecifiedLevel(lb.logger, zapcore.DebugLevel)
 
 	switch lb.status {
 	case StatusInitialized:
@@ -203,18 +207,21 @@ func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) (e
 		idx := i % length
 		be := lb.backends[idx]
 		if !be.IsAlive() {
-			/* (1) 找到的服务不可用，继续1找 */
+			/* (1) 找到的服务不可用，继续找 */
+			detailLogger.Printf("(%d/%d, %s) Not alive, continue...", idx+1, length, be.String())
 			continue
 		}
 		err := be.HandleRequest(w, r)
 		if err != nil {
 			if forwardKit.IsInterruptedError(err) {
 				/* (2) 请求被中断了 */
+				detailLogger.Printf("(%d/%d, %s) Request is interrupted, end.", idx+1, length, be.String())
 				return err
 			}
 			/* (3) 当前找到的后端服务有问题，继续找 */
 			// TODO: 加上日志输出
 			be.Disable()
+			detailLogger.Printf("(%d/%d, %s) Fail to proxy with error(%s), continue...", idx+1, length, be.String(), err.Error())
 			continue
 		}
 		/* (4) 代理请求成功 */
@@ -225,6 +232,7 @@ func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) (e
 		if i != start {
 			lb.casIndex(start, i)
 		}
+		detailLogger.Printf("(%d/%d, %s) Succeed to proxy, end.", idx+1, length, be.String())
 		return nil
 	}
 	/* (5) 无可用后端服务 */

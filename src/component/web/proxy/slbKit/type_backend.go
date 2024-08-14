@@ -5,6 +5,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/netKit"
+	"go.uber.org/zap"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
@@ -14,6 +15,9 @@ import (
 // Backend 后端节点.
 type Backend struct {
 	mutexKit.Mutex
+
+	logger        *zap.Logger
+	sugaredLogger *zap.SugaredLogger
 
 	// alive 当前节点是否可用？
 	alive        bool
@@ -79,4 +83,11 @@ func (be *Backend) HealthCheck() {
 
 func (be *Backend) HandleRequest(w http.ResponseWriter, r *http.Request) error {
 	return forwardKit.ForwardByReverseProxy(w, r, be.reverseProxy)
+}
+
+func (be *Backend) String() string {
+	if be == nil {
+		return "null"
+	}
+	return be.u.String()
 }

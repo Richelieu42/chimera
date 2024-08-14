@@ -19,16 +19,17 @@ func NewLoadBalancer(logger *zap.Logger) (lb *LoadBalancer) {
 		encoder := zapKit.NewEncoder(zapKit.WithEncoderMessagePrefix("[SLB] "))
 		ws := zapKit.LockedWriteSyncerStdout
 		core := zapKit.NewCore(encoder, ws, zapcore.DebugLevel)
-		logger = zapKit.NewLogger(core)
+		logger = zapKit.NewLogger(core, zapKit.WithAddStacktrace(zapcore.DPanicLevel))
 	}
 
 	lb = &LoadBalancer{
 		RWMutex: &mutexKit.RWMutex{},
 
-		logger:   logger,
-		backends: nil,
-		current:  atomicKit.NewInt64(-1),
-		status:   StatusInitialized,
+		logger:        logger,
+		sugaredLogger: logger.Sugar(),
+		backends:      nil,
+		current:       atomicKit.NewInt64(-1),
+		status:        StatusInitialized,
 	}
 	return
 }

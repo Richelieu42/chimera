@@ -1,6 +1,7 @@
 package slbKit
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v3/src/netKit"
 	"net/http"
@@ -10,16 +11,16 @@ import (
 
 // 访问url: http://127.0.0.1:80/test
 func TestNewLoadBalancer(t *testing.T) {
-	//go func() {
-	//	port := 8000
-	//	engine := gin.Default()
-	//	engine.Any("/test", func(ctx *gin.Context) {
-	//		ctx.String(200, fmt.Sprintf("[%d] Hello world!", port))
-	//	})
-	//	if err := engine.Run(netKit.JoinToHost("", port)); err != nil {
-	//		panic(err)
-	//	}
-	//}()
+	go func() {
+		port := 8000
+		engine := gin.Default()
+		engine.Any("/test", func(ctx *gin.Context) {
+			ctx.String(200, fmt.Sprintf("[%d] Hello world!", port))
+		})
+		if err := engine.Run(netKit.JoinToHost("", port)); err != nil {
+			panic(err)
+		}
+	}()
 	//go func() {
 	//	port := 8001
 	//	engine := gin.Default()
@@ -30,16 +31,16 @@ func TestNewLoadBalancer(t *testing.T) {
 	//		panic(err)
 	//	}
 	//}()
-	//go func() {
-	//	port := 8002
-	//	engine := gin.Default()
-	//	engine.Any("/test", func(ctx *gin.Context) {
-	//		ctx.String(200, fmt.Sprintf("[%d] Hello world!", port))
-	//	})
-	//	if err := engine.Run(netKit.JoinToHost("", port)); err != nil {
-	//		panic(err)
-	//	}
-	//}()
+	go func() {
+		port := 8002
+		engine := gin.Default()
+		engine.Any("/test", func(ctx *gin.Context) {
+			ctx.String(200, fmt.Sprintf("[%d] Hello world!", port))
+		})
+		if err := engine.Run(netKit.JoinToHost("", port)); err != nil {
+			panic(err)
+		}
+	}()
 
 	time.Sleep(time.Second * 3)
 

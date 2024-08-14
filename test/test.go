@@ -1,5 +1,7 @@
 package main
 
+import "log"
+
 func main() {
 	//log.Println("hello world")
 	//
@@ -7,4 +9,7 @@ func main() {
 	//sb.WriteString("hello\n")
 	//sb.WriteString("world\n")
 	//fmt.Println(sb.String())
+
+	log.Printf("hello %s", "world")
+	log.Printf("hello %s", "world")
 }
