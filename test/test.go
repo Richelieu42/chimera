@@ -1,15 +1,18 @@
 package main
 
-import "log"
+import (
+	"fmt"
+	"github.com/samber/lo"
+)
 
 func main() {
-	//log.Println("hello world")
+	fmt.Println(lo.Substring("hello", -1, 1))
 	//
-	//sb := &strings.Builder{}
-	//sb.WriteString("hello\n")
-	//sb.WriteString("world\n")
-	//fmt.Println(sb.String())
-
-	log.Printf("hello %s", "world")
-	log.Printf("hello %s", "world")
+	//result1 := lo.Substring("hello", 2, 3)
+	//result2 := lo.Substring("hello", -4, 3)
+	//result3 := lo.Substring("hello", -2, math.MaxUint)
+	//
+	//fmt.Printf("%v\n", result1)
+	//fmt.Printf("%v\n", result2)
+	//fmt.Printf("%v\n", result3)
 }

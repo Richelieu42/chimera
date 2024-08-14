@@ -3,6 +3,15 @@ package strKit
 import "github.com/samber/lo"
 
 // Substring Return part of a string.
+/*
+@param offset 开始下标（甚至可以<0, -1: 最后一个字符）
+
+e.g.
+	("hello", -1, 1)			=> "o"
+	("hello", 2, 3)				=> "llo"
+	("hello", -4, 3)			=> "ell"
+	("hello", -2, math.MaxUint)	=> "lo"
+*/
 func Substring[T ~string](str T, offset int, length uint) T {
 	return lo.Substring(str, offset, length)
 }
