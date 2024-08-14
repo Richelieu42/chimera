@@ -3,16 +3,14 @@ package main
 import (
 	"fmt"
 	"github.com/samber/lo"
+	"math"
 )
 
 func main() {
-	fmt.Println(lo.Substring("hello", -1, 1))
-	//
-	//result1 := lo.Substring("hello", 2, 3)
-	//result2 := lo.Substring("hello", -4, 3)
-	//result3 := lo.Substring("hello", -2, math.MaxUint)
-	//
-	//fmt.Printf("%v\n", result1)
-	//fmt.Printf("%v\n", result2)
-	//fmt.Printf("%v\n", result3)
+	fmt.Println(lo.Elipse("Richelieu", 0))
+	fmt.Println(lo.Elipse("Richelieu", 1))
+	fmt.Println(lo.Elipse("Richelieu", 2))
+	fmt.Println(lo.Elipse("Richelieu", 3))
+	fmt.Println(lo.Elipse("Richelieu", 5))
+	fmt.Println(lo.Elipse("Richelieu", math.MaxInt))
 }
