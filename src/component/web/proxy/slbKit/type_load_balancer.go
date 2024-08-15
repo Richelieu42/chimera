@@ -22,8 +22,7 @@ import (
 type LoadBalancer struct {
 	*mutexKit.RWMutex
 
-	logger        *zap.Logger
-	sugaredLogger *zap.SugaredLogger
+	logger *zap.Logger
 
 	backends []*Backend
 
@@ -52,7 +51,6 @@ func (lb *LoadBalancer) AddBackend(be *Backend) (err error) {
 		return
 	}
 	be.logger = lb.logger
-	be.sugaredLogger = lb.sugaredLogger
 
 	/* 写锁 */
 	lb.LockFunc(func() {
@@ -171,9 +169,9 @@ func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) (e
 
 	defer func() {
 		if err != nil {
-			lb.sugaredLogger.Errorf("Fail to handle request, error: %s\ndetails:\n%s", err.Error(), details.String())
+			lb.logger.Sugar().Errorf("Fail to handle request, error: %s\ndetails:\n%s", err.Error(), details.String())
 		} else {
-			lb.sugaredLogger.Infof("Succeed to handle request, details:\n%s", details.String())
+			lb.logger.Sugar().Infof("Succeed to handle request, details:\n%s", details.String())
 		}
 	}()
 
@@ -219,8 +217,7 @@ func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) (e
 				return err
 			}
 			/* (3) 当前找到的后端服务有问题，继续找 */
-			// TODO: 加上日志输出
-			be.Disable()
+			be.Disable("fail to forward request, error: %s", err.Error())
 			detailLogger.Printf("(%d/%d, %s) Fail to proxy with error(%s), continue...", idx+1, length, be.String(), err.Error())
 			continue
 		}

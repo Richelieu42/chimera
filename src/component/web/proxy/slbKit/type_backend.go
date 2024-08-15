@@ -1,6 +1,7 @@
 package slbKit
 
 import (
+	"fmt"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/proxy/forwardKit"
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
@@ -16,8 +17,7 @@ import (
 type Backend struct {
 	mutexKit.Mutex
 
-	logger        *zap.Logger
-	sugaredLogger *zap.SugaredLogger
+	logger *zap.Logger
 
 	// alive 当前节点是否可用？
 	alive        bool
@@ -42,16 +42,27 @@ func NewBackend(urlStr string) (*Backend, error) {
 	}, nil
 }
 
-func (be *Backend) Enable() {
+func (be *Backend) Enable(reason string, a ...any) {
+	reason = fmt.Sprintf(reason, a...)
+
 	/* 锁 */
 	be.LockFunc(func() {
+		if be.alive {
+			return
+		}
 		be.alive = true
+		be.logger.Info("")
 	})
 }
 
-func (be *Backend) Disable() {
+func (be *Backend) Disable(reason string, a ...any) {
+	reason = fmt.Sprintf(reason, a...)
+
 	/* 锁 */
 	be.LockFunc(func() {
+		if !be.alive {
+			return
+		}
 		be.alive = false
 	})
 }
@@ -74,11 +85,11 @@ func (be *Backend) HealthCheck() {
 
 	conn, err := netKit.DialTimeout("tcp", be.u.Host, timeout)
 	if err != nil {
-		be.Disable()
+		be.Disable("health check fails, error: %s", err.Error())
 		return
 	}
 	_ = conn.Close()
-	be.Enable()
+	be.Enable("health check succeeds")
 }
 
 func (be *Backend) HandleRequest(w http.ResponseWriter, r *http.Request) error {
