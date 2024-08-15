@@ -3,6 +3,7 @@ package slbKit
 import (
 	"bytes"
 	"fmt"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/proxy/forwardKit"
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
@@ -164,7 +165,16 @@ func (lb *LoadBalancer) Dispose() {
 func (lb *LoadBalancer) HandleRequest(w http.ResponseWriter, r *http.Request) (err error) {
 	details := &bytes.Buffer{}
 	detailLogger := logKit.NewLogger(details, "", log.Ltime|log.Lmicroseconds|log.Lshortfile)
-	//debugFlag := zapKit.CanLoggerPrintSpecifiedLevel(lb.logger, zapcore.DebugLevel)
+
+	/* 输出请求的信息，以便后续定位 */
+	//detailLogger.Printf("%s %s\n", r.Method, r.URL.String())
+	clientIp := httpKit.GetClientIP(r)
+	path := r.URL.Path
+	raw := r.URL.RawQuery
+	if raw != "" {
+		path = path + "?" + raw
+	}
+	detailLogger.Printf("client ip: %s, method: %s, path: %s", clientIp, r.Method, path)
 
 	defer func() {
 		if err != nil {

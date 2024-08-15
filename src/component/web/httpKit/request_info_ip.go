@@ -25,13 +25,13 @@ PS: 参考 gin's Context.RemoteIP().
 e.g.
 当客户端通过代理服务器连接时，RemoteIP() 返回代理服务器的 IP 地址
 */
-func GetRemoteIP(req *http.Request) string {
+func GetRemoteIP(r *http.Request) string {
 	//ctx := &gin.Context{
-	//	Request: req,
+	//	Request: r,
 	//}
 	//return ctx.RemoteIP()
 
-	ip, _, err := net.SplitHostPort(strings.TrimSpace(req.RemoteAddr))
+	ip, _, err := net.SplitHostPort(strings.TrimSpace(r.RemoteAddr))
 	if err != nil {
 		return ""
 	}
@@ -42,10 +42,10 @@ func GetRemoteIP(req *http.Request) string {
 /*
 PS: 参考 gin's Context.ClientIP().
 */
-func GetClientIP(req *http.Request) string {
-	ip := GetClientIPFromHeader(req)
+func GetClientIP(r *http.Request) string {
+	ip := GetClientIPFromHeader(r)
 	if strKit.IsEmpty(ip) {
-		ip = GetRemoteIP(req)
+		ip = GetRemoteIP(r)
 	}
 	return ip
 }
@@ -54,14 +54,14 @@ func GetClientIP(req *http.Request) string {
 /*
 PS: 参考 gin's Context.ClientIP().
 */
-func GetClientIPFromHeader(req *http.Request) string {
+func GetClientIPFromHeader(r *http.Request) string {
 	//ctx := &gin.Context{
-	//	Request: req,
+	//	Request: r,
 	//}
 	//return ctx.ClientIP()
 
 	for _, headerName := range RemoteIPHeaders {
-		ip, valid := validateHeader(GetHeader(req.Header, headerName))
+		ip, valid := validateHeader(GetHeader(r.Header, headerName))
 		if valid {
 			return ip
 		}
