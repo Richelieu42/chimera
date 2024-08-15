@@ -2,6 +2,7 @@ package slbKit
 
 import (
 	"bytes"
+	"fmt"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/proxy/forwardKit"
 	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
@@ -85,32 +86,29 @@ func (lb *LoadBalancer) casIndex(old, new int64) {
 	_ = lb.current.CompareAndSwap(old, new)
 }
 
-// HealthCheck 对目前所有的后端服务，进行1次健康检查.
-func (lb *LoadBalancer) HealthCheck() {
+// healthCheck 对目前所有的后端服务，进行 1次 健康检查.
+func (lb *LoadBalancer) healthCheck() {
 	/* 读锁 */
-	lb.RLockFunc(func() {
-		// 只有 StatusStarted 情况下，才会进行健康检查
-		switch lb.status {
-		case StatusInitialized:
-			return
-		case StatusStarted:
-			// do nothing
-		case StatusDisposed:
-			return
-		default:
-			return
-		}
+	lb.RLock()
+	defer lb.RUnlock()
 
-		var wg sync.WaitGroup
-		for _, backend := range lb.backends {
-			wg.Add(1)
-			go func() {
-				defer wg.Done()
-				backend.HealthCheck()
-			}()
-		}
-		wg.Wait()
-	})
+	lb.logger.Info("Health check starts.")
+	// 只有 StatusStarted 情况下，才会进行健康检查
+	if lb.status != StatusStarted {
+		lb.logger.Error("Health check is interrupted.", zap.String("status", string(lb.status)))
+		return
+	}
+	defer lb.logger.Info("Health check ends.")
+
+	var wg sync.WaitGroup
+	for _, backend := range lb.backends {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			backend.HealthCheck()
+		}()
+	}
+	wg.Wait()
 }
 
 // Start 手动启动.
@@ -130,9 +128,10 @@ func (lb *LoadBalancer) Start() error {
 		return errorKit.Newf("invalid status: %s", lb.status)
 	}
 
-	/* 以10s为周期，对所有后端服务进行健康检查 */
-	c, _, err := cronKit.NewCronWithTask("@every 10s", func() {
-		lb.HealthCheck()
+	/* 以 10s 为周期，对所有后端服务进行健康检查 */
+	spec := fmt.Sprintf("@every %s", HealthCheckInterval.String())
+	c, _, err := cronKit.NewCronWithTask(spec, func() {
+		lb.healthCheck()
 	})
 	if err != nil {
 		return err

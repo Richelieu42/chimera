@@ -10,7 +10,6 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"net/url"
-	"time"
 )
 
 // Backend 后端节点.
@@ -51,7 +50,7 @@ func (be *Backend) Enable(reason string, a ...any) {
 			return
 		}
 		be.alive = true
-		be.logger.Info("")
+		be.logger.Info("Backend is [enable].", zap.String("backend", be.String()), zap.String("reason", reason))
 	})
 }
 
@@ -64,6 +63,7 @@ func (be *Backend) Disable(reason string, a ...any) {
 			return
 		}
 		be.alive = false
+		be.logger.Warn("Backend is [disable].", zap.String("backend", be.String()), zap.String("reason", reason))
 	})
 }
 
@@ -80,10 +80,7 @@ func (be *Backend) IsAlive() (alive bool) {
 @return 后端服务是否可用？
 */
 func (be *Backend) HealthCheck() {
-	// 最多检查3s
-	timeout := 3 * time.Second
-
-	conn, err := netKit.DialTimeout("tcp", be.u.Host, timeout)
+	conn, err := netKit.DialTimeout("tcp", be.u.Host, HealthCheckTimeout)
 	if err != nil {
 		be.Disable("health check fails, error: %s", err.Error())
 		return

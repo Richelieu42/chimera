@@ -25,11 +25,10 @@ func NewLoadBalancer(logger *zap.Logger) (lb *LoadBalancer) {
 	lb = &LoadBalancer{
 		RWMutex: &mutexKit.RWMutex{},
 
-		logger:        logger,
-		sugaredLogger: logger.Sugar(),
-		backends:      nil,
-		current:       atomicKit.NewInt64(-1),
-		status:        StatusInitialized,
+		logger:   logger,
+		backends: nil,
+		current:  atomicKit.NewInt64(-1),
+		status:   StatusInitialized,
 	}
 	return
 }
