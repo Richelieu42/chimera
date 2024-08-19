@@ -1,4 +1,6 @@
-## 参考
-- [pdfcpu](https://github.com/pdfcpu/pdfcpu)
+## pdfcpu/pdfcpu
+
+- [github](https://github.com/pdfcpu/pdfcpu)
+- [pdfcpu命令说明](https://pdfcpu.io/core/merge)
 
 
