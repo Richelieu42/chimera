@@ -30,7 +30,7 @@ require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-kratos/kratos/v2 v2.8.0
 	github.com/go-oauth2/oauth2/v4 v4.5.2
-	github.com/go-pay/gopay v1.5.103
+	github.com/go-pay/gopay v1.5.104
 	github.com/go-playground/validator/v10 v10.22.0
 	github.com/go-redsync/redsync/v4 v4.13.0
 	github.com/goccy/go-json v0.10.3
