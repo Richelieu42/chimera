@@ -42,7 +42,7 @@ require (
 	github.com/google/wire v0.6.0
 	github.com/gorilla/context v1.1.2
 	github.com/gorilla/securecookie v1.1.2
-	github.com/gorilla/sessions v1.3.0
+	github.com/gorilla/sessions v1.4.0
 	github.com/gorilla/websocket v1.5.3
 	github.com/h2non/bimg v1.1.9
 	github.com/hashicorp/consul/api v1.29.2
