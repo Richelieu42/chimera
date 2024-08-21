@@ -8,7 +8,7 @@ import (
 
 // ExtractImagesFile 导出pdf文件中的图片.
 /*
-!!!: pdfcpu 库仅支持提取原始嵌入的图像。如果图像经过压缩或编码，则可能无法提取。
+!!!: pdfcpu 库仅支持提取原始嵌入的图像（如果图像经过压缩或编码，则可能无法提取）.
 
 @param outDir			输出目录
 @param selectedPages	可以为nil，即该pdf文件的所有页
