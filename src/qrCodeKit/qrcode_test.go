@@ -9,7 +9,7 @@ import (
 func TestWriteFile(t *testing.T) {
 	content := "https://example.org"
 
-	err := WriteFile(content, qrcode.Medium, 256, "_qr.png")
+	err := WriteFile(content, qrcode.Medium, 256, "_test-qr.png")
 	if err != nil {
 		panic(err)
 	}
@@ -18,7 +18,7 @@ func TestWriteFile(t *testing.T) {
 func TestWriteColorFile(t *testing.T) {
 	content := "https://example.org"
 
-	err := WriteColorFile(content, qrcode.Medium, 256, color.Transparent, color.Black, "_qr1.png")
+	err := WriteColorFile(content, qrcode.Medium, 256, color.Transparent, color.Black, "_test-qr1.png")
 	if err != nil {
 		panic(err)
 	}
