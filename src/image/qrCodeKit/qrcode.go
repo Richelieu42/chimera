@@ -1,6 +1,7 @@
 package qrCodeKit
 
 import (
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
 	"github.com/skip2/go-qrcode"
 	"image/color"
@@ -11,6 +12,11 @@ import (
 @param level 一般使用 qrcode.Medium
 */
 func Encode(content string, level qrcode.RecoveryLevel, size int) ([]byte, error) {
+	/* content */
+	if err := strKit.AssertNotEmpty(content, "content"); err != nil {
+		return nil, err
+	}
+
 	return qrcode.Encode(content, level, size)
 }
 
@@ -26,6 +32,11 @@ PS: 背景色默认为白色（非透明），前景色默认为黑色.
 						(3) 生成图片的背景色是白色而非透明，即使保存为 .png 格式
 */
 func WriteFile(content string, level qrcode.RecoveryLevel, size int, outputImagePath string) error {
+	/* content */
+	if err := strKit.AssertNotEmpty(content, "content"); err != nil {
+		return err
+	}
+	/* outputImagePath */
 	if err := fileKit.AssertNotExistOrIsFile(outputImagePath); err != nil {
 		return err
 	}
@@ -42,6 +53,11 @@ func WriteFile(content string, level qrcode.RecoveryLevel, size int, outputImage
 @param foreground 前景色（一般为 color.Black）
 */
 func WriteColorFile(content string, level qrcode.RecoveryLevel, size int, background, foreground color.Color, outputImagePath string) error {
+	/* content */
+	if err := strKit.AssertNotEmpty(content, "content"); err != nil {
+		return err
+	}
+	/* outputImagePath */
 	if err := fileKit.AssertNotExistOrIsFile(outputImagePath); err != nil {
 		return err
 	}
@@ -52,7 +68,16 @@ func WriteColorFile(content string, level qrcode.RecoveryLevel, size int, backgr
 	return qrcode.WriteColorFile(content, level, size, background, foreground, outputImagePath)
 }
 
+// WriteFileWithBackgroundImage
+/*
+@param size 二维码的尺寸，如果<=0，则自适应（取背景图片宽高的最小值）
+*/
 func WriteFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, size int, backgroundImagePath string, foreground color.Color, outputImagePath string) error {
+	/* content */
+	if err := strKit.AssertNotEmpty(content, "content"); err != nil {
+		return err
+	}
+	/* outputImagePath */
 	if err := fileKit.AssertNotExistOrIsFile(outputImagePath); err != nil {
 		return err
 	}
