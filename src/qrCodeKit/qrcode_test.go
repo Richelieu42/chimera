@@ -9,7 +9,7 @@ import (
 func TestWriteFile(t *testing.T) {
 	content := "https://example.org"
 
-	err := WriteFile(content, qrcode.Medium, 256, "_test-qr.png")
+	err := WriteFile(content, qrcode.Medium, 256, "_test-qr0.png")
 	if err != nil {
 		panic(err)
 	}
