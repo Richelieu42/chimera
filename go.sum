@@ -777,8 +777,8 @@ github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA
 github.com/census-instrumentation/opencensus-proto v0.3.0/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
 github.com/census-instrumentation/opencensus-proto v0.4.1 h1:iKLQ0xPNFxR/2hzXZMrBo8f1j86j5WHzznCCQxV/b8g=
 github.com/census-instrumentation/opencensus-proto v0.4.1/go.mod h1:4T9NM4+4Vw91VeyqjLS6ao50K5bOcLKN6Q42XnYaRYw=
-github.com/centrifugal/centrifuge v0.33.2 h1:MvjHKFG8XFUuv53nlzT/2KI3FR5ypOLpfTkb8Xyx61w=
-github.com/centrifugal/centrifuge v0.33.2/go.mod h1:BdSv7Ro2IUABxTrJHWzTfT+jxqW4bIpPqoQ/gBqrvUU=
+github.com/centrifugal/centrifuge v0.33.3 h1:uyqBc27oM+qnC3NX5imvZxuk9+u2ze6QGWHDICZeoSc=
+github.com/centrifugal/centrifuge v0.33.3/go.mod h1:GaOF4CiREY5x6lW7zYUz46Qrc6aUZ6J/AMV/kROc2+U=
 github.com/centrifugal/gocent/v3 v3.3.0 h1:xVkqMMtBiGcvV3OGqlTlayWdJoorNoVBQ3X9THKLe14=
 github.com/centrifugal/gocent/v3 v3.3.0/go.mod h1:8YWDQG3sX0X1g+BaotihbhawPs6zyYGUxUEk8Ng5a2g=
 github.com/centrifugal/protocol v0.13.4 h1:I0YxXtFNfn/ndDIZp5RkkqQcSSNH7DNPUbXKYtJXDzs=
@@ -1526,8 +1526,8 @@ github.com/mattn/go-sqlite3 v1.14.22 h1:2gZY6PC6kBnID23Tichd1K+Z0oS6nE/XwU+Vz/5o
 github.com/mattn/go-sqlite3 v1.14.22/go.mod h1:Uh1q+B4BYcTPb+yiD3kU8Ct7aC0hY9fxUwlHK0RXw+Y=
 github.com/matttproud/golang_protobuf_extensions v1.0.1/go.mod h1:D8He9yQNgCq6Z5Ld7szi9bcBfOoFv/3dc6xSMkL2PC0=
 github.com/matttproud/golang_protobuf_extensions v1.0.4/go.mod h1:BSXmuO+STAnVfrANrmjBb36TMTDstsz7MSK+HVaYKv4=
-github.com/maypok86/otter v1.2.1 h1:xyvMW+t0vE1sKt/++GTkznLitEl7D/msqXkAbLwiC1M=
-github.com/maypok86/otter v1.2.1/go.mod h1:mKLfoI7v1HOmQMwFgX4QkRk23mX6ge3RDvjdHOWG4R4=
+github.com/maypok86/otter v1.2.2 h1:jJi0y8ruR/ZcKmJ4FbQj3QQTqKwV+LNrSOo2S1zbF5M=
+github.com/maypok86/otter v1.2.2/go.mod h1:mKLfoI7v1HOmQMwFgX4QkRk23mX6ge3RDvjdHOWG4R4=
 github.com/mholt/archiver/v4 v4.0.0-alpha.8 h1:tRGQuDVPh66WCOelqe6LIGh0gwmfwxUrSSDunscGsRM=
 github.com/mholt/archiver/v4 v4.0.0-alpha.8/go.mod h1:5f7FUYGXdJWUjESffJaYR4R60VhnHxb2X3T1teMyv5A=
 github.com/microsoft/go-mssqldb v1.6.0 h1:mM3gYdVwEPFrlg/Dvr2DNVEgYFG7L42l+dGc67NNNpc=
@@ -2006,8 +2006,8 @@ github.com/zeebo/assert v1.3.0/go.mod h1:Pq9JiuJQpG8JLJdtkwrJESF0Foym2/D9XMU5ciN
 github.com/zeebo/xxh3 v1.0.2 h1:xZmwmqxHZA8AI603jOQ0tMqmBr9lPeFwGg6d+xy9DC0=
 github.com/zeebo/xxh3 v1.0.2/go.mod h1:5NWz9Sef7zIDm2JHfFlcQvNekmcEl9ekUZQQKCYaDcA=
 github.com/zeromicro/go-zero v1.5.4/go.mod h1:x/aUyLmSwRECvOyjOf+lhwThBOilJIY+s3slmPAeboA=
-github.com/zeromicro/go-zero v1.7.1 h1:2JNWRg/C91SPvY6tugSkBo2IrsfCfnnNjqcVFj9tCtA=
-github.com/zeromicro/go-zero v1.7.1/go.mod h1:WFXfF92Exw0O7WECifS6r99JSzv4KEN49x9RhAfgkMc=
+github.com/zeromicro/go-zero v1.7.2 h1:a8lyVOG3KXG4LrAy6ZmtJTJtisX4Ostc4Pst4fE704I=
+github.com/zeromicro/go-zero v1.7.2/go.mod h1:WFXfF92Exw0O7WECifS6r99JSzv4KEN49x9RhAfgkMc=
 github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231030135404-af9ae855016f h1:v3YWLaJjbADXBAALbbWCAq0Pm/xewsbNKwFOpVUrm8s=
 github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231030135404-af9ae855016f/go.mod h1:Hb7FtkJ38KlXtnm/7tsu0U+RErxOxdAQkr0uzKgKWVA=
 go.etcd.io/etcd/api/v3 v3.5.0/go.mod h1:cbVKeC6lCfl7j/8jBhAK6aIYO9XOjdptoxU/nLQcPvs=
