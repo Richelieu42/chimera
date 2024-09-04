@@ -38,9 +38,8 @@
 /chimera-*
 /_temp
 
-# 忽略所有以 _test 开头的文件
+# 忽略所有以 _test 开头的文件和目录
 _test*
-# 忽略所有以 _test 开头的目录
 _test*/
 
 /src/component/web/ginKit/_temp/
