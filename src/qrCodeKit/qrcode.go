@@ -23,6 +23,7 @@ PS: 背景色默认为白色（非透明），前景色默认为黑色.
 @param outputImagePath 	输出图片的路径
 						(1) 如果存在且是个文件的话，会覆盖
 						(2) 建议是 .png 格式的
+						(3) 生成图片的背景色是白色而非透明，即使保存为 .png 格式
 */
 func WriteFile(content string, level qrcode.RecoveryLevel, size int, outputImagePath string) error {
 	if err := fileKit.AssertNotExistOrIsFile(outputImagePath); err != nil {
