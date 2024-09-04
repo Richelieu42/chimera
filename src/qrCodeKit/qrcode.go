@@ -35,6 +35,11 @@ func WriteFile(content string, level qrcode.RecoveryLevel, size int, outputImage
 	return qrcode.WriteFile(content, level, size, outputImagePath)
 }
 
+// WriteColorFile
+/*
+@param background 背景色（推荐使用透明色 color.Transparent，然后保存为.png格式的图片）
+@param foreground 前景色（一般为 color.Black）
+*/
 func WriteColorFile(content string, level qrcode.RecoveryLevel, size int, background, foreground color.Color, outputImagePath string) error {
 	if err := fileKit.AssertNotExistOrIsFile(outputImagePath); err != nil {
 		return err
