@@ -28,7 +28,7 @@ var (
 	// MainPkgPath returns absolute file path of package main, which contains the entrance function main.
 	MainPkgPath func() string = gfile.MainPkgPath
 
-	// ParentDir 返回文件（或目录）路径的父路径.
+	// ParentDir 返回文件（或目录）路径的父路径（父目录）.
 	/*
 	   PS: 类似于Java中的 getParentFile().
 	*/

@@ -23,3 +23,13 @@ func TestWriteColorFile(t *testing.T) {
 		panic(err)
 	}
 }
+
+func TestWriteFileWithBackgroundImage(t *testing.T) {
+	content := "https://example.org"
+	bgPath := "/Users/richelieu/Desktop/iShot_2024-09-04_13.51.58.PNG"
+
+	err := WriteFileWithBackgroundImage(content, qrcode.Medium, 1000, bgPath, color.Black, "_test-qr2.png")
+	if err != nil {
+		panic(err)
+	}
+}

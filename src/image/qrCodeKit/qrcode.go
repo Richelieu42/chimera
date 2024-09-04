@@ -1,10 +1,18 @@
 package qrCodeKit
 
 import (
+	"github.com/richelieu-yang/chimera/v3/src/core/mathKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
+	"github.com/richelieu-yang/chimera/v3/src/idKit"
+	"github.com/richelieu-yang/chimera/v3/src/image/imageKit"
 	"github.com/skip2/go-qrcode"
+	"image"
 	"image/color"
+	"image/draw"
+	"image/png"
+	"os"
 )
 
 // Encode 生成二维码([]byte类型).
@@ -85,5 +93,76 @@ func WriteFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, si
 		return err
 	}
 
-	return nil
+	/* backgroundImagePath */
+	if err := fileKit.AssertExistAndIsFile(backgroundImagePath); err != nil {
+		return err
+	}
+	bgFile, err := os.Open(backgroundImagePath)
+	if err != nil {
+		return err
+	}
+	bgImg, _, err := imageKit.Decode(bgFile)
+	if err != nil {
+		return err
+	}
+	bgBounds := bgImg.Bounds()
+	bgWidth := bgBounds.Dx()
+	bgHeight := bgBounds.Dy()
+
+	/* size */
+	if size <= 0 {
+		size = mathKit.Min(bgWidth, bgHeight)
+	}
+
+	/* 重新绘制 */
+	width := mathKit.Max(size, bgWidth)
+	height := mathKit.Max(size, bgHeight)
+	bounds := imageKit.NewRectangle(0, 0, width, height)
+	img := image.NewRGBA(bounds)
+
+	/* (1) 生成二维码文件 */
+	var qrImg image.Image
+	{
+		dirPath := pathKit.ParentDir(outputImagePath)
+		qrPath := pathKit.Join(dirPath, idKit.NewXid()+".png")
+		if err := WriteColorFile(content, level, size, color.Transparent, foreground, qrPath); err != nil {
+			return err
+		}
+		defer fileKit.Delete(qrPath)
+
+		f, err := os.Open(qrPath)
+		if err != nil {
+			return err
+		}
+		defer f.Close()
+		qrImg, _, err = imageKit.Decode(f)
+		if err != nil {
+			return err
+		}
+	}
+
+	/* (2) 先绘制背景图片 */
+	{
+		pt := image.Pt((width-bgWidth)/2, (height-bgHeight)/2)
+		tmpBounds := bgBounds.Add(pt)
+
+		draw.Draw(img, tmpBounds, bgImg, image.Point{}, draw.Src)
+	}
+
+	/* (3) 再绘制二维码 */
+	{
+		pt := image.Pt((width-size)/2, (height-size)/2)
+		tmpBounds := qrImg.Bounds().Add(pt)
+
+		draw.Draw(img, tmpBounds, qrImg, image.Point{}, draw.Over)
+	}
+
+	/* (4) 将合成后的图片保存为新文件 */
+	outFile, err := os.Create(outputImagePath)
+	if err != nil {
+		return err
+	}
+	defer outFile.Close()
+
+	return png.Encode(outFile, img)
 }
