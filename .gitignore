@@ -40,6 +40,8 @@
 
 # 忽略所有以 _test 开头的文件
 _test*
+# 忽略所有以 _test 开头的目录
+_test*/
 
 /src/component/web/ginKit/_temp/
 /src/office/excelKit/_test.xlsx
