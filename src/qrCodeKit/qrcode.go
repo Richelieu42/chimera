@@ -51,3 +51,14 @@ func WriteColorFile(content string, level qrcode.RecoveryLevel, size int, backgr
 
 	return qrcode.WriteColorFile(content, level, size, background, foreground, outputImagePath)
 }
+
+func WriteFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, size int, backgroundImagePath string, foreground color.Color, outputImagePath string) error {
+	if err := fileKit.AssertNotExistOrIsFile(outputImagePath); err != nil {
+		return err
+	}
+	if err := fileKit.MkParentDirs(outputImagePath); err != nil {
+		return err
+	}
+
+	return nil
+}
