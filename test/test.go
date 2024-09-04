@@ -20,5 +20,6 @@ func main() {
 		panic(err)
 	}
 	fmt.Println(tmp)
-	fmt.Println(img.Bounds().String())
+	fmt.Println("width:", img.Bounds().Dx())
+	fmt.Println("height", img.Bounds().Dy())
 }

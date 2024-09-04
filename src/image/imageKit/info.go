@@ -9,22 +9,38 @@ import (
 	"golang.org/x/image/tiff"
 	"golang.org/x/image/webp"
 	"image"
-	"image/color"
 	"image/gif"
 	"image/jpeg"
 	"image/png"
 	"os"
 )
 
-type (
-	Info struct {
-		ExtName    string      `json:"extName"`
-		ColorModel color.Model `json:"colorModel"`
-
-		Width  int `json:"width"`
-		Height int `json:"height"`
+// GetSize 获取图片的宽和高.
+/*
+PS: 单位为像素（px）.
+*/
+func GetSize(path string) (width int, height int, err error) {
+	if err = fileKit.AssertExistAndIsFile(path); err != nil {
+		return
 	}
-)
+
+	imgFile, err := os.Open(path)
+	if err != nil {
+		err = errorKit.Wrapf(err, "fail to open")
+		return
+	}
+	defer imgFile.Close()
+
+	img, _, err := Decode(imgFile)
+	if err != nil {
+		err = errorKit.Wrapf(err, "fail decode")
+		return
+	}
+	bounds := img.Bounds()
+	width = bounds.Dx()
+	height = bounds.Dy()
+	return
+}
 
 // GetInfo 获取图片的信息（宽、高、后缀名）.
 /*

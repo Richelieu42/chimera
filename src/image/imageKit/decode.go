@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-// Decode 解码图片
+// Decode 解码图片（部分特殊格式不支持）.
 /*
 @param r 类型可以是: *os.File（用完记得调用Close()）
 @return 第1个: image.Image实例
