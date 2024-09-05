@@ -170,9 +170,11 @@ func WriteFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, si
 	defer outFile.Close()
 
 	if jpgFlag {
+		// 将图片保存为 jpg 文件
 		return jpeg.Encode(outFile, img, &jpeg.Options{
 			Quality: jpeg.DefaultQuality,
 		})
 	}
+	// 将图片保存为 png 文件
 	return png.Encode(outFile, img)
 }
