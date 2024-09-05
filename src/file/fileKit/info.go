@@ -9,8 +9,12 @@ import (
 
 var (
 	Exists func(path string) bool = gfile.Exists
+
+	// IsFile 如果传参path不存在，将返回false.
 	IsFile func(path string) bool = gfile.IsFile
-	IsDir  func(path string) bool = gfile.IsDir
+
+	// IsDir 如果传参path不存在，将返回false.
+	IsDir func(path string) bool = gfile.IsDir
 
 	// Stat 获取文件（或目录）信息
 	/*
@@ -18,7 +22,7 @@ var (
 	*/
 	Stat func(path string) (os.FileInfo, error) = gfile.Stat
 
-	// IsEmpty checks whether the given `path` is empty.
+	// IsEmpty 传参path对应的文件（或目录）是否为空？
 	/*
 		If `path` is a folder, it checks if there's any file under it.
 		If `path` is a file, it checks if the file size is zero.
