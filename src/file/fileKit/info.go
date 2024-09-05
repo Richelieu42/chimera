@@ -46,7 +46,7 @@ var (
 // GetExt 获取 文件名的后缀（带"."）
 /*
 	@param path 		可以不存在（exist）
-	@param lowerArgs	是否将返回值转换为小写字母?默认true
+	@param lowerArgs	是否将返回值转换为小写字母? 默认true
 	@return 可能为""
 
 	e.g.
@@ -72,7 +72,7 @@ func GetExt(path string, lowerArgs ...bool) (ext string) {
 // GetExtName 获取后缀（不带"."）.
 /*
 	@param path 		可以不存在（exist）
-	@param lowerArgs	是否将返回值转换为小写字母?默认true
+	@param lowerArgs	是否将返回值转换为小写字母? 默认true
 	@return 可能为""
 
 	e.g.
