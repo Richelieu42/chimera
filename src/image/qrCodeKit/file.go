@@ -17,19 +17,6 @@ import (
 	"os"
 )
 
-// Encode 生成二维码([]byte类型).
-/*
-@param level 一般使用 qrcode.Medium
-*/
-func Encode(content string, level qrcode.RecoveryLevel, size int) ([]byte, error) {
-	/* content */
-	if err := strKit.AssertNotEmpty(content, "content"); err != nil {
-		return nil, err
-	}
-
-	return qrcode.Encode(content, level, size)
-}
-
 // WriteFile 生成二维码文件.
 /*
 PS: 背景色默认为白色（非透明），前景色默认为黑色.
