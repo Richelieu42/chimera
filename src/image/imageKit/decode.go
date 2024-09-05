@@ -16,13 +16,16 @@ import (
 */
 var Decode func(r io.Reader) (img image.Image, format string, err error) = image.Decode
 
-// DecodeWithPath 解码图片
-func DecodeWithPath(src string) (image.Image, string, error) {
-	if err := fileKit.AssertExistAndIsFile(src); err != nil {
+// DecodeWithPath 解码图片.
+/*
+@param imagePath 图片的路径.
+*/
+func DecodeWithPath(imagePath string) (image.Image, string, error) {
+	if err := fileKit.AssertExistAndIsFile(imagePath); err != nil {
 		return nil, "", err
 	}
 
-	f, err := os.Open(src)
+	f, err := os.Open(imagePath)
 	if err != nil {
 		return nil, "", err
 	}

@@ -117,7 +117,7 @@ func WriteFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, si
 	/* 重新绘制 */
 	width := mathKit.Max(size, bgWidth)
 	height := mathKit.Max(size, bgHeight)
-	bounds := imageKit.NewRectangle(0, 0, width, height)
+	bounds := image.Rect(0, 0, width, height)
 	img := image.NewRGBA(bounds)
 
 	/* (1) 生成二维码文件 */
@@ -143,6 +143,9 @@ func WriteFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, si
 
 	/* (1.5) 输出为.jpg或.jpeg格式的情况下，需要先画一层白色底色（否则如果背景图片中有透明色的话，那部分会变成黑色） */
 	if jpgFlag {
+
+		draw.Over
+
 		draw.Draw(img, bounds, &image.Uniform{C: color.White}, image.Point{}, draw.Over)
 	}
 
