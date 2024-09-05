@@ -5,4 +5,9 @@
 
 #### 将图片转换为 webp 格式
 
-Richelieu: 目前找到的相关依赖，要么需求 libvips ，要么需求 libwebp ，都绕不开 C ，还是 vipKit 用吧. 
+Richelieu: 目前找到的相关依赖，要么需求 libvips ，要么需求 libwebp ，都绕不开 C ，还是 vipKit 用吧.
+
+## .jpg 和 .jpeg
+
+JPEG 和 JPG 实际上是同一种图像格式，本质上没有区别，只是文件扩展名不同。
+
