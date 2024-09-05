@@ -28,15 +28,17 @@ func TestGenerateFileWithBackgroundImage(t *testing.T) {
 	content := "https://example.org"
 	bgPath := "/Users/richelieu/Desktop/iShot_2024-09-05_08.54.28.png"
 
+	level := qrcode.High
+
 	{
-		err := GenerateFileWithBackgroundImage(content, qrcode.Medium, -1, bgPath, color.Black, "_test-qr2.png")
+		err := GenerateFileWithBackgroundImage(content, level, -1, bgPath, color.Black, "_test-qr2.png")
 		if err != nil {
 			panic(err)
 		}
 	}
 
 	{
-		err := GenerateFileWithBackgroundImage(content, qrcode.Medium, -1, bgPath, color.Black, "_test-qr2.jpg")
+		err := GenerateFileWithBackgroundImage(content, level, -1, bgPath, color.Black, "_test-qr2.jpg")
 		if err != nil {
 			panic(err)
 		}
