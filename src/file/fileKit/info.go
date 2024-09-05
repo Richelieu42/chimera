@@ -41,20 +41,27 @@ var (
 		file.js          -> file
 	*/
 	GetName func(path string) string = gfile.Name
-
-	// GetExt 获取 文件名的后缀（带"."）
-	/*
-		@return 可能为""
-
-		e.g.
-			println(fileKit.GetExt("main.go"))  // ".go"
-			println(fileKit.GetExt("api.json")) // ".json"
-			println(fileKit.GetExt(""))         // ""
-			println(fileKit.GetExt("    "))     // ""
-			println(fileKit.GetExt("empty"))    // ""
-	*/
-	GetExt func(path string) string = gfile.Ext
 )
+
+// GetExt 获取 文件名的后缀（带"."）
+/*
+	@return 可能为""
+
+	e.g.
+		println(fileKit.GetExt("main.go"))  // ".go"
+		println(fileKit.GetExt("api.json")) // ".json"
+		println(fileKit.GetExt(""))         // ""
+		println(fileKit.GetExt("    "))     // ""
+		println(fileKit.GetExt("empty"))    // ""
+	e.g.1
+		("./iShot_2024-09-04_13.51.58.PNG") => ".png"
+*/
+func GetExt(path string) (ext string) {
+	ext = gfile.Ext(path)
+	// 手动转换为小写字母
+	ext = strings.ToLower(ext)
+	return
+}
 
 // GetExtName 获取后缀（不带"."）.
 /*
@@ -72,7 +79,7 @@ var (
 */
 func GetExtName(path string) (extName string) {
 	extName = gfile.ExtName(path)
-	// 需要手动转换为小写字母
+	// 手动转换为小写字母
 	extName = strings.ToLower(extName)
 	return
 }
