@@ -96,8 +96,12 @@ func WriteFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, si
 		return err
 	}
 	outputExt := fileKit.GetExt(outputImagePath)
+	var jpgFlag bool
 	switch outputExt {
-	case ".png", ".jpg", ".jpeg":
+	case ".png":
+		jpgFlag = false
+	case ".jpg", ".jpeg":
+		jpgFlag = true
 	default:
 		return errorKit.Newf("invalid outputExt(%s)", outputExt)
 	}
@@ -150,12 +154,17 @@ func WriteFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, si
 		}
 	}
 
+	/* (1.5) 输出为.jpg或.jpeg的话，需要先画一层白色底色 */
+	if jpgFlag {
+		draw.Draw(img, bounds, &image.Uniform{C: color.White}, image.Point{}, draw.Over)
+	}
+
 	/* (2) 先绘制背景图片 */
 	{
 		pt := image.Pt((width-bgWidth)/2, (height-bgHeight)/2)
 		tmpBounds := bgBounds.Add(pt)
 
-		draw.Draw(img, tmpBounds, bgImg, image.Point{}, draw.Src)
+		draw.Draw(img, tmpBounds, bgImg, image.Point{}, draw.Over)
 	}
 
 	/* (3) 再绘制二维码 */
@@ -173,10 +182,10 @@ func WriteFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, si
 	}
 	defer outFile.Close()
 
-	if outputExt == ".png" {
-		return png.Encode(outFile, img)
+	if jpgFlag {
+		return jpeg.Encode(outFile, img, &jpeg.Options{
+			Quality: jpeg.DefaultQuality,
+		})
 	}
-	return jpeg.Encode(outFile, img, &jpeg.Options{
-		Quality: jpeg.DefaultQuality,
-	})
+	return png.Encode(outFile, img)
 }
