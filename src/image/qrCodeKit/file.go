@@ -15,7 +15,7 @@ import (
 	"os"
 )
 
-// WriteFile 生成二维码文件.
+// GenerateFile 生成二维码文件.
 /*
 PS: 背景色默认为白色（非透明），前景色默认为黑色.
 
@@ -26,63 +26,64 @@ PS: 背景色默认为白色（非透明），前景色默认为黑色.
 						(2) 建议是 .png 格式的
 						(3) 生成图片的背景色是白色而非透明，即使保存为 .png 格式
 */
-func WriteFile(content string, level qrcode.RecoveryLevel, size int, outputImagePath string) error {
+func GenerateFile(content string, level qrcode.RecoveryLevel, size int, outputImgPath string) error {
 	/* content */
 	if err := strKit.AssertNotEmpty(content, "content"); err != nil {
 		return err
 	}
-	/* outputImagePath */
-	if err := fileKit.AssertNotExistOrIsFile(outputImagePath); err != nil {
+	/* outputImgPath */
+	if err := fileKit.AssertNotExistOrIsFile(outputImgPath); err != nil {
 		return err
 	}
-	if err := fileKit.MkParentDirs(outputImagePath); err != nil {
+	if err := fileKit.MkParentDirs(outputImgPath); err != nil {
 		return err
 	}
 
-	return qrcode.WriteFile(content, level, size, outputImagePath)
+	return qrcode.WriteFile(content, level, size, outputImgPath)
 }
 
-// WriteFileWithColor
+// GenerateFileWithColor
 /*
 @param background 背景色（推荐使用透明色 color.Transparent，然后保存为.png格式的图片）
 @param foreground 前景色（一般为 color.Black）
 @param outputImagePath 输出的图片路径，仅支持3种格式: .jpg、.jpeg、.png（推荐）
 */
-func WriteFileWithColor(content string, level qrcode.RecoveryLevel, size int, background, foreground color.Color, outputImagePath string) error {
+func GenerateFileWithColor(content string, level qrcode.RecoveryLevel, size int, background, foreground color.Color, outputImgPath string) error {
 	/* content */
 	if err := strKit.AssertNotEmpty(content, "content"); err != nil {
 		return err
 	}
-	/* outputImagePath */
-	if err := fileKit.AssertNotExistOrIsFile(outputImagePath); err != nil {
+	/* outputImgPath */
+	if err := fileKit.AssertNotExistOrIsFile(outputImgPath); err != nil {
 		return err
 	}
-	if err := fileKit.MkParentDirs(outputImagePath); err != nil {
+	if err := fileKit.MkParentDirs(outputImgPath); err != nil {
 		return err
 	}
 
-	return qrcode.WriteColorFile(content, level, size, background, foreground, outputImagePath)
+	return qrcode.WriteColorFile(content, level, size, background, foreground, outputImgPath)
 }
 
-// WriteFileWithBackgroundImage
+// GenerateFileWithBackgroundImage
 /*
 @param size 二维码的尺寸（宽高）
 			(1) 如果<=0，则自适应（取背景图片宽高的最小值）
 			(2) 建议传参-1
 */
-func WriteFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, size int, backgroundImagePath string, foreground color.Color, outputImagePath string) error {
+func GenerateFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, size int, backgroundImagePath string, foreground color.Color, outputImgPath string) error {
 	/* content */
 	if err := strKit.AssertNotEmpty(content, "content"); err != nil {
 		return err
 	}
-	/* outputImagePath */
-	if err := fileKit.AssertNotExistOrIsFile(outputImagePath); err != nil {
+	/* outputImgPath */
+	if err := fileKit.AssertNotExistOrIsFile(outputImgPath); err != nil {
 		return err
 	}
-	if err := fileKit.MkParentDirs(outputImagePath); err != nil {
+	if err := fileKit.MkParentDirs(outputImgPath); err != nil {
 		return err
 	}
-	outputExt := fileKit.GetExt(outputImagePath)
+	/* image format */
+	outputExt := fileKit.GetExt(outputImgPath)
 	var jpgFlag bool
 	switch outputExt {
 	case ".png":
@@ -90,7 +91,7 @@ func WriteFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, si
 	case ".jpg", ".jpeg":
 		jpgFlag = true
 	default:
-		return errorKit.Newf("invalid outputExt(%s)", outputExt)
+		return errorKit.Newf("unsupported ext(%s) of outputImgPath", outputExt)
 	}
 
 	/* backgroundImagePath */
@@ -123,7 +124,7 @@ func WriteFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, si
 	/* (1) 生成二维码 */
 	var qrImg image.Image
 	{
-		data, err := EncodeWithColor(content, level, size, color.Transparent, foreground)
+		data, err := GenerateWithColor(content, level, size, color.Transparent, foreground)
 		if err != nil {
 			return err
 		}
@@ -131,23 +132,6 @@ func WriteFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, si
 		if err != nil {
 			return err
 		}
-
-		//dirPath := pathKit.ParentDir(outputImagePath)
-		//qrPath := pathKit.Join(dirPath, "_"+idKit.NewXid()+".png")
-		//if err := WriteFileWithColor(content, level, size, color.Transparent, foreground, qrPath); err != nil {
-		//	return err
-		//}
-		//defer fileKit.Delete(qrPath)
-		//
-		//f, err := os.Open(qrPath)
-		//if err != nil {
-		//	return err
-		//}
-		//defer f.Close()
-		//qrImg, _, err = imageKit.Decode(f)
-		//if err != nil {
-		//	return err
-		//}
 	}
 
 	/* (1.5) 输出为 .jpg 或 .jpeg 格式的情况下，需要先画一层白色底色（否则如果背景图片中有透明色的话，那部分会变成黑色） */
@@ -172,7 +156,7 @@ func WriteFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, si
 	}
 
 	/* (4) 将合成后的图片保存为新文件 */
-	outFile, err := os.Create(outputImagePath)
+	outFile, err := os.Create(outputImgPath)
 	if err != nil {
 		return err
 	}
