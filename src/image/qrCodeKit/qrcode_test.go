@@ -18,7 +18,7 @@ func TestWriteFile(t *testing.T) {
 func TestWriteColorFile(t *testing.T) {
 	content := "https://example.org"
 
-	err := WriteColorFile(content, qrcode.Medium, 256, color.Transparent, color.Black, "_test-qr1.png")
+	err := WriteFileWithColor(content, qrcode.Medium, 256, color.Transparent, color.Black, "_test-qr1.png")
 	if err != nil {
 		panic(err)
 	}
@@ -26,7 +26,7 @@ func TestWriteColorFile(t *testing.T) {
 
 func TestWriteFileWithBackgroundImage(t *testing.T) {
 	content := "https://example.org"
-	bgPath := "/Users/richelieu/Desktop/iShot_2024-09-04_13.51.58.PNG"
+	bgPath := "/Users/richelieu/Desktop/iShot_2024-09-05_08.54.28.png"
 
 	err := WriteFileWithBackgroundImage(content, qrcode.Medium, 1000, bgPath, color.Black, "_test-qr2.png")
 	if err != nil {

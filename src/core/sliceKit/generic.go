@@ -125,7 +125,7 @@ func Swap[T any](s []T, i, j int) {
 
 // GetFirstElement 主要用于: 从不定参数(...)中取第一个值（不存在则取默认值）
 /*
-Deprecated: 不建议在本项目内部调用，以防import cycle.
+Deprecated: 不建议在 本项目 内部调用，以防import cycle.
 
 PS:
 (1) 因为Golang不支持方法重载；
@@ -133,11 +133,12 @@ PS:
 
 @param args 要么是: nil；要么是: 长度>=1的切片实例
 */
-func GetFirstElement[T any](def T, args ...T) T {
-	if len(args) > 0 {
-		return args[0]
+func GetFirstElement[T any](defaultValue T, args ...T) T {
+	if len(args) == 0 {
+		return defaultValue
 	}
-	return def
+
+	return args[0]
 }
 
 // Compact 去除零值.
