@@ -1,6 +1,8 @@
 package imageKit
 
 import (
+	"bytes"
+	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
 	"image"
 	"io"
@@ -16,11 +18,11 @@ import (
 */
 var Decode func(r io.Reader) (img image.Image, format string, err error) = image.Decode
 
-// DecodeWithPath 解码图片.
+// DecodeWithImagePath 解码图片.
 /*
 @param imagePath 图片的路径.
 */
-func DecodeWithPath(imagePath string) (image.Image, string, error) {
+func DecodeWithImagePath(imagePath string) (image.Image, string, error) {
 	if err := fileKit.AssertExistAndIsFile(imagePath); err != nil {
 		return nil, "", err
 	}
@@ -32,4 +34,16 @@ func DecodeWithPath(imagePath string) (image.Image, string, error) {
 	defer f.Close()
 
 	return Decode(f)
+}
+
+// DecodeWithBytes []byte => image.Image
+func DecodeWithBytes(imageData []byte) (image.Image, string, error) {
+	if err := sliceKit.AssertNotEmpty(imageData, "imageData"); err != nil {
+		return nil, "", err
+	}
+
+	// 将 []byte 数据转换为 io.Reader
+	imgReader := bytes.NewReader(imageData)
+
+	return Decode(imgReader)
 }
