@@ -4,6 +4,7 @@ import (
 	"github.com/gogf/gf/v2/os/gfile"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 var (
@@ -53,16 +54,25 @@ var (
 			println(fileKit.GetExt("empty"))    // ""
 	*/
 	GetExt func(path string) string = gfile.Ext
-
-	// GetExtName 获取 后缀（不带"."）
-	/*
-		@return 可能为""
-		e.g.
-			println(fileKit.GetExtName("main.go"))  // "go"
-			println(fileKit.GetExtName("api.json")) // "json"
-			println(fileKit.GetExtName(""))         // ""
-			println(fileKit.GetExtName("    "))     // ""
-			println(fileKit.GetExtName("empty"))    // ""
-	*/
-	GetExtName func(path string) string = gfile.ExtName
 )
+
+// GetExtName 获取后缀（不带"."）.
+/*
+	@param path 可以不存在（exist）
+	@return 可能为""
+
+	e.g.
+		println(fileKit.GetExtName("main.go"))  // "go"
+		println(fileKit.GetExtName("api.json")) // "json"
+		println(fileKit.GetExtName(""))         // ""
+		println(fileKit.GetExtName("    "))     // ""
+		println(fileKit.GetExtName("empty"))    // ""
+	e.g.1
+		("./iShot_2024-09-04_13.51.58.PNG") => "png"
+*/
+func GetExtName(path string) (extName string) {
+	extName = gfile.ExtName(path)
+	// 需要手动转换为小写字母
+	extName = strings.ToLower(extName)
+	return
+}

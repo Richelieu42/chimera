@@ -92,6 +92,7 @@ func WriteFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, si
 	if err := fileKit.MkParentDirs(outputImagePath); err != nil {
 		return err
 	}
+	extName := fileKit.GetExtName(outputImagePath)
 
 	/* backgroundImagePath */
 	if err := fileKit.AssertExistAndIsFile(backgroundImagePath); err != nil {
@@ -124,7 +125,7 @@ func WriteFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, si
 	var qrImg image.Image
 	{
 		dirPath := pathKit.ParentDir(outputImagePath)
-		qrPath := pathKit.Join(dirPath, idKit.NewXid()+".png")
+		qrPath := pathKit.Join(dirPath, "_"+idKit.NewXid()+".png")
 		if err := WriteFileWithColor(content, level, size, color.Transparent, foreground, qrPath); err != nil {
 			return err
 		}
