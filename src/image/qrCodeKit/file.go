@@ -141,7 +141,7 @@ func WriteFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, si
 		}
 	}
 
-	/* (1.5) 输出为.jpg或.jpeg格式的情况下，需要先画一层白色底色（否则如果背景图片中有透明色的话，那部分会变成黑色） */
+	/* (1.5) 输出为 .jpg 或 .jpeg 格式的情况下，需要先画一层白色底色（否则如果背景图片中有透明色的话，那部分会变成黑色） */
 	if jpgFlag {
 		draw.Draw(img, bounds, &image.Uniform{C: color.White}, image.Point{}, draw.Over)
 	}
