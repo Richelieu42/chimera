@@ -45,6 +45,8 @@ var (
 
 // GetExt 获取 文件名的后缀（带"."）
 /*
+	@param path 		可以不存在（exist）
+	@param lowerArgs	是否将返回值转换为小写字母?默认true
 	@return 可能为""
 
 	e.g.
@@ -56,16 +58,21 @@ var (
 	e.g.1
 		("./iShot_2024-09-04_13.51.58.PNG") => ".png"
 */
-func GetExt(path string) (ext string) {
+func GetExt(path string, lowerArgs ...bool) (ext string) {
 	ext = gfile.Ext(path)
-	// 手动转换为小写字母
-	ext = strings.ToLower(ext)
+
+	if lowerArgs == nil || lowerArgs[0] {
+		// 手动转换为小写字母
+		ext = strings.ToLower(ext)
+	}
+
 	return
 }
 
 // GetExtName 获取后缀（不带"."）.
 /*
-	@param path 可以不存在（exist）
+	@param path 		可以不存在（exist）
+	@param lowerArgs	是否将返回值转换为小写字母?默认true
 	@return 可能为""
 
 	e.g.
@@ -77,9 +84,13 @@ func GetExt(path string) (ext string) {
 	e.g.1
 		("./iShot_2024-09-04_13.51.58.PNG") => "png"
 */
-func GetExtName(path string) (extName string) {
+func GetExtName(path string, lowerArgs ...bool) (extName string) {
 	extName = gfile.ExtName(path)
-	// 手动转换为小写字母
-	extName = strings.ToLower(extName)
+
+	if lowerArgs == nil || lowerArgs[0] {
+		// 手动转换为小写字母
+		extName = strings.ToLower(extName)
+	}
+
 	return
 }
