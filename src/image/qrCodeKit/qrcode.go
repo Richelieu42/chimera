@@ -1,6 +1,7 @@
 package qrCodeKit
 
 import (
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/mathKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
@@ -11,6 +12,7 @@ import (
 	"image"
 	"image/color"
 	"image/draw"
+	"image/jpeg"
 	"image/png"
 	"os"
 )
@@ -59,6 +61,7 @@ func WriteFile(content string, level qrcode.RecoveryLevel, size int, outputImage
 /*
 @param background 背景色（推荐使用透明色 color.Transparent，然后保存为.png格式的图片）
 @param foreground 前景色（一般为 color.Black）
+@param outputImagePath 输出的图片路径，仅支持3种格式: .jpg、.jpeg、.png（推荐）
 */
 func WriteFileWithColor(content string, level qrcode.RecoveryLevel, size int, background, foreground color.Color, outputImagePath string) error {
 	/* content */
@@ -92,7 +95,12 @@ func WriteFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, si
 	if err := fileKit.MkParentDirs(outputImagePath); err != nil {
 		return err
 	}
-	extName := fileKit.GetExtName(outputImagePath)
+	outputExt := fileKit.GetExt(outputImagePath)
+	switch outputExt {
+	case ".png", ".jpg", ".jpeg":
+	default:
+		return errorKit.Newf("invalid outputExt(%s)", outputExt)
+	}
 
 	/* backgroundImagePath */
 	if err := fileKit.AssertExistAndIsFile(backgroundImagePath); err != nil {
@@ -165,5 +173,10 @@ func WriteFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, si
 	}
 	defer outFile.Close()
 
-	return png.Encode(outFile, img)
+	if outputExt == ".png" {
+		return png.Encode(outFile, img)
+	}
+	return jpeg.Encode(outFile, img, &jpeg.Options{
+		Quality: jpeg.DefaultQuality,
+	})
 }
