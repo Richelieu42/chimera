@@ -28,8 +28,17 @@ func TestWriteFileWithBackgroundImage(t *testing.T) {
 	content := "https://example.org"
 	bgPath := "/Users/richelieu/Desktop/iShot_2024-09-05_08.54.28.png"
 
-	err := WriteFileWithBackgroundImage(content, qrcode.Medium, -1, bgPath, color.Black, "_test-qr2.png")
-	if err != nil {
-		panic(err)
+	{
+		err := WriteFileWithBackgroundImage(content, qrcode.Medium, -1, bgPath, color.Black, "_test-qr2.png")
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	{
+		err := WriteFileWithBackgroundImage(content, qrcode.Medium, -1, bgPath, color.Black, "_test-qr2.jpg")
+		if err != nil {
+			panic(err)
+		}
 	}
 }

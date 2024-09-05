@@ -3,10 +3,8 @@ package qrCodeKit
 import (
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/mathKit"
-	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
-	"github.com/richelieu-yang/chimera/v3/src/idKit"
 	"github.com/richelieu-yang/chimera/v3/src/image/imageKit"
 	"github.com/skip2/go-qrcode"
 	"image"
@@ -68,7 +66,9 @@ func WriteFileWithColor(content string, level qrcode.RecoveryLevel, size int, ba
 
 // WriteFileWithBackgroundImage
 /*
-@param size 二维码的尺寸，如果<=0，则自适应（取背景图片宽高的最小值）
+@param size 二维码的尺寸（宽高）
+			(1) 如果<=0，则自适应（取背景图片宽高的最小值）
+			(2) 建议传参-1
 */
 func WriteFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, size int, backgroundImagePath string, foreground color.Color, outputImagePath string) error {
 	/* content */
@@ -120,25 +120,34 @@ func WriteFileWithBackgroundImage(content string, level qrcode.RecoveryLevel, si
 	bounds := image.Rect(0, 0, width, height)
 	img := image.NewRGBA(bounds)
 
-	/* (1) 生成二维码文件 */
+	/* (1) 生成二维码 */
 	var qrImg image.Image
 	{
-		dirPath := pathKit.ParentDir(outputImagePath)
-		qrPath := pathKit.Join(dirPath, "_"+idKit.NewXid()+".png")
-		if err := WriteFileWithColor(content, level, size, color.Transparent, foreground, qrPath); err != nil {
+		data, err := EncodeWithColor(content, level, size, color.Transparent, foreground)
+		if err != nil {
 			return err
 		}
-		defer fileKit.Delete(qrPath)
+		qrImg, _, err = imageKit.DecodeWithBytes(data)
+		if err != nil {
+			return err
+		}
 
-		f, err := os.Open(qrPath)
-		if err != nil {
-			return err
-		}
-		defer f.Close()
-		qrImg, _, err = imageKit.Decode(f)
-		if err != nil {
-			return err
-		}
+		//dirPath := pathKit.ParentDir(outputImagePath)
+		//qrPath := pathKit.Join(dirPath, "_"+idKit.NewXid()+".png")
+		//if err := WriteFileWithColor(content, level, size, color.Transparent, foreground, qrPath); err != nil {
+		//	return err
+		//}
+		//defer fileKit.Delete(qrPath)
+		//
+		//f, err := os.Open(qrPath)
+		//if err != nil {
+		//	return err
+		//}
+		//defer f.Close()
+		//qrImg, _, err = imageKit.Decode(f)
+		//if err != nil {
+		//	return err
+		//}
 	}
 
 	/* (1.5) 输出为 .jpg 或 .jpeg 格式的情况下，需要先画一层白色底色（否则如果背景图片中有透明色的话，那部分会变成黑色） */

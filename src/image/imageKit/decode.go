@@ -22,12 +22,12 @@ var Decode func(r io.Reader) (img image.Image, format string, err error) = image
 /*
 @param imagePath 图片的路径.
 */
-func DecodeWithImagePath(imagePath string) (image.Image, string, error) {
-	if err := fileKit.AssertExistAndIsFile(imagePath); err != nil {
+func DecodeWithImagePath(imgPath string) (image.Image, string, error) {
+	if err := fileKit.AssertExistAndIsFile(imgPath); err != nil {
 		return nil, "", err
 	}
 
-	f, err := os.Open(imagePath)
+	f, err := os.Open(imgPath)
 	if err != nil {
 		return nil, "", err
 	}
@@ -37,13 +37,13 @@ func DecodeWithImagePath(imagePath string) (image.Image, string, error) {
 }
 
 // DecodeWithBytes []byte => image.Image
-func DecodeWithBytes(imageData []byte) (image.Image, string, error) {
-	if err := sliceKit.AssertNotEmpty(imageData, "imageData"); err != nil {
+func DecodeWithBytes(imgData []byte) (image.Image, string, error) {
+	if err := sliceKit.AssertNotEmpty(imgData, "imgData"); err != nil {
 		return nil, "", err
 	}
 
 	// 将 []byte 数据转换为 io.Reader
-	imgReader := bytes.NewReader(imageData)
+	imgReader := bytes.NewReader(imgData)
 
 	return Decode(imgReader)
 }
