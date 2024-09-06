@@ -17,10 +17,8 @@ go-redis 底层维护了一个连接池，不需要手动管理。默认情况�
 
 ## 命令教程
 
-菜鸟教程:
-https://www.runoob.com/redis/redis-tutorial.html
-redis命令手册:
-https://www.redis.net.cn/order/
+- [菜鸟教程](https://www.runoob.com/redis/redis-tutorial.html)
+- [redis命令手册](https://www.redis.net.cn/order/)
 
 ## script（lua脚本）
 

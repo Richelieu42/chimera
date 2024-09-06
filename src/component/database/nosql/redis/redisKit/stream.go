@@ -46,3 +46,9 @@ func (client *Client) XDel(ctx context.Context, stream string, ids ...string) (i
 	cmd := client.universalClient.XDel(ctx, stream, ids...)
 	return cmd.Result()
 }
+
+// XLen 获取 stream键中 包含的元素数量（即消息长度）.
+func (client *Client) XLen(ctx context.Context, stream string) (int64, error) {
+	cmd := client.universalClient.XLen(ctx, stream)
+	return cmd.Result()
+}
