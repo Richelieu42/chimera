@@ -31,7 +31,7 @@ require (
 	github.com/go-kratos/kratos/v2 v2.8.0
 	github.com/go-oauth2/oauth2/v4 v4.5.2
 	github.com/go-pay/gopay v1.5.104
-	github.com/go-playground/validator/v10 v10.22.0
+	github.com/go-playground/validator/v10 v10.22.1
 	github.com/go-redsync/redsync/v4 v4.13.0
 	github.com/goccy/go-json v0.10.3
 	github.com/gogf/gf/v2 v2.7.2
@@ -82,7 +82,7 @@ require (
 	github.com/pelletier/go-toml/v2 v2.2.3
 	github.com/pierrec/lz4/v4 v4.1.21
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
-	github.com/playwright-community/playwright-go v0.4501.1
+	github.com/playwright-community/playwright-go v0.4700.0
 	github.com/redis/go-redis/v9 v9.6.1
 	github.com/redis/rueidis v1.0.45
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
