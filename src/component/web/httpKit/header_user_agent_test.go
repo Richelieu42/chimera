@@ -17,6 +17,8 @@ func TestGetUserAgentInfo(t *testing.T) {
 		fmt.Println("Browser", info.GetBrowser())
 		fmt.Println("OS", info.GetOS())
 		fmt.Println("Version", info.GetVersion())
+		fmt.Println("MajorVersion", info.GetMajorVersion())
+
 		fmt.Println("IsDesktop", info.IsDesktop())
 		fmt.Println("IsMobile", info.IsMobile())
 		fmt.Println("IsTablet", info.IsTablet())
