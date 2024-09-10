@@ -34,7 +34,7 @@ require (
 	github.com/go-playground/validator/v10 v10.22.1
 	github.com/go-redsync/redsync/v4 v4.13.0
 	github.com/goccy/go-json v0.10.3
-	github.com/gogf/gf/v2 v2.7.2
+	github.com/gogf/gf/v2 v2.7.3
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/golang-module/carbon/v2 v2.3.12
 	github.com/google/go-cmp v0.6.0
@@ -66,6 +66,7 @@ require (
 	github.com/liuzl/gocc v0.0.0-20231231122217-0372e1059ca5
 	github.com/magiconair/properties v1.8.7
 	github.com/matoous/go-nanoid/v2 v2.1.0
+	github.com/medama-io/go-useragent v1.0.0
 	github.com/mholt/archiver/v4 v4.0.0-alpha.8
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/mapstructure v1.5.0
@@ -121,9 +122,9 @@ require (
 	go.uber.org/zap v1.27.0
 	golang.org/x/arch v0.10.0
 	golang.org/x/crypto v0.27.0
-	golang.org/x/exp v0.0.0-20240904232852-e7e105dedf7e
+	golang.org/x/exp v0.0.0-20240909161429-701f63a606c0
 	golang.org/x/image v0.20.0
-	golang.org/x/mobile v0.0.0-20240905004112-7c4916698cc9
+	golang.org/x/mobile v0.0.0-20240909163608-642950227fb3
 	golang.org/x/mod v0.21.0
 	golang.org/x/net v0.29.0
 	golang.org/x/oauth2 v0.23.0
@@ -132,8 +133,8 @@ require (
 	golang.org/x/term v0.24.0
 	golang.org/x/text v0.18.0
 	golang.org/x/time v0.6.0
-	golang.org/x/tools v0.24.0
-	google.golang.org/grpc v1.66.0
+	golang.org/x/tools v0.25.0
+	google.golang.org/grpc v1.66.1
 	google.golang.org/protobuf v1.34.2
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/driver/bigquery v1.2.0
@@ -142,7 +143,7 @@ require (
 	gorm.io/driver/postgres v1.5.9
 	gorm.io/driver/sqlite v1.5.6
 	gorm.io/driver/sqlserver v1.5.3
-	gorm.io/gorm v1.25.11
+	gorm.io/gorm v1.25.12
 	sigs.k8s.io/yaml v1.4.0
 )
 
@@ -280,7 +281,6 @@ require (
 	github.com/mattn/go-runewidth v0.0.16 // indirect
 	github.com/mattn/go-sqlite3 v1.14.22 // indirect
 	github.com/maypok86/otter v1.2.2 // indirect
-	github.com/medama-io/go-useragent v1.0.0 // indirect
 	github.com/microsoft/go-mssqldb v1.6.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826 // indirect
