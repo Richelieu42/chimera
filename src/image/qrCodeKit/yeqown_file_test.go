@@ -20,7 +20,7 @@ func TestEncodeToFile1(t *testing.T) {
 		panic(err)
 	}
 
-	err = EncodeToFile("https://www.example.com", "_test1.png", standard.WithLogoSizeMultiplier(3), standard.WithLogoImage(img))
+	err = EncodeToFile("https://www.example.com", "_test1.png", standard.WithLogoImage(img))
 	if err != nil {
 		panic(err)
 	}
