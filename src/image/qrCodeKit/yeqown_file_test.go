@@ -33,7 +33,7 @@ func TestEncodeToFile2(t *testing.T) {
 
 	err := EncodeToFile("https://github.com/richelieu-yang/chimera", "_test2.png",
 		standard.WithHalftone(halftonePath),
-		standard.WithQRWidth(22),
+		standard.WithQRWidth(18),
 	)
 	if err != nil {
 		panic(err)
