@@ -11,8 +11,8 @@ import (
 /*
 @param content 二维码的内容
 @param options 可以指定:	(1) logo（放在二维码的中心）
-						(2) halftone，可参考 https://github.com/yeqown/go-qrcode 中: example/with-halftone/README.md
-						(3) 尺寸
+						(2) halftone（比较酷炫），可参考 https://github.com/yeqown/go-qrcode 中: example/with-halftone/README.md
+						(3) 尺寸（但单位并非像素）
 						(4) 透明
 						(5) 前景色、背景色
 */
