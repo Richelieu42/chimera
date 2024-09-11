@@ -6,7 +6,7 @@ import (
 )
 
 func TestRead(t *testing.T) {
-	content, err := Read("read_demo.png")
+	content, err := Decode("_read_demo.png")
 	if err != nil {
 		panic(err)
 	}
