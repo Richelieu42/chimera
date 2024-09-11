@@ -61,11 +61,26 @@ type (
 	}
 
 	ProgramMemoryStats struct {
-		Alloc      string `json:"alloc"`
+		// Alloc
+		/*
+			当前堆上分配的对象的字节数。这代表了程序正在使用的内存量。它会随着程序的运行动态变化，当分配新对象时增加，当垃圾回收回收对象时可能减少。
+		*/
+		Alloc string `json:"alloc"`
+
+		// TotalAlloc
+		/*
+			从程序开始到现在累计分配的堆内存字节数。即使某些内存已经被垃圾回收释放，这个值也不会减少。它反映了程序运行过程中的总内存分配情况，可以用来观察程序的内存增长趋势。
+		*/
 		TotalAlloc string `json:"totalAlloc"`
-		Sys        string `json:"sys"`
-		NumGC      uint32 `json:"numGC"`
-		EnableGC   bool   `json:"enableGC"`
+
+		// Sys
+		/*
+			从操作系统获取的内存字节数。这包括所有已分配的堆内存、栈内存以及其他由 Go 运行时系统管理的内存。这个值通常大于Alloc，因为它还包括未被使用但已经从操作系统获取的内存。
+		*/
+		Sys string `json:"sys"`
+
+		NumGC    uint32 `json:"numGC"`
+		EnableGC bool   `json:"enableGC"`
 	}
 
 	MachineMemoryStats struct {
