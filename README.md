@@ -1,7 +1,6 @@
 ## richelieu-yang/chimera
 
-Golang的工具类。  
-Tools of Golang.
+Golang的工具类（Tools of Golang）
 
 ![qrcode.png](qrcode.png)
 
