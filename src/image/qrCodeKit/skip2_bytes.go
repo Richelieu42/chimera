@@ -8,6 +8,8 @@ import (
 
 // Generate 生成二维码([]byte类型).
 /*
+Deprecated: 推荐使用 EncodeToFile.
+
 @param content 	二维码的内容
 @param level 	一般使用 qrcode.Medium
 @param size		二维码的宽高，单位: px
@@ -23,6 +25,9 @@ func Generate(content string, level qrcode.RecoveryLevel, size int) ([]byte, err
 }
 
 // GenerateWithColor 参考了 qrcode.WriteColorFile.
+/*
+Deprecated: 推荐使用 EncodeToFile.
+*/
 func GenerateWithColor(content string, level qrcode.RecoveryLevel, size int, background, foreground color.Color) ([]byte, error) {
 	/* content */
 	if err := strKit.AssertNotEmpty(content, "content"); err != nil {

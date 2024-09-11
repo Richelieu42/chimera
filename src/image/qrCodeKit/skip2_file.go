@@ -17,6 +17,8 @@ import (
 
 // GenerateFile 生成二维码文件.
 /*
+Deprecated: 推荐使用 EncodeToFile.
+
 PS: 背景色默认为白色（非透明），前景色默认为黑色.
 
 @param size 生成图片的尺寸
@@ -44,6 +46,8 @@ func GenerateFile(content string, level qrcode.RecoveryLevel, size int, outputIm
 
 // GenerateFileWithColor
 /*
+Deprecated: 推荐使用 EncodeToFile.
+
 @param background 背景色（推荐使用透明色 color.Transparent，然后保存为.png格式的图片）
 @param foreground 前景色（一般为 color.Black）
 @param outputImagePath 输出的图片路径，仅支持3种格式: .jpg、.jpeg、.png（推荐）
@@ -66,6 +70,8 @@ func GenerateFileWithColor(content string, level qrcode.RecoveryLevel, size int,
 
 // GenerateFileWithBackgroundImage
 /*
+Deprecated: 推荐使用 EncodeToFile.
+
 @param size 二维码的尺寸（宽高）
 			(1) 如果<=0，则自适应（取背景图片宽高的最小值）
 			(2) 建议传参-1
