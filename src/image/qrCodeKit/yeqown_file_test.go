@@ -25,3 +25,17 @@ func TestEncodeToFile1(t *testing.T) {
 		panic(err)
 	}
 }
+
+// halftone
+func TestEncodeToFile2(t *testing.T) {
+	halftonePath := "_halftone0.jpg"
+	//halftonePath := "_halftone1.jpg"
+
+	err := EncodeToFile("https://github.com/richelieu-yang/chimera", "_test2.png",
+		standard.WithHalftone(halftonePath),
+		standard.WithQRWidth(22),
+	)
+	if err != nil {
+		panic(err)
+	}
+}
