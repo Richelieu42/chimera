@@ -24,7 +24,7 @@ func TestGetRegion(t *testing.T) {
 	MustSetUp(xdbPath)
 
 	//ip := "10.0.9.141"
-	ip := "43.134.166.206" /*  */
+	ip := "103.26.10.103"
 	str, err := GetRegion(ip)
 	if err != nil {
 		panic(err)

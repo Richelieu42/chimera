@@ -52,7 +52,7 @@ require (
 	github.com/hashicorp/raft v1.7.1
 	github.com/hashicorp/raft-boltdb v0.0.0-20231211162105-6c830fa4535e
 	github.com/hibiken/asynq v0.24.1
-	github.com/imroc/req/v3 v3.46.0
+	github.com/imroc/req/v3 v3.46.1
 	github.com/itchyny/gojq v0.12.16
 	github.com/jedib0t/go-pretty/v6 v6.5.9
 	github.com/jinzhu/copier v0.4.0
@@ -83,9 +83,9 @@ require (
 	github.com/pelletier/go-toml/v2 v2.2.3
 	github.com/pierrec/lz4/v4 v4.1.21
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
-	github.com/playwright-community/playwright-go v0.4700.0
+	github.com/playwright-community/playwright-go v0.4701.0
 	github.com/redis/go-redis/v9 v9.6.1
-	github.com/redis/rueidis v1.0.45
+	github.com/redis/rueidis v1.0.46
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/rs/xid v1.6.0
@@ -104,7 +104,7 @@ require (
 	github.com/tidwall/buntdb v1.3.2
 	github.com/tidwall/gjson v1.17.3
 	github.com/tuotoo/qrcode v0.0.0-20220425170535-52ccc2bebf5d
-	github.com/unidoc/unioffice v1.35.0
+	github.com/unidoc/unioffice v1.36.0
 	github.com/vulcand/oxy/v2 v2.0.0
 	github.com/xuri/excelize/v2 v2.8.1
 	github.com/yeqown/go-qrcode/v2 v2.2.4
@@ -112,7 +112,7 @@ require (
 	github.com/zeromicro/go-zero v1.7.2
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231030135404-af9ae855016f
 	go.etcd.io/etcd/client/v3 v3.5.16
-	go.mongodb.org/mongo-driver v1.16.1
+	go.mongodb.org/mongo-driver v1.17.0
 	go.opentelemetry.io/otel v1.30.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.30.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.30.0
@@ -137,7 +137,7 @@ require (
 	golang.org/x/text v0.18.0
 	golang.org/x/time v0.6.0
 	golang.org/x/tools v0.25.0
-	google.golang.org/grpc v1.66.2
+	google.golang.org/grpc v1.67.0
 	google.golang.org/protobuf v1.34.2
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/driver/bigquery v1.2.0
@@ -153,7 +153,7 @@ require (
 require (
 	cloud.google.com/go v0.112.1 // indirect
 	cloud.google.com/go/bigquery v1.59.1 // indirect
-	cloud.google.com/go/compute/metadata v0.3.0 // indirect
+	cloud.google.com/go/compute/metadata v0.5.0 // indirect
 	cloud.google.com/go/iam v1.1.6 // indirect
 	contrib.go.opencensus.io/exporter/ocagent v0.6.0 // indirect
 	filippo.io/edwards25519 v1.1.0 // indirect
@@ -308,7 +308,7 @@ require (
 	github.com/prometheus/procfs v0.15.1 // indirect
 	github.com/quic-go/qpack v0.5.1 // indirect
 	github.com/quic-go/quic-go v0.47.0 // indirect
-	github.com/redis/rueidis/rueidiscompat v1.0.45 // indirect
+	github.com/redis/rueidis/rueidiscompat v1.0.46 // indirect
 	github.com/refraction-networking/utls v1.6.7 // indirect
 	github.com/richardlehane/mscfb v1.0.4 // indirect
 	github.com/richardlehane/msoleps v1.0.3 // indirect
@@ -349,7 +349,7 @@ require (
 	github.com/xuri/efp v0.0.0-20231025114914-d1ff6096ae53 // indirect
 	github.com/xuri/nfp v0.0.0-20230919160717-d98342af3f05 // indirect
 	github.com/yeqown/reedsolomon v1.0.0 // indirect
-	github.com/youmark/pkcs8 v0.0.0-20201027041543-1326539a0a0a // indirect
+	github.com/youmark/pkcs8 v0.0.0-20240726163527-a2c0da244d78 // indirect
 	github.com/yuin/goldmark v1.7.1 // indirect
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
 	github.com/zeebo/xxh3 v1.0.2 // indirect
