@@ -34,7 +34,7 @@ require (
 	github.com/go-playground/validator/v10 v10.22.1
 	github.com/go-redsync/redsync/v4 v4.13.0
 	github.com/goccy/go-json v0.10.3
-	github.com/gogf/gf/v2 v2.7.3
+	github.com/gogf/gf/v2 v2.7.4
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/golang-module/carbon/v2 v2.3.12
 	github.com/google/go-cmp v0.6.0
