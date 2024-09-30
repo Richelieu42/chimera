@@ -2,18 +2,23 @@ package main
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v3/src/netKit"
 )
 
 func main() {
-	port := 8002
+	fmt.Println(nestedForLoop(3))
+}
 
-	engine := gin.Default()
-	engine.Any("/test", func(ctx *gin.Context) {
-		ctx.String(200, fmt.Sprintf("[%d] Hello world!", port))
-	})
-	if err := engine.Run(netKit.JoinToHost("", port)); err != nil {
-		panic(err)
+/* 双层 for 循环 */
+func nestedForLoop(n int) string {
+	res := ""
+	// 循环 i = 1, 2, ..., n-1, n
+	for i := 1; i <= n; i++ {
+		for j := 1; j <= n; j++ {
+			// 循环 j = 1, 2, ..., n-1, n
+			res += fmt.Sprintf("(%d, %d), ", i, j)
+		}
+		// 换行
+		res += "\n"
 	}
+	return res
 }
