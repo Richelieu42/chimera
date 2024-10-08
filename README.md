@@ -11,4 +11,4 @@ Golang的工具库（Tools of Golang）
 
 ### 配置文件（仅供参考）
 
-_chimera-lib/config.yaml
+路径: _chimera-lib/config.yaml
