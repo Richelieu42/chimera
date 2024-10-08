@@ -2,7 +2,8 @@
 
 Golang的工具库（Tools of Golang）
 
-![qrcode.png](qrcode.png)
+[//]: # (![qrcode.png]&#40;qrcode.png&#41;)
+<img src="./qrcode.png" alt="qrcode" width="300" height="300">
 
 ### 安装此依赖
 
