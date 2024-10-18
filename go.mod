@@ -45,7 +45,7 @@ require (
 	github.com/gorilla/sessions v1.4.0
 	github.com/gorilla/websocket v1.5.3
 	github.com/h2non/bimg v1.1.9
-	github.com/hashicorp/consul/api v1.29.5
+	github.com/hashicorp/consul/api v1.30.0
 	github.com/hashicorp/go-hclog v1.6.3
 	github.com/hashicorp/go-version v1.7.0
 	github.com/hashicorp/golang-lru/v2 v2.0.7
@@ -84,7 +84,7 @@ require (
 	github.com/pierrec/lz4/v4 v4.1.21
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
 	github.com/playwright-community/playwright-go v0.4702.0
-	github.com/redis/go-redis/v9 v9.6.2
+	github.com/redis/go-redis/v9 v9.7.0
 	github.com/redis/rueidis v1.0.47
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/robfig/cron/v3 v3.0.1
@@ -121,13 +121,12 @@ require (
 	go.opentelemetry.io/otel/sdk v1.31.0
 	go.opentelemetry.io/otel/trace v1.31.0
 	go.uber.org/atomic v1.11.0
-	go.uber.org/automaxprocs v1.6.0
 	go.uber.org/zap v1.27.0
 	golang.org/x/arch v0.11.0
 	golang.org/x/crypto v0.28.0
 	golang.org/x/exp v0.0.0-20241009180824-f66d83c29e7c
 	golang.org/x/image v0.21.0
-	golang.org/x/mobile v0.0.0-20241004191011-08a83c5af9f8
+	golang.org/x/mobile v0.0.0-20241016134751-7ff83004ec2c
 	golang.org/x/mod v0.21.0
 	golang.org/x/net v0.30.0
 	golang.org/x/oauth2 v0.23.0
@@ -359,6 +358,7 @@ require (
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.49.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.49.0 // indirect
 	go.opentelemetry.io/proto/otlp v1.3.1 // indirect
+	go.uber.org/automaxprocs v1.5.3 // indirect
 	go.uber.org/mock v0.4.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go4.org v0.0.0-20200411211856-f5505b9728dd // indirect
