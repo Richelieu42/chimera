@@ -104,7 +104,7 @@ require (
 	github.com/tidwall/buntdb v1.3.2
 	github.com/tidwall/gjson v1.18.0
 	github.com/tuotoo/qrcode v0.0.0-20220425170535-52ccc2bebf5d
-	github.com/unidoc/unioffice v1.36.0
+	github.com/unidoc/unioffice v1.37.0
 	github.com/vulcand/oxy/v2 v2.0.0
 	github.com/xuri/excelize/v2 v2.9.0
 	github.com/yeqown/go-qrcode/v2 v2.2.4
