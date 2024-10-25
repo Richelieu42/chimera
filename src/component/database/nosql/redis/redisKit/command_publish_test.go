@@ -3,7 +3,7 @@ package redisKit
 import (
 	"context"
 	"github.com/richelieu-yang/chimera/v3/src/atomic/atomicKit"
-	"github.com/richelieu-yang/chimera/v3/src/config/confKit"
+	"github.com/richelieu-yang/chimera/v3/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v3/src/consts"
 	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v3/src/idKit"
@@ -28,10 +28,17 @@ func TestClient_Publish(t *testing.T) {
 	type config struct {
 		Redis Config `json:"redis"`
 	}
-	c := &config{}
+
 	path := "_chimera-lib/config.yaml"
-	confKit.MustLoad(path, c)
+	c := &config{}
+	//err := yamlKit.UnmarshalFromFile(path, c)
+	_, err := viperKit.UnmarshalFromFile(path, nil, c)
+	if err != nil {
+		panic(err)
+	}
+
 	MustSetUp(&c.Redis)
+
 	client, err := GetClient()
 	if err != nil {
 		panic(err)
@@ -105,10 +112,17 @@ func TestSubscribeExpired(t *testing.T) {
 	type config struct {
 		Redis Config `json:"redis"`
 	}
-	c := &config{}
+
 	path := "_chimera-lib/config.yaml"
-	confKit.MustLoad(path, c)
+	c := &config{}
+	//err := yamlKit.UnmarshalFromFile(path, c)
+	_, err := viperKit.UnmarshalFromFile(path, nil, c)
+	if err != nil {
+		panic(err)
+	}
+
 	MustSetUp(&c.Redis)
+
 	client, err := GetClient()
 	if err != nil {
 		panic(err)
