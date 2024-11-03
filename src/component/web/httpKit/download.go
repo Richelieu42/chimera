@@ -30,6 +30,7 @@ func DownloadFileContent(w http.ResponseWriter, r *http.Request, content []byte,
 		w.Header().Set("Content-Disposition", `attachment; filename*=UTF-8''`+url.QueryEscape(name))
 	}
 
+	w.Header().Set("Content-Type", "application/octet-stream")
 	_, err := w.Write(content)
 	return err
 }
