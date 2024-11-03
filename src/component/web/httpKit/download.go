@@ -8,7 +8,11 @@ import (
 	"unicode"
 )
 
+// DownloadFile 下载文件（文件路径）.
 func DownloadFile(w http.ResponseWriter, r *http.Request, path, name string) error {
+	if err := fileKit.AssertExistAndIsFile(path); err != nil {
+		return err
+	}
 	if strKit.IsEmpty(name) {
 		name = fileKit.GetFileName(path)
 	}
@@ -18,22 +22,24 @@ func DownloadFile(w http.ResponseWriter, r *http.Request, path, name string) err
 	} else {
 		w.Header().Set("Content-Disposition", `attachment; filename*=UTF-8''`+url.QueryEscape(name))
 	}
-
 	http.ServeFile(w, r, path)
 	return nil
 }
 
-// DownloadFileContent
+// DownloadFileContent 下载文件（文件内容）.
 /*
 支持: office文档、图片...
 */
 func DownloadFileContent(w http.ResponseWriter, r *http.Request, content []byte, name string) error {
+	if err := strKit.AssertNotEmpty(name, "name"); err != nil {
+		return err
+	}
+
 	if isFileNameASCII(name) {
 		w.Header().Set("Content-Disposition", `attachment; filename="`+name+`"`)
 	} else {
 		w.Header().Set("Content-Disposition", `attachment; filename*=UTF-8''`+url.QueryEscape(name))
 	}
-
 	w.Header().Set("Content-Type", "application/octet-stream")
 	_, err := w.Write(content)
 	return err
