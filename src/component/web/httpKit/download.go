@@ -9,6 +9,9 @@ import (
 )
 
 // DownloadFile 下载文件（文件路径）.
+/*
+参考: gin里面的 Context.File() 和 Context.FileAttachment().
+*/
 func DownloadFile(w http.ResponseWriter, r *http.Request, path, name string) error {
 	if err := fileKit.AssertExistAndIsFile(path); err != nil {
 		return err
@@ -28,6 +31,7 @@ func DownloadFile(w http.ResponseWriter, r *http.Request, path, name string) err
 
 // DownloadFileContent 下载文件（文件内容）.
 /*
+参考: gin里面的 Context.File() 和 Context.FileAttachment().
 支持: office文档、图片...
 */
 func DownloadFileContent(w http.ResponseWriter, r *http.Request, content []byte, name string) error {
