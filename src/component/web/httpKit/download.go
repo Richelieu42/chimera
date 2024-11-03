@@ -13,16 +13,7 @@ func DownloadFile(w http.ResponseWriter, r *http.Request, path, name string) err
 		name = fileKit.GetFileName(path)
 	}
 
-	// https://stackoverflow.com/questions/53069040/checking-a-string-contains-only-ascii-characters
-	isASCII := func(s string) bool {
-		for i := 0; i < len(s); i++ {
-			if s[i] > unicode.MaxASCII {
-				return false
-			}
-		}
-		return true
-	}
-	if isASCII(name) {
+	if isFileNameASCII(name) {
 		w.Header().Set("Content-Disposition", `attachment; filename="`+name+`"`)
 	} else {
 		w.Header().Set("Content-Disposition", `attachment; filename*=UTF-8''`+url.QueryEscape(name))
@@ -30,4 +21,27 @@ func DownloadFile(w http.ResponseWriter, r *http.Request, path, name string) err
 
 	http.ServeFile(w, r, path)
 	return nil
+}
+
+func DownloadFileContent(w http.ResponseWriter, r *http.Request, content []byte, name string) error {
+	if isFileNameASCII(name) {
+		w.Header().Set("Content-Disposition", `attachment; filename="`+name+`"`)
+	} else {
+		w.Header().Set("Content-Disposition", `attachment; filename*=UTF-8''`+url.QueryEscape(name))
+	}
+
+	_, err := w.Write(content)
+	return err
+}
+
+/*
+https://stackoverflow.com/questions/53069040/checking-a-string-contains-only-ascii-characters
+*/
+func isFileNameASCII(fileName string) bool {
+	for i := 0; i < len(fileName); i++ {
+		if fileName[i] > unicode.MaxASCII {
+			return false
+		}
+	}
+	return true
 }
