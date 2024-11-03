@@ -23,6 +23,10 @@ func DownloadFile(w http.ResponseWriter, r *http.Request, path, name string) err
 	return nil
 }
 
+// DownloadFileContent
+/*
+支持: office文档、图片...
+*/
 func DownloadFileContent(w http.ResponseWriter, r *http.Request, content []byte, name string) error {
 	if isFileNameASCII(name) {
 		w.Header().Set("Content-Disposition", `attachment; filename="`+name+`"`)
