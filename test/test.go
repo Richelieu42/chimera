@@ -1,20 +1,42 @@
 package main
 
 import (
-	"net/http"
+	"flag"
+	"github.com/gin-gonic/gin"
+	_ "github.com/richelieu-yang/chimera/v3/src/component/mq/pulsarKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/ginKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/console"
+	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
+	_ "github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
+	_ "github.com/richelieu-yang/chimera/v3/src/statKit"
+	_ "go.uber.org/automaxprocs"
 )
 
+var port int
+
+func init() {
+	flag.IntVar(&port, "port", 80, "address")
+}
+
 func main() {
-	mux := http.NewServeMux()
-	// 创建一个文件服务器，将其根目录设置为"./static"
-	fileServer := http.FileServer(http.Dir("./static"))
-	mux.Handle("/", fileServer)
-	// 定义一个API端点的处理函数
-	mux.HandleFunc("/api/hello", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello from API!"))
-	})
-	err := http.ListenAndServe(":8080", mux)
-	if err != nil {
-		panic(err)
+	flag.Parse()
+
+	console.PrintBasicDetails()
+
+	c := &ginKit.Config{
+		Port:         port,
+		DisableColor: false,
+		Pprof:        true,
+		SSL:          ginKit.SslConfig{},
+		Middleware:   ginKit.MiddlewareConfig{},
 	}
+
+	ginKit.MustSetUp(c, func(engine *gin.Engine) error {
+		engine.Any("/test", func(ctx *gin.Context) {
+			ctx.String(200, "ok")
+			return
+		})
+
+		return nil
+	}, ginKit.WithServiceInfo("TEST"), ginKit.WithDefaultFavicon(true), ginKit.WithDefaultNoRouteHtml(true))
 }
