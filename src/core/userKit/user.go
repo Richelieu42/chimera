@@ -1,37 +1,46 @@
 package userKit
 
 import (
-	"github.com/sirupsen/logrus"
+	"log"
 	"os/user"
+	"sync"
 )
 
-var u *user.User
+var (
+	uOnce sync.Once
+	u     *user.User
+)
 
-func init() {
-	var err error
+func getU() *user.User {
+	// 使用 sync.Once 实现单例懒加载
+	uOnce.Do(func() {
+		var err error
 
-	u, err = user.Current()
-	if err != nil {
-		logrus.Fatal("Fail to get current user, error: ", err.Error())
-	}
+		u, err = user.Current()
+		if err != nil {
+			log.Fatalf("Fail to get current user, error: %s", err.Error())
+		}
+	})
+
+	return u
 }
 
 // GetUid user ID
 func GetUid() string {
-	return u.Uid
+	return getU().Uid
 }
 
 // GetGid primary group ID
 func GetGid() string {
-	return u.Gid
+	return getU().Gid
 }
 
 func GetName() string {
-	return u.Name
+	return getU().Name
 }
 
 func GetUserName() string {
-	return u.Username
+	return getU().Username
 }
 
 // GetUserHomeDir 获取当前用户的目录.
@@ -42,7 +51,7 @@ e.g.
 () => "/Users/richelieu"
 */
 func GetUserHomeDir() string {
-	return u.HomeDir
+	return getU().HomeDir
 }
 
 //func getUserHomeDir() (string, error) {
