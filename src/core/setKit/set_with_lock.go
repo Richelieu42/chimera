@@ -2,12 +2,12 @@ package setKit
 
 import (
 	mapset "github.com/deckarep/golang-set/v2"
-	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
+	"github.com/gogf/gf/v2/os/gmutex"
 )
 
 type (
 	SetWithLock[T comparable] struct {
-		mutexKit.RWMutex
+		gmutex.RWMutex
 
 		// Set 并发不安全的
 		Set mapset.Set[T]

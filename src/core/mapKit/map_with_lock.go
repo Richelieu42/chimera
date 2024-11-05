@@ -1,12 +1,12 @@
 package mapKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
+	"github.com/gogf/gf/v2/os/gmutex"
 )
 
 type (
 	MapWithLock[K comparable, V any] struct {
-		mutexKit.RWMutex
+		gmutex.RWMutex
 
 		// Map 并发不安全的
 		Map map[K]V

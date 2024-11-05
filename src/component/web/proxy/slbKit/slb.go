@@ -2,7 +2,6 @@ package slbKit
 
 import (
 	"github.com/richelieu-yang/chimera/v3/src/atomic/atomicKit"
-	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -23,8 +22,6 @@ func NewLoadBalancer(logger *zap.Logger) (lb *LoadBalancer) {
 	}
 
 	lb = &LoadBalancer{
-		RWMutex: &mutexKit.RWMutex{},
-
 		logger:   logger,
 		backends: nil,
 		current:  atomicKit.NewInt64(-1),

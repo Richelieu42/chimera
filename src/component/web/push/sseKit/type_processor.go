@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
-	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"net/http"
@@ -76,7 +75,6 @@ func (p *sseProcessor) newChannel(w http.ResponseWriter, r *http.Request, closeC
 	ip := httpKit.GetClientIP(r)
 	channel := &SseChannel{
 		BaseChannel: pushKit.BaseChannel{
-			RWMutex:      mutexKit.RWMutex{},
 			CloseCh:      closeCh,
 			ClientIP:     ip,
 			Type:         "SSE",

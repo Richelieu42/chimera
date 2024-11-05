@@ -2,7 +2,7 @@ package timeKit
 
 import (
 	"context"
-	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
+	"github.com/gogf/gf/v2/os/gmutex"
 	"time"
 )
 
@@ -16,7 +16,7 @@ Golang正确停止Ticker https://blog.csdn.net/weixin_40098405/article/details/1
 (2) 可以重复调用 Ticker.Stop().
 */
 type Interval struct {
-	mutexKit.RWMutex
+	gmutex.RWMutex
 
 	stopped bool
 
@@ -70,7 +70,6 @@ func (i *Interval) IsStopped() (rst bool) {
 */
 func SetInterval(ctx context.Context, task func(t time.Time), duration time.Duration) *Interval {
 	i := &Interval{
-		RWMutex: mutexKit.RWMutex{},
 		stopped: false,
 		ticker:  time.NewTicker(duration),
 		closeCh: make(chan struct{}),

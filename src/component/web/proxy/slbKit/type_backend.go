@@ -2,8 +2,8 @@ package slbKit
 
 import (
 	"fmt"
+	"github.com/gogf/gf/v2/os/gmutex"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/proxy/forwardKit"
-	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/netKit"
 	"go.uber.org/zap"
@@ -14,7 +14,7 @@ import (
 
 // Backend 后端节点.
 type Backend struct {
-	mutexKit.Mutex
+	gmutex.Mutex
 
 	logger *zap.Logger
 

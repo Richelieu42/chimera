@@ -1,12 +1,12 @@
 package sliceKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
+	"github.com/gogf/gf/v2/os/gmutex"
 )
 
 type (
 	SliceWithLock[E any] struct {
-		mutexKit.RWMutex
+		gmutex.RWMutex
 
 		// Slice 并发不安全的
 		Slice []E

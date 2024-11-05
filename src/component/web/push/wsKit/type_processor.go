@@ -7,7 +7,6 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
-	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"github.com/sirupsen/logrus"
@@ -126,7 +125,6 @@ func (p *wsProcessor) newChannel(r *http.Request, conn *websocket.Conn, closeCh 
 	ip := httpKit.GetClientIP(r)
 	channel := &WsChannel{
 		BaseChannel: pushKit.BaseChannel{
-			RWMutex:      mutexKit.RWMutex{},
 			CloseCh:      closeCh,
 			ClientIP:     ip,
 			Type:         "WebSocket",

@@ -9,7 +9,7 @@ var (
 	// globalClient 全局的客户端
 	globalClient = NewClient()
 
-	globalMutex = new(mutexKit.RWMutex)
+	globalMutex = mutexKit.NewRWMutex()
 )
 
 func ReplaceGlobalClient(client *req.Client) {

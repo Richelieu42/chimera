@@ -3,9 +3,9 @@ package slbKit
 import (
 	"bytes"
 	"fmt"
+	"github.com/gogf/gf/v2/os/gmutex"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/proxy/forwardKit"
-	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/cronKit"
 	"github.com/richelieu-yang/chimera/v3/src/log/logKit"
@@ -22,7 +22,7 @@ import (
 !!!: 创建实例后，需要先调用 Start.
 */
 type LoadBalancer struct {
-	*mutexKit.RWMutex
+	gmutex.RWMutex
 
 	logger *zap.Logger
 

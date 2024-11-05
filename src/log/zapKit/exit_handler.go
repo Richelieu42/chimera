@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	mutex = new(mutexKit.Mutex)
+	mutex = mutexKit.NewMutex()
 
 	timeout = time.Second * 30
 

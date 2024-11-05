@@ -1,7 +1,7 @@
 package pushKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
+	"github.com/gogf/gf/v2/os/gmutex"
 	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 	"time"
 )
@@ -16,7 +16,7 @@ var _ Channel = &BaseChannel{}
 	(由于unbind可能涉及Close()，因此只能在子类中实现)
 */
 type BaseChannel struct {
-	mutexKit.RWMutex
+	gmutex.RWMutex
 
 	CloseCh chan string
 
