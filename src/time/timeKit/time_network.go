@@ -5,6 +5,7 @@ import (
 	"github.com/imroc/req/v3"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"sync"
 	"time"
 )
 
@@ -23,13 +24,22 @@ var sources = []string{
 	"https://www.yozosoft.com",
 }
 
-var reqClient *req.Client
+var (
+	defaultReqClientOnce sync.Once
 
-func init() {
-	reqClient = req.C().
-		ImpersonateChrome().
-		SetTimeout(time.Second * 30).
-		EnableInsecureSkipVerify()
+	// Deprecated: 仅供内部使用 && 不要直接使用，想用就调用 getDefaultReqClient()
+	defaultReqClient *req.Client
+)
+
+func getDefaultReqClient() *req.Client {
+	defaultReqClientOnce.Do(func() {
+		defaultReqClient = req.C().
+			ImpersonateChrome().
+			SetTimeout(time.Second * 30).
+			EnableInsecureSkipVerify()
+	})
+
+	return defaultReqClient
 }
 
 // GetNetworkTime
@@ -76,7 +86,7 @@ func GetNetworkTime(ctx context.Context) (t time.Time, source string, err error)
 !!!: 方法体内不要直接使用 reqKit，以防import cycle.
 */
 func GetNetworkTimeByUrl(ctx context.Context, url string) (t time.Time, err error) {
-	resp := reqClient.Get(url).Do(ctx)
+	resp := getDefaultReqClient().Get(url).Do(ctx)
 	if resp.Err != nil {
 		err = resp.Err
 		return
