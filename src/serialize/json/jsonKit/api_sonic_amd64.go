@@ -22,5 +22,5 @@ func init() {
 		return
 	}
 
-	testAPI()
+	//testAPI()
 }

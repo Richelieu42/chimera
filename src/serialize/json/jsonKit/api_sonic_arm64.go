@@ -11,5 +11,5 @@ func init() {
 	defaultApi = sonic.ConfigDefault
 	stdApi = sonic.ConfigStd
 
-	testAPI()
+	//testAPI()
 }
