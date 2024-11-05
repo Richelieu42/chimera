@@ -7,7 +7,9 @@ import (
 
 var (
 	gmtOnce sync.Once
-	gmt     *time.Location
+
+	// Deprecated: use GetGMTLocation()
+	gmt *time.Location
 )
 
 func GetLocalLocation() *time.Location {
