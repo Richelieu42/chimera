@@ -1,16 +1,34 @@
 package timeKit
 
 import (
+	"sync"
 	"time"
 )
 
 var (
-	Local *time.Location = time.Local
-
-	UTC *time.Location = time.UTC
-
-	GMT *time.Location
+	gmtOnce sync.Once
+	gmt     *time.Location
 )
+
+func GetLocalLocation() *time.Location {
+	return time.Local
+}
+
+func GetUTCLocation() *time.Location {
+	return time.UTC
+}
+
+func GetGMTLocation() *time.Location {
+	gmtOnce.Do(func() {
+		var err error
+		gmt, err = time.LoadLocation("GMT")
+		if err != nil {
+			gmt = time.FixedZone("GMT", 0)
+		}
+	})
+
+	return gmt
+}
 
 // ConvertLocation 时区转换.
 /*

@@ -37,8 +37,8 @@ func PrintBasicDetails(logger CommonLogger) {
 	logger.Infof("[CHIMERA, PROCESS] pid: [%d]", processKit.PID)
 
 	/* golang */
-	logger.Infof("[CHIMERA, GO] version: [%s]", runtimeKit.GoVersion)
-	logger.Infof("[CHIMERA, GO] GOROOT: [%s]", runtimeKit.GoRoot)
+	logger.Infof("[CHIMERA, GO] version: [%s]", runtimeKit.GetGoVersion())
+	logger.Infof("[CHIMERA, GO] GOROOT: [%s]", runtimeKit.GetGoRoot())
 
 	/* os */
 	printOsDetails(logger)

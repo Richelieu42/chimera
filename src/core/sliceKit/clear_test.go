@@ -11,7 +11,7 @@ func TestClear(t *testing.T) {
 		id int
 	}
 
-	fmt.Println(runtimeKit.GoVersion)
+	fmt.Println(runtimeKit.GetGoVersion())
 
 	s := make([]bean, 3, 6)
 	s[0] = bean{0}

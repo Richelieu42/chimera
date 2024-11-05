@@ -6,15 +6,16 @@ import (
 	"runtime"
 )
 
-// GoVersion Golang的版本号
-var GoVersion string
-
-// GoRoot 环境变量GOROOT
-var GoRoot string
-
-func init() {
-	GoVersion = runtime.Version()
-	GoRoot = runtime.GOROOT()
+func GetHostInfo() (*host.InfoStat, error) {
+	return host.Info()
 }
 
-var GetHostInfo func() (*host.InfoStat, error) = host.Info
+// GetGoRoot 环境变量GOROOT
+func GetGoRoot() string {
+	return runtime.GOROOT()
+}
+
+// GetGoVersion Golang的版本号
+func GetGoVersion() string {
+	return runtime.Version()
+}

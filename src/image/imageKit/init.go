@@ -8,6 +8,3 @@ import (
 	_ "image/jpeg"
 	_ "image/png"
 )
-
-func init() {
-}
