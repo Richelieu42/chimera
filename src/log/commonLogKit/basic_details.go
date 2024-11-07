@@ -21,7 +21,7 @@ import (
 	"time"
 )
 
-func PrintBasicDetails(logger CommonLogger) {
+func PrintBasicDetails(logger Logger) {
 	if logger == nil {
 		return
 	}
@@ -83,7 +83,7 @@ func PrintBasicDetails(logger CommonLogger) {
 	logger.Info(strings.Repeat("=", 42))
 }
 
-func printOsDetails(logger CommonLogger) {
+func printOsDetails(logger Logger) {
 	logger.Infof("[CHIMERA, OS] os: [%s]", osKit.OS)
 	logger.Infof("[CHIMERA, OS] arch: [%s]", osKit.ARCH)
 	logger.Infof("[CHIMERA, OS] bits: [%d]", osKit.GetOsBits())
@@ -111,7 +111,7 @@ func printOsDetails(logger CommonLogger) {
 	}
 }
 
-func printTimeDetails(logger CommonLogger) {
+func printTimeDetails(logger Logger) {
 	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*3)
 	defer cancel()
 	if networkTime, source, err := timeKit.GetNetworkTime(ctx); err != nil {
@@ -125,7 +125,7 @@ func printTimeDetails(logger CommonLogger) {
 	logger.Infof("[CHIMERA, TIME] machine time: [%v], zone: [%s, %d]", machineTime, zoneName, zoneOffset)
 }
 
-func printMemoryDetails(logger CommonLogger) {
+func printMemoryDetails(logger Logger) {
 	stats, err := memoryKit.GetMachineMemoryStats()
 	if err != nil {
 		logger.Errorf("[CHIMERA, MEMORY] fail to get machine memory stats, error: %s", err.Error())
@@ -141,7 +141,7 @@ func printMemoryDetails(logger CommonLogger) {
 	logger.Infof("[CHIMERA, MEMORY] machine memory stats: [%s]", str)
 }
 
-func printDiskDetails(logger CommonLogger) {
+func printDiskDetails(logger Logger) {
 	stats, err := diskKit.GetDiskUsageStats()
 	if err != nil {
 		logger.Warnf("[CHIMERA, DISK] fail to get disk usage stats, error: %s", err.Error())
@@ -157,7 +157,7 @@ func printDiskDetails(logger CommonLogger) {
 	}
 }
 
-func printCpuDetails(logger CommonLogger) {
+func printCpuDetails(logger Logger) {
 	logger.Infof("[CHIMERA, CPU] in a virtual machine? [%t]", cpuKit.InVirtualMachine())
 	logger.Infof("[CHIMERA, CPU] vendor id: [%s]", cpuKit.GetVendorID())
 	logger.Infof("[CHIMERA, CPU] vendor string: [%s]", cpuKit.GetVendorString())
