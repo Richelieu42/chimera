@@ -41,7 +41,11 @@ func PrintBasicDetails(logger Logger) {
 	logger.Infof("[CHIMERA, GO] GOROOT: [%s]", runtimeKit.GetGoRoot())
 
 	/* os */
-	printOsDetails(logger)
+	logger.Infof("[CHIMERA, OS] os: [%s]", osKit.OS)
+	logger.Infof("[CHIMERA, OS] arch: [%s]", osKit.ARCH)
+	logger.Infof("[CHIMERA, OS] bits: [%d]", osKit.GetOsBits())
+	printUlimitInformation(logger)
+	printOsInformation(logger)
 
 	/* user */
 	logger.Infof("[CHIMERA, USER] uid: [%s]", userKit.GetUid())
@@ -81,34 +85,6 @@ func PrintBasicDetails(logger Logger) {
 	printDiskDetails(logger)
 
 	logger.Info(strings.Repeat("=", 42))
-}
-
-func printOsDetails(logger Logger) {
-	logger.Infof("[CHIMERA, OS] os: [%s]", osKit.OS)
-	logger.Infof("[CHIMERA, OS] arch: [%s]", osKit.ARCH)
-	logger.Infof("[CHIMERA, OS] bits: [%d]", osKit.GetOsBits())
-
-	if str, err := osKit.GetUlimitInfo(); err != nil {
-		logger.Warnf("[CHIMERA, OS] fail to get ulimit information, error: %s", err.Error())
-	} else {
-		logger.Infof("[CHIMERA, OS] ulimit information:\n%s", str)
-	}
-
-	if i, err := osKit.GetThreadsMax(); err != nil {
-		logger.Warnf("[CHIMERA, OS] fail to get kernel.threads-max, error: %s", err.Error())
-	} else {
-		logger.Infof("[CHIMERA, OS] kernel.threads-max: [%d]", i)
-	}
-	if i, err := osKit.GetPidMax(); err != nil {
-		logger.Warnf("[CHIMERA, OS] fail to get kernel.pid_max, error: %s", err.Error())
-	} else {
-		logger.Infof("[CHIMERA, OS] kernel.pid_max: [%d]", i)
-	}
-	if i, err := osKit.GetMaxMapCount(); err != nil {
-		logger.Warnf("[CHIMERA, OS] fail to get vm.max_map_count, error: %s", err.Error())
-	} else {
-		logger.Infof("[CHIMERA, OS] vm.max_map_count: [%d]", i)
-	}
 }
 
 func printTimeDetails(logger Logger) {
