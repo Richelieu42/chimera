@@ -107,7 +107,7 @@ func PrintBasicDetails(logger Logger) {
 }
 
 func printTimeDetails(logger Logger, ch chan struct{}) {
-	reqCtx, cancel := context.WithTimeout(context.TODO(), time.Second*6)
+	reqCtx, cancel := context.WithTimeout(context.TODO(), time.Second*3)
 	defer cancel()
 
 	networkTime, source, err := timeKit.GetNetworkTime(reqCtx)
