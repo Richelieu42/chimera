@@ -6,4 +6,6 @@ import (
 
 func main() {
 	console.PrintBasicDetails()
+
+	select {}
 }

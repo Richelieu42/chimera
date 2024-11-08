@@ -29,75 +29,99 @@ func PrintBasicDetails(logger Logger) {
 	logger.Info(strings.Repeat("=", 42))
 	logger.Infof("\n%s", consts.Banner)
 
-	/* time */
+	chA := make(chan struct{})
+	chB := make(chan struct{})
+
+	/* 协程a */
 	go func() {
-		printTimeDetails(logger)
+		logger.Infof("[CHIMERA, PROCESS] pid: [%d]", processKit.PID)
+
+		/* golang */
+		logger.Infof("[CHIMERA, GO] version: [%s]", runtimeKit.GetGoVersion())
+		logger.Infof("[CHIMERA, GO] GOROOT: [%s]", runtimeKit.GetGoRoot())
+
+		/* os */
+		logger.Infof("[CHIMERA, OS] os: [%s]", osKit.OS)
+		logger.Infof("[CHIMERA, OS] arch: [%s]", osKit.ARCH)
+		logger.Infof("[CHIMERA, OS] bits: [%d]", osKit.GetOsBits())
+		printUlimitInformation(logger)
+		printOsInformation(logger)
+
+		/* user */
+		logger.Infof("[CHIMERA, USER] uid: [%s]", userKit.GetUid())
+		logger.Infof("[CHIMERA, USER] gid: [%s]", userKit.GetGid())
+		logger.Infof("[CHIMERA, USER] name: [%s]", userKit.GetName())
+		logger.Infof("[CHIMERA, USER] user name: [%s]", userKit.GetUserName())
+		logger.Infof("[CHIMERA, USER] home dir: [%s]", userKit.GetUserHomeDir())
+
+		/* path */
+		logger.Infof("[CHIMERA, PATH] working directory: [%s]", pathKit.GetWorkingDir())
+		logger.Infof("[CHIMERA, PATH] os temporary directory: [%s]", pathKit.GetOsTempDir())
+		logger.Infof("[CHIMERA, PATH] self dir: [%s]", pathKit.SelfDir())
+		logger.Infof("[CHIMERA, PATH] main pkg path: [%s]", pathKit.MainPkgPath())
+
+		/* json */
+		logger.Infof("[CHIMERA, JSON] library: [%s]", jsonKit.GetLibrary())
+
+		/* ip */
+		logger.Infof("[CHIMERA, IP] internal ip: [%s]", ipKit.GetInternalIp())
+		ips := ipKit.GetIps()
+		logger.Infof("[CHIMERA, IP] ips: [%s]", sliceKit.Join(ips, ", "))
+
+		/* host */
+		if hostInfo, err := runtimeKit.GetHostInfo(); err != nil {
+			logger.Warnf("[CHIMERA, HOST] fail to get host info, error: %s", err.Error())
+		} else {
+			logger.Infof("[CHIMERA, HOST] host name: [%s]", hostInfo.Hostname)
+		}
+
+		/* CPU */
+		printCpuDetails(logger)
+
+		/* memory */
+		printMemoryDetails(logger)
+
+		/* disk */
+		printDiskDetails(logger)
+
+		// 关闭信道，通知协程a可以继续执行
+		close(chA)
 	}()
 
-	logger.Infof("[CHIMERA, PROCESS] pid: [%d]", processKit.PID)
+	/* 协程b */
+	go func() {
+		/* time */
+		printTimeDetails(logger, chA)
+	}()
 
-	/* golang */
-	logger.Infof("[CHIMERA, GO] version: [%s]", runtimeKit.GetGoVersion())
-	logger.Infof("[CHIMERA, GO] GOROOT: [%s]", runtimeKit.GetGoRoot())
-
-	/* os */
-	logger.Infof("[CHIMERA, OS] os: [%s]", osKit.OS)
-	logger.Infof("[CHIMERA, OS] arch: [%s]", osKit.ARCH)
-	logger.Infof("[CHIMERA, OS] bits: [%d]", osKit.GetOsBits())
-	printUlimitInformation(logger)
-	printOsInformation(logger)
-
-	/* user */
-	logger.Infof("[CHIMERA, USER] uid: [%s]", userKit.GetUid())
-	logger.Infof("[CHIMERA, USER] gid: [%s]", userKit.GetGid())
-	logger.Infof("[CHIMERA, USER] name: [%s]", userKit.GetName())
-	logger.Infof("[CHIMERA, USER] user name: [%s]", userKit.GetUserName())
-	logger.Infof("[CHIMERA, USER] home dir: [%s]", userKit.GetUserHomeDir())
-
-	/* path */
-	logger.Infof("[CHIMERA, PATH] working directory: [%s]", pathKit.GetWorkingDir())
-	logger.Infof("[CHIMERA, PATH] os temporary directory: [%s]", pathKit.GetOsTempDir())
-	logger.Infof("[CHIMERA, PATH] self dir: [%s]", pathKit.SelfDir())
-	logger.Infof("[CHIMERA, PATH] main pkg path: [%s]", pathKit.MainPkgPath())
-
-	/* json */
-	logger.Infof("[CHIMERA, JSON] library: [%s]", jsonKit.GetLibrary())
-
-	/* ip */
-	logger.Infof("[CHIMERA, IP] internal ip: [%s]", ipKit.GetInternalIp())
-	ips := ipKit.GetIps()
-	logger.Infof("[CHIMERA, IP] ips: [%s]", sliceKit.Join(ips, ", "))
-
-	/* host */
-	if hostInfo, err := runtimeKit.GetHostInfo(); err != nil {
-		logger.Warnf("[CHIMERA, HOST] fail to get host info, error: %s", err.Error())
-	} else {
-		logger.Infof("[CHIMERA, HOST] host name: [%s]", hostInfo.Hostname)
+	// 等a执行完毕
+	<-chA
+	select {
+	case <-chB:
+		// b执行完毕
+	case <-time.After(time.Millisecond * 100):
+		// 然后等了100ms（但b还在执行）
 	}
-
-	/* CPU */
-	printCpuDetails(logger)
-
-	/* memory */
-	printMemoryDetails(logger)
-
-	/* disk */
-	printDiskDetails(logger)
 
 	logger.Info(strings.Repeat("=", 42))
 }
 
-func printTimeDetails(logger Logger) {
-	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*3)
+func printTimeDetails(logger Logger, ch chan struct{}) {
+	reqCtx, cancel := context.WithTimeout(context.TODO(), time.Second*6)
 	defer cancel()
-	if networkTime, source, err := timeKit.GetNetworkTime(ctx); err != nil {
-		logger.Warnf("[CHIMERA, TIME] fail to get network time, error: %s", err.Error())
+
+	networkTime, source, err := timeKit.GetNetworkTime(reqCtx)
+	machineTime := timeKit.GetMachineTime()
+	zoneName, zoneOffset := machineTime.Zone()
+
+	// 等待协程a执行完毕，为防止: 多协程输出导致输出混在一起
+	<-ch
+
+	if err != nil {
+		logger.Warnf("[CHIMERA, TIME] Fail to get network time, error: %s", err.Error())
 	} else {
 		logger.Infof("[CHIMERA, TIME] network time: [%v], source: [%s]", networkTime, source)
 	}
-
-	machineTime := timeKit.GetMachineTime()
-	zoneName, zoneOffset := machineTime.Zone()
 	logger.Infof("[CHIMERA, TIME] machine time: [%v], zone: [%s, %d]", machineTime, zoneName, zoneOffset)
 }
 
