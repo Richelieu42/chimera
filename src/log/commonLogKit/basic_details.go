@@ -94,13 +94,13 @@ func PrintBasicDetails(logger Logger) {
 		printTimeDetails(logger, chA)
 	}()
 
-	// 等a执行完毕
+	// a执行完毕
 	<-chA
 	select {
 	case <-chB:
 		// b执行完毕
 	case <-time.After(time.Millisecond * 100):
-		// 然后等了100ms（但b还在执行）
+		// 等了100ms（但b还在执行）
 	}
 
 	logger.Info(strings.Repeat("=", 42))
