@@ -71,6 +71,7 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/modern-go/reflect2 v1.0.2
+	github.com/mozillazg/go-pinyin v0.20.0
 	github.com/nacos-group/nacos-sdk-go/v2 v2.2.7
 	github.com/nanmu42/gzip v1.2.0
 	github.com/natefinch/lumberjack/v3 v3.0.0-alpha
