@@ -9,3 +9,7 @@ func printUlimitInformation(logger Logger) {
 func printOsInformation(logger Logger) {
 	// do nothing
 }
+
+func printCgroupInfo(logger Logger) {
+	// do nothing
+}

@@ -46,6 +46,7 @@ func PrintBasicDetails(logger Logger) {
 		logger.Infof("[CHIMERA, OS] bits: [%d]", osKit.GetOsBits())
 		printUlimitInformation(logger)
 		printOsInformation(logger)
+		printCgroupInfo(logger)
 
 		/* user */
 		logger.Infof("[CHIMERA, USER] uid: [%s]", userKit.GetUid())
