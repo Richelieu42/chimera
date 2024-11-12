@@ -39,9 +39,9 @@ func printOsInformation(logger Logger) {
 
 		"kernel.hung_task_timeout_secs",
 		"kernel.pid_max",
-		"kernel.sched_latency_ns",
-		"kernel.sched_migration_cost_ns",
-		"kernel.sched_min_granularity_ns",
+		"kernel.sched_latency_ns",         // Centos 7支持，Ubuntu 24.04 LTS不支持
+		"kernel.sched_migration_cost_ns",  // Centos 7支持，Ubuntu 24.04 LTS不支持
+		"kernel.sched_min_granularity_ns", // Centos 7支持，Ubuntu 24.04 LTS不支持
 		"kernel.threads-max",
 		"kernel.timer_migration",
 		"kernel.numa_balancing",
