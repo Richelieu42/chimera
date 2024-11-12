@@ -99,9 +99,10 @@ func printCgroupInfo(logger Logger) {
 		logger.Warnf("Fail to get cgroup type, error: %s", err.Error())
 		return
 	}
-	logger.Infof("cgroup type: %s", cgroupType)
+	cgroupType = strKit.TrimSpace(cgroupType)
+	logger.Infof("[CHIMERA, OS] cgroup type: %s", cgroupType)
 
-	var hardLimitPath, softLimitPath string
+	var softLimitPath, hardLimitPath string
 	if cgroupType == "cgroup2fs" {
 		/* cgroup v2 */
 		cgroupPath, err := getCgroupPath()
@@ -119,25 +120,20 @@ func printCgroupInfo(logger Logger) {
 
 	printLine := func(path string) {
 		s := strKit.Split(path, osKit.PathSeparator)
-
-		logger.Debugf("[TEST] len(s): %d", len(s))
-
-		if len(s) <= 1 {
+		if len(s) <= 3 {
+			logger.Warnf("[CHIMERA, OS] invalid path: %s", path)
 			return
 		}
 		key := s[len(s)-1]
 
-		cmd := exec.Command("bash", "-c", fmt.Sprintf("cat %s", hardLimitPath))
-
-		logger.Debugf("[TEST] command: %s", cmd.String())
-
+		cmd := exec.Command("bash", "-c", fmt.Sprintf("cat %s", path))
 		data, err := cmd.CombinedOutput()
 		if err != nil {
-			logger.Warnf("Command(%s) fails, error: %s", cmd.String(), err.Error())
+			logger.Warnf("[CHIMERA, OS] Command(%s) fails, error: %s", cmd.String(), err.Error())
 			return
 		}
 		value := strKit.TrimSpace(string(data))
-		logger.Infof("%s: %s", key, value)
+		logger.Infof("[CHIMERA, OS] %s: %s", key, value)
 	}
 	printLine(softLimitPath)
 	printLine(hardLimitPath)
