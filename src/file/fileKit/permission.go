@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	// AllPerm 所有权限
+	// AllPerm 所有权限（0777）
 	AllPerm = os.ModePerm
 
 	// SafePerm 文件拥有者可以读写文件，而组用户和其他用户只能读取文件.
@@ -18,27 +18,29 @@ const (
 	SafePerm os.FileMode = 0644
 )
 
-var (
-	// IsReadable 是否有 读 权限?
-	/*
-		@param path 文件（或目录）的路径
-		@return 传参path不存在的话，将返回false
+// IsReadable 是否有 读 权限?
+/*
+	@param path 文件（或目录）的路径
+	@return 传参path不存在的话，将返回false
 
-		e.g.
-			("") => false
-	*/
-	IsReadable func(path string) bool = gfile.IsReadable
+	e.g.
+		("") => false
+*/
+func IsReadable(path string) bool {
+	return gfile.IsReadable(path)
+}
 
-	// IsWritable 是否有 写 权限?
-	/*
-		@param path 文件（或目录）的路径
-		@return 传参path不存在的话，将返回false
+// IsWritable 是否有 写 权限?
+/*
+	@param path 文件（或目录）的路径
+	@return 传参path不存在的话，将返回false
 
-		e.g.
-			("") => false
-	*/
-	IsWritable func(path string) bool = gfile.IsWritable
-)
+	e.g.
+		("") => false
+*/
+func IsWritable(path string) bool {
+	return gfile.IsWritable(path)
+}
 
 // GetFileMode get mode and permission bits of file/directory
 func GetFileMode(path string) (os.FileMode, error) {
