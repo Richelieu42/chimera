@@ -9,7 +9,7 @@ const (
 	// AllPerm 所有权限（0777）
 	AllPerm = os.ModePerm
 
-	// SafePerm 文件拥有者可以读写文件，而组用户和其他用户只能读取文件.
+	// RegularPerm 常规的权限: 文件拥有者可以读写文件，而组用户和其他用户只能读取文件.
 	/*
 		3种权限:
 		(1) 4: 读权限
@@ -21,7 +21,7 @@ const (
 		第3位: 表示所属组的权限
 		第4位: 表示其他用户的权限
 	*/
-	SafePerm os.FileMode = 0644
+	RegularPerm os.FileMode = 0644
 )
 
 // IsReadable 是否有 读 权限?
