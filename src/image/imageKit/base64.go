@@ -80,5 +80,5 @@ func DecodeToImageFile(base64 []byte, dest string, perm os.FileMode) error {
 	if err != nil {
 		return err
 	}
-	return fileKit.WriteToFile(dest, data, perm)
+	return fileKit.WriteToFile(dest, data)
 }

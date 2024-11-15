@@ -39,5 +39,5 @@ func MarshalToFile(in interface{}, filePath string, perm os.FileMode) error {
 	if err != nil {
 		return err
 	}
-	return fileKit.WriteToFile(filePath, data, perm)
+	return fileKit.WriteToFile(filePath, data)
 }
