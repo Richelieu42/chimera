@@ -10,6 +10,8 @@ import (
 // NewGormDB
 /*
 参考: https://gorm.io/zh_CN/docs/connecting_to_the_database.html#PostgreSQL
+
+@param dsn e.g."host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable TimeZone=Asia/Shanghai"
 */
 func NewGormDB(dsn string, opts ...gorm.Option) (*gorm.DB, error) {
 	dialector := postgres.Open(dsn)
