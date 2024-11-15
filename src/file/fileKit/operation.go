@@ -23,8 +23,12 @@ var (
 	// Delete 删除文件（或目录）.
 	Delete func(path string) (err error) = Remove
 
-	// Truncate 裁剪文件为指定大小.
+	// Truncate 更改文件大小的函数.
 	/*
+		其主要作用是：
+		(1) 截断文件：将文件大小缩小到指定的长度，如果文件的当前内容长度超过指定长度，多余的内容会被直接截掉。
+		(2) 扩展文件：如果指定的长度大于当前文件长度，文件将被扩展，新增的部分会用空字节（即 \x00）填充。
+
 		PS:
 		(1) 如果给定文件路径是软链，将会修改源文件;
 		(2) If there is an error, it will be of type *PathError.

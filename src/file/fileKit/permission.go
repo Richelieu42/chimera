@@ -9,7 +9,12 @@ const (
 	// AllPerm 所有权限
 	AllPerm = os.ModePerm
 
-	// SafePerm 只有你自己有 写 权限
+	// SafePerm 文件拥有者可以读写文件，而组用户和其他用户只能读取文件.
+	/*
+		4: 读权限
+		2: 写权限
+		1: 执行权限
+	*/
 	SafePerm os.FileMode = 0644
 )
 

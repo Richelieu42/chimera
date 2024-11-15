@@ -1,15 +1,9 @@
 package fileKit
 
 import (
-	"bufio"
+	"github.com/duke-git/lancet/v2/fileutil"
 	"github.com/gogf/gf/v2/os/gfile"
 	"os"
-)
-
-var (
-	ReadLines func(file string, callback func(line string) error) error = gfile.ReadLines
-
-	ReadLinesBytes func(file string, callback func(bytes []byte) error) error = gfile.ReadLinesBytes
 )
 
 // ReadFile 读取文件的数据.
@@ -34,28 +28,24 @@ func ReadFileToString(filePath string) (string, error) {
 	return string(data), err
 }
 
-// ReadFileByLine
-/*
-@param f 调用scan.Bytes() || scan.Text()
-*/
-func ReadFileByLine(filePath string, f func(scan *bufio.Scanner)) error {
+func ReadFileByLine(filePath string) ([]string, error) {
 	if err := AssertExistAndIsFile(filePath); err != nil {
-		return err
+		return nil, err
 	}
 
-	file, err := os.Open(filePath)
-	defer file.Close()
-	if err != nil {
-		return err
-	}
-
-	scan := bufio.NewScanner(file)
-	for scan.Scan() {
-		// 自定义
-		f(scan)
-	}
-	if err := scan.Err(); err != nil {
-		return err
-	}
-	return nil
+	return fileutil.ReadFileByLine(filePath)
 }
+
+func ReadLines(file string, callback func(line string) error) error {
+	return gfile.ReadLines(file, callback)
+}
+
+func ReadLinesBytes(file string, callback func(bytes []byte) error) error {
+	return gfile.ReadLinesBytes(file, callback)
+}
+
+//var (
+//	ReadLines func(file string, callback func(line string) error) error = gfile.ReadLines
+//
+//	ReadLinesBytes func(file string, callback func(bytes []byte) error) error = gfile.ReadLinesBytes
+//)
