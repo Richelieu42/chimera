@@ -11,7 +11,7 @@ import (
 /*
 PS:
 (1) 参考: https://gorm.io/zh_CN/docs/connecting_to_the_database.html#MySQL
-(2) 个人实测，如果密码包含特殊字符（e.g.@或/）或者中文，并不需要进行编码（e.g.Golang中可以使用 url.QueryEscape()）.
+(2) 个人实测，如果密码包含特殊字符（e.g.@或/）或者中文，并不需要进行编码（e.g.Golang中使用 url.QueryEscape()）.
 
 @param dsn	"user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
 			查询参数:
