@@ -31,10 +31,10 @@ require (
 	github.com/go-kratos/kratos/v2 v2.8.2
 	github.com/go-oauth2/oauth2/v4 v4.5.2
 	github.com/go-pay/gopay v1.5.106
-	github.com/go-playground/validator/v10 v10.22.1
+	github.com/go-playground/validator/v10 v10.23.0
 	github.com/go-redsync/redsync/v4 v4.13.0
 	github.com/goccy/go-json v0.10.3
-	github.com/gogf/gf/v2 v2.7.4
+	github.com/gogf/gf/v2 v2.8.0
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/golang-module/carbon/v2 v2.4.1
 	github.com/google/go-cmp v0.6.0
@@ -202,7 +202,7 @@ require (
 	github.com/dvsekhvalnov/jose2go v1.6.0 // indirect
 	github.com/emersion/go-sasl v0.0.0-20200509203442-7bfe0ed36a21 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
-	github.com/fatih/color v1.16.0 // indirect
+	github.com/fatih/color v1.17.0 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/fogleman/gg v1.3.0 // indirect
 	github.com/fredbi/uri v1.1.0 // indirect
