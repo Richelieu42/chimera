@@ -1,7 +1,7 @@
 package sqliteKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/component/database/gorm/gormKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/database/sql/gorm/gormKit"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )

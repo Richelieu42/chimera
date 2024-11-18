@@ -1,7 +1,7 @@
 package pgKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/component/database/gorm/gormKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/database/sql/gorm/gormKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
