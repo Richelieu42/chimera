@@ -9,7 +9,9 @@ import (
 
 // NewGormDB
 /*
-参考: https://gorm.io/zh_CN/docs/connecting_to_the_database.html#MySQL
+PS:
+(1) 参考: https://gorm.io/zh_CN/docs/connecting_to_the_database.html#MySQL
+(2) 如果密码包含特殊字符（e.g. @或/），需要进一步编码，Golang中可以使用 url.QueryEscape().
 
 @param dsn	"user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
 			查询参数:
