@@ -7,6 +7,18 @@ import (
 	"time"
 )
 
+func polyfillOpts(opts ...gorm.Option) []gorm.Option {
+	if len(opts) > 0 {
+		// do nothing
+		return opts
+	}
+
+	opts = []gorm.Option{&gorm.Config{
+		Logger: GetDefaultLogger(),
+	}}
+	return opts
+}
+
 // NewDB
 /*
 @param dialector 方言（针对不同的数据库; 不能为nil!）
@@ -15,9 +27,7 @@ func NewDB(dialector gorm.Dialector, opts ...gorm.Option) (*gorm.DB, error) {
 	if err := interfaceKit.AssertNotNil(dialector, "dialector"); err != nil {
 		return nil, err
 	}
-	if len(opts) == 0 {
-		opts = []gorm.Option{&gorm.Config{}}
-	}
+	opts = polyfillOpts()
 
 	db, err := gorm.Open(dialector, opts...)
 	if err != nil {
