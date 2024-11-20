@@ -45,7 +45,7 @@ func NewDB(dialector gorm.Dialector, opts ...gorm.Option) (*gorm.DB, error) {
 	}
 
 	/* (2) 连接池（pool）的默认配置，后续可以按照业务需求进行更改 */
-	ConfigurePoolWithSqlDB(sqlDB, 512, 4096, time.Minute*30)
+	ConfigurePoolWithSqlDB(sqlDB, 1024, 8192, time.Minute*30)
 
 	return db, nil
 }
