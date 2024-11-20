@@ -2,6 +2,7 @@ package mysqlKit
 
 import (
 	"fmt"
+	"gorm.io/gorm"
 	"testing"
 )
 
@@ -23,5 +24,12 @@ func TestNewGormDB(t *testing.T) {
 
 	{
 
+		db.Transaction()
+
+		db.Session()
+
+		db.Create()
+
+		gorm.Session{}
 	}
 }

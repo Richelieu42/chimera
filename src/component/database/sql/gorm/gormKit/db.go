@@ -45,19 +45,7 @@ func NewDB(dialector gorm.Dialector, opts ...gorm.Option) (*gorm.DB, error) {
 	}
 
 	/* (2) 连接池（pool）的默认配置，后续可以按照业务需求进行更改 */
-	/*
-		SetMaxIdleConns 用于设置连接池中空闲连接的最大数量。
-		== 0: 	defaultMaxIdleConns（目前是2）
-		< 0:	0
-	*/
-	sqlDB.SetMaxIdleConns(512)
-	/*
-		SetMaxOpenConns 设置打开数据库连接的最大数量。
-		<= 0: unlimited
-	*/
-	sqlDB.SetMaxOpenConns(8192)
-	// SetConnMaxLifetime 设置了连接可复用的最大时间。
-	sqlDB.SetConnMaxLifetime(time.Minute * 30)
+	ConfigurePoolWithSqlDB(sqlDB, 512, 4096, time.Minute*30)
 
 	return db, nil
 }
