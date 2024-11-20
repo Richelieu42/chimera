@@ -50,11 +50,11 @@ require (
 	github.com/hashicorp/go-version v1.7.0
 	github.com/hashicorp/golang-lru/v2 v2.0.7
 	github.com/hashicorp/raft v1.7.1
-	github.com/hashicorp/raft-boltdb v0.0.0-20231211162105-6c830fa4535e
+	github.com/hashicorp/raft-boltdb v0.0.0-20241118193808-d88003288591
 	github.com/hibiken/asynq v0.25.0
 	github.com/imroc/req/v3 v3.48.0
 	github.com/itchyny/gojq v0.12.16
-	github.com/jedib0t/go-pretty/v6 v6.6.1
+	github.com/jedib0t/go-pretty/v6 v6.6.2
 	github.com/jinzhu/copier v0.4.0
 	github.com/joho/godotenv v1.5.1
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
