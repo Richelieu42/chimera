@@ -114,6 +114,7 @@ func PrintBasicDetails(logger Logger) {
 }
 
 func printTimeDetails(logger Logger, ch chan struct{}) {
+	// 最多3s
 	reqCtx, cancel := context.WithTimeout(context.TODO(), time.Second*3)
 	defer cancel()
 
