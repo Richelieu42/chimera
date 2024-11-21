@@ -85,7 +85,7 @@ func PrintBasicDetails(logger Logger) {
 		/* disk */
 		printDiskDetails(logger)
 
-		// 关闭信道，通知协程a可以继续执行
+		// 关闭信道，通知外部: 协程a 已执行完毕
 		close(chA)
 	}()
 
@@ -93,6 +93,9 @@ func PrintBasicDetails(logger Logger) {
 	go func() {
 		/* time */
 		printTimeDetails(logger, chA)
+
+		// 关闭信道，通知外部: 协程b 已执行完毕
+		close(chB)
 	}()
 
 	// 等待 协程a 执行完毕
