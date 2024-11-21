@@ -20,7 +20,7 @@ require (
 	github.com/emersion/go-message v0.18.1
 	github.com/fatih/structs v1.1.0
 	github.com/fsnotify/fsnotify v1.8.0
-	github.com/gabriel-vasile/mimetype v1.4.6
+	github.com/gabriel-vasile/mimetype v1.4.7
 	github.com/gin-contrib/cors v1.7.2
 	github.com/gin-contrib/gzip v1.0.1
 	github.com/gin-contrib/pprof v1.5.1
