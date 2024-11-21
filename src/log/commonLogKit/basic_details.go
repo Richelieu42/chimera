@@ -121,7 +121,7 @@ func printTimeDetails(logger Logger, ch chan struct{}) {
 	machineTime := timeKit.GetMachineTime()
 	zoneName, zoneOffset := machineTime.Zone()
 
-	// 等待 协程a 执行完毕，为防止: 多协程输出导致输出混在一起
+	// 等待 协程a 执行完毕，防止: 多协程输出导致输出混在一起，很难看
 	<-ch
 
 	if err != nil {
