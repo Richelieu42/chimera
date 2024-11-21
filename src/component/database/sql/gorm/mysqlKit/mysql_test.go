@@ -6,9 +6,11 @@ import (
 )
 
 func TestNewGormDB(t *testing.T) {
-	user := "test"
-	password := "测试test123"
-	dsn := fmt.Sprintf("%s:%s@tcp(101.32.170.155:3306)/mysql?charset=utf8mb4&parseTime=True&loc=Local", user, password)
+	user := "yjs"
+	password := "~Test123"
+	addr := "localhost:3306"
+
+	dsn := fmt.Sprintf("%s:%s@tcp(%s)/mysql?charset=utf8mb4&parseTime=True&loc=Local", user, password, addr)
 	fmt.Printf("dsn: %s\n", dsn)
 
 	db, err := NewGormDB(dsn)
