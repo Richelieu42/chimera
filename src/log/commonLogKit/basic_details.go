@@ -95,14 +95,14 @@ func PrintBasicDetails(logger Logger) {
 		printTimeDetails(logger, chA)
 	}()
 
-	// a执行完毕
+	// 等待 协程a 执行完毕
 	<-chA
 
 	select {
 	case <-chB:
-		// b执行完毕
+		// 协程b 执行完毕
 	case <-time.After(time.Millisecond * 100):
-		// 等了100ms（但b还在执行，就不管了）
+		// 等了100ms（但 协程b 还在执行，就不管了）
 	}
 
 	logger.Info(strings.Repeat("=", 42))
@@ -116,7 +116,7 @@ func printTimeDetails(logger Logger, ch chan struct{}) {
 	machineTime := timeKit.GetMachineTime()
 	zoneName, zoneOffset := machineTime.Zone()
 
-	// 等待协程a执行完毕，为防止: 多协程输出导致输出混在一起
+	// 等待 协程a 执行完毕，为防止: 多协程输出导致输出混在一起
 	<-ch
 
 	if err != nil {
