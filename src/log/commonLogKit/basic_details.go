@@ -29,7 +29,9 @@ func PrintBasicDetails(logger Logger) {
 	logger.Info(strings.Repeat("=", 42))
 	logger.Infof("\n%s", consts.Banner)
 
+	// 作用: 通知外部（可以是多个）协程a已执行完毕
 	chA := make(chan struct{})
+	// 作用: 通知外部（可以是多个）协程b已执行完毕
 	chB := make(chan struct{})
 
 	/* 协程a */
@@ -85,7 +87,7 @@ func PrintBasicDetails(logger Logger) {
 		/* disk */
 		printDiskDetails(logger)
 
-		// 关闭信道，通知外部: 协程a 已执行完毕
+		// 关闭信道，通知外部（可以是多个）: 协程a 已执行完毕
 		close(chA)
 	}()
 
@@ -94,7 +96,7 @@ func PrintBasicDetails(logger Logger) {
 		/* time */
 		printTimeDetails(logger, chA)
 
-		// 关闭信道，通知外部: 协程b 已执行完毕
+		// 关闭信道，通知外部（可以是多个）: 协程b 已执行完毕
 		close(chB)
 	}()
 
