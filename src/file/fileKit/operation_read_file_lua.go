@@ -1,7 +1,6 @@
 package fileKit
 
 import (
-	"bufio"
 	"bytes"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 )
@@ -11,22 +10,23 @@ import (
 @param path .lua文件的路径
 */
 func ReadLuaFileToString(filePath string) (string, error) {
-	var buffer = bytes.Buffer{}
+	buf := bytes.NewBuffer(nil)
 
-	err := ReadFileByLine(filePath, func(scan *bufio.Scanner) {
-		text := scan.Text()
-		text = strKit.TrimSpace(text)
+	err := ReadLines(filePath, func(line string) error {
+		line = strKit.TrimSpace(line)
 
 		// 忽略"空行"和"注释行"
-		if strKit.IsEmpty(text) || strKit.StartWith(text, "--") {
-			return
+		if strKit.IsEmpty(line) || strKit.StartWith(line, "--") {
+			return nil
 		}
-		buffer.WriteString(text)
-		// 加个空格
-		buffer.WriteString(" ")
+
+		buf.WriteString(line)
+		// 再加个空格
+		buf.WriteString(" ")
+		return nil
 	})
 	if err != nil {
 		return "", err
 	}
-	return buffer.String(), nil
+	return buf.String(), nil
 }
