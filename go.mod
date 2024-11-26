@@ -14,6 +14,7 @@ require (
 	github.com/coocood/freecache v1.2.4
 	github.com/davidbyttow/govips/v2 v2.15.0
 	github.com/deckarep/golang-set/v2 v2.6.0
+	github.com/dromara/carbon/v2 v2.5.0
 	github.com/duke-git/lancet/v2 v2.3.3
 	github.com/emersion/go-imap v1.2.1
 	github.com/emersion/go-imap-id v0.0.0-20190926060100-f94a56b9ecde
@@ -34,9 +35,8 @@ require (
 	github.com/go-playground/validator/v10 v10.23.0
 	github.com/go-redsync/redsync/v4 v4.13.0
 	github.com/goccy/go-json v0.10.3
-	github.com/gogf/gf/v2 v2.8.0
+	github.com/gogf/gf/v2 v2.8.1
 	github.com/golang-jwt/jwt/v5 v5.2.1
-	github.com/golang-module/carbon/v2 v2.4.1
 	github.com/google/go-cmp v0.6.0
 	github.com/google/uuid v1.6.0
 	github.com/google/wire v0.6.0
@@ -105,7 +105,7 @@ require (
 	github.com/tidwall/buntdb v1.3.2
 	github.com/tidwall/gjson v1.18.0
 	github.com/tuotoo/qrcode v0.0.0-20220425170535-52ccc2bebf5d
-	github.com/unidoc/unioffice v1.37.0
+	github.com/unidoc/unioffice v1.38.0
 	github.com/vulcand/oxy/v2 v2.0.2
 	github.com/xuri/excelize/v2 v2.9.0
 	github.com/yeqown/go-qrcode/v2 v2.2.4
@@ -141,7 +141,7 @@ require (
 	gorm.io/driver/bigquery v1.2.0
 	gorm.io/driver/clickhouse v0.6.1
 	gorm.io/driver/mysql v1.5.7
-	gorm.io/driver/postgres v1.5.9
+	gorm.io/driver/postgres v1.5.10
 	gorm.io/driver/sqlite v1.5.6
 	gorm.io/driver/sqlserver v1.5.4
 	gorm.io/gorm v1.25.12

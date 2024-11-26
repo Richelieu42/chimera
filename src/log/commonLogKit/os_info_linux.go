@@ -31,29 +31,40 @@ func printUlimitInformation(logger Logger) {
 
 func printOsInformation(logger Logger) {
 	var kernelParameterKeys = []string{
+		"fs.file-max",
+		"fs.nr_open",
+		"fs.inotify.max_user_watches",
 		"fs.aio-max-nr",
 		"fs.epoll.max_user_watches",
-		"fs.file-max",
-		"fs.inotify.max_user_watches",
-		"fs.nr_open",
 
-		"kernel.hung_task_timeout_secs",
 		"kernel.pid_max",
+		"kernel.threads-max",
+		"kernel.hung_task_timeout_secs",
 		"kernel.sched_latency_ns",         // Centos 7支持，Ubuntu 24.04 LTS不支持
 		"kernel.sched_migration_cost_ns",  // Centos 7支持，Ubuntu 24.04 LTS不支持
 		"kernel.sched_min_granularity_ns", // Centos 7支持，Ubuntu 24.04 LTS不支持
-		"kernel.threads-max",
 		"kernel.timer_migration",
 		"kernel.numa_balancing",
 
+		"net.core.netdev_max_backlog",
+		"net.core.somaxconn",
 		"net.core.rmem_max",
 		"net.core.wmem_max",
-		"net.core.somaxconn",
+		"net.core.rmem_default",
+		"net.core.wmem_default",
+
 		"net.ipv4.ip_local_port_range",
+		"net.ipv4.ip_forward",
+		"net.ipv4.tcp_rmem",
+		"net.ipv4.tcp_wmem",
 		"net.ipv4.tcp_fin_timeout",
 		"net.ipv4.tcp_max_syn_backlog",
 		//"net.ipv4.tcp_tw_recycle", // 被 net.ipv4.tcp_tw_reuse 替代
 		"net.ipv4.tcp_tw_reuse",
+		"net.ipv4.tcp_mtu_probing",
+		"net.ipv4.udp_mem",
+		"net.ipv4.tcp_max_syn_backlog",
+		"net.ipv4.tcp_max_tw_buckets",
 
 		"vm.dirty_background_ratio",
 		"vm.dirty_ratio",

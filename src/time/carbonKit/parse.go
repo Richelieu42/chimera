@@ -1,6 +1,6 @@
 package carbonKit
 
-import "github.com/golang-module/carbon/v2"
+import "github.com/dromara/carbon/v2"
 
 var (
 	// Parse 将标准时间字符串解析成 Carbon 实例.
