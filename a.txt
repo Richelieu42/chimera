@@ -1,0 +1,33 @@
+### open files(-n)
+### 文件描述符数 (nofile): 默认值通常较低（1024），建议增加。
+* soft nofile 65535
+* hard nofile 65535
+
+### max user processes(-u)
+### 进程数 (nproc): 限制单个用户的最大进程数。
+* soft nproc 65535
+* hard nproc 65535
+
+### core file size(blocks, -c)
+### 核心文件大小 (core): 控制生成核心转储文件的大小，通常设为 unlimited 以便调试。
+* soft core unlimited
+* hard core unlimited
+
+### 内存锁定 (memlock): 控制可以锁定在内存中的最大字节数。
+* soft memlock unlimited
+* hard memlock unlimited
+
+### 堆栈大小 (stack): 控制每个线程的最大堆栈大小。
+* soft stack 8192
+* hard stack unlimited
+
+### CPU 时间 (cpu): 控制进程可使用的最大 CPU 时间，通常设为 unlimited。
+* soft cpu unlimited
+* hard cpu unlimited
+
+### pending signals (-i)
+* soft sigpending 65535
+* hard sigpending 65535
+
+
+

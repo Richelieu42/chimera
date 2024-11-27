@@ -36,6 +36,7 @@ func printOsInformation(logger Logger) {
 		"fs.inotify.max_user_watches",
 		"fs.aio-max-nr",
 		"fs.epoll.max_user_watches",
+		"fs.pipe-max-size",
 
 		"kernel.pid_max",
 		"kernel.threads-max",
