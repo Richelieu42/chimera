@@ -14,7 +14,7 @@ import (
 	"strings"
 )
 
-func printUlimitInformation(logger Logger) {
+func printUlimitInfo(logger Logger) {
 	/*
 		Richelieu: 针对 Ubuntu，使用 bash 而 非sh，因为默认情况下 /bin/sh -> dash*.
 	*/
@@ -29,7 +29,25 @@ func printUlimitInformation(logger Logger) {
 	logger.Infof("[CHIMERA, OS] ulimit imformation(ulimit -a):\n%s", str)
 }
 
-func printOsInformation(logger Logger) {
+// printLimitsForCurrentPid
+/*
+关于 ulimit 的两个天坑
+	https://mp.weixin.qq.com/s/yUwQW3pnBhN50tHwBLsiMw
+*/
+func printLimitsForCurrentPid(logger Logger) {
+	pid := os.Getpid()
+
+	cmd := exec.CommandContext(context.TODO(), "bash", "-c", fmt.Sprintf("cat /proc/%d/limits", pid))
+	data, err := cmd.CombinedOutput()
+	if err != nil {
+		logger.Warnf("[CHIMERA, OS] command(%s) fails, error: %s", cmd.String(), err.Error())
+		return
+	}
+	str := strings.TrimSpace(string(data))
+	logger.Infof("[CHIMERA, OS] limit for pid(%d):\n%s", pid, str)
+}
+
+func printOsInfo(logger Logger) {
 	var kernelParameterKeys = []string{
 		"fs.file-max",
 		"fs.nr_open",
