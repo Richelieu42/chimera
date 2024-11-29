@@ -8,10 +8,21 @@ import (
 	"os"
 )
 
+func init() {
+	log.Printf("pid: %d", os.Getpid())
+}
+
+func init() {
+	for {
+	}
+}
+
 func main() {
+	log.Println("--- main starts ---")
+
 	port := 8002
 
-	log.Printf("pid: %d", os.Getpid())
+	//console.PrintBasicDetails()
 
 	engine := gin.Default()
 	engine.Any("/test", func(ctx *gin.Context) {
@@ -20,4 +31,6 @@ func main() {
 	if err := engine.Run(netKit.JoinToHost("", port)); err != nil {
 		panic(err)
 	}
+
+	log.Println("--- main ends ---")
 }

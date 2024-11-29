@@ -14,7 +14,7 @@ require (
 	github.com/coocood/freecache v1.2.4
 	github.com/davidbyttow/govips/v2 v2.15.0
 	github.com/deckarep/golang-set/v2 v2.6.0
-	github.com/dromara/carbon/v2 v2.5.0
+	github.com/dromara/carbon/v2 v2.5.1
 	github.com/duke-git/lancet/v2 v2.3.3
 	github.com/emersion/go-imap v1.2.1
 	github.com/emersion/go-imap-id v0.0.0-20190926060100-f94a56b9ecde
@@ -54,7 +54,7 @@ require (
 	github.com/hibiken/asynq v0.25.0
 	github.com/imroc/req/v3 v3.48.0
 	github.com/itchyny/gojq v0.12.16
-	github.com/jedib0t/go-pretty/v6 v6.6.2
+	github.com/jedib0t/go-pretty/v6 v6.6.3
 	github.com/jinzhu/copier v0.4.0
 	github.com/joho/godotenv v1.5.1
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible

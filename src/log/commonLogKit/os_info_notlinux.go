@@ -2,11 +2,15 @@
 
 package commonLogKit
 
-func printUlimitInformation(logger Logger) {
+func printLimitsForCurrentPid(logger Logger) {
 	// do nothing
 }
 
-func printOsInformation(logger Logger) {
+func printOsInfo(logger Logger) {
+	// do nothing
+}
+
+func printUlimitInfo(logger Logger) {
 	// do nothing
 }
 
