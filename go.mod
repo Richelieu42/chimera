@@ -54,7 +54,7 @@ require (
 	github.com/hibiken/asynq v0.25.0
 	github.com/imroc/req/v3 v3.48.0
 	github.com/itchyny/gojq v0.12.17
-	github.com/jedib0t/go-pretty/v6 v6.6.3
+	github.com/jedib0t/go-pretty/v6 v6.6.4
 	github.com/jinzhu/copier v0.4.0
 	github.com/joho/godotenv v1.5.1
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
@@ -83,7 +83,7 @@ require (
 	github.com/pelletier/go-toml/v2 v2.2.3
 	github.com/pierrec/lz4/v4 v4.1.21
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
-	github.com/playwright-community/playwright-go v0.4802.0
+	github.com/playwright-community/playwright-go v0.4901.0
 	github.com/redis/go-redis/v9 v9.7.0
 	github.com/redis/rueidis v1.0.51
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
