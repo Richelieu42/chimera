@@ -58,7 +58,7 @@ var (
 )
 
 // Average 计算平均数（可能需要对结果调用RoundToFloat方法四舍五入）
-func Average[T constraints.Integer | constraints.Float](numbers ...T) T {
+func Average[T constraints.Integer | constraints.Float](numbers ...T) float64 {
 	return mathutil.Average[T](numbers...)
 }
 
