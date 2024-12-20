@@ -29,7 +29,7 @@ require (
 	github.com/gin-contrib/sse v0.1.0
 	github.com/gin-contrib/static v1.1.2
 	github.com/gin-gonic/gin v1.10.0
-	github.com/go-kratos/kratos/v2 v2.8.2
+	github.com/go-kratos/kratos/v2 v2.8.3
 	github.com/go-oauth2/oauth2/v4 v4.5.2
 	github.com/go-pay/gopay v1.5.106
 	github.com/go-playground/validator/v10 v10.23.0
