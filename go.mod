@@ -31,7 +31,7 @@ require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-kratos/kratos/v2 v2.8.3
 	github.com/go-oauth2/oauth2/v4 v4.5.2
-	github.com/go-pay/gopay v1.5.106
+	github.com/go-pay/gopay v1.5.107
 	github.com/go-playground/validator/v10 v10.23.0
 	github.com/go-redsync/redsync/v4 v4.13.0
 	github.com/goccy/go-json v0.10.4
@@ -61,8 +61,8 @@ require (
 	github.com/json-iterator/go v1.1.12
 	github.com/klauspost/compress v1.17.11
 	github.com/klauspost/cpuid/v2 v2.2.9
-	github.com/linxGnu/grocksdb v1.9.7
-	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20240510055607-89e20ab7b6c6
+	github.com/linxGnu/grocksdb v1.9.8
+	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20241220152942-06eb5c6e8230
 	github.com/liuzl/gocc v0.0.0-20231231122217-0372e1059ca5
 	github.com/magiconair/properties v1.8.9
 	github.com/matoous/go-nanoid/v2 v2.1.0
