@@ -1,20 +1,20 @@
 package zapKit
 
 func Debugf(template string, args ...interface{}) {
-	innerS.Debugf(template, args...)
+	getInnerS().Debugf(template, args...)
 }
 
 func Debugw(msg string, keysAndValues ...interface{}) {
-	innerS.Debugw(msg, keysAndValues...)
+	getInnerS().Debugw(msg, keysAndValues...)
 }
 
 func Debugln(args ...interface{}) {
-	innerS.Debugln(args...)
+	getInnerS().Debugln(args...)
 }
 
 // Infof 格式化输出的信息日志，类似于 fmt.Printf ，可以使用格式化字符串.
 func Infof(template string, args ...interface{}) {
-	innerS.Infof(template, args...)
+	getInnerS().Infof(template, args...)
 }
 
 // Infow 结构化输出的信息日志，使用键值对的方式输出，更加适合记录结构化数据.
@@ -22,7 +22,7 @@ func Infof(template string, args ...interface{}) {
 @param keysAndValues e.g. "key", "value", "flag", true
 */
 func Infow(msg string, keysAndValues ...interface{}) {
-	innerS.Infow(msg, keysAndValues...)
+	getInnerS().Infow(msg, keysAndValues...)
 }
 
 // Infoln
@@ -30,65 +30,65 @@ func Infow(msg string, keysAndValues ...interface{}) {
 PS: Spaces are always added between arguments.（传参间会加上" "）
 */
 func Infoln(args ...interface{}) {
-	innerS.Infoln(args...)
+	getInnerS().Infoln(args...)
 }
 
 func Warnf(template string, args ...interface{}) {
-	innerS.Warnf(template, args...)
+	getInnerS().Warnf(template, args...)
 }
 
 func Warnw(msg string, keysAndValues ...interface{}) {
-	innerS.Warnw(msg, keysAndValues...)
+	getInnerS().Warnw(msg, keysAndValues...)
 }
 
 func Warnln(args ...interface{}) {
-	innerS.Warnln(args...)
+	getInnerS().Warnln(args...)
 }
 
 func Errorf(template string, args ...interface{}) {
-	innerS.Errorf(template, args...)
+	getInnerS().Errorf(template, args...)
 }
 
 func Errorw(msg string, keysAndValues ...interface{}) {
-	innerS.Errorw(msg, keysAndValues...)
+	getInnerS().Errorw(msg, keysAndValues...)
 }
 
 func Errorln(args ...interface{}) {
-	innerS.Errorln(args...)
+	getInnerS().Errorln(args...)
 }
 
 func DPanicf(template string, args ...interface{}) {
-	innerS.DPanicf(template, args...)
+	getInnerS().DPanicf(template, args...)
 }
 
 func DPanicw(msg string, keysAndValues ...interface{}) {
-	innerS.DPanicw(msg, keysAndValues...)
+	getInnerS().DPanicw(msg, keysAndValues...)
 }
 
 func DPanicln(args ...interface{}) {
-	innerS.DPanicln(args...)
+	getInnerS().DPanicln(args...)
 }
 
 func Panicf(template string, args ...interface{}) {
-	innerS.Panicf(template, args...)
+	getInnerS().Panicf(template, args...)
 }
 
 func Panicw(msg string, keysAndValues ...interface{}) {
-	innerS.Panicw(msg, keysAndValues...)
+	getInnerS().Panicw(msg, keysAndValues...)
 }
 
 func Panicln(args ...interface{}) {
-	innerS.Panicln(args...)
+	getInnerS().Panicln(args...)
 }
 
 func Fatalf(template string, args ...interface{}) {
-	innerS.Fatalf(template, args...)
+	getInnerS().Fatalf(template, args...)
 }
 
 func Fatalw(msg string, keysAndValues ...interface{}) {
-	innerS.Fatalw(msg, keysAndValues...)
+	getInnerS().Fatalw(msg, keysAndValues...)
 }
 
 func Fatalln(args ...interface{}) {
-	innerS.Fatalln(args...)
+	getInnerS().Fatalln(args...)
 }

@@ -17,28 +17,26 @@ var (
 )
 
 func init() {
-	initializeDefaultLogger()
-}
-
-func initializeDefaultLogger() {
-	encoder := NewEncoder()
-	ws := LockedWriteSyncerStdout
-	core := NewCore(encoder, ws, defLevel)
-
-	l = NewLogger(core, WithCallerSkip(0))
-	s = l.Sugar()
-	innerL = NewLogger(core, WithCallerSkip(1))
-	innerS = innerL.Sugar()
+	// 初始化
+	SetDefaultLevel(defLevel)
 }
 
 func SetDefaultLevel(level zapcore.Level) {
 	/* 写锁 */
 	defMutex.LockFunc(func() {
-		if level == defLevel {
-			return
-		}
+		//if level == defLevel {
+		//	return
+		//}
 		defLevel = level
-		initializeDefaultLogger()
+
+		encoder := NewEncoder()
+		ws := LockedWriteSyncerStdout
+		core := NewCore(encoder, ws, defLevel)
+
+		l = NewLogger(core, WithCallerSkip(0))
+		s = l.Sugar()
+		innerL = NewLogger(core, WithCallerSkip(1))
+		innerS = innerL.Sugar()
 	})
 }
 
@@ -58,11 +56,15 @@ func S() *zap.SugaredLogger {
 	return s
 }
 
-// GetInnerSugaredLogger
-/*
-Deprecated: 此函数仅供包 console 调用.
-*/
-func GetInnerSugaredLogger() *zap.SugaredLogger {
+func getInnerL() *zap.Logger {
+	/* 读锁 */
+	defMutex.RLock()
+	defer defMutex.RUnlock()
+
+	return innerL
+}
+
+func getInnerS() *zap.SugaredLogger {
 	/* 读锁 */
 	defMutex.RLock()
 	defer defMutex.RUnlock()
@@ -81,7 +83,7 @@ func Sync() {
 }
 
 func Debug(msg string, fields ...zap.Field) {
-	innerL.Debug(msg, fields...)
+	getInnerL().Debug(msg, fields...)
 }
 
 // Info
@@ -89,25 +91,25 @@ func Debug(msg string, fields ...zap.Field) {
 @param fields 输出循序与 传参fields 顺序一致（并不会按字母排序）
 */
 func Info(msg string, fields ...zap.Field) {
-	innerL.Info(msg, fields...)
+	getInnerL().Info(msg, fields...)
 }
 
 func Warn(msg string, fields ...zap.Field) {
-	innerL.Warn(msg, fields...)
+	getInnerL().Warn(msg, fields...)
 }
 
 func Error(msg string, fields ...zap.Field) {
-	innerL.Error(msg, fields...)
+	getInnerL().Error(msg, fields...)
 }
 
 func Panic(msg string, fields ...zap.Field) {
-	innerL.Panic(msg, fields...)
+	getInnerL().Panic(msg, fields...)
 }
 
 func DPanic(msg string, fields ...zap.Field) {
-	innerL.DPanic(msg, fields...)
+	getInnerL().DPanic(msg, fields...)
 }
 
 func Fatal(msg string, fields ...zap.Field) {
-	innerL.Fatal(msg, fields...)
+	getInnerL().Fatal(msg, fields...)
 }

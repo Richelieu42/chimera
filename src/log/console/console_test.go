@@ -8,6 +8,8 @@ import (
 func TestDebug(t *testing.T) {
 	defer Sync()
 
+	Debug("ddd")
+
 	/* WrappedLogger */
 	Debug("hello world", zap.String("key", "value"), zap.Bool("flag", true))
 
