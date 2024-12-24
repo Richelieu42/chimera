@@ -6,6 +6,13 @@ import (
 )
 
 func TestDebug(t *testing.T) {
+	Debug("debug")
+	Info("info")
+	Warn("warn")
+	Error("error")
+}
+
+func TestDebug1(t *testing.T) {
 	defer Sync()
 
 	Debug("ddd")
@@ -22,4 +29,17 @@ func TestDebug(t *testing.T) {
 	Warn("Warn")
 	Error("Error")
 	Fatal("Fatal")
+}
+
+func TestSetDefaultLevel(t *testing.T) {
+	Debug("debug")
+	Info("info")
+	Warn("warn")
+	Error("error")
+
+	SetDefaultLevel(zap.WarnLevel)
+	Debug("debug")
+	Info("info")
+	Warn("warn")
+	Error("error")
 }

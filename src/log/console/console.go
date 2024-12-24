@@ -3,12 +3,15 @@ package console
 import (
 	"github.com/richelieu-yang/chimera/v3/src/log/zapKit"
 	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
 
 var (
 	L    func() *zap.Logger        = zapKit.L
 	S    func() *zap.SugaredLogger = zapKit.S
 	Sync func()                    = zapKit.Sync
+
+	SetDefaultLevel func(level zapcore.Level) = zapKit.SetDefaultLevel
 )
 
 var (
