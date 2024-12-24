@@ -7,6 +7,7 @@ import (
 )
 
 var (
+	// defLevel 默认日志级别: DEBUG
 	defLevel = zap.DebugLevel
 	defMutex = new(gmutex.RWMutex)
 
@@ -17,26 +18,29 @@ var (
 )
 
 func init() {
-	// 初始化
-	SetDefaultLevel(defLevel)
+	initializeLoggers()
+}
+
+func initializeLoggers() {
+	encoder := NewEncoder()
+	ws := LockedWriteSyncerStdout
+	core := NewCore(encoder, ws, defLevel)
+
+	l = NewLogger(core, WithCallerSkip(0))
+	s = l.Sugar()
+	innerL = NewLogger(core, WithCallerSkip(1))
+	innerS = innerL.Sugar()
 }
 
 func SetDefaultLevel(level zapcore.Level) {
 	/* 写锁 */
 	defMutex.LockFunc(func() {
-		//if level == defLevel {
-		//	return
-		//}
+		if level == defLevel {
+			return
+		}
 		defLevel = level
 
-		encoder := NewEncoder()
-		ws := LockedWriteSyncerStdout
-		core := NewCore(encoder, ws, defLevel)
-
-		l = NewLogger(core, WithCallerSkip(0))
-		s = l.Sugar()
-		innerL = NewLogger(core, WithCallerSkip(1))
-		innerS = innerL.Sugar()
+		initializeLoggers()
 	})
 }
 
