@@ -1,20 +1,60 @@
 package zapKit
 
-import "go.uber.org/zap"
-
-var (
-	l = NewLogger(nil, WithCallerSkip(0))
-	s = l.Sugar()
-
-	innerL = NewLogger(nil, WithCallerSkip(1))
-	innerS = innerL.Sugar()
+import (
+	"github.com/gogf/gf/v2/os/gmutex"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
 
+var (
+	defLevel = zap.DebugLevel
+	defMutex = new(gmutex.RWMutex)
+
+	l      *zap.Logger
+	s      *zap.SugaredLogger
+	innerL *zap.Logger
+	innerS *zap.SugaredLogger
+)
+
+func init() {
+	initializeDefaultLogger()
+}
+
+func initializeDefaultLogger() {
+	encoder := NewEncoder()
+	ws := LockedWriteSyncerStdout
+	core := NewCore(encoder, ws, defLevel)
+
+	l = NewLogger(core, WithCallerSkip(0))
+	s = l.Sugar()
+	innerL = NewLogger(core, WithCallerSkip(1))
+	innerS = innerL.Sugar()
+}
+
+func SetDefaultLevel(level zapcore.Level) {
+	/* 写锁 */
+	defMutex.LockFunc(func() {
+		if level == defLevel {
+			return
+		}
+		defLevel = level
+		initializeDefaultLogger()
+	})
+}
+
 func L() *zap.Logger {
+	/* 读锁 */
+	defMutex.RLock()
+	defer defMutex.RUnlock()
+
 	return l
 }
 
 func S() *zap.SugaredLogger {
+	/* 读锁 */
+	defMutex.RLock()
+	defer defMutex.RUnlock()
+
 	return s
 }
 
@@ -23,15 +63,21 @@ func S() *zap.SugaredLogger {
 Deprecated: 此函数仅供包 console 调用.
 */
 func GetInnerSugaredLogger() *zap.SugaredLogger {
+	/* 读锁 */
+	defMutex.RLock()
+	defer defMutex.RUnlock()
+
 	return innerS
 }
 
 func Sync() {
-	_ = l.Sync()
-	_ = s.Sync()
-
-	_ = innerL.Sync()
-	_ = innerS.Sync()
+	/* 写锁 */
+	defMutex.LockFunc(func() {
+		_ = l.Sync()
+		_ = s.Sync()
+		_ = innerL.Sync()
+		_ = innerS.Sync()
+	})
 }
 
 func Debug(msg string, fields ...zap.Field) {

@@ -19,7 +19,7 @@ e.g. case: core传nil，options不传
 	(3) [Encoder] 日志级别大写且有颜色
 	(4) [Encoder] Message字段无前缀
 	(5) [Core] 仅有1个输出: 输出到控制台(并发安全地输出到os.Stdout)
-	(6) [Core] 仅有1个输出: 日志级别为 DEBUG
+	(6) [Core] 仅有1个输出: 日志级别(level)为 DEBUG
 	(6) [Logger] 有 Caller 且 CallerSkip == 0
 	(7) [Logger] Development == false，即生产模式
 	(8) [Logger] ErrorOutput 使用默认值: 并发安全地输出到os.Stderr
