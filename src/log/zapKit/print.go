@@ -32,6 +32,7 @@ func initializeLoggers() {
 	innerS = innerL.Sugar()
 }
 
+// SetDefaultLevel PS: 默认日志级别为 DEBUG .
 func SetDefaultLevel(level zapcore.Level) {
 	/* 写锁 */
 	defMutex.LockFunc(func() {
