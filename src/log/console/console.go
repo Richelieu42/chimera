@@ -7,10 +7,9 @@ import (
 )
 
 var (
-	//L    func() *zap.Logger        = zapKit.L
-	//S    func() *zap.SugaredLogger = zapKit.S
-
-	Sync func() = zapKit.Sync
+	L    func() *zap.Logger        = zapKit.L
+	S    func() *zap.SugaredLogger = zapKit.S
+	Sync func()                    = zapKit.Sync
 
 	// SetDefaultLevel PS: 默认日志级别为 DEBUG .
 	SetDefaultLevel func(level zapcore.Level) = zapKit.SetDefaultLevel

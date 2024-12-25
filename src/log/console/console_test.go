@@ -1,6 +1,7 @@
 package console
 
 import (
+	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
 	"testing"
 )
@@ -9,7 +10,7 @@ func TestDebug(t *testing.T) {
 	Debug("debug")
 	Info("info")
 	Warn("warn")
-	Error("error")
+	Error("error", zap.Error(redis.Nil))
 }
 
 func TestDebug1(t *testing.T) {
