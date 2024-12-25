@@ -37,7 +37,7 @@ func TestSetDefaultLevel(t *testing.T) {
 	Warn("warn")
 	Error("error")
 
-	SetDefaultLevel(zap.InfoLevel)
+	SetDefaultLevel(zap.WarnLevel)
 	Debug("debug")
 	Info("info")
 	Warn("warn")
