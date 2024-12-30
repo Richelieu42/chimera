@@ -9,7 +9,7 @@ require (
 	github.com/apache/pulsar-client-go v0.14.0
 	github.com/apache/rocketmq-clients/golang/v5 v5.1.1-rc1
 	github.com/bytedance/sonic v1.12.6
-	github.com/centrifugal/centrifuge v0.33.4
+	github.com/centrifugal/centrifuge v0.33.5
 	github.com/centrifugal/gocent/v3 v3.3.0
 	github.com/coocood/freecache v1.2.4
 	github.com/davidbyttow/govips/v2 v2.15.0
@@ -22,12 +22,12 @@ require (
 	github.com/fatih/structs v1.1.0
 	github.com/fsnotify/fsnotify v1.8.0
 	github.com/gabriel-vasile/mimetype v1.4.7
-	github.com/gin-contrib/cors v1.7.2
-	github.com/gin-contrib/gzip v1.0.1
-	github.com/gin-contrib/pprof v1.5.1
+	github.com/gin-contrib/cors v1.7.3
+	github.com/gin-contrib/gzip v1.1.0
+	github.com/gin-contrib/pprof v1.5.2
 	github.com/gin-contrib/size v1.0.1
 	github.com/gin-contrib/sse v0.1.0
-	github.com/gin-contrib/static v1.1.2
+	github.com/gin-contrib/static v1.1.3
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-kratos/kratos/v2 v2.8.3
 	github.com/go-oauth2/oauth2/v4 v4.5.2
@@ -52,7 +52,7 @@ require (
 	github.com/hashicorp/raft v1.7.1
 	github.com/hashicorp/raft-boltdb v0.0.0-20241202213821-f9dd2ba30efd
 	github.com/hibiken/asynq v0.25.1
-	github.com/imroc/req/v3 v3.49.0
+	github.com/imroc/req/v3 v3.49.1
 	github.com/itchyny/gojq v0.12.17
 	github.com/jedib0t/go-pretty/v6 v6.6.5
 	github.com/jinzhu/copier v0.4.0
@@ -85,7 +85,7 @@ require (
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
 	github.com/playwright-community/playwright-go v0.4901.0
 	github.com/redis/go-redis/v9 v9.7.0
-	github.com/redis/rueidis v1.0.51
+	github.com/redis/rueidis v1.0.52
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/rs/xid v1.6.0
@@ -276,7 +276,7 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.16 // indirect
 	github.com/mattn/go-sqlite3 v1.14.22 // indirect
-	github.com/maypok86/otter v1.2.3 // indirect
+	github.com/maypok86/otter v1.2.4 // indirect
 	github.com/microsoft/go-mssqldb v1.7.2 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826 // indirect
@@ -291,13 +291,13 @@ require (
 	github.com/planetscale/vtprotobuf v0.6.1-0.20240319094008-0393e58bdf10 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/power-devops/perfstat v0.0.0-20221212215047-62379fc7944b // indirect
-	github.com/prometheus/client_golang v1.20.4 // indirect
+	github.com/prometheus/client_golang v1.20.5 // indirect
 	github.com/prometheus/client_model v0.6.1 // indirect
 	github.com/prometheus/common v0.55.0 // indirect
 	github.com/prometheus/procfs v0.15.1 // indirect
 	github.com/quic-go/qpack v0.5.1 // indirect
 	github.com/quic-go/quic-go v0.48.2 // indirect
-	github.com/redis/rueidis/rueidiscompat v1.0.51 // indirect
+	github.com/redis/rueidis/rueidiscompat v1.0.52 // indirect
 	github.com/refraction-networking/utls v1.6.7 // indirect
 	github.com/richardlehane/mscfb v1.0.4 // indirect
 	github.com/richardlehane/msoleps v1.0.4 // indirect
@@ -306,7 +306,7 @@ require (
 	github.com/sagikazarmark/locafero v0.4.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
 	github.com/segmentio/asm v1.2.0 // indirect
-	github.com/segmentio/encoding v0.4.0 // indirect
+	github.com/segmentio/encoding v0.4.1 // indirect
 	github.com/segmentio/fasthash v1.0.3 // indirect
 	github.com/shadowspore/fossil-delta v0.0.0-20240102155221-e3a8590b820b // indirect
 	github.com/shoenig/go-m1cpu v0.1.6 // indirect
