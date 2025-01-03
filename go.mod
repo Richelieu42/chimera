@@ -26,7 +26,7 @@ require (
 	github.com/gin-contrib/gzip v1.1.0
 	github.com/gin-contrib/pprof v1.5.2
 	github.com/gin-contrib/size v1.0.1
-	github.com/gin-contrib/sse v0.1.0
+	github.com/gin-contrib/sse v1.0.0
 	github.com/gin-contrib/static v1.1.3
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-kratos/kratos/v2 v2.8.3
