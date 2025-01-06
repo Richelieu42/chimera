@@ -1,6 +1,6 @@
 ## Settings => Build Tags => Custom tags
 
-- sonic: 是否想用sonic库？
+- sonic: 是否想用sonic库？（但是并不一定最终使用sonic库，还要看其他条件）
 - avx: CPU是否支持AVX指令集？（针对amd64架构）
 
 ## 想要获取指定字段的值，但又不想定义 struct 去 Unmarshal 来获取字段的值
