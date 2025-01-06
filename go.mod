@@ -21,7 +21,7 @@ require (
 	github.com/emersion/go-message v0.18.1
 	github.com/fatih/structs v1.1.0
 	github.com/fsnotify/fsnotify v1.8.0
-	github.com/gabriel-vasile/mimetype v1.4.7
+	github.com/gabriel-vasile/mimetype v1.4.8
 	github.com/gin-contrib/cors v1.7.3
 	github.com/gin-contrib/gzip v1.1.0
 	github.com/gin-contrib/pprof v1.5.2
@@ -104,7 +104,7 @@ require (
 	github.com/tidwall/buntdb v1.3.2
 	github.com/tidwall/gjson v1.18.0
 	github.com/tuotoo/qrcode v0.0.0-20220425170535-52ccc2bebf5d
-	github.com/unidoc/unioffice v1.38.0
+	github.com/unidoc/unioffice v1.39.0
 	github.com/vulcand/oxy/v2 v2.0.2
 	github.com/xuri/excelize/v2 v2.9.0
 	github.com/yeqown/go-qrcode/v2 v2.2.4
@@ -120,19 +120,19 @@ require (
 	go.opentelemetry.io/otel/trace v1.33.0
 	go.uber.org/atomic v1.11.0
 	go.uber.org/zap v1.27.0
-	golang.org/x/arch v0.12.0
+	golang.org/x/arch v0.13.0
 	golang.org/x/crypto v0.31.0
-	golang.org/x/exp v0.0.0-20241217172543-b2144cdd0a67
+	golang.org/x/exp v0.0.0-20250103183323-7d7fa50e5329
 	golang.org/x/image v0.23.0
-	golang.org/x/mobile v0.0.0-20241213221354-a87c1cf6cf46
+	golang.org/x/mobile v0.0.0-20250103163954-5e5de4c85663
 	golang.org/x/mod v0.22.0
 	golang.org/x/net v0.33.0
-	golang.org/x/oauth2 v0.24.0
+	golang.org/x/oauth2 v0.25.0
 	golang.org/x/sync v0.10.0
-	golang.org/x/sys v0.28.0
-	golang.org/x/term v0.27.0
+	golang.org/x/sys v0.29.0
+	golang.org/x/term v0.28.0
 	golang.org/x/text v0.21.0
-	golang.org/x/time v0.8.0
+	golang.org/x/time v0.9.0
 	golang.org/x/tools v0.28.0
 	google.golang.org/grpc v1.69.2
 	google.golang.org/protobuf v1.36.1
