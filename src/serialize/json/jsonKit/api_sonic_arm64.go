@@ -1,4 +1,4 @@
-//go:build go1.20 && arm64 && sonic && avx
+//go:build go1.20 && arm64 && sonic
 
 package jsonKit
 
