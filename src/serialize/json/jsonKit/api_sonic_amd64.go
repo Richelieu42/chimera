@@ -1,4 +1,4 @@
-//go:build go1.17 && amd64 && avx
+//go:build go1.17 && amd64 && sonic && avx
 
 package jsonKit
 
@@ -21,6 +21,4 @@ func init() {
 		panic(text)
 		return
 	}
-
-	//testAPI()
 }
