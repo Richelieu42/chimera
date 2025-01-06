@@ -107,8 +107,8 @@ func PrintBasicDetails(logger Logger) {
 	select {
 	case <-chB:
 		// 协程b 执行完毕
-	case <-time.After(time.Millisecond * 100):
-		// 等了100ms（但 协程b 还在执行，就不管了）
+	case <-time.After(time.Millisecond * 200):
+		// 等了200ms（但 协程b 还在执行，就不管它了）
 	}
 
 	logger.Info(strings.Repeat("=", 42))
