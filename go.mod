@@ -32,7 +32,7 @@ require (
 	github.com/go-kratos/kratos/v2 v2.8.3
 	github.com/go-oauth2/oauth2/v4 v4.5.2
 	github.com/go-pay/gopay v1.5.107
-	github.com/go-playground/validator/v10 v10.23.0
+	github.com/go-playground/validator/v10 v10.24.0
 	github.com/go-redsync/redsync/v4 v4.13.0
 	github.com/goccy/go-json v0.10.4
 	github.com/gogf/gf/v2 v2.8.3
@@ -78,7 +78,7 @@ require (
 	github.com/oklog/ulid/v2 v2.1.0
 	github.com/olahol/melody v1.2.1
 	github.com/otiai10/gosseract/v2 v2.4.1
-	github.com/panjf2000/ants/v2 v2.10.0
+	github.com/panjf2000/ants/v2 v2.11.0
 	github.com/pdfcpu/pdfcpu v0.9.1
 	github.com/pelletier/go-toml/v2 v2.2.3
 	github.com/pierrec/lz4/v4 v4.1.22
@@ -134,7 +134,7 @@ require (
 	golang.org/x/text v0.21.0
 	golang.org/x/time v0.9.0
 	golang.org/x/tools v0.29.0
-	google.golang.org/grpc v1.69.2
+	google.golang.org/grpc v1.69.4
 	google.golang.org/protobuf v1.36.2
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/driver/bigquery v1.2.0
