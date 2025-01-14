@@ -18,12 +18,12 @@ require (
 	github.com/duke-git/lancet/v2 v2.3.4
 	github.com/emersion/go-imap v1.2.1
 	github.com/emersion/go-imap-id v0.0.0-20190926060100-f94a56b9ecde
-	github.com/emersion/go-message v0.18.1
+	github.com/emersion/go-message v0.18.2
 	github.com/fatih/structs v1.1.0
 	github.com/fsnotify/fsnotify v1.8.0
 	github.com/gabriel-vasile/mimetype v1.4.8
 	github.com/gin-contrib/cors v1.7.3
-	github.com/gin-contrib/gzip v1.1.0
+	github.com/gin-contrib/gzip v1.2.0
 	github.com/gin-contrib/pprof v1.5.2
 	github.com/gin-contrib/size v1.0.1
 	github.com/gin-contrib/sse v1.0.0
@@ -50,7 +50,7 @@ require (
 	github.com/hashicorp/go-version v1.7.0
 	github.com/hashicorp/golang-lru/v2 v2.0.7
 	github.com/hashicorp/raft v1.7.2
-	github.com/hashicorp/raft-boltdb v0.0.0-20241202213821-f9dd2ba30efd
+	github.com/hashicorp/raft-boltdb v0.0.0-20250113192317-e8660f88bcc9
 	github.com/hibiken/asynq v0.25.1
 	github.com/imroc/req/v3 v3.49.1
 	github.com/itchyny/gojq v0.12.17
@@ -66,7 +66,7 @@ require (
 	github.com/liuzl/gocc v0.0.0-20231231122217-0372e1059ca5
 	github.com/magiconair/properties v1.8.9
 	github.com/matoous/go-nanoid/v2 v2.1.0
-	github.com/medama-io/go-useragent v1.0.1
+	github.com/medama-io/go-useragent v1.0.2
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/modern-go/reflect2 v1.0.2
@@ -85,7 +85,7 @@ require (
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
 	github.com/playwright-community/playwright-go v0.4901.0
 	github.com/redis/go-redis/v9 v9.7.0
-	github.com/redis/rueidis v1.0.52
+	github.com/redis/rueidis v1.0.53
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/rs/xid v1.6.0
@@ -299,7 +299,7 @@ require (
 	github.com/prometheus/procfs v0.15.1 // indirect
 	github.com/quic-go/qpack v0.5.1 // indirect
 	github.com/quic-go/quic-go v0.48.2 // indirect
-	github.com/redis/rueidis/rueidiscompat v1.0.52 // indirect
+	github.com/redis/rueidis/rueidiscompat v1.0.53 // indirect
 	github.com/refraction-networking/utls v1.6.7 // indirect
 	github.com/richardlehane/mscfb v1.0.4 // indirect
 	github.com/richardlehane/msoleps v1.0.4 // indirect
