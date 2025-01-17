@@ -12,7 +12,7 @@ require (
 	github.com/centrifugal/centrifuge v0.33.6
 	github.com/centrifugal/gocent/v3 v3.3.0
 	github.com/coocood/freecache v1.2.4
-	github.com/davidbyttow/govips/v2 v2.15.0
+	github.com/davidbyttow/govips/v2 v2.16.0
 	github.com/deckarep/golang-set/v2 v2.7.0
 	github.com/dromara/carbon/v2 v2.5.2
 	github.com/duke-git/lancet/v2 v2.3.4
