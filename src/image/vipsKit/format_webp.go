@@ -41,5 +41,5 @@ func ToWebp(src, dest string, exportParams *vips.WebpExportParams) error {
 	if err != nil {
 		return err
 	}
-	return os.WriteFile(dest, imageData, perm)
+	return os.WriteFile(dest, imageData, defaultPerm)
 }

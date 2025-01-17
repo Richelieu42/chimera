@@ -6,57 +6,7 @@ import (
 	"os"
 )
 
-var perm os.FileMode = 0644
-
-func ToJpeg(src, dest string, exportParams *vips.JpegExportParams) error {
-	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
-		return err
-	}
-	if err := fileKit.MkParentDirs(dest); err != nil {
-		return err
-	}
-
-	if exportParams == nil {
-		exportParams = vips.NewJpegExportParams()
-		exportParams.Quality = 100
-	}
-
-	imageRef, err := Read(src, nil)
-	if err != nil {
-		return err
-	}
-
-	imageData, _, err := imageRef.ExportJpeg(exportParams)
-	if err != nil {
-		return err
-	}
-	return os.WriteFile(dest, imageData, perm)
-}
-
-func ToPng(src, dest string, exportParams *vips.PngExportParams) error {
-	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
-		return err
-	}
-	if err := fileKit.MkParentDirs(dest); err != nil {
-		return err
-	}
-
-	if exportParams == nil {
-		exportParams = vips.NewPngExportParams()
-		exportParams.Quality = 100
-	}
-
-	imageRef, err := Read(src, nil)
-	if err != nil {
-		return err
-	}
-
-	imageData, _, err := imageRef.ExportPng(exportParams)
-	if err != nil {
-		return err
-	}
-	return os.WriteFile(dest, imageData, perm)
-}
+var defaultPerm os.FileMode = 0644
 
 func ToTiff(src, dest string, exportParams *vips.TiffExportParams) error {
 	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
@@ -80,7 +30,7 @@ func ToTiff(src, dest string, exportParams *vips.TiffExportParams) error {
 	if err != nil {
 		return err
 	}
-	return os.WriteFile(dest, imageData, perm)
+	return os.WriteFile(dest, imageData, defaultPerm)
 }
 
 func ToGif(src, dest string, exportParams *vips.GifExportParams) error {
@@ -105,7 +55,7 @@ func ToGif(src, dest string, exportParams *vips.GifExportParams) error {
 	if err != nil {
 		return err
 	}
-	return os.WriteFile(dest, imageData, perm)
+	return os.WriteFile(dest, imageData, defaultPerm)
 }
 
 func ToAvif(src, dest string, exportParams *vips.AvifExportParams) error {
@@ -130,7 +80,7 @@ func ToAvif(src, dest string, exportParams *vips.AvifExportParams) error {
 	if err != nil {
 		return err
 	}
-	return os.WriteFile(dest, imageData, perm)
+	return os.WriteFile(dest, imageData, defaultPerm)
 }
 
 // ToHeif
@@ -163,5 +113,5 @@ func ToHeif(src, dest string, exportParams *vips.HeifExportParams) error {
 	if err != nil {
 		return err
 	}
-	return os.WriteFile(dest, imageData, perm)
+	return os.WriteFile(dest, imageData, defaultPerm)
 }
