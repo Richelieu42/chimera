@@ -6,6 +6,10 @@ import (
 	"os"
 )
 
+// ToWebpData
+/*
+@param exportParams 可以为nil
+*/
 func ToWebpData(src string, exportParams *vips.WebpExportParams) ([]byte, error) {
 	if exportParams == nil {
 		exportParams = vips.NewWebpExportParams()
@@ -21,6 +25,10 @@ func ToWebpData(src string, exportParams *vips.WebpExportParams) ([]byte, error)
 	return data, err
 }
 
+// ToWebp
+/*
+@param exportParams 可以为nil
+*/
 func ToWebp(src, dest string, exportParams *vips.WebpExportParams) error {
 	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
 		return err
