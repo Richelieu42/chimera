@@ -238,8 +238,8 @@ github.com/DataDog/datadog-go v2.2.0+incompatible/go.mod h1:LButxg5PwREeZtORoXG3
 github.com/DataDog/datadog-go v3.2.0+incompatible/go.mod h1:LButxg5PwREeZtORoXG3tL4fMGNddJ+vMq1mwgfaqoQ=
 github.com/DataDog/zstd v1.5.2 h1:vUG4lAyuPCXO0TLbXvPv7EB7cNK1QV/luu55UHLrrn8=
 github.com/DataDog/zstd v1.5.2/go.mod h1:g4AWEaM3yOg3HYfnJ3YIawPnVdXJh9QME85blwSAmyw=
-github.com/FZambia/eagle v0.1.0 h1:9gyX6x+xjoIfglgyPTcYm7dvY7FJ93us1QY5De4CyXA=
-github.com/FZambia/eagle v0.1.0/go.mod h1:YjGSPVkQTNcVLfzEUQJNgW9ScPR0K4u/Ky0yeFa4oDA=
+github.com/FZambia/eagle v0.2.0 h1:1kQaZpJvbkvAXFRE/9K2ucBMuVqo+E29EMLYB74hIis=
+github.com/FZambia/eagle v0.2.0/go.mod h1:LKMYBwGYhao5sJI0TppvQ4SvvldFj9gITxrl8NvGwG0=
 github.com/GoogleCloudPlatform/opentelemetry-operations-go/detectors/gcp v1.25.0 h1:3c8yed4lgqTt+oTQ+JNMDo+F4xprBf+O/il4ZC0nRLw=
 github.com/GoogleCloudPlatform/opentelemetry-operations-go/detectors/gcp v1.25.0/go.mod h1:obipzmGjfSjam60XLwGfqUkJsfiheAl+TUjG+4yzyPM=
 github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/metric v0.48.1 h1:UQ0AhxogsIRZDkElkblfnwjc3IaltCm2HUMvezQaL7s=
@@ -330,8 +330,8 @@ github.com/cenkalti/backoff/v4 v4.3.0/go.mod h1:Y3VNntkOUPxTVeUxJ/G5vcM//AlwfmyY
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
 github.com/census-instrumentation/opencensus-proto v0.4.1 h1:iKLQ0xPNFxR/2hzXZMrBo8f1j86j5WHzznCCQxV/b8g=
 github.com/census-instrumentation/opencensus-proto v0.4.1/go.mod h1:4T9NM4+4Vw91VeyqjLS6ao50K5bOcLKN6Q42XnYaRYw=
-github.com/centrifugal/centrifuge v0.34.0 h1:1lQIYMX8HQ7/yoweSY/9JdCdNw9PS6VGgtgMW+Ta1/U=
-github.com/centrifugal/centrifuge v0.34.0/go.mod h1:C3Ls3DZ8UJ1avq/kFzFO105KqcfpFfJyXuKVGZBG8ig=
+github.com/centrifugal/centrifuge v0.34.1 h1:sbQrjAkFzz5CqyAtUsIpASdKFNJqtVZRAJTdt0MD1tM=
+github.com/centrifugal/centrifuge v0.34.1/go.mod h1:WPOaelBxin6UN6UJpNT6b8GVHrGIqCEvDcRqEAywITk=
 github.com/centrifugal/gocent/v3 v3.3.0 h1:xVkqMMtBiGcvV3OGqlTlayWdJoorNoVBQ3X9THKLe14=
 github.com/centrifugal/gocent/v3 v3.3.0/go.mod h1:8YWDQG3sX0X1g+BaotihbhawPs6zyYGUxUEk8Ng5a2g=
 github.com/centrifugal/protocol v0.14.0 h1:HfB/oKcU7ZVpSzbWUcA5e+0NuUOFaRAOvxfcKBTHVf4=
