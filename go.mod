@@ -8,8 +8,8 @@ require (
 	github.com/andybalholm/brotli v1.1.1
 	github.com/apache/pulsar-client-go v0.14.0
 	github.com/apache/rocketmq-clients/golang/v5 v5.1.1-rc1
-	github.com/bytedance/sonic v1.12.7
-	github.com/centrifugal/centrifuge v0.34.1
+	github.com/bytedance/sonic v1.12.8
+	github.com/centrifugal/centrifuge v0.34.2
 	github.com/centrifugal/gocent/v3 v3.3.0
 	github.com/coocood/freecache v1.2.4
 	github.com/davidbyttow/govips/v2 v2.16.0
@@ -23,7 +23,7 @@ require (
 	github.com/fsnotify/fsnotify v1.8.0
 	github.com/gabriel-vasile/mimetype v1.4.8
 	github.com/gin-contrib/cors v1.7.3
-	github.com/gin-contrib/gzip v1.2.0
+	github.com/gin-contrib/gzip v1.2.2
 	github.com/gin-contrib/pprof v1.5.2
 	github.com/gin-contrib/size v1.0.1
 	github.com/gin-contrib/sse v1.0.0
@@ -31,7 +31,7 @@ require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-kratos/kratos/v2 v2.8.3
 	github.com/go-oauth2/oauth2/v4 v4.5.2
-	github.com/go-pay/gopay v1.5.107
+	github.com/go-pay/gopay v1.5.108
 	github.com/go-playground/validator/v10 v10.24.0
 	github.com/go-redsync/redsync/v4 v4.13.0
 	github.com/goccy/go-json v0.10.4
@@ -71,10 +71,10 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/modern-go/reflect2 v1.0.2
 	github.com/mozillazg/go-pinyin v0.20.0
-	github.com/nacos-group/nacos-sdk-go/v2 v2.2.7
+	github.com/nacos-group/nacos-sdk-go/v2 v2.2.8
 	github.com/nanmu42/gzip v1.2.0
 	github.com/natefinch/lumberjack/v3 v3.0.0-alpha
-	github.com/nicksnyder/go-i18n/v2 v2.4.1
+	github.com/nicksnyder/go-i18n/v2 v2.5.0
 	github.com/oklog/ulid/v2 v2.1.0
 	github.com/olahol/melody v1.2.1
 	github.com/otiai10/gosseract/v2 v2.4.1
@@ -83,14 +83,14 @@ require (
 	github.com/pelletier/go-toml/v2 v2.2.3
 	github.com/pierrec/lz4/v4 v4.1.22
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
-	github.com/playwright-community/playwright-go v0.4901.0
+	github.com/playwright-community/playwright-go v0.4902.0
 	github.com/redis/go-redis/v9 v9.7.0
 	github.com/redis/rueidis v1.0.53
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/rs/xid v1.6.0
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d
-	github.com/samber/lo v1.47.0
+	github.com/samber/lo v1.49.0
 	github.com/shirou/gopsutil/v3 v3.24.5
 	github.com/shopspring/decimal v1.4.0
 	github.com/sirupsen/logrus v1.9.3
@@ -109,7 +109,7 @@ require (
 	github.com/xuri/excelize/v2 v2.9.0
 	github.com/yeqown/go-qrcode/v2 v2.2.4
 	github.com/yeqown/go-qrcode/writer/standard v1.2.4
-	go.etcd.io/etcd/client/v3 v3.5.17
+	go.etcd.io/etcd/client/v3 v3.5.18
 	go.mongodb.org/mongo-driver v1.17.2
 	go.opentelemetry.io/otel v1.34.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.34.0
@@ -134,8 +134,8 @@ require (
 	golang.org/x/text v0.21.0
 	golang.org/x/time v0.9.0
 	golang.org/x/tools v0.29.0
-	google.golang.org/grpc v1.69.4
-	google.golang.org/protobuf v1.36.3
+	google.golang.org/grpc v1.70.0
+	google.golang.org/protobuf v1.36.4
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/driver/bigquery v1.2.0
 	gorm.io/driver/clickhouse v0.6.1
@@ -166,12 +166,26 @@ require (
 	github.com/FZambia/eagle v0.2.0 // indirect
 	github.com/HdrHistogram/hdrhistogram-go v1.1.2 // indirect
 	github.com/adamzy/cedar-go v0.0.0-20170805034717-80a9c64b256d // indirect
-	github.com/alibabacloud-go/debug v0.0.0-20190504072949-9472017b5c68 // indirect
-	github.com/alibabacloud-go/tea v1.1.17 // indirect
+	github.com/alibabacloud-go/alibabacloud-gateway-pop v0.0.6 // indirect
+	github.com/alibabacloud-go/alibabacloud-gateway-spi v0.0.5 // indirect
+	github.com/alibabacloud-go/darabonba-array v0.1.0 // indirect
+	github.com/alibabacloud-go/darabonba-encode-util v0.0.2 // indirect
+	github.com/alibabacloud-go/darabonba-map v0.0.2 // indirect
+	github.com/alibabacloud-go/darabonba-openapi/v2 v2.0.10 // indirect
+	github.com/alibabacloud-go/darabonba-signature-util v0.0.7 // indirect
+	github.com/alibabacloud-go/darabonba-string v1.0.2 // indirect
+	github.com/alibabacloud-go/debug v1.0.1 // indirect
+	github.com/alibabacloud-go/endpoint-util v1.1.0 // indirect
+	github.com/alibabacloud-go/kms-20160120/v3 v3.2.3 // indirect
+	github.com/alibabacloud-go/openapi-util v0.1.0 // indirect
+	github.com/alibabacloud-go/tea v1.2.2 // indirect
 	github.com/alibabacloud-go/tea-utils v1.4.4 // indirect
+	github.com/alibabacloud-go/tea-utils/v2 v2.0.7 // indirect
+	github.com/alibabacloud-go/tea-xml v1.1.3 // indirect
 	github.com/aliyun/alibaba-cloud-sdk-go v1.61.1800 // indirect
 	github.com/aliyun/alibabacloud-dkms-gcs-go-sdk v0.2.2 // indirect
 	github.com/aliyun/alibabacloud-dkms-transfer-go-sdk v0.1.7 // indirect
+	github.com/aliyun/credentials-go v1.3.10 // indirect
 	github.com/apache/arrow/go/v15 v15.0.2 // indirect
 	github.com/ardielle/ardielle-go v1.5.2 // indirect
 	github.com/armon/go-metrics v0.4.1 // indirect
@@ -185,8 +199,9 @@ require (
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
 	github.com/centrifugal/protocol v0.14.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
+	github.com/clbanning/mxj/v2 v2.7.0 // indirect
 	github.com/cloudflare/circl v1.5.0 // indirect
-	github.com/cloudwego/base64x v0.1.4 // indirect
+	github.com/cloudwego/base64x v0.1.5 // indirect
 	github.com/coreos/go-semver v0.3.0 // indirect
 	github.com/coreos/go-systemd/v22 v22.5.0 // indirect
 	github.com/danieljoos/wincred v1.1.2 // indirect
@@ -325,6 +340,7 @@ require (
 	github.com/tidwall/pretty v1.2.1 // indirect
 	github.com/tidwall/rtred v0.1.2 // indirect
 	github.com/tidwall/tinyqueue v0.1.1 // indirect
+	github.com/tjfoc/gmsm v1.4.1 // indirect
 	github.com/tklauser/go-sysconf v0.3.12 // indirect
 	github.com/tklauser/numcpus v0.6.1 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
@@ -342,8 +358,8 @@ require (
 	github.com/yuin/goldmark v1.7.1 // indirect
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
 	github.com/zeebo/xxh3 v1.0.2 // indirect
-	go.etcd.io/etcd/api/v3 v3.5.17 // indirect
-	go.etcd.io/etcd/client/pkg/v3 v3.5.17 // indirect
+	go.etcd.io/etcd/api/v3 v3.5.18 // indirect
+	go.etcd.io/etcd/client/pkg/v3 v3.5.18 // indirect
 	go.opencensus.io v0.24.0 // indirect
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.54.0 // indirect
